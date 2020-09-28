@@ -2019,7 +2019,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('auth/logout');
 
               case 2:
-                _this.$router.push('/');
+                _this.$router.push('/login');
 
               case 3:
               case "end":
