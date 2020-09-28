@@ -68,10 +68,14 @@ const actions = {
   // 会員登録
   // -------------
   async register (context, data) {
-    // 始めにエラーコード欄を空にする
+    
+    // 始めにエラーステート欄を空にする
+    
     context.commit('setApiStatus', null);
     // 会員登録APIに入力フォームのデータを送り、レスポンスを受け取る
-    const response = await axios.post('/api/register', data);
+    const response = await axios.post('/api/register', data)
+        // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+        .catch(error => error.response || error);
     
     // 通信成功時
     if(response.status === CREATED) {
@@ -88,6 +92,7 @@ const actions = {
       // 受け取ったレスポンスを元に、apiStatus,userステートを更新
       context.commit('setRegisterErrorMessages', response.data.errors);
     } else {
+      // 別のストア(ここではerror.js)のmutationをcommitしたいので、第三引数に{root:true}を追記
       context.commit('error/setErrorCode', response.status, {root: true})
     }
   },
@@ -96,10 +101,14 @@ const actions = {
   // ログイン
   // -------------
   async login (context, data) {
+    
     // 始めにエラーコード欄を空にする
     context.commit('setApiStatus', null);
+    
     // ログインAPIに入力フォームのデータを送り、レスポンスを受け取る
-    const response = await axios.post('/api/login', data);
+    const response = await axios.post('/api/login', data)
+        // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+        .catch(error => error.response || error);
     
     // 通信成功時
     if(response.status === OK) {
@@ -125,7 +134,9 @@ const actions = {
   // -------------
   async logout (context) {
     context.commit('setApiStatus', null);
-    const response = await axios.post('/api/logout');
+    const response = await axios.post('/api/logout')
+        // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+        .catch(error => error.response || error);
     
     if(response.status === OK) {
       context.commit('setApiStatus', true);

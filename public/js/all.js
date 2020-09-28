@@ -12079,25 +12079,29 @@ setRegisterErrorMessages:function setRegisterErrorMessages(state,messages){state
 var actions={// -------------
 // 会員登録
 // -------------
-register:function register(context,data){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(){var response;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context){while(1){switch(_context.prev=_context.next){case 0:// 始めにエラーコード欄を空にする
+register:function register(context,data){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(){var response;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context){while(1){switch(_context.prev=_context.next){case 0:// 始めにエラーステート欄を空にする
 context.commit('setApiStatus',null);// 会員登録APIに入力フォームのデータを送り、レスポンスを受け取る
-_context.next=3;return axios.post('/api/register',data);case 3:response=_context.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])){_context.next=8;break;}// 受け取ったレスポンスを元に、apiStatus,userステートを更新
+_context.next=3;return axios.post('/api/register',data)// 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+["catch"](function(error){return error.response||error;});case 3:response=_context.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])){_context.next=8;break;}// 受け取ったレスポンスを元に、apiStatus,userステートを更新
 context.commit('setApiStatus',true);context.commit('setUser',response.data);return _context.abrupt("return",false);case 8:// 通信失敗時、errorストアを更新
 context.commit('setApiStatus',false);// バリデーションエラーの時
 if(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]){// 受け取ったレスポンスを元に、apiStatus,userステートを更新
-context.commit('setRegisterErrorMessages',response.data.errors);}else{context.commit('error/setErrorCode',response.status,{root:true});}case 10:case"end":return _context.stop();}}},_callee);}))();},// -------------
+context.commit('setRegisterErrorMessages',response.data.errors);}else{// 別のストア(ここではerror.js)のmutationをcommitしたいので、第三引数に{root:true}を追記
+context.commit('error/setErrorCode',response.status,{root:true});}case 10:case"end":return _context.stop();}}},_callee);}))();},// -------------
 // ログイン
 // -------------
 login:function login(context,data){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(){var response;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2){while(1){switch(_context2.prev=_context2.next){case 0:// 始めにエラーコード欄を空にする
 context.commit('setApiStatus',null);// ログインAPIに入力フォームのデータを送り、レスポンスを受け取る
-_context2.next=3;return axios.post('/api/login',data);case 3:response=_context2.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context2.next=8;break;}// 受け取ったレスポンスを元に、apiStatus,userステートを更新
+_context2.next=3;return axios.post('/api/login',data)// 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+["catch"](function(error){return error.response||error;});case 3:response=_context2.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context2.next=8;break;}// 受け取ったレスポンスを元に、apiStatus,userステートを更新
 context.commit('setApiStatus',true);context.commit('setUser',response.data);return _context2.abrupt("return",false);case 8:// 通信失敗時、errorストアを更新
 context.commit('setApiStatus',false);// バリデーションエラーの時
 if(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]){// 受け取ったレスポンスを元に、apiStatus,userステートを更新
 context.commit('setLoginErrorMessages',response.data.errors);}else{context.commit('error/setErrorCode',response.status,{root:true});}case 10:case"end":return _context2.stop();}}},_callee2);}))();},// -------------
 // ログアウト
 // -------------
-logout:function logout(context){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(){var response;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3){while(1){switch(_context3.prev=_context3.next){case 0:context.commit('setApiStatus',null);_context3.next=3;return axios.post('/api/logout');case 3:response=_context3.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context3.next=8;break;}context.commit('setApiStatus',true);context.commit('setUser',null);return _context3.abrupt("return",false);case 8:// 通信失敗時、errorストアを更新
+logout:function logout(context){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(){var response;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3){while(1){switch(_context3.prev=_context3.next){case 0:context.commit('setApiStatus',null);_context3.next=3;return axios.post('/api/logout')// 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+["catch"](function(error){return error.response||error;});case 3:response=_context3.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context3.next=8;break;}context.commit('setApiStatus',true);context.commit('setUser',null);return _context3.abrupt("return",false);case 8:// 通信失敗時、errorストアを更新
 context.commit('setApiStatus',false);context.commit('error/setErrorCode',response.status,{root:true});case 10:case"end":return _context3.stop();}}},_callee3);}))();},// --------------------
 // 現在のユーザー情報を返却
 // --------------------

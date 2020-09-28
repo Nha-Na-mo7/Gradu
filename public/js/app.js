@@ -38619,11 +38619,14 @@ var actions = {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              // 始めにエラーコード欄を空にする
+              // 始めにエラーステート欄を空にする
               context.commit('setApiStatus', null); // 会員登録APIに入力フォームのデータを送り、レスポンスを受け取る
 
               _context.next = 3;
-              return axios.post('/api/register', data);
+              return axios.post('/api/register', data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+              ["catch"](function (error) {
+                return error.response || error;
+              });
 
             case 3:
               response = _context.sent;
@@ -38646,6 +38649,7 @@ var actions = {
                 // 受け取ったレスポンスを元に、apiStatus,userステートを更新
                 context.commit('setRegisterErrorMessages', response.data.errors);
               } else {
+                // 別のストア(ここではerror.js)のmutationをcommitしたいので、第三引数に{root:true}を追記
                 context.commit('error/setErrorCode', response.status, {
                   root: true
                 });
@@ -38673,7 +38677,10 @@ var actions = {
               context.commit('setApiStatus', null); // ログインAPIに入力フォームのデータを送り、レスポンスを受け取る
 
               _context2.next = 3;
-              return axios.post('/api/login', data);
+              return axios.post('/api/login', data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+              ["catch"](function (error) {
+                return error.response || error;
+              });
 
             case 3:
               response = _context2.sent;
@@ -38721,7 +38728,10 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context3.next = 3;
-              return axios.post('/api/logout');
+              return axios.post('/api/logout') // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+              ["catch"](function (error) {
+                return error.response || error;
+              });
 
             case 3:
               response = _context3.sent;
