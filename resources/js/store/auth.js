@@ -54,6 +54,10 @@ const mutations = {
   // 新規登録時のエラーメッセージを格納する
   setRegisterErrorMessages(state, messages) {
     state.registerErrorMessages = messages
+  },
+  // リマインドメール送信先入力時のエラーメッセージを格納する
+  setResetMailErrorMessages(state, messages) {
+    state.resetMailErrorMessages = messages
   }
 }
 
@@ -89,7 +93,7 @@ const actions = {
     context.commit('setApiStatus', false);
     // バリデーションエラーの時
     if(response.status === UNPROCESSABLE_ENTITY) {
-      // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+      // エラーメッセージをセット
       context.commit('setRegisterErrorMessages', response.data.errors);
     } else {
       // 別のストア(ここではerror.js)のmutationをcommitしたいので、第三引数に{root:true}を追記
@@ -122,7 +126,7 @@ const actions = {
     context.commit('setApiStatus', false);
     // バリデーションエラーの時
     if(response.status === UNPROCESSABLE_ENTITY) {
-      // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+      // エラーメッセージをセット
       context.commit('setLoginErrorMessages', response.data.errors);
     } else {
       context.commit('error/setErrorCode', response.status, {root: true});
@@ -148,6 +152,37 @@ const actions = {
     context.commit('setApiStatus', false);
     context.commit('error/setErrorCode', response.status, {root: true});
     
+  },
+  // -----------------
+  // パスワードリマインド
+  // -----------------
+  async reserMail (context, data) {
+    
+    // 始めにエラーコード欄を空にする
+    context.commit('setApiStatus', null);
+    
+    // リマインドAPIに入力フォームのデータを送り、レスポンスを受け取る
+    // const response = await axios.post('/api/login', data)
+    //     // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+    //     .catch(error => error.response || error);
+    
+    // 通信成功時
+    if(response.status === OK) {
+      // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+      context.commit('setApiStatus', true);
+      context.commit('setUser', response.data);
+      return false;
+    }
+    
+    // 通信失敗時、errorストアを更新
+    context.commit('setApiStatus', false);
+    // バリデーションエラーの時
+    if(response.status === UNPROCESSABLE_ENTITY) {
+      // エラーメッセージをセット
+      context.commit('setResetMailErrorMessagess', response.data.errors);
+    } else {
+      context.commit('error/setErrorCode', response.status, {root: true});
+    }
   },
   
   // --------------------

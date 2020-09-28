@@ -38628,6 +38628,10 @@ var mutations = {
   // 新規登録時のエラーメッセージを格納する
   setRegisterErrorMessages: function setRegisterErrorMessages(state, messages) {
     state.registerErrorMessages = messages;
+  },
+  // リマインドメール送信先入力時のエラーメッセージを格納する
+  setResetMailErrorMessages: function setResetMailErrorMessages(state, messages) {
+    state.resetMailErrorMessages = messages;
   }
 }; // ===============
 // actions
@@ -38671,7 +38675,7 @@ var actions = {
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+                // エラーメッセージをセット
                 context.commit('setRegisterErrorMessages', response.data.errors);
               } else {
                 // 別のストア(ここではerror.js)のmutationをcommitしたいので、第三引数に{root:true}を追記
@@ -38725,7 +38729,7 @@ var actions = {
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+                // エラーメッセージをセット
                 context.commit('setLoginErrorMessages', response.data.errors);
               } else {
                 context.commit('error/setErrorCode', response.status, {
@@ -38785,32 +38789,79 @@ var actions = {
       }, _callee3);
     }))();
   },
-  // --------------------
-  // 現在のユーザー情報を返却
-  // --------------------
-  currentUser: function currentUser(context) {
+  // -----------------
+  // パスワードリマインド
+  // -----------------
+  reserMail: function reserMail(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      var response, currentUser;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
+              // 始めにエラーコード欄を空にする
+              context.commit('setApiStatus', null); // リマインドAPIに入力フォームのデータを送り、レスポンスを受け取る
+              // const response = await axios.post('/api/login', data)
+              //     // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+              //     .catch(error => error.response || error);
+              // 通信成功時
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context4.next = 5;
+                break;
+              }
+
+              // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+              context.commit('setApiStatus', true);
+              context.commit('setUser', response.data);
+              return _context4.abrupt("return", false);
+
+            case 5:
+              // 通信失敗時、errorストアを更新
+              context.commit('setApiStatus', false); // バリデーションエラーの時
+
+              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
+                // エラーメッセージをセット
+                context.commit('setResetMailErrorMessagess', response.data.errors);
+              } else {
+                context.commit('error/setErrorCode', response.status, {
+                  root: true
+                });
+              }
+
+            case 7:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  // --------------------
+  // 現在のユーザー情報を返却
+  // --------------------
+  currentUser: function currentUser(context) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      var response, currentUser;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
               context.commit('setApiStatus', null);
-              _context4.next = 3;
+              _context5.next = 3;
               return axios.get('/api/user');
 
             case 3:
-              response = _context4.sent;
+              response = _context5.sent;
               currentUser = response.data || null;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context4.next = 9;
+                _context5.next = 9;
                 break;
               }
 
               context.commit('setApiStatus', true);
               context.commit('setUser', currentUser);
-              return _context4.abrupt("return", false);
+              return _context5.abrupt("return", false);
 
             case 9:
               // 通信失敗時、errorストアを更新
@@ -38821,10 +38872,10 @@ var actions = {
 
             case 11:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 }; // ================
