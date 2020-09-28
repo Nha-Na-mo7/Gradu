@@ -20,7 +20,7 @@ const getter = {}
 // mutations
 // ===============
 const mutations = {
-  // errorCodeに受け取ったエラーコード番号を格納する
+  // errorCodeに、受け取ったエラー時のステータスコード番号を格納する
   setErrorCode(state, code) {
     state.errorCode = code;
   }

@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { INTERNAL_SERVER_ERROR } from "./util.js";
 import Header from './components/Header.vue';
 import Footer from './components/footer.vue';
 
@@ -28,6 +29,12 @@ export default {
   components: {
     Header,
     Footer
+  },
+  computed: {
+    // エラー時のステータスコード番号
+    errorCode() {
+      return this.$store.state.error.errorCode();
+    }
   }
 }
 

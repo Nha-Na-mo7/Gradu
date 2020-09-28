@@ -1920,8 +1920,9 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Header_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/Header.vue */ "./resources/js/components/Header.vue");
-/* harmony import */ var _components_footer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/footer.vue */ "./resources/js/components/footer.vue");
+/* harmony import */ var _util_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util.js */ "./resources/js/util.js");
+/* harmony import */ var _components_Header_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Header.vue */ "./resources/js/components/Header.vue");
+/* harmony import */ var _components_footer_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/footer.vue */ "./resources/js/components/footer.vue");
 //
 //
 //
@@ -1944,12 +1945,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Header: _components_Header_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Footer: _components_footer_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Header: _components_Header_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Footer: _components_footer_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  computed: {
+    // エラー時のステータスコード番号
+    errorCode: function errorCode() {
+      return this.$store.state.error.errorCode();
+    }
   }
 });
 
@@ -38842,7 +38850,7 @@ var getter = {}; // ===============
 // ===============
 
 var mutations = {
-  // errorCodeに受け取ったエラーコード番号を格納する
+  // errorCodeに、受け取ったエラー時のステータスコード番号を格納する
   setErrorCode: function setErrorCode(state, code) {
     state.errorCode = code;
   }
