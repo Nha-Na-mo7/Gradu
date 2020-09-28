@@ -25,7 +25,6 @@
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/error.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/error.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +213,7 @@
       <workItem from="1601302471654" duration="20000" />
       <workItem from="1601302539246" duration="11000" />
       <workItem from="1601302561065" duration="93000" />
-      <workItem from="1601302666433" duration="1355000" />
+      <workItem from="1601302666433" duration="1564000" />
     </task>
     <servers />
   </component>

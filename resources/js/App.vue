@@ -35,6 +35,23 @@ export default {
     errorCode() {
       return this.$store.state.error.errorCode();
     }
+  },
+  watch: {
+    // ストアのerrorCodeステートを監視
+    errorCode: {
+      handler(val) {
+        // 500エラーが発生した時、500エラー用のコンポーネントに遷移させる、要確認
+        if(val === INTERNAL_SERVER_ERROR) {
+          this.$router.push('/500');
+        }
+      },
+      // 最初の読み込みの段階からこのハンドラーは実行される
+      immediate: true
+    },
+    // 何もなければErrorCodeにnullを代入
+    $route() {
+      this.$store.commit('error/setErrorCode', null);
+    }
   }
 }
 
