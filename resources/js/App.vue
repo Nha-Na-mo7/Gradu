@@ -33,7 +33,7 @@ export default {
   computed: {
     // エラー時のステータスコード番号
     errorCode() {
-      return this.$store.state.error.errorCode();
+      return this.$store.state.error.errorCode;
     }
   },
   watch: {
