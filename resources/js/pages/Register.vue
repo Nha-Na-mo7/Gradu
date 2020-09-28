@@ -6,12 +6,24 @@
     <h2 class="p-auth__title">アカウントを作成</h2>
     <form class="p-form" @submit.prevent="register" autocomplete="off">
       <label for="email">メールアドレス</label>
+      <!--      エラー表示は要修正-->
+      <div v-if="registerErrors">
+        <span v-if="registerErrors.email">{{ registerErrors.email[0] }}</span>
+      </div>
       <input type="text" class="p-form__item" id="email" v-model="registerForm.email">
 
       <label for="password">パスワード (半角英数字 8文字以上) </label>
+      <!--      エラー表示は要修正-->
+      <div v-if="registerErrors">
+        <span v-if="registerErrors.password">{{ registerErrors.password[0] }}</span>
+      </div>
       <input type="password" class="p-form__item" id="password" v-model="registerForm.password">
 
       <label for="password-confirmation">パスワードの再入力</label>
+      <!--      エラー表示は要修正-->
+      <div v-if="registerErrors">
+        <span v-if="registerErrors.password_confirmation">{{ registerErrors.password_confirmation[0] }}</span>
+      </div>
       <input type="password" class="p-form__item" id="password-confirmation" v-model="registerForm.password_confirmation">
 
       <button type="submit" class="c-btn c-btn__main c-btn--primary">新規登録</button>
@@ -25,6 +37,8 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   data() {
     return {
@@ -40,9 +54,25 @@ export default {
       // authStoreからregisterアクションを呼ぶ
       await this.$store.dispatch('auth/register', this.registerForm);
 
-      // トップページへ遷移 遷移先は要修正
-      this.$router.push('/');
+      // apiStatusがtrueなら遷移
+      if(this.apiStatus) {
+        this.$router.push('/');
+      }
+    },
+    // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
+    clearError() {
+      this.$store.commit('auth/setRegisterErrorMessages', null)
     }
+  },
+  computed: {
+    ...mapState({
+      apiStatus: state => state.auth.apiStatus,
+      registerErrors: state => state.auth.registerErrorMessages
+    })
+  },
+  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  created() {
+    this.clearError()
   }
 }
 </script>
