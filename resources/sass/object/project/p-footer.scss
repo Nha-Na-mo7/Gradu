@@ -1,0 +1,9 @@
+//  =============
+//  p-footer
+//  =============
+.p-footer {
+  background: $color_Primary;
+  border-top: 1px solid #cdcdcd; // TOD修正
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.1);
+  color: #f1f1f1; // 修正すること
+}

@@ -1,0 +1,101 @@
+// =========================
+//  variable 変数まとめ
+// =========================
+
+// -----------
+// font
+// -----------
+//$font-family-sans-serif: 'Nunito', sans-serif;
+//$font-size-base: 0.9rem;
+//$line-height-base: 1.6;
+
+
+// -----------
+// base-color
+// -----------
+// 参考: Twitter...#55acee
+// https://www.colordic.org/colorscheme/55acee
+
+$font-color_dark: #1b515f;
+$font-color_white: #ffffff;
+
+$color_CoinCheck: #50cdcd;
+$color_Twitter: #55acee;
+
+$color_Primary: #52c8e3;
+
+$background-color_base: #ecf0f1;
+$background-color_content-title: #52a5e3;
+
+
+
+// -------------
+// brand color
+// -------------
+// CoinCheckで扱っている仮想通貨の色
+// 新規仮想通貨が登場した際、配色を都度追加する必要あり
+$brand-color_JPY: #20c2d3;
+$brand-color_BTC: #f7931a;
+$brand-color_ETH: #8a92b2;
+$brand-color_ETC: #4fb858;
+$brand-color_LSK: #2384b0;
+$brand-color_FCT: #02bae9;
+$brand-color_XRP: #11aae2;
+$brand-color_XEM: #00c4b3;
+$brand-color_LTC: #b4b4b4;
+$brand-color_BCH: #90dd60;
+$brand-color_MONA: #bb912e;
+$brand-color_XLM: #a957ff;
+$brand-color_QTUM: #2ca6e0;
+$brand-color_BAT: #ff4724;
+$brand-color_IOST: #f6f6f6;
+// 以下はCoinCheckでの取り扱いが18年6月18日を持って廃止された通貨
+//$brand-color_DASH: #f6f6f6;
+//$brand-color_ZEC: #f6f6f6;
+//$brand-color_XMR: #f6f6f6;
+//$brand-color_REP: #f6f6f6;
+
+
+// -----------------
+// font-size
+// -----------------
+$font-size_s: 12px;
+$font-size_m: 14px;
+$font-size_l: 18px;
+$font-size_xl: 24px;
+$font-size_xxl: 30px;
+$font-size_3l: 38px;
+
+// -----------------
+// space
+// -----------------
+$space_s: 5px;
+$space_m: 10px;
+$space_l: 15px;
+$space_xl: 20px;
+$space_xxl: 30px;
+$space_3l: 40px;
+
+// -----------------
+// breakpoint
+// -----------------
+// メディアクエリのブレークポイント設定
+
+//@media screen and (max-width: 414px){
+//  .btn{
+//    font-size: .7em;
+//  }
+//}
+
+//$breakpoint-sm: 400px !default;
+//$breakpoint-md: 768px !default;
+//$breakpoint-lg: 1000px !default;
+
+$breakpoints: (
+    'sm': 'screen and (max-width: 414px)',
+    'md': 'screen and (min-width: 415px) and (max-width: 768px) ',
+    'min_md': 'screen and (min-width: 769px)',
+    'lg': 'screen and (max-width: 1000px)',
+    'xl': 'screen and (max-width: 1200px)',
+    'xxl': 'screen and (min-width: 1200px)',
+) !default;

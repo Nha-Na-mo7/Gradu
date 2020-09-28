@@ -1,0 +1,40 @@
+// ==============
+//  c-button
+//  =============
+.c-btn {
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 1;
+  padding: $space_m 50px;
+  text-decoration: none;
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  color: #f1f1f1;
+  border: 1px solid $color_CoinCheck;
+  background: #8a92b2;
+  &:hover {
+    background: #6da099;
+  }
+
+  &--link {
+    border: 0;
+  }
+
+  &--fluid {
+    width: 100%;
+  }
+
+  &--primary {
+    background: $color_Primary;
+  }
+  &__main {
+    text-align: center;
+    padding: $space_l 100px;
+    margin: auto 0;
+    font-size: 1.2rem;
+  }
+}

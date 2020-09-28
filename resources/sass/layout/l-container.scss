@@ -1,0 +1,22 @@
+// ==============
+//  l-container
+//  =============
+.l-container {
+  margin: 0 auto;
+  @include mq($breakpoint: xxl) {
+    max-width: 1200px;
+  }
+  max-width: 100%;
+  padding: 0 2%;
+
+  &--authform {
+    margin: 0 auto;
+    max-width: 600px;
+    @include mq($breakpoint: md) {
+      max-width: 100%;
+    }
+    @include mq($breakpoint: sm) {
+      max-width: 100%;
+    }
+  }
+}

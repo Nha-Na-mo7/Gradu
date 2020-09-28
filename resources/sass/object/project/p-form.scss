@@ -1,0 +1,38 @@
+// ==============
+//  p-form
+//  =============
+.p-form {
+  padding: $space_xxl 0;
+  &__item {
+    border: 1px solid #dedede;
+    border-radius: 0.25rem;
+    font-size: 1.2rem;
+    margin-bottom: $space_xl;
+    padding: $space_m $space_l;
+    letter-spacing: .1rem;
+    width: 100%;
+
+    &:focus {
+      // 以下はわかりやすく変数名をつけて管理すること
+      border: 1px solid #f66d9b;
+      box-shadow: 0 0 5px #f66d9b;
+    }
+    &--error {
+      // フォームのエラー時に該当箇所を赤背景にする
+      background: #fff3f3;
+    }
+  }
+  label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+
+  &__textarea {
+    resize: none;
+    font-size: 1.2rem;
+    height: 13rem;
+    @include mq($breakpoint: sm) {
+      height: 20rem;
+    }
+  }
+}
