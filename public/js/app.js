@@ -38365,11 +38365,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
 /* harmony import */ var _pages_Register_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Register.vue */ "./resources/js/pages/Register.vue");
 /* harmony import */ var _pages_PassReset_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/PassReset.vue */ "./resources/js/pages/PassReset.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 
  // ページコンポーネントのインポート
 
 
 
+
+ // ストアのインポート
 
  // VueRouterプラグインの使用
 
@@ -38380,10 +38383,28 @@ var routes = [{
   component: _pages_Index_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/login',
-  component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  // URL直入力などでログイン済みのユーザーはアクセスできないページに無理やり行こうとした時、
+  // ナビゲーションガードを使ってホームに遷移させる。
+  beforeEnter: function beforeEnter(to, from, next) {
+    // ログイン状態をチェックし、分岐させる
+    if (_store__WEBPACK_IMPORTED_MODULE_6__["default"].getters['auth/loginCheck']) {
+      next('/');
+    } else {
+      next();
+    }
+  }
 }, {
   path: '/register',
-  component: _pages_Register_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _pages_Register_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+  beforeEnter: function beforeEnter(to, from, next) {
+    // ログイン状態をチェックし、分岐させる
+    if (_store__WEBPACK_IMPORTED_MODULE_6__["default"].getters['auth/loginCheck']) {
+      next('/');
+    } else {
+      next();
+    }
+  }
 }, {
   path: '/password/reset',
   component: _pages_PassReset_vue__WEBPACK_IMPORTED_MODULE_5__["default"]

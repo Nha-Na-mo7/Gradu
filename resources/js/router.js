@@ -7,6 +7,9 @@ import Login from './pages/Login.vue';
 import Register from './pages/Register.vue';
 import PassReset from './pages/PassReset.vue';
 
+// ストアのインポート
+import store from './store';
+
 // VueRouterプラグインの使用
 Vue.use(VueRouter);
 
@@ -20,11 +23,29 @@ const routes = [
   },
   {
     path: '/login',
-    component: Login
+    component: Login,
+    // URL直入力などでログイン済みのユーザーはアクセスできないページに無理やり行こうとした時、
+    // ナビゲーションガードを使ってホームに遷移させる。
+    beforeEnter(to, from, next) {
+      // ログイン状態をチェックし、分岐させる
+      if(store.getters['auth/loginCheck']) {
+        next('/');
+      }else{
+        next();
+      }
+    }
   },
   {
     path: '/register',
-    component: Register
+    component: Register,
+    beforeEnter(to, from, next) {
+      // ログイン状態をチェックし、分岐させる
+      if(store.getters['auth/loginCheck']) {
+        next('/');
+      }else{
+        next();
+      }
+    }
   },
   {
     path: '/password/reset',
