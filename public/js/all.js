@@ -12070,7 +12070,10 @@ user_id:function user_id(state){return state.user?state.user.id:'';}};// =======
 // mutations
 // ===============
 var mutations={// userステートの値をセット
-setUser:function setUser(state,userdata){state.user=userdata;},setApiStatus:function setApiStatus(state,status){state.apiStatus=status;},setLoginErrorMessages:function setLoginErrorMessages(state,messages){state.loginErrorMessages=messages;},setRegisterErrorMessages:function setRegisterErrorMessages(state,messages){state.registerErrorMessages=messages;}};// ===============
+setUser:function setUser(state,userdata){state.user=userdata;},// 通信ステータス番号をセットする
+setApiStatus:function setApiStatus(state,status){state.apiStatus=status;},// ログイン時のエラーメッセージを格納する
+setLoginErrorMessages:function setLoginErrorMessages(state,messages){state.loginErrorMessages=messages;},// 新規登録時のエラーメッセージを格納する
+setRegisterErrorMessages:function setRegisterErrorMessages(state,messages){state.registerErrorMessages=messages;}};// ===============
 // actions
 // ===============
 var actions={// -------------
@@ -12116,7 +12119,8 @@ var state={errorCode:null};// ===============
 var getter={};// ===============
 // mutations
 // ===============
-var mutations={setErrorCode:function setErrorCode(state,code){state.errorCode=code;}};// ===============
+var mutations={// errorCodeに受け取ったエラーコード番号を格納する
+setErrorCode:function setErrorCode(state,code){state.errorCode=code;}};// ===============
 // actions
 // ===============
 var actions={};// ================

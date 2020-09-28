@@ -43,12 +43,15 @@ const mutations = {
   setUser(state, userdata) {
     state.user = userdata
   },
+  // 通信ステータス番号をセットする
   setApiStatus(state, status) {
     state.apiStatus = status
   },
+  // ログイン時のエラーメッセージを格納する
   setLoginErrorMessages(state, messages) {
     state.loginErrorMessages = messages
   },
+  // 新規登録時のエラーメッセージを格納する
   setRegisterErrorMessages(state, messages) {
     state.registerErrorMessages = messages
   }
