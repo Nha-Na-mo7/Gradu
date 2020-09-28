@@ -35,8 +35,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -206,7 +206,7 @@
       <workItem from="1601286313169" duration="39000" />
       <workItem from="1601286367990" duration="2736000" />
       <workItem from="1601290695566" duration="424000" />
-      <workItem from="1601291176180" duration="4987000" />
+      <workItem from="1601291176180" duration="5374000" />
     </task>
     <servers />
   </component>
