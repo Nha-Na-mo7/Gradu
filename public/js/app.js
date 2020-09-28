@@ -21357,7 +21357,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("label", { attrs: { for: "password-confirmation" } }, [
+        _c("label", { attrs: { for: "password_confirmation" } }, [
           _vm._v("パスワードの再入力")
         ]),
         _vm._v(" "),
@@ -21381,7 +21381,7 @@ var render = function() {
             }
           ],
           staticClass: "p-form__item",
-          attrs: { type: "password", id: "password-confirmation" },
+          attrs: { type: "password", id: "password_confirmation" },
           domProps: { value: _vm.registerForm.password_confirmation },
           on: {
             input: function($event) {

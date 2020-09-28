@@ -19,12 +19,12 @@
       </div>
       <input type="password" class="p-form__item" id="password" v-model="registerForm.password">
 
-      <label for="password-confirmation">パスワードの再入力</label>
+      <label for="password_confirmation">パスワードの再入力</label>
       <!--      エラー表示は要修正-->
       <div v-if="registerErrors">
         <span v-if="registerErrors.password_confirmation">{{ registerErrors.password_confirmation[0] }}</span>
       </div>
-      <input type="password" class="p-form__item" id="password-confirmation" v-model="registerForm.password_confirmation">
+      <input type="password" class="p-form__item" id="password_confirmation" v-model="registerForm.password_confirmation">
 
       <button type="submit" class="c-btn c-btn__main c-btn--primary">新規登録</button>
     </form>

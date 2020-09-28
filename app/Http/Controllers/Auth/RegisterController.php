@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRegistPost;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -22,7 +23,9 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
+    
+    private $PASSWORD_MIN_LENGTH =  8;
+  
     use RegistersUsers;
 
     /**
@@ -41,7 +44,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
     }
-
+    
     /**
      * Get a validator for an incoming registration request.
      *
@@ -50,10 +53,23 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        // グローバル変数を記述しやすくするもの
+        extract(get_object_vars($this));
+      
+        $messages = [
+            'email.required' => '入力してください',
+            'email.email' => 'メールアドレスの形式で入力してください',
+            'email.unique' => '入力されたメールアドレスは既に登録されています',
+            'email.max' => "100文字以内で入力してください",
+            'password.required' => '入力してください',
+            'password.min' => "${PASSWORD_MIN_LENGTH}文字以上で入力してください",
+            'password.confirmed' => '入力されたパスワードと再入力が一致しません'
+        ];
+      
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ], $messages);
     }
 
     /**
