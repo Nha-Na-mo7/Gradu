@@ -1,27 +1,36 @@
 // ====================
-// Store template
+// error Store(エラー情報)
 // ====================
-// ストアの雛形。
 
 // ===============
 // state
 // ===============
-const state = {}
+const state = {
+  errorCode: null
+}
+
 
 // ===============
 // getter
 // ===============
 const getter = {}
 
+
 // ===============
 // mutations
 // ===============
-const mutations = {}
+const mutations = {
+  setErrorCode(state, code) {
+    state.errorCode = code;
+  }
+}
+
 
 // ===============
 // actions
 // ===============
 const actions = {}
+
 
 // ================
 // export default
