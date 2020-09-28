@@ -18,8 +18,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        // ログイン中に、ログインしていない場合にしかアクセスできないリクエストを送信した時、
+        // 代わりにユーザー情報を返すAPIにアクセスさせる。
         if (Auth::guard($guard)->check()) {
-            return redirect(RouteServiceProvider::HOME);
+            return redirect()->route('user');
         }
 
         return $next($request);
