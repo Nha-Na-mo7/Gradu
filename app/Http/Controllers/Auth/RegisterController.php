@@ -55,21 +55,11 @@ class RegisterController extends Controller
     {
         // グローバル変数を記述しやすくするもの
         extract(get_object_vars($this));
-      
-        $messages = [
-            'email.required' => '入力してください',
-            'email.email' => 'メールアドレスの形式で入力してください',
-            'email.unique' => '入力されたメールアドレスは既に登録されています',
-            'email.max' => "100文字以内で入力してください",
-            'password.required' => '入力してください',
-            'password.min' => "${PASSWORD_MIN_LENGTH}文字以上で入力してください",
-            'password.confirmed' => '入力されたパスワードと再入力が一致しません'
-        ];
-      
+        
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], $messages);
+            'password' => ['required', 'string', "min:${PASSWORD_MIN_LENGTH}", 'confirmed'],
+        ]);
     }
 
     /**

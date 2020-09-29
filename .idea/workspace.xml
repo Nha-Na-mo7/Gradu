@@ -23,13 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Http/Requests/LoginPostRequest.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ja.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ja/auth.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ja/pagination.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ja/passwords.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/lang/ja/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Requests/LoginPostRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Requests/LoginPostRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/ja/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ja/validation.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -227,7 +224,7 @@
       <workItem from="1601312227383" duration="2793000" />
       <workItem from="1601365361634" duration="93000" />
       <workItem from="1601365463548" duration="518000" />
-      <workItem from="1601366191538" duration="944000" />
+      <workItem from="1601366191538" duration="1720000" />
     </task>
     <servers />
   </component>
