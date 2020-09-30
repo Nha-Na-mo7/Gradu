@@ -6,7 +6,7 @@ import Index from './pages/Index.vue';
 // 認証系
 import Login from './pages/Login.vue';
 import Register from './pages/Register.vue';
-import PassReset from './pages/PassReset.vue';
+import PassResetMailSend from './pages/PassResetMailSend.vue';
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
 
@@ -53,7 +53,7 @@ const routes = [
   },
   {
     path: '/password/reset',
-    component: PassReset
+    component: PassResetMailSend
   },
   {
     path: '/500',
