@@ -45,7 +45,7 @@ class CustomPasswordReset extends Notification
     {
         return (new MailMessage)
                     ->subject('【CryptoTrend】'.__('Reset Password'))
-                    ->view('emails.resetPassword')
+                    ->view('emails.reset')
                     ->action(__('Reset Password'), url('password/reset', $this->token));
     }
 
