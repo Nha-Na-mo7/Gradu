@@ -38985,7 +38985,7 @@ var actions = {
             case 3:
               response = _context4.sent;
 
-              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
                 _context4.next = 8;
                 break;
               }
@@ -39000,11 +39000,9 @@ var actions = {
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                console.log(422); // エラーメッセージをセット
-
+                // エラーメッセージをセット
                 context.commit('setResetMailErrorMessages', response.data.errors);
               } else {
-                console.log('!?');
                 context.commit('error/setErrorCode', response.status, {
                   root: true
                 });

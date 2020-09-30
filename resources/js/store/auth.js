@@ -167,7 +167,7 @@ const actions = {
         .catch(error => error.response || error);
     
     // 通信成功時
-    if(response.status === OK) {
+    if(response.status === CREATED) {
       // 受け取ったレスポンスを元に、apiStatus,userステートを更新
       context.commit('setApiStatus', true);
       context.commit('setUser', response.data);
@@ -178,11 +178,9 @@ const actions = {
     context.commit('setApiStatus', false);
     // バリデーションエラーの時
     if(response.status === UNPROCESSABLE_ENTITY) {
-      console.log(422)
       // エラーメッセージをセット
       context.commit('setResetMailErrorMessages', response.data.errors);
     } else {
-      console.log('!?')
       context.commit('error/setErrorCode', response.status, {root: true});
     }
   },
