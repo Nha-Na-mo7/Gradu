@@ -13,7 +13,7 @@
     <p>入力したメールアドレス宛に、パスワード変更ページのURLが記載されたメールを送信します。</p>
     <form class="p-form" @submit.prevent="resetMailSubmit">
       <label for="email">メールアドレス</label>
-      <input type="text" class="p-form__item" id="email" v-model="email">
+      <input type="text" class="p-form__item" id="email" v-model="resetMailForm.email">
 
       <button type="submit" class="c-btn c-btn__main c-btn--primary">送信する</button>
     </form>
@@ -22,17 +22,42 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   data() {
     return {
-      email: ''
+      resetMailForm: {
+        email: ''
+      }
     }
   },
   methods: {
-    resetMailSubmit() {
-      alert(this.email);
+    async resetMailSubmit() {
+      // authStoreからregisterアクションを呼ぶ
+      await this.$store.dispatch('auth/resetMail', this.resetMailForm);
+
+      // apiStatusがtrueなら遷移
+      if(this.apiStatus) {
+        alert('メールを送信しますた');
+      }
+    },
+    // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
+    clearError() {
+      this.$store.commit('auth/setResetMailErrorMessages', null)
     }
+  },
+  computed: {
+    ...mapState({
+      apiStatus: state => state.auth.apiStatus,
+      resetMailErrors: state => state.auth.resetMailErrorMessage
+    })
+  },
+  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  created() {
+    this.clearError()
   }
+
 }
 </script>
 

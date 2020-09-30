@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
 {
@@ -20,11 +22,40 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+    
+    public function __construct()
+    {
+      $this->middleware('guest');
+    }
   
-    /**
+    public function sendResetLinkEmail(Request $request)
+    {
+      $this->validateEmail($request);
+    
+      $response = $this->broker()->sendResetLink(
+          $request->only('email')
+      );
+      
+      if($response == Password::RESET_LINK_SENT) {
+        Log::debug('this is true(201)');
+        return response()->json([
+            'message' => 'Reset link sent to youe email.',
+            'status' => true
+        ], 201);
+      }else{
+        Log::debug('this is false(401)');
+  
+        return response()->json([
+            'message' => 'Unable to sent reset link', 'status' => false
+        ], 401);
+      }
+    }
+  
+  
+  /**
      * SendsPasswordResetEmails trait で定義されているメソッドをオーバーライド。
-     * DBにアドレスが登録されているか否かを問わず、「送信しました」とメッセージを出す。
-     * ただしDBに登録されていないメアドの場合、実際にはメールを送らない。
+     * usersテーブルに登録されていないメアドが入力されていた場合でも、「送信しました」とメッセージを出す。
+     * ただし実際にはメールを送らない。
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  string  $response

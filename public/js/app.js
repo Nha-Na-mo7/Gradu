@@ -2211,6 +2211,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2234,16 +2249,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      email: ''
+      resetMailForm: {
+        email: ''
+      }
     };
   },
   methods: {
     resetMailSubmit: function resetMailSubmit() {
-      alert(this.email);
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return _this.$store.dispatch('auth/resetMail', _this.resetMailForm);
+
+              case 2:
+                // apiStatusがtrueなら遷移
+                if (_this.apiStatus) {
+                  alert('メールを送信しますた');
+                }
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
+    clearError: function clearError() {
+      this.$store.commit('auth/setResetMailErrorMessages', null);
     }
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    apiStatus: function apiStatus(state) {
+      return state.auth.apiStatus;
+    },
+    resetMailErrors: function resetMailErrors(state) {
+      return state.auth.resetMailErrorMessage;
+    }
+  })),
+  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  created: function created() {
+    this.clearError();
   }
 });
 
@@ -21224,19 +21280,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.email,
-              expression: "email"
+              value: _vm.resetMailForm.email,
+              expression: "resetMailForm.email"
             }
           ],
           staticClass: "p-form__item",
           attrs: { type: "text", id: "email" },
-          domProps: { value: _vm.email },
+          domProps: { value: _vm.resetMailForm.email },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.email = $event.target.value
+              _vm.$set(_vm.resetMailForm, "email", $event.target.value)
             }
           }
         }),
@@ -38711,7 +38767,8 @@ var state = {
   apiStatus: null,
   //エラーメッセージ
   loginErrorMessages: null,
-  registerErrorMessages: null
+  registerErrorMessages: null,
+  resetMailErrorMessage: null
 }; // ===============
 // getter
 // ===============
@@ -38906,24 +38963,30 @@ var actions = {
       }, _callee3);
     }))();
   },
-  // -----------------
-  // パスワードリマインド
-  // -----------------
-  reserMail: function reserMail(context, data) {
+  // --------------------------
+  // パスワードリマインドメール送信
+  // --------------------------
+  resetMail: function resetMail(context, data) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               // 始めにエラーコード欄を空にする
               context.commit('setApiStatus', null); // リマインドAPIに入力フォームのデータを送り、レスポンスを受け取る
-              // const response = await axios.post('/api/login', data)
-              //     // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
-              //     .catch(error => error.response || error);
-              // 通信成功時
+
+              _context4.next = 3;
+              return axios.post('/api/password/reset', data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+              ["catch"](function (error) {
+                return error.response || error;
+              });
+
+            case 3:
+              response = _context4.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context4.next = 5;
+                _context4.next = 8;
                 break;
               }
 
@@ -38932,20 +38995,22 @@ var actions = {
               context.commit('setUser', response.data);
               return _context4.abrupt("return", false);
 
-            case 5:
+            case 8:
               // 通信失敗時、errorストアを更新
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                // エラーメッセージをセット
-                context.commit('setResetMailErrorMessagess', response.data.errors);
+                console.log(422); // エラーメッセージをセット
+
+                context.commit('setResetMailErrorMessages', response.data.errors);
               } else {
+                console.log('!?');
                 context.commit('error/setErrorCode', response.status, {
                   root: true
                 });
               }
 
-            case 7:
+            case 10:
             case "end":
               return _context4.stop();
           }

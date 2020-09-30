@@ -28,6 +28,8 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+// パスワードリセットメール送信
+Route::post('/password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('api.password.email');
 
 
 //ログインしているユーザー情報を取得するAPI

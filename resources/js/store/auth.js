@@ -16,7 +16,8 @@ const state = {
   apiStatus: null,
   //エラーメッセージ
   loginErrorMessages: null,
-  registerErrorMessages: null
+  registerErrorMessages: null,
+  resetMailErrorMessage: null
 }
 
 
@@ -153,18 +154,17 @@ const actions = {
     context.commit('error/setErrorCode', response.status, {root: true});
     
   },
-  // -----------------
-  // パスワードリマインド
-  // -----------------
-  async reserMail (context, data) {
-    
+  
+  // --------------------------
+  // パスワードリマインドメール送信
+  // --------------------------
+  async resetMail (context, data) {
     // 始めにエラーコード欄を空にする
     context.commit('setApiStatus', null);
-    
     // リマインドAPIに入力フォームのデータを送り、レスポンスを受け取る
-    // const response = await axios.post('/api/login', data)
-    //     // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
-    //     .catch(error => error.response || error);
+    const response = await axios.post('/api/password/reset', data)
+        // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+        .catch(error => error.response || error);
     
     // 通信成功時
     if(response.status === OK) {
@@ -178,9 +178,11 @@ const actions = {
     context.commit('setApiStatus', false);
     // バリデーションエラーの時
     if(response.status === UNPROCESSABLE_ENTITY) {
+      console.log(422)
       // エラーメッセージをセット
-      context.commit('setResetMailErrorMessagess', response.data.errors);
+      context.commit('setResetMailErrorMessages', response.data.errors);
     } else {
+      console.log('!?')
       context.commit('error/setErrorCode', response.status, {root: true});
     }
   },

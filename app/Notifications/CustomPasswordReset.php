@@ -10,15 +10,18 @@ use Illuminate\Notifications\Notification;
 class CustomPasswordReset extends Notification
 {
     use Queueable;
+    
+    public $token;
 
     /**
      * Create a new notification instance.
      *
+     * @param string $token
      * @return void
      */
-    public function __construct()
+    public function __construct($token)
     {
-        //
+        $this->token = $token;
     }
 
     /**
@@ -41,9 +44,9 @@ class CustomPasswordReset extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->subject(__('Reset Password'))
+                    ->view('emails.resetPassword')
+                    ->action(__('Reset Password'), url('password/reset', $this->token));
     }
 
     /**
