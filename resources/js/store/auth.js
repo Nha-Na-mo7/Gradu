@@ -17,7 +17,8 @@ const state = {
   //エラーメッセージ
   loginErrorMessages: null,
   registerErrorMessages: null,
-  resetMailErrorMessage: null
+  resetMailErrorMessage: null,
+  resetPasswordErrorMessages: null
 }
 
 
@@ -56,9 +57,13 @@ const mutations = {
   setRegisterErrorMessages(state, messages) {
     state.registerErrorMessages = messages
   },
-  // リマインドメール送信先入力時のエラーメッセージを格納する
+  // リマインドメール送信先入力時のエラーメッセージを格納する(フォームが1つなので単数系)
   setResetMailErrorMessages(state, messages) {
-    state.resetMailErrorMessages = messages
+    state.resetMailErrorMessage = messages
+  },
+  // パスワードの再設定時のエラーメッセージを格納する
+  setResetPasswordErrorMessages(state, messages) {
+    state.resetPasswordErrorMessages = messages
   }
 }
 
@@ -162,7 +167,7 @@ const actions = {
     // 始めにエラーコード欄を空にする
     context.commit('setApiStatus', null);
     // リマインドAPIに入力フォームのデータを送り、レスポンスを受け取る
-    const response = await axios.post('/api/password/reset', data)
+    const response = await axios.post('/api/password/email', data)
         // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
         .catch(error => error.response || error);
     
@@ -180,6 +185,35 @@ const actions = {
     if(response.status === UNPROCESSABLE_ENTITY) {
       // エラーメッセージをセット
       context.commit('setResetMailErrorMessages', response.data.errors);
+    } else {
+      context.commit('error/setErrorCode', response.status, {root: true});
+    }
+  },
+  // --------------------------
+  // パスワード再設定フォーム
+  // --------------------------
+  async resetPassword (context, data) {
+    // 始めにエラーコード欄を空にする
+    context.commit('setApiStatus', null);
+    // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
+    const response = await axios.post(`/api/password/reset/${this.state.user}`, data)
+        // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+        .catch(error => error.response || error);
+    
+    // 通信成功時
+    if(response.status === CREATED) {
+      // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+      context.commit('setApiStatus', true);
+      context.commit('setUser', response.data);
+      return false;
+    }
+    
+    // 通信失敗時、errorストアを更新
+    context.commit('setApiStatus', false);
+    // バリデーションエラーの時
+    if(response.status === UNPROCESSABLE_ENTITY) {
+      // エラーメッセージをセット
+      context.commit('setResetPasswordErrorMessages', response.data.errors);
     } else {
       context.commit('error/setErrorCode', response.status, {root: true});
     }

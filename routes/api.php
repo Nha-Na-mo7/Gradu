@@ -29,7 +29,11 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // パスワードリセットメール送信
-Route::post('/password/reset', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('api.password.email');
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('api.password.email');
+// パスワードリセット
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('api.password.reset');
+// パスワードリセット
+Route::get('/password/reset/{token?}', 'Auth\ResetPasswordController@showResetForm')->name('api.password.showResetForm');
 
 
 //ログインしているユーザー情報を取得するAPI

@@ -7,6 +7,7 @@ import Index from './pages/Index.vue';
 import Login from './pages/Login.vue';
 import Register from './pages/Register.vue';
 import PassResetMailSend from './pages/PassResetMailSend.vue';
+import PassResetForm from './pages/PassResetForm.vue';
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
 
@@ -55,6 +56,20 @@ const routes = [
     path: '/password/reset',
     component: PassResetMailSend
   },
+  {
+    path: '/password/reset/:token',
+    component: PassResetForm,
+    // props: (route) => {
+    //   const page = route.query.page
+    //   return {
+    //     // 整数でない値を1扱いにする
+    //     page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1,
+    //     // mypage/:user_id のuser_idの部分
+    //     token: Number(route.params.user_id)
+    //   }
+    // }
+  },
+  
   {
     path: '/500',
     component: SystemError500
