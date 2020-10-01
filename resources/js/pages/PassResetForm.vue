@@ -11,7 +11,7 @@
     <p>新しいパスワードでそのままログインされます。</p>
     <form class="p-form" @submit.prevent="resetPassword">
       <!-- トークン -->
-      <input type="hidden" name="token" value="">
+      <input type="hidden" name="token" value="08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3">
 
       <label for="email">メールアドレス</label>
       <input type="email" class="p-form__item" id="email" value="" required autocomplete="email" autofocus v-model="resetPasswordForm.email">
@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       resetPasswordForm: {
+        token: '08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3',
         email: '',
         password: '',
         password_confirmation: ''
@@ -41,18 +42,18 @@ export default {
   },
   methods: {
     async resetPassword() {
-      // authStoreからregisterアクションを呼ぶ
+      // authStoreからresetPasswordアクションを呼ぶ
       await this.$store.dispatch('auth/resetPassword', this.resetPasswordForm);
-
-      // apiStatusがtrueなら遷移
-      // if(this.apiStatus) {
-      //  alert('送信しますた');
-      // }
     },
-    // // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
-    // clearError() {
-    //   this.$store.commit('auth/setResetMailErrorMessages', null)
-    // }
+    // パスワードリセットトークンを取得する、URL直接入力などで存在しなければ何も入れない。
+    getPasswordResetToken(){
+
+    },
+    // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
+    clearError() {
+      this.$store.commit('auth/setResetPasswordErrorMessages', null)
+    },
+
   },
   computed: {
     ...mapState({
@@ -60,10 +61,11 @@ export default {
       // resetMailErrors: state => state.auth.resetMailErrorMessage
     })
   },
-  // // ページが表示されるタイミングで、エラーメッセージをクリアする。
-  // created() {
-  //   this.clearError()
-  // }
+  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  created() {
+    this.clearError();
+  },
+
 
 }
 </script>

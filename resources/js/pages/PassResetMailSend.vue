@@ -44,7 +44,7 @@ export default {
     },
     // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
     clearError() {
-      this.$store.commit('auth/setResetMailErrorMessages', null)
+      this.$store.commit('auth/setResetMailErrorMessage', null)
     }
   },
   computed: {

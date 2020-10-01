@@ -18,7 +18,8 @@ const state = {
   loginErrorMessages: null,
   registerErrorMessages: null,
   resetMailErrorMessage: null,
-  resetPasswordErrorMessages: null
+  resetPasswordErrorMessages: null,
+  resetToken: null
 }
 
 
@@ -31,7 +32,9 @@ const getters = {
   // ユーザーがログイン済みか否か
   loginCheck: state => !! state.user,
   // ログインしているユーザーのID
-  user_id: state => state.user ? state.user.id : ''
+  user_id: state => state.user ? state.user.id : '',
+  // パスワードリセットトークン
+  resetToken: state => state.resetToken ? state.resetToken : ''
 }
 
 
@@ -58,12 +61,16 @@ const mutations = {
     state.registerErrorMessages = messages
   },
   // リマインドメール送信先入力時のエラーメッセージを格納する(フォームが1つなので単数系)
-  setResetMailErrorMessages(state, messages) {
-    state.resetMailErrorMessage = messages
+  setResetMailErrorMessage(state, message) {
+    state.resetMailErrorMessage = message
   },
   // パスワードの再設定時のエラーメッセージを格納する
   setResetPasswordErrorMessages(state, messages) {
     state.resetPasswordErrorMessages = messages
+  },
+  // パスワード再設定時のリセットトークンを格納する
+  setResetToken(state, token){
+    state.resetToken = token
   }
 }
 
@@ -196,12 +203,13 @@ const actions = {
     // 始めにエラーコード欄を空にする
     context.commit('setApiStatus', null);
     // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
-    const response = await axios.post(`/api/password/reset/${this.state.user}`, data)
+    const response = await axios.post(`/api/password/reset/${data.token}`, data)
         // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
         .catch(error => error.response || error);
     
     // 通信成功時
-    if(response.status === CREATED) {
+    if(response.status === OK) {
+      console.log(200)
       // 受け取ったレスポンスを元に、apiStatus,userステートを更新
       context.commit('setApiStatus', true);
       context.commit('setUser', response.data);
@@ -215,6 +223,7 @@ const actions = {
       // エラーメッセージをセット
       context.commit('setResetPasswordErrorMessages', response.data.errors);
     } else {
+      console.log(response.status)
       context.commit('error/setErrorCode', response.status, {root: true});
     }
   },

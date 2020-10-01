@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Log;
 
 class CustomPasswordReset extends Notification
 {
@@ -22,6 +23,7 @@ class CustomPasswordReset extends Notification
     public function __construct($token)
     {
         $this->token = $token;
+        Log::debug('トークン  :'.$this->token);
     }
 
     /**
@@ -46,7 +48,6 @@ class CustomPasswordReset extends Notification
         return (new MailMessage)
                     ->subject('【CryptoTrend】'.__('Reset Password')) // 件名
                     ->view('emails.resetPassword') // メールテンプレートの指定
-                    // ->action(__('Reset Password'), url('password/reset', $this->token));
                     ->action(__('Reset Password'), url('password/reset', $this->token));
     }
 

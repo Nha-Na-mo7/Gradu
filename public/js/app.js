@@ -2259,6 +2259,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       resetPasswordForm: {
+        token: '08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3',
         email: '',
         password: '',
         password_confirmation: ''
@@ -2284,22 +2285,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
-    } // // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
-    // clearError() {
-    //   this.$store.commit('auth/setResetMailErrorMessages', null)
-    // }
-
+    },
+    // パスワードリセットトークンを取得する、URL直接入力などで存在しなければ何も入れない。
+    getPasswordResetToken: function getPasswordResetToken() {},
+    // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
+    clearError: function clearError() {
+      this.$store.commit('auth/setResetPasswordErrorMessages', null);
+    }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     apiStatus: function apiStatus(state) {
       return state.auth.apiStatus;
     } // resetMailErrors: state => state.auth.resetMailErrorMessage
 
-  })) // // ページが表示されるタイミングで、エラーメッセージをクリアする。
-  // created() {
-  //   this.clearError()
-  // }
-
+  })),
+  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  created: function created() {
+    this.clearError();
+  }
 });
 
 /***/ }),
@@ -2388,7 +2391,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
     clearError: function clearError() {
-      this.$store.commit('auth/setResetMailErrorMessages', null);
+      this.$store.commit('auth/setResetMailErrorMessage', null);
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
@@ -21371,7 +21374,14 @@ var render = function() {
         }
       },
       [
-        _c("input", { attrs: { type: "hidden", name: "token", value: "" } }),
+        _c("input", {
+          attrs: {
+            type: "hidden",
+            name: "token",
+            value:
+              "08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3"
+          }
+        }),
         _vm._v(" "),
         _c("label", { attrs: { for: "email" } }, [_vm._v("メールアドレス")]),
         _vm._v(" "),
@@ -39112,7 +39122,8 @@ var state = {
   loginErrorMessages: null,
   registerErrorMessages: null,
   resetMailErrorMessage: null,
-  resetPasswordErrorMessages: null
+  resetPasswordErrorMessages: null,
+  resetToken: null
 }; // ===============
 // getter
 // ===============
@@ -39125,6 +39136,10 @@ var getters = {
   // ログインしているユーザーのID
   user_id: function user_id(state) {
     return state.user ? state.user.id : '';
+  },
+  // パスワードリセットトークン
+  resetToken: function resetToken(state) {
+    return state.resetToken ? state.resetToken : '';
   }
 }; // ===============
 // mutations
@@ -39148,12 +39163,16 @@ var mutations = {
     state.registerErrorMessages = messages;
   },
   // リマインドメール送信先入力時のエラーメッセージを格納する(フォームが1つなので単数系)
-  setResetMailErrorMessages: function setResetMailErrorMessages(state, messages) {
-    state.resetMailErrorMessage = messages;
+  setResetMailErrorMessage: function setResetMailErrorMessage(state, message) {
+    state.resetMailErrorMessage = message;
   },
   // パスワードの再設定時のエラーメッセージを格納する
   setResetPasswordErrorMessages: function setResetPasswordErrorMessages(state, messages) {
     state.resetPasswordErrorMessages = messages;
+  },
+  // パスワード再設定時のリセットトークンを格納する
+  setResetToken: function setResetToken(state, token) {
+    state.resetToken = token;
   }
 }; // ===============
 // actions
@@ -39368,8 +39387,6 @@ var actions = {
   // パスワード再設定フォーム
   // --------------------------
   resetPassword: function resetPassword(context, data) {
-    var _this = this;
-
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -39380,7 +39397,7 @@ var actions = {
               context.commit('setApiStatus', null); // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
 
               _context5.next = 3;
-              return axios.post("/api/password/reset/".concat(_this.state.user), data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+              return axios.post("/api/password/reset/".concat(data.token), data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
               ["catch"](function (error) {
                 return error.response || error;
               });
@@ -39388,17 +39405,18 @@ var actions = {
             case 3:
               response = _context5.sent;
 
-              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
-                _context5.next = 8;
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context5.next = 9;
                 break;
               }
 
-              // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+              console.log(200); // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+
               context.commit('setApiStatus', true);
               context.commit('setUser', response.data);
               return _context5.abrupt("return", false);
 
-            case 8:
+            case 9:
               // 通信失敗時、errorストアを更新
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
@@ -39406,12 +39424,13 @@ var actions = {
                 // エラーメッセージをセット
                 context.commit('setResetPasswordErrorMessages', response.data.errors);
               } else {
+                console.log(response.status);
                 context.commit('error/setErrorCode', response.status, {
                   root: true
                 });
               }
 
-            case 10:
+            case 11:
             case "end":
               return _context5.stop();
           }
