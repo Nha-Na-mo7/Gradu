@@ -180,9 +180,8 @@ const actions = {
     
     // 通信成功時
     if(response.status === CREATED) {
-      // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+      // 受け取ったレスポンスを元に、apiStatusステートを更新
       context.commit('setApiStatus', true);
-      context.commit('setUser', response.data);
       return false;
     }
     
@@ -202,6 +201,7 @@ const actions = {
   async resetPassword (context, data) {
     // 始めにエラーコード欄を空にする
     context.commit('setApiStatus', null);
+    console.log(data.token)
     // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
     const response = await axios.post(`/api/password/reset/${data.token}`, data)
         // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る

@@ -2256,10 +2256,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    token: {
+      type: String,
+      required: true
+    }
+  },
   data: function data() {
     return {
       resetPasswordForm: {
-        token: '08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3',
+        token: '',
         email: '',
         password: '',
         password_confirmation: ''
@@ -2279,6 +2285,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('auth/resetPassword', _this.resetPasswordForm);
 
               case 2:
+                // apiStatusがtrueなら遷移
+                if (_this.apiStatus) {
+                  _this.$router.push('/');
+                }
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2286,11 +2298,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    // パスワードリセットトークンを取得する、URL直接入力などで存在しなければ何も入れない。
-    getPasswordResetToken: function getPasswordResetToken() {},
     // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
     clearError: function clearError() {
       this.$store.commit('auth/setResetPasswordErrorMessages', null);
+    },
+    // propsで送られてきたtokenをdata.tokenにつめる。ページ表示のタイミングで呼び出す
+    getPasswordResetToken: function getPasswordResetToken() {
+      this.resetPasswordForm.token = this.$props.token;
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
@@ -2299,9 +2313,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     } // resetMailErrors: state => state.auth.resetMailErrorMessage
 
   })),
-  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  // ページが表示されるタイミング。
   created: function created() {
     this.clearError();
+    this.getPasswordResetToken();
   }
 });
 
@@ -21375,11 +21390,23 @@ var render = function() {
       },
       [
         _c("input", {
-          attrs: {
-            type: "hidden",
-            name: "token",
-            value:
-              "08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3"
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.resetPasswordForm.token,
+              expression: "resetPasswordForm.token"
+            }
+          ],
+          attrs: { type: "hidden", name: "token" },
+          domProps: { value: _vm.resetPasswordForm.token },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.resetPasswordForm, "token", $event.target.value)
+            }
           }
         }),
         _vm._v(" "),
@@ -39065,16 +39092,8 @@ var routes = [{
   component: _pages_PassResetMailSend_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/password/reset/:token',
-  component: _pages_PassResetForm_vue__WEBPACK_IMPORTED_MODULE_6__["default"] // props: (route) => {
-  //   const page = route.query.page
-  //   return {
-  //     // 整数でない値を1扱いにする
-  //     page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1,
-  //     // mypage/:user_id のuser_idの部分
-  //     token: Number(route.params.user_id)
-  //   }
-  // }
-
+  component: _pages_PassResetForm_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+  props: true
 }, {
   path: '/500',
   component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
@@ -39353,16 +39372,15 @@ var actions = {
               response = _context4.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
-                _context4.next = 8;
+                _context4.next = 7;
                 break;
               }
 
-              // 受け取ったレスポンスを元に、apiStatus,userステートを更新
+              // 受け取ったレスポンスを元に、apiStatusステートを更新
               context.commit('setApiStatus', true);
-              context.commit('setUser', response.data);
               return _context4.abrupt("return", false);
 
-            case 8:
+            case 7:
               // 通信失敗時、errorストアを更新
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
@@ -39375,7 +39393,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context4.stop();
           }
@@ -39394,19 +39412,20 @@ var actions = {
           switch (_context5.prev = _context5.next) {
             case 0:
               // 始めにエラーコード欄を空にする
-              context.commit('setApiStatus', null); // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
+              context.commit('setApiStatus', null);
+              console.log(data.token); // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
 
-              _context5.next = 3;
+              _context5.next = 4;
               return axios.post("/api/password/reset/".concat(data.token), data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
               ["catch"](function (error) {
                 return error.response || error;
               });
 
-            case 3:
+            case 4:
               response = _context5.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context5.next = 9;
+                _context5.next = 10;
                 break;
               }
 
@@ -39416,7 +39435,7 @@ var actions = {
               context.commit('setUser', response.data);
               return _context5.abrupt("return", false);
 
-            case 9:
+            case 10:
               // 通信失敗時、errorストアを更新
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
@@ -39430,7 +39449,7 @@ var actions = {
                 });
               }
 
-            case 11:
+            case 12:
             case "end":
               return _context5.stop();
           }

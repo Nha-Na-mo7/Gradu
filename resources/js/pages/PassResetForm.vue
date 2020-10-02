@@ -11,7 +11,7 @@
     <p>新しいパスワードでそのままログインされます。</p>
     <form class="p-form" @submit.prevent="resetPassword">
       <!-- トークン -->
-      <input type="hidden" name="token" value="08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3">
+      <input type="hidden" name="token" v-model="resetPasswordForm.token">
 
       <label for="email">メールアドレス</label>
       <input type="email" class="p-form__item" id="email" value="" required autocomplete="email" autofocus v-model="resetPasswordForm.email">
@@ -30,10 +30,16 @@
 import {mapState} from "vuex";
 
 export default {
+  props: {
+    token: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       resetPasswordForm: {
-        token: '08bf28a0bf68540668918fa09c86003f773cdb47400bf231d4d2f3be448036f3',
+        token: '',
         email: '',
         password: '',
         password_confirmation: ''
@@ -44,16 +50,20 @@ export default {
     async resetPassword() {
       // authStoreからresetPasswordアクションを呼ぶ
       await this.$store.dispatch('auth/resetPassword', this.resetPasswordForm);
-    },
-    // パスワードリセットトークンを取得する、URL直接入力などで存在しなければ何も入れない。
-    getPasswordResetToken(){
 
+      // apiStatusがtrueなら遷移
+      if(this.apiStatus) {
+        this.$router.push('/');
+      }
     },
     // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
     clearError() {
       this.$store.commit('auth/setResetPasswordErrorMessages', null)
     },
-
+    // propsで送られてきたtokenをdata.tokenにつめる。ページ表示のタイミングで呼び出す
+    getPasswordResetToken() {
+      this.resetPasswordForm.token =  this.$props.token;
+    }
   },
   computed: {
     ...mapState({
@@ -61,9 +71,10 @@ export default {
       // resetMailErrors: state => state.auth.resetMailErrorMessage
     })
   },
-  // ページが表示されるタイミングで、エラーメッセージをクリアする。
+  // ページが表示されるタイミング。
   created() {
     this.clearError();
+    this.getPasswordResetToken();
   },
 
 
