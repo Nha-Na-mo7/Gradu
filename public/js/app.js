@@ -2207,17 +2207,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('auth/login', _this.loginForm);
 
               case 2:
-                // フラッシュメッセージテスト
-                _this.$store.commit('message/setContent', {
-                  content: 'ログインしました！'
-                }); // apiStatusがtrueなら遷移
-
-
+                // apiStatusがtrue(ステータスコードが200)の時
                 if (_this.apiStatus) {
+                  // フラッシュメッセージテスト
+                  _this.$store.commit('message/setContent', {
+                    content: 'ログインしました！'
+                  }); // トップページへ遷移
+
+
                   _this.$router.push('/');
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2635,7 +2636,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.message[data-v-b91a6428] {\n  background: #98c379;\n  height: 40px;\n  width: 100%;\n  opacity: 0.7;\n}\n", ""]);
+exports.push([module.i, "\n.message[data-v-b91a6428] {\n  background: #98c379;\n  height: 40px;\n  width: 100%;\n  opacity: 0.7;\n  z-index: 44;\n}\n", ""]);
 
 // exports
 

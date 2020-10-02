@@ -57,13 +57,15 @@ export default {
     async login() {
       await this.$store.dispatch('auth/login', this.loginForm);
 
-      // フラッシュメッセージテスト
-      this.$store.commit('message/setContent', {
-        content: 'ログインしました！'
-      });
-
-      // apiStatusがtrueなら遷移
+      // apiStatusがtrue(ステータスコードが200)の時
       if(this.apiStatus) {
+
+        // フラッシュメッセージテスト
+        this.$store.commit('message/setContent', {
+          content: 'ログインしました！'
+        });
+
+        // トップページへ遷移
         this.$router.push('/');
       }
     },

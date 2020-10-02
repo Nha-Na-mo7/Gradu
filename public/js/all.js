@@ -564,9 +564,10 @@ $route:function $route(){this.$store.commit('error/setErrorCode',null);}}};/***/
 //
 //
 /* harmony default export */__webpack_exports__["default"]={data:function data(){return{loginForm:{email:'',password:'',remember:false}};},methods:{// ログイン
-login:function login(){var _this=this;return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(){return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context){while(1){switch(_context.prev=_context.next){case 0:_context.next=2;return _this.$store.dispatch('auth/login',_this.loginForm);case 2:// フラッシュメッセージテスト
-_this.$store.commit('message/setContent',{content:'ログインしました！'});// apiStatusがtrueなら遷移
-if(_this.apiStatus){_this.$router.push('/');}case 4:case"end":return _context.stop();}}},_callee);}))();},// エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
+login:function login(){var _this=this;return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(){return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context){while(1){switch(_context.prev=_context.next){case 0:_context.next=2;return _this.$store.dispatch('auth/login',_this.loginForm);case 2:// apiStatusがtrue(ステータスコードが200)の時
+if(_this.apiStatus){// フラッシュメッセージテスト
+_this.$store.commit('message/setContent',{content:'ログインしました！'});// トップページへ遷移
+_this.$router.push('/');}case 3:case"end":return _context.stop();}}},_callee);}))();},// エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
 clearError:function clearError(){this.$store.commit('auth/setLoginErrorMessages',null);}},computed:_objectSpread({},Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({apiStatus:function apiStatus(state){return state.auth.apiStatus;},loginErrors:function loginErrors(state){return state.auth.loginErrorMessages;}})),// ページが表示されるタイミングで、エラーメッセージをクリアする。
 created:function created(){this.clearError();}};/***/},/***/"./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/PassResetForm.vue?vue&type=script&lang=js&":/*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/PassResetForm.vue?vue&type=script&lang=js& ***!
@@ -696,7 +697,7 @@ created:function created(){this.clearError();}};/***/},/***/"./node_modules/babe
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Message.vue?vue&type=style&index=0&id=b91a6428&scoped=true&lang=css& ***!
   \*************************************************************************************************************************************************************************************************************************************************************************************************/ /*! no static exports found */ /***/function node_modulesCssLoaderIndexJsNode_modulesVueLoaderLibLoadersStylePostLoaderJsNode_modulesPostcssLoaderSrcIndexJsNode_modulesVueLoaderLibIndexJsResourcesJsComponentsMessageVueVueTypeStyleIndex0IdB91a6428ScopedTrueLangCss(module,exports,__webpack_require__){exports=module.exports=__webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */"./node_modules/css-loader/lib/css-base.js")(false);// imports
 // module
-exports.push([module.i,"\n.message[data-v-b91a6428] {\n  background: #98c379;\n  height: 40px;\n  width: 100%;\n  opacity: 0.7;\n}\n",""]);// exports
+exports.push([module.i,"\n.message[data-v-b91a6428] {\n  background: #98c379;\n  height: 40px;\n  width: 100%;\n  opacity: 0.7;\n  z-index: 44;\n}\n",""]);// exports
 /***/},/***/"./node_modules/css-loader/lib/css-base.js":/*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
   \*************************************************/ /*! no static exports found */ /***/function node_modulesCssLoaderLibCssBaseJs(module,exports){/*
