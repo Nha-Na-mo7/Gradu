@@ -28,6 +28,7 @@
       <change beforePath="$PROJECT_DIR$/public/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/PassResetForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/PassResetForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/lang/ja/passwords.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/ja/passwords.php" afterDir="false" />
     </list>
@@ -247,7 +248,7 @@
       <workItem from="1601606105966" duration="14000" />
       <workItem from="1601606156520" duration="97000" />
       <workItem from="1601606326801" duration="57000" />
-      <workItem from="1601606466143" duration="6843000" />
+      <workItem from="1601606466143" duration="10371000" />
     </task>
     <servers />
   </component>
@@ -358,10 +359,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="750" y="249" key="SettingsEditor/0.23.1920.1177@0.23.1920.1177" timestamp="1601050984200" />
-    <state x="988" y="360" width="715" height="490" key="find.popup" timestamp="1601619236671">
+    <state x="988" y="360" width="715" height="490" key="find.popup" timestamp="1601626231573">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="988" y="360" width="715" height="490" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1601619236671" />
+    <state x="988" y="360" width="715" height="490" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1601626231573" />
     <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup" timestamp="1601449139630">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>

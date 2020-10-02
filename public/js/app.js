@@ -2254,6 +2254,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2310,8 +2323,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     apiStatus: function apiStatus(state) {
       return state.auth.apiStatus;
-    } // resetMailErrors: state => state.auth.resetMailErrorMessage
-
+    },
+    resetPasswordErrors: function resetPasswordErrors(state) {
+      return state.auth.resetPasswordErrorMessages;
+    }
   })),
   // ページが表示されるタイミング。
   created: function created() {
@@ -21410,6 +21425,18 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _vm.resetPasswordErrors
+          ? _c("div", [
+              _vm.resetPasswordErrors.reset
+                ? _c("span", [_vm._v(_vm._s(_vm.resetPasswordErrors.reset))])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.resetPasswordErrors.email
+                ? _c("span", [_vm._v(_vm._s(_vm.resetPasswordErrors.email[0]))])
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("label", { attrs: { for: "email" } }, [_vm._v("メールアドレス")]),
         _vm._v(" "),
         _c("input", {
@@ -21441,6 +21468,16 @@ var render = function() {
           }
         }),
         _vm._v(" "),
+        _vm.resetPasswordErrors
+          ? _c("div", [
+              _vm.resetPasswordErrors.password
+                ? _c("span", [
+                    _vm._v(_vm._s(_vm.resetPasswordErrors.password[0]))
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("label", { attrs: { for: "password" } }, [
           _vm._v("新しいパスワード (半角英数 8文字以上)")
         ]),
@@ -21471,6 +21508,18 @@ var render = function() {
             }
           }
         }),
+        _vm._v(" "),
+        _vm.resetPasswordErrors
+          ? _c("div", [
+              _vm.resetPasswordErrors.password_confirmation
+                ? _c("span", [
+                    _vm._v(
+                      _vm._s(_vm.resetPasswordErrors.password_confirmation[0])
+                    )
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("label", { attrs: { for: "password_confirmation" } }, [
           _vm._v("パスワードの再入力")
@@ -39155,10 +39204,6 @@ var getters = {
   // ログインしているユーザーのID
   user_id: function user_id(state) {
     return state.user ? state.user.id : '';
-  },
-  // パスワードリセットトークン
-  resetToken: function resetToken(state) {
-    return state.resetToken ? state.resetToken : '';
   }
 }; // ===============
 // mutations

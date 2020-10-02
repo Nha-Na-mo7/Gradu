@@ -13,10 +13,23 @@
       <!-- トークン -->
       <input type="hidden" name="token" v-model="resetPasswordForm.token">
 
+
+      <!--      エラー表示は要修正-->
+      <div v-if="resetPasswordErrors">
+        <span v-if="resetPasswordErrors.reset">{{ resetPasswordErrors.reset }}</span>
+        <span v-if="resetPasswordErrors.email">{{ resetPasswordErrors.email[0] }}</span>
+      </div>
       <label for="email">メールアドレス</label>
       <input type="email" class="p-form__item" id="email" value="" required autocomplete="email" autofocus v-model="resetPasswordForm.email">
+
+      <div v-if="resetPasswordErrors">
+        <span v-if="resetPasswordErrors.password">{{ resetPasswordErrors.password[0] }}</span>
+      </div>
       <label for="password">新しいパスワード (半角英数 8文字以上)</label>
       <input type="password" class="p-form__item" id="password" required autocomplete="new-password" v-model="resetPasswordForm.password">
+      <div v-if="resetPasswordErrors">
+        <span v-if="resetPasswordErrors.password_confirmation">{{ resetPasswordErrors.password_confirmation[0] }}</span>
+      </div>
       <label for="password_confirmation">パスワードの再入力</label>
       <input type="password" class="p-form__item" id="password_confirmation" required autocomplete="new-password" v-model="resetPasswordForm.password_confirmation">
 
@@ -68,7 +81,7 @@ export default {
   computed: {
     ...mapState({
       apiStatus: state => state.auth.apiStatus,
-      // resetMailErrors: state => state.auth.resetMailErrorMessage
+      resetPasswordErrors: state => state.auth.resetPasswordErrorMessages
     })
   },
   // ページが表示されるタイミング。

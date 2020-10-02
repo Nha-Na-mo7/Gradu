@@ -33,8 +33,6 @@ const getters = {
   loginCheck: state => !! state.user,
   // ログインしているユーザーのID
   user_id: state => state.user ? state.user.id : '',
-  // パスワードリセットトークン
-  resetToken: state => state.resetToken ? state.resetToken : ''
 }
 
 

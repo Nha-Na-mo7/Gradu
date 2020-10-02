@@ -61,7 +61,6 @@ class ResetPasswordController extends Controller
             $this->resetPassword($user, $password);
           }
       );
-      Log::debug('バリデーション通貨後のレスポンス'.$response);
       
       return $response == Password::PASSWORD_RESET
           ? $this->sendResetResponse($request, $response)
@@ -85,7 +84,8 @@ class ResetPasswordController extends Controller
     // DBにメールアドレスがない、トークンが無効などの場合、422を返却
     protected function sendResetFailedResponse(Request $request, $response)
     {
-      return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+      // vueコンポーネントで参照するため、キーヴァリューの形式。さらにここで日本語化させる。
+      return new JsonResponse(['reset' => __($response)], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
     
     protected function validator(array $data)
@@ -97,10 +97,10 @@ class ResetPasswordController extends Controller
       ]);
     }
     
-    public function showResetForm(Request $request, $token = null)
-      {
-        return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
-      }
+    // public function showResetForm(Request $request, $token = null)
+    //   {
+    //     return view('auth.passwords.reset')->with(
+    //         ['token' => $token, 'email' => $request->email]
+    //     );
+    //   }
 }
