@@ -12198,13 +12198,13 @@ context.commit('setResetMailErrorMessages',response.data.errors);}else{context.c
 // パスワード再設定フォーム
 // --------------------------
 resetPassword:function resetPassword(context,data){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(){var response;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5){while(1){switch(_context5.prev=_context5.next){case 0:// 始めにエラーコード欄を空にする
-context.commit('setApiStatus',null);console.log(data.token);// APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
-_context5.next=4;return axios.post("/api/password/reset/".concat(data.token),data)// 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
-["catch"](function(error){return error.response||error;});case 4:response=_context5.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context5.next=10;break;}console.log(200);// 受け取ったレスポンスを元に、apiStatus,userステートを更新
-context.commit('setApiStatus',true);context.commit('setUser',response.data);return _context5.abrupt("return",false);case 10:// 通信失敗時、errorストアを更新
+context.commit('setApiStatus',null);// APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
+_context5.next=3;return axios.post("/api/password/reset/".concat(data.token),data)// 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
+["catch"](function(error){return error.response||error;});case 3:response=_context5.sent;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context5.next=8;break;}// 受け取ったレスポンスを元に、apiStatus,userステートを更新
+context.commit('setApiStatus',true);context.commit('setUser',response.data);return _context5.abrupt("return",false);case 8:// 通信失敗時、errorストアを更新
 context.commit('setApiStatus',false);// バリデーションエラーの時
 if(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]){// エラーメッセージをセット
-context.commit('setResetPasswordErrorMessages',response.data.errors);}else{console.log(response.status);context.commit('error/setErrorCode',response.status,{root:true});}case 12:case"end":return _context5.stop();}}},_callee5);}))();},// --------------------
+context.commit('setResetPasswordErrorMessages',response.data.errors);}else{context.commit('error/setErrorCode',response.status,{root:true});}case 10:case"end":return _context5.stop();}}},_callee5);}))();},// --------------------
 // 現在のユーザー情報を返却
 // --------------------
 currentUser:function currentUser(context){return _asyncToGenerator(/*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(){var response,currentUser;return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6){while(1){switch(_context6.prev=_context6.next){case 0:context.commit('setApiStatus',null);_context6.next=3;return axios.get('/api/user');case 3:response=_context6.sent;currentUser=response.data||null;if(!(response.status===_util__WEBPACK_IMPORTED_MODULE_1__["OK"])){_context6.next=9;break;}context.commit('setApiStatus',true);context.commit('setUser',currentUser);return _context6.abrupt("return",false);case 9:// 通信失敗時、errorストアを更新

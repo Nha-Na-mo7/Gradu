@@ -39412,30 +39412,28 @@ var actions = {
           switch (_context5.prev = _context5.next) {
             case 0:
               // 始めにエラーコード欄を空にする
-              context.commit('setApiStatus', null);
-              console.log(data.token); // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
+              context.commit('setApiStatus', null); // APIに入力フォームのデータを送り、レスポンスを受け取る。トークンの値もいれる。
 
-              _context5.next = 4;
+              _context5.next = 3;
               return axios.post("/api/password/reset/".concat(data.token), data) // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
               ["catch"](function (error) {
                 return error.response || error;
               });
 
-            case 4:
+            case 3:
               response = _context5.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context5.next = 10;
+                _context5.next = 8;
                 break;
               }
 
-              console.log(200); // 受け取ったレスポンスを元に、apiStatus,userステートを更新
-
+              // 受け取ったレスポンスを元に、apiStatus,userステートを更新
               context.commit('setApiStatus', true);
               context.commit('setUser', response.data);
               return _context5.abrupt("return", false);
 
-            case 10:
+            case 8:
               // 通信失敗時、errorストアを更新
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
@@ -39443,13 +39441,12 @@ var actions = {
                 // エラーメッセージをセット
                 context.commit('setResetPasswordErrorMessages', response.data.errors);
               } else {
-                console.log(response.status);
                 context.commit('error/setErrorCode', response.status, {
                   root: true
                 });
               }
 
-            case 12:
+            case 10:
             case "end":
               return _context5.stop();
           }
