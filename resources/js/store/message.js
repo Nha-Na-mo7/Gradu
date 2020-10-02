@@ -1,7 +1,6 @@
 // ====================
-// message Store
+// message (フラッシュメッセージ)
 // ====================
-// フラッシュメッセージ用のStoreです。
 
 // ===============
 // state
@@ -10,28 +9,19 @@ const state = {
   content: ''
 }
 
-// ===============
-// getter
-// ===============
-const getter = {}
 
 // ===============
 // mutations
 // ===============
 const mutations = {
-  // メッセージをセットする。指定がなければ3秒で消える。
-  setContent(state, {content, timeout = 3000}) {
+  // フラッシュメッセージをセットする。
+  // 引数timeoutに指定した時間が経過したら消える。(指定がない場合5秒で消えることにする。)
+  setContent(state, {content, timeout = 5000}) {
     state.content = content;
     
     setTimeout(() => (state.content = ''), timeout);
   }
-  
 }
-
-// ===============
-// actions
-// ===============
-const actions = {}
 
 // ================
 // export default
@@ -39,7 +29,5 @@ const actions = {}
 export default {
   namespaced: true,
   state,
-  // getter,
-  mutations,
-  // actions
+  mutations
 }

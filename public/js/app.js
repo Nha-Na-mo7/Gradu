@@ -2207,12 +2207,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('auth/login', _this.loginForm);
 
               case 2:
-                // apiStatusがtrueなら遷移
+                // フラッシュメッセージテスト
+                _this.$store.commit('message/setContent', {
+                  content: 'ログインしました！'
+                }); // apiStatusがtrueなら遷移
+
+
                 if (_this.apiStatus) {
                   _this.$router.push('/');
                 }
 
-              case 3:
+              case 4:
               case "end":
                 return _context.stop();
             }
@@ -40464,47 +40469,37 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 // ====================
-// message Store
+// message (フラッシュメッセージ)
 // ====================
-// フラッシュメッセージ用のStoreです。
 // ===============
 // state
 // ===============
 var state = {
   content: ''
 }; // ===============
-// getter
-// ===============
-
-var getter = {}; // ===============
 // mutations
 // ===============
 
 var mutations = {
-  // メッセージをセットする。指定がなければ3秒で消える。
+  // フラッシュメッセージをセットする。
+  // 引数timeoutに指定した時間が経過したら消える。(指定がない場合5秒で消えることにする。)
   setContent: function setContent(state, _ref) {
     var content = _ref.content,
         _ref$timeout = _ref.timeout,
-        timeout = _ref$timeout === void 0 ? 3000 : _ref$timeout;
+        timeout = _ref$timeout === void 0 ? 5000 : _ref$timeout;
     state.content = content;
     setTimeout(function () {
       return state.content = '';
     }, timeout);
   }
-}; // ===============
-// actions
-// ===============
-
-var actions = {}; // ================
+}; // ================
 // export default
 // ================
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: state,
-  // getter,
-  mutations: mutations // actions
-
+  mutations: mutations
 });
 
 /***/ }),
