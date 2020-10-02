@@ -39424,29 +39424,31 @@ var actions = {
               response = _context5.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context5.next = 8;
+                _context5.next = 7;
                 break;
               }
 
               // 受け取ったレスポンスを元に、apiStatus,userステートを更新
-              context.commit('setApiStatus', true);
-              context.commit('setUser', response.data);
+              console.log(response); // context.commit('setApiStatus', true);
+              // context.commit('setUser', response.data);
+
               return _context5.abrupt("return", false);
 
-            case 8:
+            case 7:
               // 通信失敗時、errorストアを更新
               context.commit('setApiStatus', false); // バリデーションエラーの時
 
               if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                // エラーメッセージをセット
-                context.commit('setResetPasswordErrorMessages', response.data.errors);
+                console.log(response); // エラーメッセージをセット
+
+                context.commit('setResetPasswordErrorMessages', response.data);
               } else {
                 context.commit('error/setErrorCode', response.status, {
                   root: true
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context5.stop();
           }

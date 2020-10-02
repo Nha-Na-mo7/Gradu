@@ -7,9 +7,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\validator;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordController extends Controller
 {
@@ -47,16 +49,19 @@ class ResetPasswordController extends Controller
     public function reset(Request $request)
     {
       $validate =  $this->validator($request->all());
-      
+      Log::debug('バリデーション');
+  
       // バリデーション失敗時
       if($validate->fails()) {
-        return new JsonResponse($validate->errors());
+        // JsonResponseの引数に422を追加してバリデーションエラー扱いにする。(引数なしだと200扱いになるため)
+        return new JsonResponse($validate->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
       }
       $response = $this->broker()->reset(
           $this->credentials($request), function ($user, $password){
             $this->resetPassword($user, $password);
           }
       );
+      Log::debug('バリデーション通貨後のレスポンス'.$response);
       
       return $response == Password::PASSWORD_RESET
           ? $this->sendResetResponse($request, $response)
@@ -76,9 +81,11 @@ class ResetPasswordController extends Controller
       return new JsonResponse('password Reset');
     }
     
+    // バリデーションを通過後
+    // DBにメールアドレスがない、トークンが無効などの場合、422を返却
     protected function sendResetFailedResponse(Request $request, $response)
     {
-      return new JsonResponse($response);
+      return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
     }
     
     protected function validator(array $data)
@@ -90,10 +97,10 @@ class ResetPasswordController extends Controller
       ]);
     }
     
-    // public function showResetForm(Request $request, $token = null)
-    //   {
-    //     return view('auth.passwords.reset')->with(
-    //         ['token' => $token, 'email' => $request->email]
-    //     );
-    //   }
+    public function showResetForm(Request $request, $token = null)
+      {
+        return view('auth.passwords.reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
+      }
 }

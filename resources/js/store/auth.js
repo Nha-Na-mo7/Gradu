@@ -209,8 +209,9 @@ const actions = {
     // 通信成功時
     if(response.status === OK) {
       // 受け取ったレスポンスを元に、apiStatus,userステートを更新
-      context.commit('setApiStatus', true);
-      context.commit('setUser', response.data);
+      console.log(response)
+      // context.commit('setApiStatus', true);
+      // context.commit('setUser', response.data);
       return false;
     }
     
@@ -218,8 +219,9 @@ const actions = {
     context.commit('setApiStatus', false);
     // バリデーションエラーの時
     if(response.status === UNPROCESSABLE_ENTITY) {
+      console.log(response)
       // エラーメッセージをセット
-      context.commit('setResetPasswordErrorMessages', response.data.errors);
+      context.commit('setResetPasswordErrorMessages', response.data);
     } else {
       context.commit('error/setErrorCode', response.status, {root: true});
     }
