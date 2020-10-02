@@ -9,6 +9,9 @@
     <!-- メイン -->
     <main>
       <div class="l-container">
+        <!-- フラッシュメッセージエリア -->
+        <Message />
+        <!-- 実際にコンポーネントが切り替わるエリア -->
         <RouterView />
       </div>
     </main>
@@ -22,11 +25,13 @@
 
 <script>
 import { INTERNAL_SERVER_ERROR } from "./util.js";
+import Message from './components/Message.vue';
 import Header from './components/Header.vue';
 import Footer from './components/footer.vue';
 
 export default {
   components: {
+    Message,
     Header,
     Footer
   },
