@@ -114,4 +114,9 @@ return [
 
     'password_timeout' => 10800,
 
+
+
+
+    // ログイン維持を選択したときの期間
+    'remember_me_expiration' => 60 * 60 * 24 * 30,
 ];
