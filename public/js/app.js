@@ -2571,9 +2571,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _this.$store.dispatch('auth/register', _this.registerForm);
 
               case 2:
-                // apiStatusがtrueなら遷移
+                // apiStatusがtrueなら登録完了画面へ遷移
                 if (_this.apiStatus) {
-                  _this.$router.push('/');
+                  _this.$router.push('/registerCompletion');
                 }
 
               case 3:

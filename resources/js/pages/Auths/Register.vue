@@ -54,9 +54,9 @@ export default {
       // authStoreからregisterアクションを呼ぶ
       await this.$store.dispatch('auth/register', this.registerForm);
 
-      // apiStatusがtrueなら遷移
+      // apiStatusがtrueなら登録完了画面へ遷移
       if(this.apiStatus) {
-        this.$router.push('/');
+        this.$router.push('/registerCompletion');
       }
     },
     // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。
