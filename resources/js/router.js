@@ -6,6 +6,7 @@ import Index from './pages/Index.vue';
 // 認証系
 import Login from './pages/Auths/Login.vue';
 import Register from './pages/Auths/Register.vue';
+import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';
 import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
 import PassResetForm from './pages/Auths/PassResetForm.vue';
 // エラー系
@@ -49,6 +50,18 @@ const routes = [
         next('/');
       }else{
         next();
+      }
+    }
+  },
+  {
+    path: '/registerCompletion',
+    component: RegisterCompletion,
+    beforeEnter(to, from, next) {
+      // 未ログイン状態なら戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
       }
     }
   },

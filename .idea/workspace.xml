@@ -23,11 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/resources/js/pages/Auths/RegisterCompletion.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/PassResetForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/PassResetForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/PassResetMailSend.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/PassResetMailSend.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/Register.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/router.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -168,17 +165,18 @@
     <property name="settings.editor.selected.configurable" value="inlay.hints" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/js/pages/Auths" />
+      <recent name="$PROJECT_DIR$/resources/views/emails" />
+      <recent name="$PROJECT_DIR$/app/Models" />
+      <recent name="$PROJECT_DIR$/resources/sass/layout" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/lang" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/tests/Feature" />
       <recent name="$PROJECT_DIR$/resources" />
       <recent name="$PROJECT_DIR$/resources/js" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/views/emails" />
-      <recent name="$PROJECT_DIR$/app/Models" />
-      <recent name="$PROJECT_DIR$/resources/sass/layout" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.auth.js">
@@ -252,7 +250,8 @@
       <workItem from="1601606156520" duration="97000" />
       <workItem from="1601606326801" duration="57000" />
       <workItem from="1601606466143" duration="21164000" />
-      <workItem from="1601873067468" duration="775000" />
+      <workItem from="1601873067468" duration="1165000" />
+      <workItem from="1601901023917" duration="468000" />
     </task>
     <servers />
   </component>
