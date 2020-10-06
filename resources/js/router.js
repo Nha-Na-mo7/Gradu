@@ -9,6 +9,8 @@ import Register from './pages/Auths/Register.vue';
 import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';
 import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
 import PassResetForm from './pages/Auths/PassResetForm.vue';
+// Googleニュース
+import News from './pages/News/News.vue';
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
 
@@ -75,6 +77,11 @@ const routes = [
     props: true
   },
   
+  {
+    path: '/news',
+    component: News,
+    props: true
+  },
   {
     path: '/500',
     component: SystemError500
