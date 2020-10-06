@@ -10,7 +10,7 @@ import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';
 import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
 import PassResetForm from './pages/Auths/PassResetForm.vue';
 // Googleニュース
-import News from './pages/News/News.vue';
+import NewsList from './pages/News/NewsList.vue';
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
 
@@ -79,7 +79,7 @@ const routes = [
   
   {
     path: '/news',
-    component: News,
+    component: NewsList,
     props: true
   },
   {
