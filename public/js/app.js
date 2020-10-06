@@ -21880,7 +21880,7 @@ var render = function() {
           "div",
           { staticClass: "p-navbar__item" },
           [
-            _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
+            _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/news" } }, [
               _vm._v("ニュース")
             ])
           ],

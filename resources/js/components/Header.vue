@@ -6,7 +6,7 @@
         <RouterLink class="c-btn" to="/">トレンド</RouterLink>
       </div>
       <div class="p-navbar__item">
-        <RouterLink class="c-btn" to="/">ニュース</RouterLink>
+        <RouterLink class="c-btn" to="/news">ニュース</RouterLink>
       </div>
       <div class="p-navbar__item">
         <RouterLink class="c-btn" to="/">アカウント設定</RouterLink>
