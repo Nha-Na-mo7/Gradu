@@ -32,11 +32,28 @@
             <option value="1">投稿が古い順</option>
           </select>
         </div>
-        <!-- 絞り込みモーダル -->
+        <!-- 絞り込みモーダルボタン -->
         <div class="p-hedmodal">
-          <button class="c-btn c-btn__main c-btn--primary">絞り込む</button>
+          <button class="c-btn c-btn__main c-btn--primary" @click="showModalToggle">絞り込む</button>
         </div>
+      </div>
 
+      <!-- 絞り込みモーダル -->
+      <div class="p-modal__hide" v-if="modal">
+        <div class="p-modal js-show-modal-target">
+          <div class="c-modal__head"><span class="c-modal__head-title">法定健康診断基本コース</span></div>
+
+          <div class="c-modal__foot">
+            <p>およそ2時間の健診で、問診、尿検査、血液検査、心電図、胸部X線検査を行います。<br>
+              健康診断書の送付は健診終了後１週間以内の発送となります。
+              <br>
+              ※健診前日以降、一切の飲食禁止となります。
+            </p>
+          </div>
+          <div class="c-modal__btn-area">
+            <button class="c-btn" @click="showModalToggle">閉じる</button>
+          </div>
+        </div>
       </div>
 
       <!-- ニュース一覧 -->
@@ -46,12 +63,26 @@
 
 
     </div>
+    <!-- モーダルカバー -->
+    <div class="p-modal__cover" v-if="modal"></div>
+
   </div>
+
 </template>
 
 <script>
 import News from './News.vue';
 export default {
+  data() {
+    return {
+      modal: false
+    }
+  },
+  methods: {
+    showModalToggle(){
+      this.modal = !this.modal;
+    }
+  },
   components: {News}
 
 }
@@ -121,4 +152,36 @@ export default {
   width: 30%;
   border: 1px solid #000;
 }
+
+.p-modal {
+  z-index: 5;
+  box-sizing: border-box;
+  position: fixed;
+  background: #e9e9e9;
+  border-radius: 4px;
+  transition: .3s all;
+  width: 60%;
+  top: 10%;
+  left: 20%;
+  padding: 20px 25px;
+}
+.p-modal__hide {
+   /*display: none;*/
+ }
+
+.p-modal__cover {
+  position: absolute;
+  /*display: none;*/
+  transition: .3s all;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  opacity: 0.5;
+  background: #030303;
+}
+
+
 </style>
