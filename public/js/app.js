@@ -2753,16 +2753,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      modal: true
+      modal: false
     };
   },
   methods: {
-    showModalToggle: function showModalToggle() {
-      this.modal = !this.modal;
+    showModal: function showModal() {
+      this.modal = true;
+    },
+    closeModal: function closeModal() {
+      this.modal = false;
     }
   },
   components: {
@@ -2841,7 +2865,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.p-container-news[data-v-f7689e98] {\n  margin: 20px 15px;\n  border: 1px solid #000000;\n  height: 800px;\n  background: #f7fbff;\n}\n.c-site-linknav[data-v-f7689e98] {\n  margin-left: 20px;\n  margin-bottom: 5px;\n  font-weight: bold;\n  text-shadow: #dedede 0 2px 2px;\n}\n.c-totop[data-v-f7689e98]{\n  color: #4FB4D7;\n}\n.c-totop[data-v-f7689e98]:hover , .c-tonews[data-v-f7689e98]:hover{\n  color: #ffcd22;\n}\n.c-tonews[data-v-f7689e98] {\n  color: orange;\n}\n.c-topictitle[data-v-f7689e98]{\n  font-size: 30px;\n  color: #4FB4D7;\n  padding: 5px;\n  font-weight: bold;\n  border-bottom: 3px solid #4FB4D7;\n}\n.c-news__search[data-v-f7689e98] {\n  width: 50%;\n  border: 1px dotted #000;\n}\n.kari-input[data-v-f7689e98] {\n  background: #FFF;\n  border: 1px solid #000000;\n  border-radius: 4px;\n  height: 100%;\n  padding: 0 10px;\n  width: 90%;\n  font-size: 20px;\n}\n.news-hedline[data-v-f7689e98] {\n  margin: 20px 30px;\n  display: flex;\n}\n.p-selectbox[data-v-f7689e98] {\n  width: 20%;\n  border: 1px dotted #000;\n  margin-right: 20px;\n}\n.c-selectbox[data-v-f7689e98] {\n  border: 1px solid #000;\n  width: 90%;\n  height: 100%;\n}\n.p-hedmodal[data-v-f7689e98]{\n  width: 30%;\n  border: 1px solid #000;\n}\n.p-modal[data-v-f7689e98] {\n  z-index: 5;\n  box-sizing: border-box;\n  position: fixed;\n  background: #e9e9e9;\n  border-radius: 4px;\n  transition: .3s all;\n  width: 60%;\n  top: 10%;\n  left: 20%;\n  padding: 20px 25px;\n}\n.p-modal__hide[data-v-f7689e98] {\n   /*display: none;*/\n}\n.p-modal__cover[data-v-f7689e98] {\n  position: absolute;\n  /*display: none;*/\n  transition: .3s all;\n  width: 100%;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 4;\n  opacity: 0.5;\n  background: #030303;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.p-container-news[data-v-f7689e98] {\n  margin: 20px 15px;\n  border: 1px solid #000000;\n  height: 800px;\n  background: #f7fbff;\n}\n.c-site-linknav[data-v-f7689e98] {\n  margin-left: 20px;\n  margin-bottom: 5px;\n  font-weight: bold;\n  text-shadow: #dedede 0 2px 2px;\n}\n.c-totop[data-v-f7689e98]{\n  color: #4FB4D7;\n}\n.c-totop[data-v-f7689e98]:hover , .c-tonews[data-v-f7689e98]:hover{\n  color: #ffcd22;\n}\n.c-tonews[data-v-f7689e98] {\n  color: orange;\n}\n.c-topictitle[data-v-f7689e98]{\n  font-size: 30px;\n  color: #4FB4D7;\n  padding: 5px;\n  font-weight: bold;\n  border-bottom: 3px solid #4FB4D7;\n}\n.c-modal__head[data-v-f7689e98] {\n  text-align: center;\n}\n.c-modal__head-title[data-v-f7689e98]{\n  font-size: 30px;\n  font-weight: bold;\n}\n.c-news__search[data-v-f7689e98] {\n  width: 70%;\n  background: #fdfdfd;\n  border-radius: 10px;\n  border: 1px solid #000;\n}\n.kari-input[data-v-f7689e98] {\n  border-radius: 4px;\n  height: 100%;\n  padding: 0 10px;\n  width: 90%;\n  font-size: 20px;\n}\n.news-hedline[data-v-f7689e98] {\n  margin: 20px 30px;\n  display: flex;\n}\n.p-hedmodal[data-v-f7689e98]{\n  width: 30%;\n  border: 1px solid #000;\n}\n.p-modal[data-v-f7689e98] {\n  z-index: 5;\n  box-sizing: border-box;\n  position: fixed;\n  background: #e9e9e9;\n  border-radius: 4px;\n  transition: .3s all;\n  width: 60%;\n  top: 10%;\n  left: 20%;\n  padding: 20px 25px;\n}\n.p-modal__hide[data-v-f7689e98] {\n   /*display: none;*/\n}\n.p-modal__cover[data-v-f7689e98] {\n  position: absolute;\n  /*display: none;*/\n  transition: .3s all;\n  width: 100%;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 4;\n  opacity: 0.5;\n  background: #030303;\n}\n.c-modal__index[data-v-f7689e98]{\n  margin-top: 40px;\n}\n.c-modal__index-title[data-v-f7689e98]{\n  font-size: 20px;\n  padding-bottom: 5px;\n  margin-bottom: 15px;\n  border-bottom: 1px solid #000;\n}\n.c-checkbox__space[data-v-f7689e98] {\n  font-size: 20px;\n  margin-bottom: 15px;\n  display: flex;\n  flex-wrap: wrap;\n}\n.c-checkbox__item[data-v-f7689e98] {\n  width: 25%;\n  height: 30px;\n  margin-bottom: 10px;\n}\n\n\n", ""]);
 
 // exports
 
@@ -22951,46 +22975,60 @@ var render = function() {
       _c("div", { staticClass: "news-hedline" }, [
         _vm._m(1),
         _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
         _c("div", { staticClass: "p-hedmodal" }, [
           _c(
             "button",
             {
               staticClass: "c-btn c-btn__main c-btn--primary",
-              on: { click: _vm.showModalToggle }
+              on: { click: _vm.showModal }
             },
-            [_vm._v("絞り込む")]
+            [_vm._v("条件設定")]
           )
         ])
       ]),
       _vm._v(" "),
       _vm.modal
         ? _c("div", { staticClass: "p-modal__hide" }, [
-            _vm.modal
-              ? _c("div", {
-                  staticClass: "p-modal__cover",
-                  on: {
-                    click: function($event) {
-                      if ($event.target !== $event.currentTarget) {
-                        return null
-                      }
-                      return _vm.showModalToggle($event)
-                    }
+            _c("div", {
+              staticClass: "p-modal__cover",
+              on: {
+                click: function($event) {
+                  if ($event.target !== $event.currentTarget) {
+                    return null
                   }
-                })
-              : _vm._e(),
+                  return _vm.closeModal($event)
+                }
+              }
+            }),
             _vm._v(" "),
-            _c("div", { staticClass: "p-modal js-show-modal-target" }, [
-              _vm._m(3),
+            _c("div", { staticClass: "p-modal" }, [
+              _vm._m(2),
               _vm._v(" "),
-              _vm._m(4),
+              _vm._m(3),
               _vm._v(" "),
               _c("div", { staticClass: "c-modal__btn-area" }, [
                 _c(
                   "button",
-                  { staticClass: "c-btn", on: { click: _vm.showModalToggle } },
-                  [_vm._v("閉じる")]
+                  { staticClass: "c-btn", on: { click: _vm.closeModal } },
+                  [_vm._v("絞り込む")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "c-btn", on: { click: _vm.closeModal } },
+                  [_vm._v("リセット")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "c-btn", on: { click: _vm.closeModal } },
+                  [_vm._v("絞り込まずに閉じる")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "c-btn", on: { click: _vm.closeModal } },
+                  [_vm._v("設定を保存")]
                 )
               ])
             ])
@@ -23029,21 +23067,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-selectbox" }, [
-      _c("select", { staticClass: "c-selectbox", attrs: { name: "sort" } }, [
-        _c("option", { attrs: { value: "0" } }, [_vm._v("投稿が新しい順")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "1" } }, [_vm._v("投稿が古い順")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "c-modal__head" }, [
       _c("span", { staticClass: "c-modal__head-title" }, [
-        _vm._v("法定健康診断基本コース")
+        _vm._v("検索条件設定")
       ])
     ])
   },
@@ -23052,18 +23078,87 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "c-modal__foot" }, [
-      _c("p", [
-        _vm._v(
-          "およそ2時間の健診で、問診、尿検査、血液検査、心電図、胸部X線検査を行います。"
-        ),
-        _c("br"),
-        _vm._v(
-          "\n            健康診断書の送付は健診終了後１週間以内の発送となります。\n            "
-        ),
-        _c("br"),
-        _vm._v(
-          "\n            ※健診前日以降、一切の飲食禁止となります。\n          "
-        )
+      _c("div", { staticClass: "c-modal__index" }, [
+        _c("p", { staticClass: "c-modal__index-title" }, [
+          _vm._v("記事の表示順")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-checkbox__space" }, [
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("input", {
+              attrs: {
+                type: "radio",
+                name: "CryptoSubject",
+                value: "kaso",
+                checked: ""
+              }
+            }),
+            _vm._v("新着順")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("input", {
+              attrs: { type: "radio", name: "CryptoSubject", value: "alto" }
+            }),
+            _vm._v("古い順")
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-modal__index" }, [
+        _c("p", { staticClass: "c-modal__index-title" }, [
+          _vm._v("通貨で絞り込む")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-checkbox__space" }, [
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "Crypto",
+                value: "kaso",
+                checked: ""
+              }
+            }),
+            _vm._v("仮想通貨")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("input", {
+              attrs: { type: "checkbox", name: "Crypto", value: "alto" }
+            }),
+            _vm._v("アルトコイン")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "c-checkbox__space" }, [
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("label", { attrs: { for: "0" } }, [
+              _c("input", {
+                attrs: { type: "checkbox", name: "Crypto", value: "0", id: "0" }
+              }),
+              _vm._v("BTC")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("label", { attrs: { for: "1" } }, [
+              _c("input", {
+                attrs: { type: "checkbox", name: "Crypto", value: "1", id: "1" }
+              }),
+              _vm._v("BTC")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-checkbox__item" }, [
+            _c("label", { attrs: { for: "2" } }, [
+              _c("input", {
+                attrs: { type: "checkbox", name: "Crypto", value: "2", id: "2" }
+              }),
+              _vm._v("BTC")
+            ])
+          ])
+        ])
       ])
     ])
   }

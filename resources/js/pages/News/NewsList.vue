@@ -25,16 +25,10 @@
           <input type="text" class="kari-input" value="仮想通貨">
           <button type="submit" class="btn">🔎</button>
         </div>
-        <!-- 降順・昇順ドロップダウン -->
-        <div class="p-selectbox">
-          <select name="sort" class="c-selectbox">
-            <option value="0">投稿が新しい順</option>
-            <option value="1">投稿が古い順</option>
-          </select>
-        </div>
+
         <!-- 絞り込みモーダルボタン -->
         <div class="p-hedmodal">
-          <button class="c-btn c-btn__main c-btn--primary" @click="showModalToggle">絞り込む</button>
+          <button class="c-btn c-btn__main c-btn--primary" @click="showModal">条件設定</button>
         </div>
       </div>
 
@@ -42,20 +36,47 @@
       <div class="p-modal__hide" v-if="modal">
         <!-- モーダルカバー -->
         <!-- 画面がクリックでモーダルを閉じる。.selfを付与して子要素にクローズイベントが伝播しないようにする-->
-        <div class="p-modal__cover" v-if="modal" @click.self="showModalToggle"></div>
+        <div class="p-modal__cover" @click.self="closeModal"></div>
         <!-- モーダルコンテンツ -->
-        <div class="p-modal js-show-modal-target">
-          <div class="c-modal__head"><span class="c-modal__head-title">法定健康診断基本コース</span></div>
+        <div class="p-modal">
+          <div class="c-modal__head"><span class="c-modal__head-title">検索条件設定</span></div>
 
           <div class="c-modal__foot">
-            <p>およそ2時間の健診で、問診、尿検査、血液検査、心電図、胸部X線検査を行います。<br>
-              健康診断書の送付は健診終了後１週間以内の発送となります。
-              <br>
-              ※健診前日以降、一切の飲食禁止となります。
-            </p>
+            <div class="c-modal__index">
+              <p class="c-modal__index-title">記事の表示順</p>
+              <!-- 降順・昇順ドロップダウン -->
+              <div class="c-checkbox__space">
+                <div class="c-checkbox__item"><input type="radio" name="CryptoSubject" value="kaso" checked>新着順</div>
+                <div class="c-checkbox__item"><input type="radio" name="CryptoSubject" value="alto">古い順</div>
+              </div>
+            </div>
+            <div class="c-modal__index">
+              <p class="c-modal__index-title">通貨で絞り込む</p>
+              <div class="c-checkbox__space">
+                <div class="c-checkbox__item"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
+                <div class="c-checkbox__item"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
+              </div>
+              <div class="c-checkbox__space">
+                <!-- 通貨アイテムボックス、v-forで通貨テーブルからループさせて描画する -->
+                <div class="c-checkbox__item">
+                  <label for="0"><input type="checkbox" name="Crypto" value="0" id="0">BTC</label>
+                </div>
+                <div class="c-checkbox__item">
+                  <label for="1"><input type="checkbox" name="Crypto" value="1" id="1">BTC</label>
+                </div>
+                <div class="c-checkbox__item">
+                  <label for="2"><input type="checkbox" name="Crypto" value="2" id="2">BTC</label>
+                </div>
+              </div>
+            </div>
+
+
           </div>
           <div class="c-modal__btn-area">
-            <button class="c-btn" @click="showModalToggle">閉じる</button>
+            <button class="c-btn" @click="closeModal">絞り込む</button>
+            <button class="c-btn" @click="closeModal">リセット</button>
+            <button class="c-btn" @click="closeModal">絞り込まずに閉じる</button>
+            <button class="c-btn" @click="closeModal">設定を保存</button>
           </div>
         </div>
       </div>
@@ -78,13 +99,16 @@ import News from './News.vue';
 export default {
   data() {
     return {
-      modal: true
+      modal: false
     }
   },
   methods: {
-    showModalToggle(){
-      this.modal = !this.modal;
-    }
+    showModal(){
+      this.modal = true;
+    },
+    closeModal(){
+      this.modal = false;
+    },
   },
   components: {News}
 
@@ -110,11 +134,9 @@ export default {
 .c-totop:hover , .c-tonews:hover{
   color: #ffcd22;
 }
-
 .c-tonews {
   color: orange;
 }
-
 .c-topictitle{
   font-size: 30px;
   color: #4FB4D7;
@@ -122,15 +144,20 @@ export default {
   font-weight: bold;
   border-bottom: 3px solid #4FB4D7;
 }
-
-
+.c-modal__head {
+  text-align: center;
+}
+.c-modal__head-title{
+  font-size: 30px;
+  font-weight: bold;
+}
 .c-news__search {
-  width: 50%;
-  border: 1px dotted #000;
+  width: 70%;
+  background: #fdfdfd;
+  border-radius: 10px;
+  border: 1px solid #000;
 }
 .kari-input {
-  background: #FFF;
-  border: 1px solid #000000;
   border-radius: 4px;
   height: 100%;
   padding: 0 10px;
@@ -140,16 +167,6 @@ export default {
 .news-hedline {
   margin: 20px 30px;
   display: flex;
-}
-.p-selectbox {
-  width: 20%;
-  border: 1px dotted #000;
-  margin-right: 20px;
-}
-.c-selectbox {
-  border: 1px solid #000;
-  width: 90%;
-  height: 100%;
 }
 .p-hedmodal{
   width: 30%;
@@ -184,6 +201,27 @@ export default {
   z-index: 4;
   opacity: 0.5;
   background: #030303;
+}
+.c-modal__index{
+  margin-top: 40px;
+}
+.c-modal__index-title{
+  font-size: 20px;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #000;
+}
+
+.c-checkbox__space {
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.c-checkbox__item {
+  width: 25%;
+  height: 30px;
+  margin-bottom: 10px;
 }
 
 
