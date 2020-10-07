@@ -2662,6 +2662,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "News.vue"
 });
@@ -2678,6 +2692,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _News_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./News.vue */ "./resources/js/pages/News/News.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22828,7 +22851,27 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "p-news__item" }, [
-      _c("h2", [_vm._v("ニュース")])
+      _c("span", { staticClass: "c-icon" }, [_vm._v("NEW!!")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-news__item--picture" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-news__item--title" }, [
+        _c("h2", {}, [
+          _vm._v(
+            "鳥貴族、錬金術終了へ | 新型コロナウイルスのキャンペーンを悪用"
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-news__item--data" }, [
+        _c("div", { staticClass: "p-news__item--time" }, [
+          _vm._v("2020/18/39 99:99:59")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-news__item--media" }, [
+          _vm._v("いくいくファクトリーメディア")
+        ])
+      ])
     ])
   }
 ]
@@ -22853,7 +22896,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "l-container__content" }, [
     _c(
       "div",
       { staticClass: "c-site-linknav" },
@@ -22944,7 +22987,32 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "p-newses" }, [_c("News")], 1)
+      _c(
+        "div",
+        { staticClass: "p-news__list" },
+        [
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News"),
+          _vm._v(" "),
+          _c("News")
+        ],
+        1
+      )
     ])
   ])
 }
@@ -22967,9 +23035,7 @@ var staticRenderFns = [
         attrs: { type: "text", value: "仮想通貨" }
       }),
       _vm._v(" "),
-      _c("button", { staticClass: "c-btn", attrs: { type: "submit" } }, [
-        _vm._v("🔎")
-      ])
+      _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")])
     ])
   },
   function() {

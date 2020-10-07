@@ -2,7 +2,7 @@
 <!--ニュースの一覧画面-->
 <!--===============-->
 <template>
-  <div>
+  <div class="l-container__content">
     <!-- サイトリンク -->
     <div class="c-site-linknav">
       <RouterLink class="c-site__link-nav__to-top" to="/">トップ</RouterLink>
@@ -23,7 +23,7 @@
         <!-- 検索 -->
         <div class="p-news__search">
           <input type="text" class="c-input" value="仮想通貨">
-          <button type="submit" class="c-btn">🔎</button>
+          <button type="submit" class="">🔎</button>
         </div>
 
         <!-- 絞り込みモーダルボタン -->
@@ -82,7 +82,16 @@
       </div>
 
       <!-- ニュース一覧 -->
-      <div class="p-newses">
+      <div class="p-news__list">
+        <News/>
+        <News/>
+        <News/>
+        <News/>
+        <News/>
+        <News/>
+        <News/>
+        <News/>
+        <News/>
         <News/>
       </div>
 
