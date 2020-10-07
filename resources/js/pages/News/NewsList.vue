@@ -19,9 +19,9 @@
     <div class="p-news__container">
 
       <!-- ヘッドライン -->
-      <div class="c-news__headline">
+      <div class="p-news__headline">
         <!-- 検索 -->
-        <div class="c-news__search">
+        <div class="p-news__search">
           <input type="text" class="c-input" value="仮想通貨">
           <button type="submit" class="c-btn">🔎</button>
         </div>
