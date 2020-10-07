@@ -40,6 +40,10 @@
 
       <!-- 絞り込みモーダル -->
       <div class="p-modal__hide" v-if="modal">
+        <!-- モーダルカバー -->
+        <!-- 画面がクリックでモーダルを閉じる。.selfを付与して子要素にクローズイベントが伝播しないようにする-->
+        <div class="p-modal__cover" v-if="modal" @click.self="showModalToggle"></div>
+        <!-- モーダルコンテンツ -->
         <div class="p-modal js-show-modal-target">
           <div class="c-modal__head"><span class="c-modal__head-title">法定健康診断基本コース</span></div>
 
@@ -63,8 +67,7 @@
 
 
     </div>
-    <!-- モーダルカバー -->
-    <div class="p-modal__cover" v-if="modal"></div>
+
 
   </div>
 
@@ -75,7 +78,7 @@ import News from './News.vue';
 export default {
   data() {
     return {
-      modal: false
+      modal: true
     }
   },
   methods: {

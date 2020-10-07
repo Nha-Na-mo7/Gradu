@@ -2750,11 +2750,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      modal: false
+      modal: true
     };
   },
   methods: {
@@ -22964,6 +22967,20 @@ var render = function() {
       _vm._v(" "),
       _vm.modal
         ? _c("div", { staticClass: "p-modal__hide" }, [
+            _vm.modal
+              ? _c("div", {
+                  staticClass: "p-modal__cover",
+                  on: {
+                    click: function($event) {
+                      if ($event.target !== $event.currentTarget) {
+                        return null
+                      }
+                      return _vm.showModalToggle($event)
+                    }
+                  }
+                })
+              : _vm._e(),
+            _vm._v(" "),
             _c("div", { staticClass: "p-modal js-show-modal-target" }, [
               _vm._m(3),
               _vm._v(" "),
@@ -22981,9 +22998,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("div", { staticClass: "p-newses" }, [_c("News")], 1)
-    ]),
-    _vm._v(" "),
-    _vm.modal ? _c("div", { staticClass: "p-modal__cover" }) : _vm._e()
+    ])
   ])
 }
 var staticRenderFns = [
