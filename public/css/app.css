@@ -715,6 +715,13 @@ main {
   color: #f1f1f1;
 }
 
+.p-news__container {
+  background: #f7fbff;
+  border: 1px solid #000000;
+  height: 800px;
+  margin: 20px 15px;
+}
+
 .c-btn {
   border-radius: 4px;
   cursor: pointer;
@@ -787,10 +794,121 @@ main {
   font-weight: bold;
 }
 
+.c-input {
+  border-radius: 4px;
+  font-size: 20px;
+  height: 100%;
+  padding: 0 10px;
+  width: 90%;
+}
+
+.c-checkbox__space {
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.c-checkbox__item {
+  width: 25%;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.c-modal {
+  box-sizing: border-box;
+  background: #e9e9e9;
+  border-radius: 4px;
+  transition: 0.3s all;
+  width: 60%;
+  top: 10%;
+  left: 20%;
+  padding: 20px 25px;
+  position: fixed;
+  z-index: 5;
+}
+
+.c-modal__cover {
+  transition: 0.3s all;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  opacity: 0.5;
+  background: #030303;
+}
+
+.c-modal__index {
+  margin-top: 40px;
+}
+
+.c-modal__index-title {
+  font-size: 20px;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #000;
+}
+
+.c-modal__head {
+  text-align: center;
+}
+
+.c-modal__head-title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.c-modal__title {
+  width: 30%;
+  border: 1px solid #000;
+}
+
 .title {
   font-weight: bold;
   margin: 2rem 0;
   text-align: center;
+}
+
+.c-site__link-nav {
+  font-weight: bold;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  text-shadow: #dedede 0 2px 2px;
+}
+
+.c-site__link-nav__to-top {
+  color: #4FB4D7;
+}
+
+.c-site__link-nav__to-content {
+  color: orange;
+}
+
+.c-site__link-nav__to-top:hover,
+.c-site__link-nav__to-content:hover {
+  color: #ffcd22;
+}
+
+.c-site__title {
+  border-bottom: 3px solid #4FB4D7;
+  color: #4FB4D7;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+.c-news__search {
+  width: 70%;
+  background: #fdfdfd;
+  border-radius: 10px;
+  border: 1px solid #000;
+}
+
+.c-news__headline {
+  margin: 20px 30px;
+  display: flex;
 }
 
 .u-glay {

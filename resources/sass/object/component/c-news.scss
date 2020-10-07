@@ -1,0 +1,15 @@
+// ==============
+//  c-news
+//  =============
+.c-news {
+  &__search {
+    width: 70%;
+    background: #fdfdfd;
+    border-radius: 10px;
+    border: 1px solid #000;
+  }
+  &__headline {
+    margin: 20px 30px;
+    display: flex;
+  }
+}

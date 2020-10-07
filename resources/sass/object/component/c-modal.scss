@@ -1,0 +1,58 @@
+// ==============
+//  c-modal
+//  =============
+.c-modal {
+  box-sizing: border-box;
+  background: #e9e9e9;
+  border-radius: 4px;
+  transition: .3s all;
+  width: 60%;
+  top: 10%;
+  left: 20%;
+  padding: 20px 25px;
+  position: fixed;
+  z-index: 5;
+
+  &__cover{
+    transition: .3s all;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    opacity: 0.5;
+    background: #030303;
+  }
+
+  &__index {
+    margin-top: 40px;
+
+    &-title {
+      font-size: 20px;
+      padding-bottom: 5px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #000;
+    }
+  }
+
+  &__hide {
+
+  }
+
+  &__head {
+    text-align: center;
+    &-title {
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+
+  &__title {
+    width: 30%;
+    border: 1px solid #000;
+  }
+  &__btn-area {
+
+  }
+}

@@ -2853,25 +2853,6 @@ exports.push([module.i, "\n.news__item[data-v-1e9a0c14]{\n  height: 80px;\n  wid
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.p-container-news[data-v-f7689e98] {\n  margin: 20px 15px;\n  border: 1px solid #000000;\n  height: 800px;\n  background: #f7fbff;\n}\n.c-site-linknav[data-v-f7689e98] {\n  margin-left: 20px;\n  margin-bottom: 5px;\n  font-weight: bold;\n  text-shadow: #dedede 0 2px 2px;\n}\n.c-totop[data-v-f7689e98]{\n  color: #4FB4D7;\n}\n.c-totop[data-v-f7689e98]:hover , .c-tonews[data-v-f7689e98]:hover{\n  color: #ffcd22;\n}\n.c-tonews[data-v-f7689e98] {\n  color: orange;\n}\n.c-topictitle[data-v-f7689e98]{\n  font-size: 30px;\n  color: #4FB4D7;\n  padding: 5px;\n  font-weight: bold;\n  border-bottom: 3px solid #4FB4D7;\n}\n.c-modal__head[data-v-f7689e98] {\n  text-align: center;\n}\n.c-modal__head-title[data-v-f7689e98]{\n  font-size: 30px;\n  font-weight: bold;\n}\n.c-news__search[data-v-f7689e98] {\n  width: 70%;\n  background: #fdfdfd;\n  border-radius: 10px;\n  border: 1px solid #000;\n}\n.kari-input[data-v-f7689e98] {\n  border-radius: 4px;\n  height: 100%;\n  padding: 0 10px;\n  width: 90%;\n  font-size: 20px;\n}\n.news-hedline[data-v-f7689e98] {\n  margin: 20px 30px;\n  display: flex;\n}\n.p-hedmodal[data-v-f7689e98]{\n  width: 30%;\n  border: 1px solid #000;\n}\n.p-modal[data-v-f7689e98] {\n  z-index: 5;\n  box-sizing: border-box;\n  position: fixed;\n  background: #e9e9e9;\n  border-radius: 4px;\n  transition: .3s all;\n  width: 60%;\n  top: 10%;\n  left: 20%;\n  padding: 20px 25px;\n}\n.p-modal__hide[data-v-f7689e98] {\n   /*display: none;*/\n}\n.p-modal__cover[data-v-f7689e98] {\n  position: absolute;\n  /*display: none;*/\n  transition: .3s all;\n  width: 100%;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 4;\n  opacity: 0.5;\n  background: #030303;\n}\n.c-modal__index[data-v-f7689e98]{\n  margin-top: 40px;\n}\n.c-modal__index-title[data-v-f7689e98]{\n  font-size: 20px;\n  padding-bottom: 5px;\n  margin-bottom: 15px;\n  border-bottom: 1px solid #000;\n}\n.c-checkbox__space[data-v-f7689e98] {\n  font-size: 20px;\n  margin-bottom: 15px;\n  display: flex;\n  flex-wrap: wrap;\n}\n.c-checkbox__item[data-v-f7689e98] {\n  width: 25%;\n  height: 30px;\n  margin-bottom: 10px;\n}\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/lib/css-base.js":
 /*!*************************************************!*\
   !*** ./node_modules/css-loader/lib/css-base.js ***!
@@ -21336,36 +21317,6 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css&");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
-
-/***/ }),
-
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -22956,26 +22907,33 @@ var render = function() {
       "div",
       { staticClass: "c-site-linknav" },
       [
-        _c("RouterLink", { staticClass: "c-totop", attrs: { to: "/" } }, [
-          _vm._v("トップ")
-        ]),
+        _c(
+          "RouterLink",
+          { staticClass: "c-site__link-nav__to-top", attrs: { to: "/" } },
+          [_vm._v("トップ")]
+        ),
         _vm._v(" "),
         _c("span", [_vm._v(">")]),
         _vm._v(" "),
-        _c("RouterLink", { staticClass: "c-tonews", attrs: { to: "/news" } }, [
-          _vm._v("ニュース")
-        ])
+        _c(
+          "RouterLink",
+          {
+            staticClass: "c-site__link-nav__to-content",
+            attrs: { to: "/news" }
+          },
+          [_vm._v("ニュース")]
+        )
       ],
       1
     ),
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "p-container-news" }, [
-      _c("div", { staticClass: "news-hedline" }, [
+    _c("div", { staticClass: "p-news__container" }, [
+      _c("div", { staticClass: "c-news__headline" }, [
         _vm._m(1),
         _vm._v(" "),
-        _c("div", { staticClass: "p-hedmodal" }, [
+        _c("div", { staticClass: "c-modal__title" }, [
           _c(
             "button",
             {
@@ -22988,9 +22946,9 @@ var render = function() {
       ]),
       _vm._v(" "),
       _vm.modal
-        ? _c("div", { staticClass: "p-modal__hide" }, [
+        ? _c("div", { staticClass: "c-modal__hide" }, [
             _c("div", {
-              staticClass: "p-modal__cover",
+              staticClass: "c-modal__cover",
               on: {
                 click: function($event) {
                   if ($event.target !== $event.currentTarget) {
@@ -23001,7 +22959,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("div", { staticClass: "p-modal" }, [
+            _c("div", { staticClass: "c-modal" }, [
               _vm._m(2),
               _vm._v(" "),
               _vm._m(3),
@@ -23044,8 +23002,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-topictitle" }, [
-      _c("h2", [_vm._v("NEWS")])
+    return _c("div", { staticClass: "c-site__title" }, [
+      _c("span", [_vm._v("NEWS")])
     ])
   },
   function() {
@@ -23054,11 +23012,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "c-news__search" }, [
       _c("input", {
-        staticClass: "kari-input",
+        staticClass: "c-input",
         attrs: { type: "text", value: "仮想通貨" }
       }),
       _vm._v(" "),
-      _c("button", { staticClass: "btn", attrs: { type: "submit" } }, [
+      _c("button", { staticClass: "c-btn", attrs: { type: "submit" } }, [
         _vm._v("🔎")
       ])
     ])
@@ -40595,9 +40553,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NewsList_vue_vue_type_template_id_f7689e98_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NewsList.vue?vue&type=template&id=f7689e98&scoped=true& */ "./resources/js/pages/News/NewsList.vue?vue&type=template&id=f7689e98&scoped=true&");
 /* harmony import */ var _NewsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewsList.vue?vue&type=script&lang=js& */ "./resources/js/pages/News/NewsList.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css& */ "./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -40605,7 +40561,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _NewsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _NewsList_vue_vue_type_template_id_f7689e98_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _NewsList_vue_vue_type_template_id_f7689e98_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -40634,22 +40590,6 @@ component.options.__file = "resources/js/pages/News/NewsList.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewsList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/News/NewsList.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css&":
-/*!*******************************************************************************************************!*\
-  !*** ./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css& ***!
-  \*******************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/News/NewsList.vue?vue&type=style&index=0&id=f7689e98&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_NewsList_vue_vue_type_style_index_0_id_f7689e98_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
