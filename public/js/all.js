@@ -845,7 +845,9 @@ created:function created(){this.clearError();}};/***/},/***/"./node_modules/babe
 //
 //
 //
-/* harmony default export */__webpack_exports__["default"]={data:function data(){return{modal:false};},methods:{showModal:function showModal(){this.modal=true;},closeModal:function closeModal(){this.modal=false;}},components:{News:_News_vue__WEBPACK_IMPORTED_MODULE_0__["default"]}};/***/},/***/"./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/errors/System.vue?vue&type=script&lang=js&":/*!*******************************************************************************************************************************************************************!*\
+/* harmony default export */__webpack_exports__["default"]={data:function data(){return{modal:false};},methods:{// モーダルを開く
+showModal:function showModal(){this.modal=true;},// モーダルを閉じる
+closeModal:function closeModal(){this.modal=false;}},components:{News:_News_vue__WEBPACK_IMPORTED_MODULE_0__["default"]}};/***/},/***/"./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/errors/System.vue?vue&type=script&lang=js&":/*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/errors/System.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************************************************************************************************/ /*! exports provided: default */ /***/function node_modulesBabelLoaderLibIndexJsNode_modulesVueLoaderLibIndexJsResourcesJsPagesErrorsSystemVueVueTypeScriptLangJs(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.r(__webpack_exports__);//
 //

@@ -2805,9 +2805,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // モーダルを開く
     showModal: function showModal() {
       this.modal = true;
     },
+    // モーダルを閉じる
     closeModal: function closeModal() {
       this.modal = false;
     }

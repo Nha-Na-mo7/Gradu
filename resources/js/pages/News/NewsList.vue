@@ -112,12 +112,15 @@ export default {
     }
   },
   methods: {
+    // モーダルを開く
     showModal(){
       this.modal = true;
     },
+    // モーダルを閉じる
     closeModal(){
       this.modal = false;
     },
+
   },
   components: {News}
 
