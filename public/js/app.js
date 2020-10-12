@@ -2806,7 +2806,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       modal: false,
       searchData: {
-        keywords: '仮想通貨'
+        keywords: ''
       }
     };
   },

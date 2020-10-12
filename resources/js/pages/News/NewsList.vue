@@ -105,7 +105,7 @@ export default {
     return {
       modal: false,
       searchData: {
-        keywords: '仮想通貨'
+        keywords: ''
       }
 
     }
