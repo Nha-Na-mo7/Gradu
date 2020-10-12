@@ -2820,6 +2820,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     closeModal: function closeModal() {
       this.modal = false;
     },
+    // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     getGoogleNews: function getGoogleNews() {
       var _this = this;
 

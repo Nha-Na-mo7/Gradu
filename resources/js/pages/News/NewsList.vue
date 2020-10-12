@@ -121,12 +121,13 @@ export default {
       this.modal = false;
     },
 
+    // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     async getGoogleNews() {
       const params = this.searchData
       const response = await axios.get(`/api/news/get`, { params });
 
       this.getNews = response.data;
-      
+
       return response.status;
     }
   },
