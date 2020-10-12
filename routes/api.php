@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// ============
+// ===============
 // 認証関連
-// ============
+// ===============
 // 会員登録
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
 // ログイン
@@ -35,6 +35,13 @@ Route::post('/password/reset/{token}', 'Auth\ResetPasswordController@reset')->na
 // パスワードリセット
 // Route::post('"/password/reset/{token?}"', 'Auth\ResetPasswordController@showResetForm')->name('api.password.showResetForm');
 
-
 //ログインしているユーザー情報を取得するAPI
 Route::get('/user', fn() => Auth::user())->name('user');
+
+// ===============
+// GoogleNews関連
+// ===============
+Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
+
+
+

@@ -15,6 +15,10 @@
       <span>NEWS</span>
     </div>
 
+    <div>
+      <button class="c-btn" @click="getGoogleNews">取得</button>
+    </div>
+
     <!--メインレイアウト-->
     <div class="p-news__container">
 
@@ -84,15 +88,6 @@
       <!-- ニュース一覧 -->
       <div class="p-news__list">
         <News/>
-        <News/>
-        <News/>
-        <News/>
-        <News/>
-        <News/>
-        <News/>
-        <News/>
-        <News/>
-        <News/>
       </div>
 
 
@@ -108,7 +103,11 @@ import News from './News.vue';
 export default {
   data() {
     return {
-      modal: false
+      modal: false,
+      searchData: {
+        keywords: '仮想通貨'
+      }
+
     }
   },
   methods: {
@@ -121,6 +120,15 @@ export default {
       this.modal = false;
     },
 
+    async getGoogleNews() {
+      const params = this.searchData
+      console.log(params)
+      const response = await axios.get(`/api/news/get`, { params });
+
+      console.log(response.data);
+
+      return response.status;
+    }
   },
   components: {News}
 

@@ -2691,12 +2691,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _News_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./News.vue */ "./resources/js/pages/News/News.vue");
-//
-//
-//
-//
-//
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _News_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./News.vue */ "./resources/js/pages/News/News.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2801,7 +2804,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      modal: false
+      modal: false,
+      searchData: {
+        keywords: '仮想通貨'
+      }
     };
   },
   methods: {
@@ -2812,10 +2818,39 @@ __webpack_require__.r(__webpack_exports__);
     // モーダルを閉じる
     closeModal: function closeModal() {
       this.modal = false;
+    },
+    getGoogleNews: function getGoogleNews() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var params, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                params = _this.searchData;
+                console.log(params);
+                _context.next = 4;
+                return axios.get("/api/news/get", {
+                  params: params
+                });
+
+              case 4:
+                response = _context.sent;
+                console.log(response.data);
+                return _context.abrupt("return", response.status);
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   },
   components: {
-    News: _News_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    News: _News_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   }
 });
 
@@ -22925,6 +22960,12 @@ var render = function() {
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
+    _c("div", [
+      _c("button", { staticClass: "c-btn", on: { click: _vm.getGoogleNews } }, [
+        _vm._v("取得")
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "p-news__container" }, [
       _c("div", { staticClass: "p-news__headline" }, [
         _vm._m(1),
@@ -22989,32 +23030,7 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "p-news__list" },
-        [
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News"),
-          _vm._v(" "),
-          _c("News")
-        ],
-        1
-      )
+      _c("div", { staticClass: "p-news__list" }, [_c("News")], 1)
     ])
   ])
 }
