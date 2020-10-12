@@ -2800,6 +2800,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2808,7 +2812,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       searchData: {
         keywords: ''
       },
-      getNews: []
+      fetchedNews: []
     };
   },
   methods: {
@@ -2838,7 +2842,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 response = _context.sent;
-                _this.getNews = response.data;
+                _this.fetchedNews = response.data;
                 return _context.abrupt("return", response.status);
 
               case 6:
@@ -23057,7 +23061,14 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "p-news__list" }, [_c("News")], 1)
+      _c(
+        "div",
+        { staticClass: "p-news__list" },
+        _vm._l(_vm.fetchedNews, function(News) {
+          return _c("News", { key: News.id, attrs: { item: News } })
+        }),
+        1
+      )
     ])
   ])
 }

@@ -87,7 +87,11 @@
 
       <!-- ニュース一覧 -->
       <div class="p-news__list">
-        <News/>
+        <News
+            v-for="News in fetchedNews"
+            :key="News.id"
+            :item="News"
+        />
       </div>
 
 
@@ -107,7 +111,7 @@ export default {
       searchData: {
         keywords: ''
       },
-      getNews: []
+      fetchedNews: []
 
     }
   },
@@ -126,7 +130,7 @@ export default {
       const params = this.searchData
       const response = await axios.get(`/api/news/get`, { params });
 
-      this.getNews = response.data;
+      this.fetchedNews = response.data;
 
       return response.status;
     }
