@@ -9,11 +9,11 @@
     <div class="p-news__item--picture"></div>
     <!-- 記事のタイトル -->
     <div class="p-news__item--title">
-      <h2 class="">鳥貴族、錬金術終了へ | 新型コロナウイルスのキャンペーンを悪用</h2>
+      <h2 class="">{{ entry.title }}</h2>
     </div>
     <!-- 時刻とメディア -->
     <div class="p-news__item--data">
-      <div class="p-news__item--time">2020/18/39 99:99:59</div>
+      <div class="p-news__item--time">{{ entry.updated }}</div>
       <div class="p-news__item--media">いくいくファクトリーメディア</div>
     </div>
 
@@ -23,7 +23,27 @@
 
 <script>
 export default {
-name: "News.vue"
+  props: {
+    entry: {
+      type: Object,
+      required: true
+    }
+  },
+  data() {
+    return {
+      currentPath: this.$route.path
+    }
+  },
+  methods: {
+    // async emitFetchReports() {
+    //   this.$emit('reloadReports');
+    // }
+  },
+  filters: {
+    // moment: function (date) {
+    //   return moment(date).format('YY/M/D HH:mm')
+    // }
+  }
 }
 </script>
 

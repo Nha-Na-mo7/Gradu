@@ -27,6 +27,7 @@
       <change beforePath="$PROJECT_DIR$/public/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/News.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/News.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -269,7 +270,10 @@
       <workItem from="1602466915493" duration="11007000" />
       <workItem from="1602492509183" duration="326000" />
       <workItem from="1602492893336" duration="36000" />
-      <workItem from="1602492996503" duration="83000" />
+      <workItem from="1602492996503" duration="192000" />
+      <workItem from="1602493247540" duration="79000" />
+      <workItem from="1602493366643" duration="24000" />
+      <workItem from="1602493413866" duration="92000" />
     </task>
     <servers />
   </component>

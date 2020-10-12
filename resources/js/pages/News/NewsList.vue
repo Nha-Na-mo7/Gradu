@@ -90,7 +90,7 @@
         <News
             v-for="News in fetchedNews"
             :key="News.id"
-            :item="News"
+            :entry="News"
         />
       </div>
 

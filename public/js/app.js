@@ -2677,7 +2677,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "News.vue"
+  props: {
+    entry: {
+      type: Object,
+      required: true
+    }
+  },
+  data: function data() {
+    return {
+      currentPath: this.$route.path
+    };
+  },
+  methods: {// async emitFetchReports() {
+    //   this.$emit('reloadReports');
+    // }
+  },
+  filters: {// moment: function (date) {
+    //   return moment(date).format('YY/M/D HH:mm')
+    // }
+  }
 });
 
 /***/ }),
@@ -22909,38 +22927,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-news__item" }, [
-      _c("span", { staticClass: "c-icon" }, [_vm._v("NEW!!")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-news__item--picture" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-news__item--title" }, [
-        _c("h2", {}, [
-          _vm._v(
-            "鳥貴族、錬金術終了へ | 新型コロナウイルスのキャンペーンを悪用"
-          )
-        ])
+  return _c("div", { staticClass: "p-news__item" }, [
+    _c("span", { staticClass: "c-icon" }, [_vm._v("NEW!!")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-news__item--picture" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-news__item--title" }, [
+      _c("h2", {}, [_vm._v(_vm._s(_vm.entry.title))])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "p-news__item--data" }, [
+      _c("div", { staticClass: "p-news__item--time" }, [
+        _vm._v(_vm._s(_vm.entry.updated))
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "p-news__item--data" }, [
-        _c("div", { staticClass: "p-news__item--time" }, [
-          _vm._v("2020/18/39 99:99:59")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-news__item--media" }, [
-          _vm._v("いくいくファクトリーメディア")
-        ])
+      _c("div", { staticClass: "p-news__item--media" }, [
+        _vm._v("いくいくファクトリーメディア")
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -23065,7 +23072,7 @@ var render = function() {
         "div",
         { staticClass: "p-news__list" },
         _vm._l(_vm.fetchedNews, function(News) {
-          return _c("News", { key: News.id, attrs: { item: News } })
+          return _c("News", { key: News.id, attrs: { entry: News } })
         }),
         1
       )
