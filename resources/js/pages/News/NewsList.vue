@@ -16,7 +16,7 @@
     </div>
 
     <div>
-      <button class="c-btn" @click="getGoogleNews">取得</button>
+      <button class="c-btn" @click="fetchGoogleNews">取得</button>
     </div>
 
     <!--メインレイアウト-->
@@ -122,7 +122,7 @@ export default {
     },
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
-    async getGoogleNews() {
+    async fetchGoogleNews() {
       const params = this.searchData
       const response = await axios.get(`/api/news/get`, { params });
 
@@ -131,7 +131,16 @@ export default {
       return response.status;
     }
   },
-  components: {News}
+  components: {News},
+  watch: {
+    $route: {
+      async handler() {
+        // ページの読み込み直後にもニュース取得を行う
+        await this.fetchGoogleNews()
+      },
+      immediate: true
+    }
+  }
 
 }
 </script>
