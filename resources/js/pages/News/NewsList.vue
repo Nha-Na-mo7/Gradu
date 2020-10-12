@@ -106,7 +106,8 @@ export default {
       modal: false,
       searchData: {
         keywords: ''
-      }
+      },
+      getNews: []
 
     }
   },
@@ -122,11 +123,10 @@ export default {
 
     async getGoogleNews() {
       const params = this.searchData
-      console.log(params)
       const response = await axios.get(`/api/news/get`, { params });
 
-      console.log(response.data);
-
+      this.getNews = response.data;
+      
       return response.status;
     }
   },
