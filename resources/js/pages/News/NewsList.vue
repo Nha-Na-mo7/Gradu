@@ -133,7 +133,8 @@ export default {
       this.fetchedNews = response.data;
 
       return response.status;
-    }
+    },
+
   },
   components: {News},
   watch: {

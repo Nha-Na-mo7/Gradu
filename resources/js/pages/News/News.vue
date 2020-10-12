@@ -4,7 +4,7 @@
 <template>
   <div class="p-news__item">
     <!-- 24H以内の記事に付与されるアイコン -->
-    <span class="c-icon">NEW!!</span>
+    <span v-if="is24h" class="c-icon">NEW!!</span>
     <!-- 写真 -->
     <div class="p-news__item--picture"></div>
     <!-- 記事のタイトル -->
@@ -33,7 +33,8 @@ export default {
   },
   data() {
     return {
-      currentPath: this.$route.path
+      currentPath: this.$route.path,
+      is24h: false,
     }
   },
   methods: {
@@ -60,6 +61,29 @@ export default {
     getMedia() {
       const arr = this.splitTitle;
       return arr[arr.length - 1];
+    },
+
+    // 投稿された記事が、現在時刻から見て24時間以内の投稿記事かを判定する
+    async getTime() {
+      const day = Date.now(); //現在時刻
+      const entryday = Date.parse(this.entry.updated); //記事の投稿時刻
+
+      console.log('day:'+day)
+      console.log('entryday:'+entryday)
+      console.log(day - entryday);
+
+      if(day - entryday < 60 * 60 * 24) {
+        this.is24h = true;
+      }
+    }
+  },
+  watch: {
+    $route: {
+      async handler() {
+        // ページの読み込み直後にもニュース取得を行う
+        await this.getTime
+      },
+      immediate: true
     }
   },
   filters: {

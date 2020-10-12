@@ -82,7 +82,7 @@ class GoogleNewsController extends Controller
     }else{
       $list_gn = $list;
     }
-    
+    Log::debug($list_gn);
     // 取得したニュースの配列を返却
     return $list_gn;
   }
