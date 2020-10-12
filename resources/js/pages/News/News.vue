@@ -42,20 +42,24 @@ export default {
     // }
   },
   computed: {
+    // " - "で区切る
     splitTitle() {
-      return this.entry.title.split(' - ');
+      const split_title = this.entry.title;
+      return split_title.split(' - ');
     },
+    // 提供メディアを除いたタイトルを返す。
+    // タイトルの一番最後に" - "に続く形でメディアが続くため、そこだけを取り除いた文字列を返却
     getTitle() {
-      const title = this.splitTitle;
-      const media = title.pop();
-      console.log(media)
+      const splitTitle = this.splitTitle
+      var title = '';
+      for (let i = 0; i < splitTitle.length - 1; i++){
+        title += splitTitle[i];
+      }
       return title;
     },
     getMedia() {
-      const title = this.splitTitle;
-      const media = title.pop();
-      console.log(media)
-      return media;
+      const arr = this.splitTitle;
+      return arr[arr.length - 1];
     }
   },
   filters: {

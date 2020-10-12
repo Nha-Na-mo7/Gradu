@@ -2696,20 +2696,26 @@ __webpack_require__.r(__webpack_exports__);
     // }
   },
   computed: {
+    // " - "で区切る
     splitTitle: function splitTitle() {
-      return this.entry.title.split(' - ');
+      var split_title = this.entry.title;
+      return split_title.split(' - ');
     },
+    // 提供メディアを除いたタイトルを返す。
+    // タイトルの一番最後に" - "に続く形でメディアが続くため、そこだけを取り除いた文字列を返却
     getTitle: function getTitle() {
-      var title = this.splitTitle;
-      var media = title.pop();
-      console.log(media);
+      var splitTitle = this.splitTitle;
+      var title = '';
+
+      for (var i = 0; i < splitTitle.length - 1; i++) {
+        title += splitTitle[i];
+      }
+
       return title;
     },
     getMedia: function getMedia() {
-      var title = this.splitTitle;
-      var media = title.pop();
-      console.log(media);
-      return media;
+      var arr = this.splitTitle;
+      return arr[arr.length - 1];
     }
   },
   filters: {
