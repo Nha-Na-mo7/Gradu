@@ -9,12 +9,12 @@
     <div class="p-news__item--picture"></div>
     <!-- 記事のタイトル -->
     <div class="p-news__item--title">
-      <h2 class="">{{ entry.title }}</h2>
+      <h2 class=""><a :href="this.entry.url">{{ getTitle }}</a></h2>
     </div>
     <!-- 時刻とメディア -->
     <div class="p-news__item--data">
-      <div class="p-news__item--time">{{ entry.updated }}</div>
-      <div class="p-news__item--media">いくいくファクトリーメディア</div>
+      <div class="p-news__item--time"><p>{{ entry.updated | newsUpdate }}</p></div>
+      <div class="p-news__item--media"><p>{{ getMedia }}</p></div>
     </div>
 
 
@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   props: {
     entry: {
@@ -39,10 +41,27 @@ export default {
     //   this.$emit('reloadReports');
     // }
   },
+  computed: {
+    splitTitle() {
+      return this.entry.title.split(' - ');
+    },
+    getTitle() {
+      const title = this.splitTitle;
+      const media = title.pop();
+      console.log(media)
+      return title;
+    },
+    getMedia() {
+      const title = this.splitTitle;
+      const media = title.pop();
+      console.log(media)
+      return media;
+    }
+  },
   filters: {
-    // moment: function (date) {
-    //   return moment(date).format('YY/M/D HH:mm')
-    // }
+    newsUpdate: function (date) {
+      return moment(date).format('YYYY/MM/DD HH:mm')
+    }
   }
 }
 </script>
