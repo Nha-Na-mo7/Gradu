@@ -16,7 +16,7 @@
     </div>
 
     <div>
-      <button class="c-btn" @click="fetchGoogleNews">取得</button>
+      <button class="c-btn" @click="fetch_googleNews">取得</button>
     </div>
 
     <!--メインレイアウト-->
@@ -104,7 +104,10 @@
 
 <script>
 import News from './News.vue';
+const defaultSearchWord = '仮想通貨';
+
 export default {
+
   data() {
     return {
       modal: false,
@@ -126,8 +129,8 @@ export default {
     },
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
-    async fetchGoogleNews() {
-      const params = this.searchData
+    async fetch_googleNews() {
+      const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
 
       this.fetchedNews = response.data;
@@ -135,13 +138,24 @@ export default {
       return response.status;
     },
 
+    // DBからユーザーが保存した検索設定を取得し、searchData.keywordsに入れる。
+    // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
+    async fetch_setting_search() {
+      // DBから取得してくる処理
+
+      // DBから取得した値が空だった場合の処理
+      if(true) {
+        this.searchData.keywords = defaultSearchWord;
+      }
+    }
   },
   components: {News},
   watch: {
     $route: {
       async handler() {
-        // ページの読み込み直後にもニュース取得を行う
-        await this.fetchGoogleNews()
+        // ページの読み込み直後、DBから検索設定ワードを格納して、ニュース取得を行う
+        await this.fetch_setting_search();
+        await this.fetch_googleNews();
       },
       immediate: true
     }

@@ -2913,6 +2913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
+var defaultSearchWord = '仮想通貨';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2933,7 +2934,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.modal = false;
     },
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
-    fetchGoogleNews: function fetchGoogleNews() {
+    fetch_googleNews: function fetch_googleNews() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2960,6 +2961,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    // DBからユーザーが保存した検索設定を取得し、searchData.keywordsに入れる。
+    // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
+    fetch_setting_search: function fetch_setting_search() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                // DBから取得してくる処理
+                // DBから取得した値が空だった場合の処理
+                if (true) {
+                  _this2.searchData.keywords = defaultSearchWord;
+                }
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
     }
   },
   components: {
@@ -2968,22 +2993,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this3 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.fetchGoogleNews();
+                  _context3.next = 2;
+                  return _this3.fetch_setting_search();
 
                 case 2:
+                  _context3.next = 4;
+                  return _this3.fetch_googleNews();
+
+                case 4:
                 case "end":
-                  return _context2.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee2);
+          }, _callee3);
         }))();
       },
       immediate: true
@@ -44666,7 +44695,7 @@ var render = function() {
     _c("div", [
       _c(
         "button",
-        { staticClass: "c-btn", on: { click: _vm.fetchGoogleNews } },
+        { staticClass: "c-btn", on: { click: _vm.fetch_googleNews } },
         [_vm._v("取得")]
       )
     ]),
