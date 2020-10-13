@@ -11,7 +11,7 @@ class GoogleNewsController extends Controller
   /*
    * Googleニュース検索・データ取得関数 atom
    * $keyword: ニュース検索のキーワード
-   * $max_num: 取得記事数の上限
+   * $max_num: 取得記事数の上限。APIの仕様上最大100件
    * $news_letters: 表示するニュースの文字数
    */
   public function get_news(){
@@ -19,10 +19,8 @@ class GoogleNewsController extends Controller
     // TODO getキーワードにスクリプト攻撃が混ざる可能性を考察すること
     // GETパラメータの値を元に、ニュースを取得する
     $keywords = !empty($_GET['keywords']) ? $_GET['keywords'] : '仮想通貨';
-    $max_num = 50;
+    $max_num = 100;
     $news_letters = 200;
-    Log::debug('$keywords: '.$keywords);
-    Log::debug('$max_num: '.$max_num);
     
     // 実行時間。90秒。
     set_time_limit(90);
@@ -38,8 +36,6 @@ class GoogleNewsController extends Controller
     
     // APIへのリクエストURLを作成(検索キーワードを付与)
     $api_url = $API_BASE_URL.$query;
-    
-    Log::debug('今回の検索URLは: '.$api_url);
     
     // APIにアクセスする。その結果はsimplexmlに格納する。
     $content = file_get_contents($api_url);
