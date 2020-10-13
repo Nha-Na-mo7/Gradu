@@ -19,7 +19,7 @@ class GoogleNewsController extends Controller
     // TODO getキーワードにスクリプト攻撃が混ざる可能性を考察すること
     // GETパラメータの値を元に、ニュースを取得する
     $keywords = !empty($_GET['keywords']) ? $_GET['keywords'] : '仮想通貨';
-    $max_num = 10;
+    $max_num = 50;
     $news_letters = 200;
     Log::debug('$keywords: '.$keywords);
     Log::debug('$max_num: '.$max_num);
@@ -74,6 +74,15 @@ class GoogleNewsController extends Controller
   
     }
     
+    // 記事を並べ替える。デフォルトでは新着順に並べる。
+    // TODO GETパラメータによって降順・昇順、あるいは他の条件か選択できるようにする
+    foreach ($list as $key => $value) {
+      $updated[$key] = $value['updated'];
+    }
+    array_multisort($updated, SORT_DESC, $list);
+    
+    
+    
     // $max_numの数値以上の記事がある場合、オーバーした分の記事を削る
     if(count($list) > $max_num){
       for ($i = 0; $i < $max_num; $i++) {
@@ -82,7 +91,6 @@ class GoogleNewsController extends Controller
     }else{
       $list_gn = $list;
     }
-    Log::debug($list_gn);
     // 取得したニュースの配列を返却
     return $list_gn;
   }

@@ -2973,6 +2973,7 @@ var defaultSearchWord = '仮想通貨';
             switch (_context2.prev = _context2.next) {
               case 0:
                 // DBから取得してくる処理
+                // const response = await axios.get(`/api/news/setting/get`, { params });
                 // DBから取得した値が空だった場合の処理
                 if (true) {
                   _this2.searchData.keywords = defaultSearchWord;
@@ -2985,6 +2986,10 @@ var defaultSearchWord = '仮想通貨';
           }
         }, _callee2);
       }))();
+    },
+    // 検索設定をDBに保存するメソッド
+    // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
+    save_setting_search: function save_setting_search() {// const response = await axios.post(`/api/news/setting/get`, { params });
     }
   },
   components: {
