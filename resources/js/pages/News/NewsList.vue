@@ -104,6 +104,7 @@
 
 <script>
 import News from './News.vue';
+import {OK} from "../../util";
 const defaultSearchWord = '仮想通貨';
 
 export default {
@@ -140,6 +141,12 @@ export default {
 
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status)
+        return false
+      }
 
       this.fetchedNews = response.data;
 

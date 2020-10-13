@@ -19,7 +19,7 @@ class GoogleNewsController extends Controller
     // TODO getキーワードにスクリプト攻撃が混ざる可能性を考察すること
     // GETパラメータの値を元に、ニュースを取得する
     $keywords = !empty($_GET['keywords']) ? $_GET['keywords'] : '仮想通貨';
-    $max_num = 100;
+    $max_num = 10;
     $news_letters = 200;
     
     // 実行時間。90秒。
@@ -46,6 +46,11 @@ class GoogleNewsController extends Controller
     
     // 記事エントリを取り出す。entry1つに記事情報が詰まっている。
     $data = $xml->entry;
+    
+    // 記事数が0だった場合、空のままレスポンスを返す
+    if(!count($data)) {
+      return $data;
+    }
     
     // entry1つ1つから"title"、"updated"とURLを取り出して、配列に格納する
     for ($i = 0; $i < count($data); $i++) {
