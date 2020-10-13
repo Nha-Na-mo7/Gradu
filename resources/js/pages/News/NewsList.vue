@@ -94,6 +94,15 @@
         />
       </div>
 
+      <!--記事がない時-->
+      <div v-if="isNothingNews">
+        <p>(記事が)ないです</p>
+      </div>
+
+      <!--検索中Loading-->
+      <div v-if="isSearching">
+        <p>検索中 ...</p>
+      </div>
 
     </div>
 
@@ -116,8 +125,8 @@ export default {
         keywords: ''
       },
       isSearching: false,
+      isNothingNews: false,
       fetchedNews: []
-
     }
   },
   methods: {
@@ -136,8 +145,9 @@ export default {
       if(this.isSearching) {
         return false;
       }
-      // 検索開始、isSearchingをtrueにする
+      // 検索開始、isSearchingをtrueに、isNothingNewsをfalseにする
       this.isSearching = true;
+      this.isNothingNews = false;
 
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
@@ -149,6 +159,11 @@ export default {
       }
 
       this.fetchedNews = response.data;
+
+      // 記事数が0の時、isNothingNewsをtrueにする
+      if(!this.fetchedNews.length) {
+        this.isNothingNews = true;
+      }
 
       // 検索終了、isSearchingをfalseに戻す
       this.isSearching = false;

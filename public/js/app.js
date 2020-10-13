@@ -2910,6 +2910,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var defaultSearchWord = '仮想通貨';
@@ -2921,6 +2930,7 @@ var defaultSearchWord = '仮想通貨';
         keywords: ''
       },
       isSearching: false,
+      isNothingNews: false,
       fetchedNews: []
     };
   },
@@ -2951,19 +2961,20 @@ var defaultSearchWord = '仮想通貨';
                 return _context.abrupt("return", false);
 
               case 2:
-                // 検索開始、isSearchingをtrueにする
+                // 検索開始、isSearchingをtrueに、isNothingNewsをfalseにする
                 _this.isSearching = true;
+                _this.isNothingNews = false;
                 params = _this.searchData;
-                _context.next = 6;
+                _context.next = 7;
                 return axios.get("/api/news/get", {
                   params: params
                 });
 
-              case 6:
+              case 7:
                 response = _context.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
-                  _context.next = 10;
+                  _context.next = 11;
                   break;
                 }
 
@@ -2971,13 +2982,18 @@ var defaultSearchWord = '仮想通貨';
 
                 return _context.abrupt("return", false);
 
-              case 10:
-                _this.fetchedNews = response.data; // 検索終了、isSearchingをfalseに戻す
+              case 11:
+                _this.fetchedNews = response.data; // 記事数が0の時、isNothingNewsをtrueにする
+
+                if (!_this.fetchedNews.length) {
+                  _this.isNothingNews = true;
+                } // 検索終了、isSearchingをfalseに戻す
+
 
                 _this.isSearching = false;
                 return _context.abrupt("return", response.status);
 
-              case 13:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -44823,7 +44839,13 @@ var render = function() {
           return _c("News", { key: News.id, attrs: { entry: News } })
         }),
         1
-      )
+      ),
+      _vm._v(" "),
+      _vm.isNothingNews
+        ? _c("div", [_c("p", [_vm._v("(記事が)ないです")])])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.isSearching ? _c("div", [_c("p", [_vm._v("検索中 ...")])]) : _vm._e()
     ])
   ])
 }
