@@ -734,9 +734,10 @@ main {
 }
 
 .p-news__container {
-  border: 1px solid #000;
   background: #f5f8ff;
-  margin: 15px 25px;
+  box-shadow: #edf1fa 0 0 20px;
+  margin-top: 20px;
+  padding: 15px 25px;
 }
 
 .p-news__search {
@@ -1010,9 +1011,10 @@ main {
 }
 
 .p-news__container {
-  border: 1px solid #000;
   background: #f5f8ff;
-  margin: 15px 25px;
+  box-shadow: #edf1fa 0 0 20px;
+  margin-top: 20px;
+  padding: 15px 25px;
 }
 
 .p-news__search {
