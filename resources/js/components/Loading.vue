@@ -1,12 +1,17 @@
 <template>
   <div>
+    <!-- カバー -->
     <div class="c-loading__cover"></div>
+
+    <!-- 四角い表示画面-->
     <div class="c-loading">
 
+      <!-- メッセージのタイトル(例「検索中」) -->
       <div class="c-loading__message-area">
         <p class="c-loading__title">{{ this.title }}</p>
       </div>
 
+      <!-- 円がグルグルしているエリア -->
       <div class="c-loading__circle-area">
         <span class="c-loading__circle">●</span>
       </div>
