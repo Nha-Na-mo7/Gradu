@@ -26,7 +26,7 @@
       <div class="p-news__headline">
         <!-- 検索 -->
         <div class="p-news__search">
-          <input type="text" class="c-input" value="仮想通貨">
+          <input type="text" class="c-input" v-model="searchData.keywords">
           <button type="submit" class="">🔎</button>
         </div>
 

@@ -44673,7 +44673,31 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "p-news__container" }, [
       _c("div", { staticClass: "p-news__headline" }, [
-        _vm._m(1),
+        _c("div", { staticClass: "p-news__search" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.searchData.keywords,
+                expression: "searchData.keywords"
+              }
+            ],
+            staticClass: "c-input",
+            attrs: { type: "text" },
+            domProps: { value: _vm.searchData.keywords },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.searchData, "keywords", $event.target.value)
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "c-modal__title" }, [
           _c(
@@ -44702,9 +44726,9 @@ var render = function() {
             }),
             _vm._v(" "),
             _c("div", { staticClass: "c-modal" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "c-modal__btn-area" }, [
                 _c(
@@ -44753,19 +44777,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "c-site__title" }, [
       _c("span", [_vm._v("NEWS")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-news__search" }, [
-      _c("input", {
-        staticClass: "c-input",
-        attrs: { type: "text", value: "仮想通貨" }
-      }),
-      _vm._v(" "),
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")])
     ])
   },
   function() {
