@@ -95,14 +95,16 @@
         />
       </div>
 
-      <!--記事がない時-->
+      <!-- 記事がない時 -->
       <div v-if="isNothingNews">
         <p>(記事が)ないです</p>
       </div>
 
-      <!--検索中 Loading-->
+      <!-- 検索中 -->
       <div v-if="isSearching" class="">
-        <Loading />
+        <Loading
+          :title="searchingWord"
+        />
       </div>
 
     </div>
@@ -114,8 +116,8 @@
 <script>
 import News from './News.vue';
 import Loading from '../../components/Loading.vue';
-import {OK} from "../../util";
-const defaultSearchWord = '仮想通貨';
+import { OK , SEARCHING, defaultSearchWord } from "../../util";
+
 
 export default {
 
@@ -130,6 +132,11 @@ export default {
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
       fetchedNews: []
+    }
+  },
+  computed: {
+    searchingWord() {
+      return SEARCHING;
     }
   },
   methods: {

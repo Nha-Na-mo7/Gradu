@@ -4,7 +4,7 @@
     <div class="c-loading">
 
       <div class="c-loading__message-area">
-        <p class="c-loading__title">検索中</p>
+        <p class="c-loading__title">{{ this.title }}</p>
       </div>
 
       <div class="c-loading__circle-area">
@@ -16,7 +16,12 @@
 
 <script>
 export default {
-name: "Loading.vue"
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  },
 }
 </script>
 

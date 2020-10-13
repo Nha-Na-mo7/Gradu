@@ -2091,7 +2091,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Loading.vue"
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  }
 });
 
 /***/ }),
@@ -2951,10 +2956,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
-var defaultSearchWord = '仮想通貨';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2968,6 +2974,11 @@ var defaultSearchWord = '仮想通貨';
       isNothingNews: false,
       fetchedNews: []
     };
+  },
+  computed: {
+    searchingWord: function searchingWord() {
+      return _util__WEBPACK_IMPORTED_MODULE_3__["SEARCHING"];
+    }
   },
   methods: {
     // モーダルを開く
@@ -3051,7 +3062,7 @@ var defaultSearchWord = '仮想通貨';
                 // const response = await axios.get(`/api/news/setting/get`, { params });
                 // DBから取得した値が空だった場合の処理
                 if (true) {
-                  _this2.searchData.keywords = defaultSearchWord;
+                  _this2.searchData.keywords = _util__WEBPACK_IMPORTED_MODULE_3__["defaultSearchWord"];
                 }
 
               case 1:
@@ -43951,25 +43962,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("div", { staticClass: "c-loading__cover" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "c-loading" }, [
+      _c("div", { staticClass: "c-loading__message-area" }, [
+        _c("p", { staticClass: "c-loading__title" }, [
+          _vm._v(_vm._s(this.title))
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "c-loading__cover" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-loading" }, [
-        _c("div", { staticClass: "c-loading__message-area" }, [
-          _c("p", { staticClass: "c-loading__title" }, [_vm._v("検索中")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-loading__circle-area" }, [
-          _c("span", { staticClass: "c-loading__circle" }, [_vm._v("●")])
-        ])
-      ])
+    return _c("div", { staticClass: "c-loading__circle-area" }, [
+      _c("span", { staticClass: "c-loading__circle" }, [_vm._v("●")])
     ])
   }
 ]
@@ -44982,7 +44995,14 @@ var render = function() {
         ? _c("div", [_c("p", [_vm._v("(記事が)ないです")])])
         : _vm._e(),
       _vm._v(" "),
-      _vm.isSearching ? _c("div", {}, [_c("Loading")], 1) : _vm._e()
+      _vm.isSearching
+        ? _c(
+            "div",
+            {},
+            [_c("Loading", { attrs: { title: _vm.searchingWord } })],
+            1
+          )
+        : _vm._e()
     ])
   ])
 }
@@ -63358,7 +63378,7 @@ var mutations = {
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: getCookieValue, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR */
+/*! exports provided: getCookieValue, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOADING, SEARCHING, defaultSearchWord */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63370,6 +63390,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNAUTHORIZED", function() { return UNAUTHORIZED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOADING", function() { return LOADING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SEARCHING", function() { return SEARCHING; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultSearchWord", function() { return defaultSearchWord; });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -63421,6 +63444,9 @@ var UNAUTHORIZED = 419; //認証切れ
 var UNPROCESSABLE_ENTITY = 422; //バリデーションエラー
 
 var INTERNAL_SERVER_ERROR = 500;
+var LOADING = '読み込み中';
+var SEARCHING = '検索中';
+var defaultSearchWord = '仮想通貨';
 
 /***/ }),
 

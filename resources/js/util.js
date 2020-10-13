@@ -35,3 +35,9 @@ export const NOT_FOUND = 404
 export const UNAUTHORIZED = 419 //認証切れ
 export const UNPROCESSABLE_ENTITY = 422 //バリデーションエラー
 export const INTERNAL_SERVER_ERROR = 500
+
+export const LOADING = '読み込み中'
+export const SEARCHING = '検索中'
+
+export const defaultSearchWord = '仮想通貨';
+
