@@ -38,6 +38,7 @@
 
       <!-- 絞り込みモーダル -->
       <div class="c-modal__hide" v-if="modal">
+
         <!-- モーダルカバー -->
         <!-- 画面がクリックでモーダルを閉じる。.selfを付与して子要素にクローズイベントが伝播しないようにする-->
         <div class="c-modal__cover" @click.self="closeModal"></div>
@@ -85,6 +86,11 @@
         </div>
       </div>
 
+      <!--検索中Loading マスクにするのも検討したい-->
+      <div v-if="isSearching" class="c-modal__cover">
+        <h2 class="c-zindex5">検索中 ...</h2>
+      </div>
+
       <!-- ニュース一覧 -->
       <div class="p-news__list">
         <News
@@ -97,11 +103,6 @@
       <!--記事がない時-->
       <div v-if="isNothingNews">
         <p>(記事が)ないです</p>
-      </div>
-
-      <!--検索中Loading-->
-      <div v-if="isSearching">
-        <p>検索中 ...</p>
       </div>
 
     </div>
@@ -125,6 +126,8 @@ export default {
         keywords: ''
       },
       isSearching: false,
+      // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
+      // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
       fetchedNews: []
     }
@@ -205,5 +208,9 @@ export default {
 </script>
 
 <style scoped>
-
+.c-zindex5 {
+  z-index: 5;
+  font-size: 50px;
+  color: red;
+}
 </style>
