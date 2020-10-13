@@ -2949,6 +2949,7 @@ var defaultSearchWord = '仮想通貨';
                 return _context.abrupt("return", false);
 
               case 2:
+                // 検索開始、isSearchingをtrueにする
                 _this.isSearching = true;
                 params = _this.searchData;
                 _context.next = 6;
@@ -2958,7 +2959,8 @@ var defaultSearchWord = '仮想通貨';
 
               case 6:
                 response = _context.sent;
-                _this.fetchedNews = response.data;
+                _this.fetchedNews = response.data; // 検索終了、isSearchingをfalseに戻す
+
                 _this.isSearching = false;
                 return _context.abrupt("return", response.status);
 

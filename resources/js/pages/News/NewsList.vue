@@ -135,6 +135,7 @@ export default {
       if(this.isSearching) {
         return false;
       }
+      // 検索開始、isSearchingをtrueにする
       this.isSearching = true;
 
       const params = this.searchData;
@@ -142,6 +143,7 @@ export default {
 
       this.fetchedNews = response.data;
 
+      // 検索終了、isSearchingをfalseに戻す
       this.isSearching = false;
 
       return response.status;
