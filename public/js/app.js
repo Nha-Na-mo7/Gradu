@@ -2918,6 +2918,7 @@ var defaultSearchWord = '仮想通貨';
       searchData: {
         keywords: ''
       },
+      isSearching: false,
       fetchedNews: []
     };
   },
@@ -2940,18 +2941,28 @@ var defaultSearchWord = '仮想通貨';
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                if (!_this.isSearching) {
+                  _context.next = 2;
+                  break;
+                }
+
+                return _context.abrupt("return", false);
+
+              case 2:
+                _this.isSearching = true;
                 params = _this.searchData;
-                _context.next = 3;
+                _context.next = 6;
                 return axios.get("/api/news/get", {
                   params: params
                 });
 
-              case 3:
+              case 6:
                 response = _context.sent;
                 _this.fetchedNews = response.data;
+                _this.isSearching = false;
                 return _context.abrupt("return", response.status);
 
-              case 6:
+              case 10:
               case "end":
                 return _context.stop();
             }

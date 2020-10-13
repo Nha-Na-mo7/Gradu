@@ -114,6 +114,7 @@ export default {
       searchData: {
         keywords: ''
       },
+      isSearching: false,
       fetchedNews: []
 
     }
@@ -130,10 +131,18 @@ export default {
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     async fetch_googleNews() {
+      // 検索中には呼び出せないようにする
+      if(this.isSearching) {
+        return false;
+      }
+      this.isSearching = true;
+
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
 
       this.fetchedNews = response.data;
+
+      this.isSearching = false;
 
       return response.status;
     },
