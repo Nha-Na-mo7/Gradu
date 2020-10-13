@@ -2731,24 +2731,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var day, entryday;
+        var now, entryday;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                day = Date.now(); //現在時刻
+                now = Date.now(); //現在時刻
 
                 entryday = Date.parse(_this.entry.updated); //記事の投稿時刻
+                // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
 
-                console.log('day:' + day);
-                console.log('entryday:' + entryday);
-                console.log(day - entryday);
-
-                if (day - entryday < 60 * 60 * 24) {
+                if ((now - entryday) / 1000 < 60 * 60 * 24) {
                   _this.is24h = true;
                 }
 
-              case 6:
+              case 3:
               case "end":
                 return _context.stop();
             }

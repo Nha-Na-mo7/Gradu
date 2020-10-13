@@ -65,14 +65,11 @@ export default {
 
     // 投稿された記事が、現在時刻から見て24時間以内の投稿記事かを判定する
     async getTime() {
-      const day = Date.now(); //現在時刻
+      const now = Date.now(); //現在時刻
       const entryday = Date.parse(this.entry.updated); //記事の投稿時刻
 
-      console.log('day:'+day)
-      console.log('entryday:'+entryday)
-      console.log(day - entryday);
-
-      if(day - entryday < 60 * 60 * 24) {
+      // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
+      if( (now - entryday) / 1000  < 60 * 60 * 24) {
         this.is24h = true;
       }
     }
