@@ -14282,7 +14282,7 @@ setContent:function setContent(state,_ref){var content=_ref.content,_ref$timeout
 // cookieを";"でsplitし、それをさらに"="でsplit。
 document.cookie.split(';').forEach(function(cookie){var _cookie$split=cookie.split('='),_cookie$split2=_slicedToArray(_cookie$split,2),key=_cookie$split2[0],value=_cookie$split2[1];if(key===searchKey){return val=value;}});return val;}var OK=200;var CREATED=201;var NOT_FOUND=404;var UNAUTHORIZED=419;//認証切れ
 var UNPROCESSABLE_ENTITY=422;//バリデーションエラー
-var INTERNAL_SERVER_ERROR=500;var LOADING='読み込み中';var SEARCHING='検索中';var DEFAULT_SEARCHWORD='則本 石川';/***/},/***/"./resources/sass/app.scss":/*!*********************************!*\
+var INTERNAL_SERVER_ERROR=500;var LOADING='読み込み中';var SEARCHING='検索中';var DEFAULT_SEARCHWORD='仮想通貨';/***/},/***/"./resources/sass/app.scss":/*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
   \*********************************/ /*! no static exports found */ /***/function resourcesSassAppScss(module,exports){// removed by extract-text-webpack-plugin
 /***/},/***/0:/*!*************************************************************!*\

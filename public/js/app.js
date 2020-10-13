@@ -63451,7 +63451,7 @@ var UNPROCESSABLE_ENTITY = 422; //バリデーションエラー
 var INTERNAL_SERVER_ERROR = 500;
 var LOADING = '読み込み中';
 var SEARCHING = '検索中';
-var DEFAULT_SEARCHWORD = '則本 石川';
+var DEFAULT_SEARCHWORD = '仮想通貨';
 
 /***/ }),
 
