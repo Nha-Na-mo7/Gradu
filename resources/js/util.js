@@ -39,5 +39,5 @@ export const INTERNAL_SERVER_ERROR = 500
 export const LOADING = '読み込み中'
 export const SEARCHING = '検索中'
 
-export const defaultSearchWord = '仮想通貨';
+export const DEFAULT_SEARCHWORD = '則本 石川';
 

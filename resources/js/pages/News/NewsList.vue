@@ -116,7 +116,7 @@
 <script>
 import News from './News.vue';
 import Loading from '../../components/Loading.vue';
-import { OK , SEARCHING, defaultSearchWord } from "../../util";
+import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 
 
 export default {
@@ -190,7 +190,7 @@ export default {
 
       // DBから取得した値が空だった場合の処理
       if(true) {
-        this.searchData.keywords = defaultSearchWord;
+        this.searchData.keywords = DEFAULT_SEARCHWORD;
       }
     },
 
