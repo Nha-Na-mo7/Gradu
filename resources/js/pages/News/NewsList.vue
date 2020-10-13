@@ -78,25 +78,10 @@
 
           </div>
           <div class="c-modal__btn-area">
-            <button class="c-btn" @click="closeModal">絞り込む</button>
+            <button class="c-btn" @click="fetch_googleNews">絞り込む</button>
             <button class="c-btn" @click="closeModal">リセット</button>
             <button class="c-btn" @click="closeModal">絞り込まずに閉じる</button>
             <button class="c-btn" @click="closeModal">設定を保存</button>
-          </div>
-        </div>
-      </div>
-
-      <!--検索中Loading マスクにするのも検討したい-->
-      <div v-if="isSearching" class="c-loading__hide">
-        <div class="c-loading__cover"></div>
-        <div class="c-loading">
-
-          <div class="c-loading__message-area">
-            <p class="c-loading__title">検索中</p>
-          </div>
-
-          <div class="c-loading__circle-area">
-            <span class="c-loading__circle">●</span>
           </div>
         </div>
       </div>
@@ -115,8 +100,12 @@
         <p>(記事が)ないです</p>
       </div>
 
-    </div>
+      <!--検索中 Loading-->
+      <div v-if="isSearching" class="">
+        <Loading />
+      </div>
 
+    </div>
 
   </div>
 
@@ -124,6 +113,7 @@
 
 <script>
 import News from './News.vue';
+import Loading from '../../components/Loading.vue';
 import {OK} from "../../util";
 const defaultSearchWord = '仮想通貨';
 
@@ -158,9 +148,10 @@ export default {
       if(this.isSearching) {
         return false;
       }
-      // 検索開始、isSearchingをtrueに、isNothingNewsをfalseにする
+      // 検索開始、isSearchingをtrueに、isNothingNews、modalをfalseにする
       this.isSearching = true;
       this.isNothingNews = false;
+      // this.modal = false;
 
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
@@ -200,9 +191,21 @@ export default {
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
     save_setting_search() {
       // const response = await axios.post(`/api/news/setting/get`, { params });
+    },
+
+    // チェックボックスでチェックされた内容をsearchData.keywordsに入れる
+    getCheckboxWord() {
+      $('[name="Crypto"]').change(function(){
+        $('[name="Crypto"]:checked').each(function(index, element){
+          this.searchData.keywords.push($(element).val());
+        });
+      });
     }
   },
-  components: {News},
+  components: {
+    News,
+    Loading
+  },
   watch: {
     $route: {
       async handler() {
@@ -218,49 +221,5 @@ export default {
 </script>
 
 <style scoped>
-.c-loading{
-  width: 20%;
-  height: 20%;
-  position: fixed;
-  display: flex;
-  flex-direction: column;
 
-  top: 40%;
-  left: 40%;
-  z-index: 4;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #dedede;
-}
-.c-loading__message-area {
-  height: 20%;
-  text-align: center;
-  margin: auto 0;
-}
-.c-loading__title {
-  font-size: 20px;
-}
-
-.c-loading__circle-area {
-  height: 70%;
-  padding: 0 10%;
-  background: #ffffff;
-}
-.c-loading__circle{
-  border-radius: 25px;
-  background: #4FB4D7;
-  margin: 0 auto;
-  height: 80px;
-  width: 80px;
-}
-.c-loading__cover {
-  transition: .1s all;
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 5;
-  opacity: 0.1;
-  background: #000000;
-}
 </style>
