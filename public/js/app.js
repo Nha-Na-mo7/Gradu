@@ -2920,6 +2920,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var defaultSearchWord = '仮想通貨';
@@ -3119,7 +3129,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.c-zindex5[data-v-f7689e98] {\n  z-index: 5;\n  font-size: 50px;\n  color: red;\n}\n", ""]);
+exports.push([module.i, "\n.c-loading[data-v-f7689e98]{\n  width: 20%;\n  height: 20%;\n  position: fixed;\n  display: flex;\n  flex-direction: column;\n\n  top: 40%;\n  left: 40%;\n  z-index: 4;\n  border-radius: 10px;\n  box-shadow: 0 0 15px #dedede;\n}\n.c-loading__message-area[data-v-f7689e98] {\n  height: 20%;\n  text-align: center;\n  margin: auto 0;\n}\n.c-loading__title[data-v-f7689e98] {\n  font-size: 20px;\n}\n.c-loading__circle-area[data-v-f7689e98] {\n  height: 70%;\n  padding: 0 10%;\n  background: #ffffff;\n}\n.c-loading__circle[data-v-f7689e98]{\n  border-radius: 25px;\n  background: #4FB4D7;\n  margin: 0 auto;\n  height: 80px;\n  width: 80px;\n}\n.c-loading__cover[data-v-f7689e98] {\n  transition: .1s all;\n  width: 100%;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 5;\n  opacity: 0.1;\n  background: #000000;\n}\n", ""]);
 
 // exports
 
@@ -44885,8 +44895,10 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.isSearching
-        ? _c("div", { staticClass: "c-modal__cover" }, [
-            _c("h2", { staticClass: "c-zindex5" }, [_vm._v("検索中 ...")])
+        ? _c("div", { staticClass: "c-loading__hide" }, [
+            _c("div", { staticClass: "c-loading__cover" }),
+            _vm._v(" "),
+            _vm._m(3)
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -45010,6 +45022,20 @@ var staticRenderFns = [
             ])
           ])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-loading" }, [
+      _c("div", { staticClass: "c-loading__message-area" }, [
+        _c("p", { staticClass: "c-loading__title" }, [_vm._v("検索中")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-loading__circle-area" }, [
+        _c("span", { staticClass: "c-loading__circle" }, [_vm._v("●")])
       ])
     ])
   }

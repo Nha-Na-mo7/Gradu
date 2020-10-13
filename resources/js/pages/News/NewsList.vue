@@ -87,8 +87,18 @@
       </div>
 
       <!--検索中Loading マスクにするのも検討したい-->
-      <div v-if="isSearching" class="c-modal__cover">
-        <h2 class="c-zindex5">検索中 ...</h2>
+      <div v-if="isSearching" class="c-loading__hide">
+        <div class="c-loading__cover"></div>
+        <div class="c-loading">
+
+          <div class="c-loading__message-area">
+            <p class="c-loading__title">検索中</p>
+          </div>
+
+          <div class="c-loading__circle-area">
+            <span class="c-loading__circle">●</span>
+          </div>
+        </div>
       </div>
 
       <!-- ニュース一覧 -->
@@ -208,9 +218,49 @@ export default {
 </script>
 
 <style scoped>
-.c-zindex5 {
+.c-loading{
+  width: 20%;
+  height: 20%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+
+  top: 40%;
+  left: 40%;
+  z-index: 4;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #dedede;
+}
+.c-loading__message-area {
+  height: 20%;
+  text-align: center;
+  margin: auto 0;
+}
+.c-loading__title {
+  font-size: 20px;
+}
+
+.c-loading__circle-area {
+  height: 70%;
+  padding: 0 10%;
+  background: #ffffff;
+}
+.c-loading__circle{
+  border-radius: 25px;
+  background: #4FB4D7;
+  margin: 0 auto;
+  height: 80px;
+  width: 80px;
+}
+.c-loading__cover {
+  transition: .1s all;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 5;
-  font-size: 50px;
-  color: red;
+  opacity: 0.1;
+  background: #000000;
 }
 </style>
