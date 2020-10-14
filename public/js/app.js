@@ -3001,6 +3001,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -3016,7 +3017,7 @@ var PAGE_TITLE = 'NEWS';
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-      isEntering: false,
+      isEditMode: false,
       fetchedNews: [],
       searchData: {
         keywords: ''
@@ -3044,6 +3045,10 @@ var PAGE_TITLE = 'NEWS';
     // 検索欄を空欄にする
     resetSearchWord: function resetSearchWord() {
       this.searchData.keywords = '';
+    },
+    // 編集モードに切り替え
+    toggleEditMode: function toggleEditMode() {
+      this.isEditMode = !this.isEditMode;
     },
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     fetch_googleNews: function fetch_googleNews() {
@@ -45035,27 +45040,42 @@ var render = function() {
               [_vm._v("🔎")]
             ),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.searchData.keywords,
-                  expression: "searchData.keywords"
-                }
-              ],
-              staticClass: "c-input",
-              attrs: { type: "text" },
-              domProps: { value: _vm.searchData.keywords },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _vm.isEditMode
+              ? _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.searchData.keywords,
+                      expression: "searchData.keywords"
+                    }
+                  ],
+                  staticClass: "c-input",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.searchData.keywords },
+                  on: {
+                    keyup: function($event) {
+                      if (
+                        !$event.type.indexOf("key") &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      ) {
+                        return null
+                      }
+                      return _vm.toggleEditMode($event)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.searchData, "keywords", $event.target.value)
+                    }
                   }
-                  _vm.$set(_vm.searchData, "keywords", $event.target.value)
-                }
-              }
-            })
+                })
+              : _c(
+                  "span",
+                  { staticClass: "c-input", on: { click: _vm.toggleEditMode } },
+                  [_vm._v(_vm._s(_vm.searchData.keywords))]
+                )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "c-modal__title" }, [

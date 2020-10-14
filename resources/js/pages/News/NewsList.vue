@@ -28,7 +28,8 @@
 
           <button type="submit" class="" @click="fetch_googleNews">🔎</button>
 
-          <input type="text" class="c-input" v-model="searchData.keywords">
+          <input type="text" class="c-input" v-model="searchData.keywords" v-if="isEditMode" v-on:keyup.enter="toggleEditMode">
+          <span class="c-input" v-else  @click="toggleEditMode">{{ searchData.keywords }}</span>
         </div>
 
         <!-- 絞り込みモーダルボタン -->
@@ -133,7 +134,7 @@ export default {
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-      isEntering: false,
+      isEditMode: false,
       fetchedNews: [],
       searchData: {
         keywords: ''
@@ -161,6 +162,10 @@ export default {
     // 検索欄を空欄にする
     resetSearchWord() {
       this.searchData.keywords = '';
+    },
+    // 編集モードに切り替え
+    toggleEditMode() {
+      this.isEditMode = !this.isEditMode
     },
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
