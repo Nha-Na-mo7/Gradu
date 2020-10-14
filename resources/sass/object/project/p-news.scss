@@ -10,6 +10,7 @@
   }
 
   &__search {
+    position: relative; //TODO c-input__resetarea用に仮に付与したもの
     width: 70%;
     background: #fdfdfd;
     box-shadow: #b0b0b0 0 0 5px;

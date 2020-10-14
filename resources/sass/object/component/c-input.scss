@@ -7,4 +7,37 @@
   height: 100%;
   padding: 0 10px;
   width: 90%;
+
+
+  // 入力内容を消去するためのボタン
+  &__reset {
+    &-area {
+      right: 0;
+      height: 100%;
+      width: 60px;
+      z-index: 2;
+
+      font-size: 25px;
+
+      position: absolute;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &-circle {
+      border-radius: 50%;
+      transition: all .2s;
+      text-align: center;
+
+      width: 40px;
+      height: 40px;
+
+      &:hover {
+        background: #dbdbdb;
+        cursor: pointer;
+      }
+    }
+  }
 }

@@ -20,8 +20,11 @@
       <div class="p-news__headline">
         <!-- 検索 -->
         <div class="p-news__search">
-          <input type="text" class="c-input" v-model="searchData.keywords">
+          <div class="c-input__reset-area">
+            <button class="c-input__reset-circle">×</button>
+          </div>
           <button type="submit" class="">🔎</button>
+          <input type="text" class="c-input" v-model="searchData.keywords">
         </div>
 
         <!-- 絞り込みモーダルボタン -->

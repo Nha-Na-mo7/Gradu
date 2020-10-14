@@ -2994,6 +2994,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -44997,6 +45000,10 @@ var render = function() {
       _c("div", { staticClass: "p-news__container" }, [
         _c("div", { staticClass: "p-news__headline" }, [
           _c("div", { staticClass: "p-news__search" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")]),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -45017,9 +45024,7 @@ var render = function() {
                   _vm.$set(_vm.searchData, "keywords", $event.target.value)
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")])
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "c-modal__title" }, [
@@ -45049,9 +45054,9 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "c-modal" }, [
-                _vm._m(0),
-                _vm._v(" "),
                 _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("div", { staticClass: "c-modal__btn-area" }, [
                   _c(
@@ -45110,6 +45115,14 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-input__reset-area" }, [
+      _c("button", { staticClass: "c-input__reset-circle" }, [_vm._v("×")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
