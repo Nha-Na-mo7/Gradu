@@ -2999,6 +2999,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -3008,16 +3010,17 @@ var PAGE_TITLE = 'NEWS';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      modal: false,
       pageTitle: PAGE_TITLE,
-      searchData: {
-        keywords: ''
-      },
+      modal: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-      fetchedNews: []
+      isEntering: false,
+      fetchedNews: [],
+      searchData: {
+        keywords: ''
+      }
     };
   },
   computed: {
@@ -3062,19 +3065,19 @@ var PAGE_TITLE = 'NEWS';
               case 2:
                 // 検索開始、isSearchingをtrueに、isNothingNews、modalをfalseにする
                 _this.isSearching = true;
-                _this.isNothingNews = false; // this.modal = false;
-
+                _this.isNothingNews = false;
+                _this.modal = false;
                 params = _this.searchData;
-                _context.next = 7;
+                _context.next = 8;
                 return axios.get("/api/news/get", {
                   params: params
                 });
 
-              case 7:
+              case 8:
                 response = _context.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_5__["OK"])) {
-                  _context.next = 11;
+                  _context.next = 12;
                   break;
                 }
 
@@ -3082,7 +3085,7 @@ var PAGE_TITLE = 'NEWS';
 
                 return _context.abrupt("return", false);
 
-              case 11:
+              case 12:
                 _this.fetchedNews = response.data; // 記事数が0の時、isNothingNewsをtrueにする
 
                 if (!_this.fetchedNews.length) {
@@ -3093,7 +3096,7 @@ var PAGE_TITLE = 'NEWS';
                 _this.isSearching = false;
                 return _context.abrupt("return", response.status);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -45023,7 +45026,14 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
-            _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")]),
+            _c(
+              "button",
+              {
+                attrs: { type: "submit" },
+                on: { click: _vm.fetch_googleNews }
+              },
+              [_vm._v("🔎")]
+            ),
             _vm._v(" "),
             _c("input", {
               directives: [

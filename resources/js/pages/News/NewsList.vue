@@ -25,7 +25,9 @@
           <div class="c-input__reset-area" v-if="isExistSearchWord">
             <button class="c-input__reset-circle" @click="resetSearchWord">×</button>
           </div>
-          <button type="submit" class="">🔎</button>
+
+          <button type="submit" class="" @click="fetch_googleNews">🔎</button>
+
           <input type="text" class="c-input" v-model="searchData.keywords">
         </div>
 
@@ -125,16 +127,17 @@ export default {
 
   data() {
     return {
-      modal: false,
       pageTitle: PAGE_TITLE,
-      searchData: {
-        keywords: ''
-      },
+      modal: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-      fetchedNews: []
+      isEntering: false,
+      fetchedNews: [],
+      searchData: {
+        keywords: ''
+      },
     }
   },
   computed: {
@@ -169,7 +172,7 @@ export default {
       // 検索開始、isSearchingをtrueに、isNothingNews、modalをfalseにする
       this.isSearching = true;
       this.isNothingNews = false;
-      // this.modal = false;
+      this.modal = false;
 
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
