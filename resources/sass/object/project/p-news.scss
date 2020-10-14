@@ -14,9 +14,16 @@
     display: flex; //TODO c-input__resetarea用に仮に付与したもの
     align-items: center; //TODO c-input__resetarea用に仮に付与したもの
     width: 70%;
-    background: #fdfdfd;
+    background: #f6f6f6;
     box-shadow: #b0b0b0 0 0 5px;
     border-radius: 10px;
+
+    transition: .2s all;
+
+    &:focus-within {
+      background: #FFF;
+      box-shadow: #929292 0 1px 5px;
+    }
   }
 
   &__headline {

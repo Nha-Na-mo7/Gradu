@@ -27,9 +27,9 @@
           </div>
 
           <!-- 検索欄 -->
-          <div>
-            <input type="text" class="c-input" v-model="searchData.keywords" v-if="isEditMode" v-on:keyup.enter="toggleEditMode">
-            <span class="c-input" v-else  @click="toggleEditMode">{{ searchData.keywords }}</span>
+          <div class="c-input-test">
+            <input type="text" class="c-input" v-model="searchData.keywords">
+<!--            <span class="c-input" v-else  @mousedown="toggleEditMode">{{ searchData.keywords }}</span>-->
           </div>
 
           <!-- リセット用の✖️ボタン -->
@@ -255,5 +255,7 @@ export default {
 </script>
 
 <style scoped>
-
+.c-input-test {
+  width: 100%;
+}
 </style>
