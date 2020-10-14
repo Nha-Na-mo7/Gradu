@@ -30,14 +30,14 @@
     border-radius: 4px;
     min-height: 150px; //TODO
     width: 100%;
-    background: #f0f3f2;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 10px 15px;
     position: relative;
-    border: 2px solid rgba(246,109,55,0);
+    border-top: 1px solid rgba(246,109,55,0);
+    border-bottom: 1px solid rgba(246,109,55,0);
     color: #0b2e13;
     font-size: 20px;
-    box-shadow: 0 1px 3px #cdcdcd;
+    box-shadow: 0 3px 3px #cdcdcd;
     transition: .5s all;
     display: flex;
     word-break: break-word;
@@ -79,9 +79,24 @@
         color: #4dc0b5;
       }
     }
+    // 24hいないのタグ
     &--new {
       background: #f8ffed;
       box-shadow: 1px 1px 3px #cbe8ff;
+    }
+    // 記事がない時に表示する
+    &--nothing {
+      text-align: center;
+      box-sizing: border-box;
+      padding: 15px 25px;
+      h2 {
+        font-weight: bold;
+        font-size: 25px;
+        margin-bottom: 20px;
+      }
+      p {
+        font-size: 18px;
+      }
     }
   }
 }

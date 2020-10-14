@@ -97,7 +97,7 @@
 
       <!-- 記事がない時 -->
       <div v-if="isNothingNews">
-        <p>(記事が)ないです</p>
+        <NothingNews />
       </div>
 
       <!-- 検索中 -->
@@ -115,6 +115,7 @@
 
 <script>
 import News from './News.vue';
+import NothingNews from './NothingNews.vue';
 import Loading from '../../components/Loading.vue';
 import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 
@@ -211,6 +212,7 @@ export default {
   },
   components: {
     News,
+    NothingNews,
     Loading
   },
   watch: {
