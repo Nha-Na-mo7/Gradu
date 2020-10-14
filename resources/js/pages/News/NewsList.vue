@@ -20,8 +20,10 @@
       <div class="p-news__headline">
         <!-- 検索 -->
         <div class="p-news__search">
-          <div class="c-input__reset-area">
-            <button class="c-input__reset-circle">×</button>
+
+          <!-- リセット用の✖️ボタン -->
+          <div class="c-input__reset-area" v-if="isExistSearchWord">
+            <button class="c-input__reset-circle" @click="resetSearchWord">×</button>
           </div>
           <button type="submit" class="">🔎</button>
           <input type="text" class="c-input" v-model="searchData.keywords">
@@ -138,6 +140,10 @@ export default {
   computed: {
     searchingWord() {
       return SEARCHING;
+    },
+    // 検索欄にワードが存在するか
+    isExistSearchWord() {
+      return this.searchData.keywords !== '';
     }
   },
   methods: {
@@ -148,6 +154,10 @@ export default {
     // モーダルを閉じる
     closeModal(){
       this.modal = false;
+    },
+    // 検索欄を空欄にする
+    resetSearchWord() {
+      this.searchData.keywords = '';
     },
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する

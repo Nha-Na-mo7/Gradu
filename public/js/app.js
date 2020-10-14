@@ -2997,6 +2997,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -3021,6 +3023,10 @@ var PAGE_TITLE = 'NEWS';
   computed: {
     searchingWord: function searchingWord() {
       return _util__WEBPACK_IMPORTED_MODULE_5__["SEARCHING"];
+    },
+    // 検索欄にワードが存在するか
+    isExistSearchWord: function isExistSearchWord() {
+      return this.searchData.keywords !== '';
     }
   },
   methods: {
@@ -3031,6 +3037,10 @@ var PAGE_TITLE = 'NEWS';
     // モーダルを閉じる
     closeModal: function closeModal() {
       this.modal = false;
+    },
+    // 検索欄を空欄にする
+    resetSearchWord: function resetSearchWord() {
+      this.searchData.keywords = '';
     },
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     fetch_googleNews: function fetch_googleNews() {
@@ -45000,7 +45010,18 @@ var render = function() {
       _c("div", { staticClass: "p-news__container" }, [
         _c("div", { staticClass: "p-news__headline" }, [
           _c("div", { staticClass: "p-news__search" }, [
-            _vm._m(0),
+            _vm.isExistSearchWord
+              ? _c("div", { staticClass: "c-input__reset-area" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "c-input__reset-circle",
+                      on: { click: _vm.resetSearchWord }
+                    },
+                    [_vm._v("×")]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("button", { attrs: { type: "submit" } }, [_vm._v("🔎")]),
             _vm._v(" "),
@@ -45054,9 +45075,9 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "c-modal" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("div", { staticClass: "c-modal__btn-area" }, [
                   _c(
@@ -45115,14 +45136,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-input__reset-area" }, [
-      _c("button", { staticClass: "c-input__reset-circle" }, [_vm._v("×")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
