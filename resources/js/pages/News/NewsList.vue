@@ -11,9 +11,7 @@
     </div>
 
     <!-- ページタイトル -->
-    <div class="c-site__title">
-      <span>NEWS</span>
-    </div>
+    <PageTitle :title='pageTitle'/>
 
     <!--メインレイアウト-->
     <div class="p-news__container">
@@ -113,14 +111,17 @@
 import News from './News.vue';
 import NothingNews from './NothingNews.vue';
 import Loading from '../../components/Loading.vue';
+import PageTitle from '../Components/PageTitle.vue';
 import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 
+const PAGE_TITLE = 'NEWS';
 
 export default {
 
   data() {
     return {
       modal: false,
+      pageTitle: PAGE_TITLE,
       searchData: {
         keywords: ''
       },
@@ -207,6 +208,7 @@ export default {
     }
   },
   components: {
+    PageTitle,
     News,
     NothingNews,
     Loading
