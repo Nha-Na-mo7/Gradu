@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /*! destyle.css v1.0.15 | MIT License | https://github.com/nicolas-cusan/destyle.css */
 
 /* Reset box-model */
@@ -948,6 +950,33 @@ main {
   height: 100%;
   padding: 0 10px;
   width: 90%;
+  /* 旧Edge対応 */
+  /* IE対応 */
+}
+
+.c-input::-moz-placeholder {
+  opacity: 0.5;
+}
+
+.c-input:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
+.c-input::placeholder {
+  opacity: 0.5;
+}
+
+.c-input::-ms-input-placeholder {
+  opacity: 0.5;
+}
+
+.c-input:-ms-input-placeholder {
+  opacity: 0.5;
+}
+
+.c-input__searcharea {
+  width: 100%;
+  height: 100%;
 }
 
 .c-input__btn-area {

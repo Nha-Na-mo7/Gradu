@@ -8,6 +8,23 @@
   padding: 0 10px;
   width: 90%;
 
+  &::placeholder {
+    opacity: 0.5;
+  }
+  /* 旧Edge対応 */
+  &::-ms-input-placeholder {
+    opacity: 0.5;
+  }
+  /* IE対応 */
+  &:-ms-input-placeholder {
+    opacity: 0.5;
+  }
+
+  &__searcharea {
+    width: 100%;
+    height: 100%;
+  }
+
   // 入力内容を消去したり検索するためのボタン
   &__btn {
     &-area {

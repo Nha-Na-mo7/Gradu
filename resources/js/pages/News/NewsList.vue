@@ -27,9 +27,8 @@
           </div>
 
           <!-- 検索欄 -->
-          <div class="c-input-test">
-            <input type="text" class="c-input" v-model="searchData.keywords">
-<!--            <span class="c-input" v-else  @mousedown="toggleEditMode">{{ searchData.keywords }}</span>-->
+          <div class="c-input__searcharea">
+            <input type="text" class="c-input" v-model="searchData.keywords" :placeholder="defaultSearchWord">
           </div>
 
           <!-- リセット用の✖️ボタン -->
@@ -151,6 +150,9 @@ export default {
     searchingWord() {
       return SEARCHING;
     },
+    defaultSearchWord() {
+      return DEFAULT_SEARCHWORD;
+    },
     // 検索欄にワードが存在するか
     isExistSearchWord() {
       return this.searchData.keywords !== '';
@@ -255,7 +257,5 @@ export default {
 </script>
 
 <style scoped>
-.c-input-test {
-  width: 100%;
-}
+
 </style>

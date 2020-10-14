@@ -30,7 +30,6 @@
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-input.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-input.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -281,7 +280,7 @@
       <workItem from="1602572136243" duration="125000" />
       <workItem from="1602572310947" duration="12647000" />
       <workItem from="1602655317117" duration="6492000" />
-      <workItem from="1602662297070" duration="3749000" />
+      <workItem from="1602662297070" duration="4533000" />
     </task>
     <servers />
   </component>
