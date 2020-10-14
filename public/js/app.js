@@ -3002,6 +3002,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -45018,64 +45024,90 @@ var render = function() {
       _c("div", { staticClass: "p-news__container" }, [
         _c("div", { staticClass: "p-news__headline" }, [
           _c("div", { staticClass: "p-news__search" }, [
-            _vm.isExistSearchWord
-              ? _c("div", { staticClass: "c-input__reset-area" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "c-input__reset-circle",
-                      on: { click: _vm.resetSearchWord }
-                    },
-                    [_vm._v("×")]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
             _c(
-              "button",
-              {
-                attrs: { type: "submit" },
-                on: { click: _vm.fetch_googleNews }
-              },
-              [_vm._v("🔎")]
+              "div",
+              { staticClass: "c-input__btn-area c-input__btn-area__search" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "c-input__btn-circle",
+                    attrs: { type: "submit" },
+                    on: { click: _vm.fetch_googleNews }
+                  },
+                  [_vm._v("🔎")]
+                )
+              ]
             ),
             _vm._v(" "),
-            _vm.isEditMode
-              ? _c("input", {
-                  directives: [
+            _c("div", [
+              _vm.isEditMode
+                ? _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchData.keywords,
+                        expression: "searchData.keywords"
+                      }
+                    ],
+                    staticClass: "c-input",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.searchData.keywords },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return _vm.toggleEditMode($event)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.searchData,
+                          "keywords",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                : _c(
+                    "span",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.searchData.keywords,
-                      expression: "searchData.keywords"
-                    }
-                  ],
-                  staticClass: "c-input",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.searchData.keywords },
-                  on: {
-                    keyup: function($event) {
-                      if (
-                        !$event.type.indexOf("key") &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.toggleEditMode($event)
+                      staticClass: "c-input",
+                      on: { click: _vm.toggleEditMode }
                     },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.searchData, "keywords", $event.target.value)
-                    }
-                  }
-                })
-              : _c(
-                  "span",
-                  { staticClass: "c-input", on: { click: _vm.toggleEditMode } },
-                  [_vm._v(_vm._s(_vm.searchData.keywords))]
+                    [_vm._v(_vm._s(_vm.searchData.keywords))]
+                  )
+            ]),
+            _vm._v(" "),
+            _vm.isExistSearchWord
+              ? _c(
+                  "div",
+                  { staticClass: "c-input__btn-area c-input__btn-area__reset" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "c-input__btn-circle",
+                        on: { click: _vm.resetSearchWord }
+                      },
+                      [_vm._v("×")]
+                    )
+                  ]
                 )
+              : _vm._e()
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "c-modal__title" }, [

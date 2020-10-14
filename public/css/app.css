@@ -742,6 +742,8 @@ main {
 
 .p-news__search {
   position: relative;
+  display: flex;
+  align-items: center;
   width: 70%;
   background: #fdfdfd;
   box-shadow: #b0b0b0 0 0 5px;
@@ -942,19 +944,22 @@ main {
   width: 90%;
 }
 
-.c-input__reset-area {
-  right: 0;
+.c-input__btn-area {
   height: 100%;
   width: 60px;
   z-index: 2;
   font-size: 25px;
-  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.c-input__reset-circle {
+.c-input__btn-area__reset {
+  right: 0;
+  position: absolute;
+}
+
+.c-input__btn-circle {
   border-radius: 50%;
   transition: all 0.2s;
   text-align: center;
@@ -962,7 +967,7 @@ main {
   height: 40px;
 }
 
-.c-input__reset-circle:hover {
+.c-input__btn-circle:hover {
   background: #dbdbdb;
   cursor: pointer;
 }
@@ -1073,6 +1078,8 @@ main {
 
 .p-news__search {
   position: relative;
+  display: flex;
+  align-items: center;
   width: 70%;
   background: #fdfdfd;
   box-shadow: #b0b0b0 0 0 5px;

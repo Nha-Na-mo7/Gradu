@@ -9,21 +9,26 @@
   width: 90%;
 
 
-  // 入力内容を消去するためのボタン
-  &__reset {
+  // 入力内容を消去したり検索するためのボタン
+  &__btn {
     &-area {
-      right: 0;
       height: 100%;
       width: 60px;
       z-index: 2;
 
       font-size: 25px;
 
-      position: absolute;
-
       display: flex;
       align-items: center;
       justify-content: center;
+
+      &__reset {
+        right: 0;
+        position: absolute;
+      }
+      &__search {
+
+      }
     }
 
     &-circle {

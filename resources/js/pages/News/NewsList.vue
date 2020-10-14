@@ -21,15 +21,21 @@
         <!-- 検索 -->
         <div class="p-news__search">
 
-          <!-- リセット用の✖️ボタン -->
-          <div class="c-input__reset-area" v-if="isExistSearchWord">
-            <button class="c-input__reset-circle" @click="resetSearchWord">×</button>
+          <!-- 検索虫眼鏡ボタン -->
+          <div class="c-input__btn-area c-input__btn-area__search">
+            <button type="submit" class="c-input__btn-circle" @click="fetch_googleNews">🔎</button>
           </div>
 
-          <button type="submit" class="" @click="fetch_googleNews">🔎</button>
+          <!-- 検索欄 -->
+          <div>
+            <input type="text" class="c-input" v-model="searchData.keywords" v-if="isEditMode" v-on:keyup.enter="toggleEditMode">
+            <span class="c-input" v-else  @click="toggleEditMode">{{ searchData.keywords }}</span>
+          </div>
 
-          <input type="text" class="c-input" v-model="searchData.keywords" v-if="isEditMode" v-on:keyup.enter="toggleEditMode">
-          <span class="c-input" v-else  @click="toggleEditMode">{{ searchData.keywords }}</span>
+          <!-- リセット用の✖️ボタン -->
+          <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
+            <button class="c-input__btn-circle" @click="resetSearchWord">×</button>
+          </div>
         </div>
 
         <!-- 絞り込みモーダルボタン -->
