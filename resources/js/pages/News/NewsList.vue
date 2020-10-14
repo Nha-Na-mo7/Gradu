@@ -18,12 +18,12 @@
 
       <!-- ヘッドライン -->
       <div class="p-news__headline">
-        <!-- 検索 -->
-        <div class="p-news__search">
+        <!-- 検索フォーム -->
+        <form class="p-news__search">
 
           <!-- 検索虫眼鏡ボタン -->
           <div class="c-input__btn-area c-input__btn-area__search">
-            <button type="submit" class="c-input__btn-circle" @click="fetch_googleNews">🔎</button>
+            <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
           </div>
 
           <!-- 検索欄 -->
@@ -35,7 +35,7 @@
           <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
             <button class="c-input__btn-circle" @click="resetSearchWord">×</button>
           </div>
-        </div>
+        </form>
 
         <!-- 絞り込みモーダルボタン -->
         <div class="c-modal__title">

@@ -45025,7 +45025,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "p-news__container" }, [
         _c("div", { staticClass: "p-news__headline" }, [
-          _c("div", { staticClass: "p-news__search" }, [
+          _c("form", { staticClass: "p-news__search" }, [
             _c(
               "div",
               { staticClass: "c-input__btn-area c-input__btn-area__search" },
@@ -45034,8 +45034,12 @@ var render = function() {
                   "button",
                   {
                     staticClass: "c-input__btn-circle",
-                    attrs: { type: "submit" },
-                    on: { click: _vm.fetch_googleNews }
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.fetch_googleNews($event)
+                      }
+                    }
                   },
                   [_vm._v("🔎")]
                 )
