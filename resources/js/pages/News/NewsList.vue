@@ -15,10 +15,6 @@
       <span>NEWS</span>
     </div>
 
-    <div>
-      <button class="c-btn" @click="fetch_googleNews">取得</button>
-    </div>
-
     <!--メインレイアウト-->
     <div class="p-news__container">
 

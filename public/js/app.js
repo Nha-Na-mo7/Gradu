@@ -2962,10 +2962,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -44932,14 +44928,6 @@ var render = function() {
     ),
     _vm._v(" "),
     _vm._m(0),
-    _vm._v(" "),
-    _c("div", [
-      _c(
-        "button",
-        { staticClass: "c-btn", on: { click: _vm.fetch_googleNews } },
-        [_vm._v("取得")]
-      )
-    ]),
     _vm._v(" "),
     _c("div", { staticClass: "p-news__container" }, [
       _c("div", { staticClass: "p-news__headline" }, [
