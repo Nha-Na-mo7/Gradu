@@ -38,6 +38,17 @@ Route::post('/password/reset/{token}', 'Auth\ResetPasswordController@reset')->na
 //ログインしているユーザー情報を取得するAPI
 Route::get('/user', fn() => Auth::user())->name('user');
 
+
+// ===============
+// 銘柄関連
+// ===============
+// 通貨カラムを全て取得する
+Route::get('/brand', 'BrandController@get_brands')->name('get_brands');
+// 指定の通貨名のカラムを取得する
+Route::get('/brand/{brand_name}', 'BrandController@get_brands')->name('get_brands.brandname');
+
+
+
 // ===============
 // GoogleNews関連
 // ===============
