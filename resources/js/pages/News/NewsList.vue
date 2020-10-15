@@ -70,14 +70,11 @@
               </div>
               <div class="c-checkbox__space">
                 <!-- 通貨アイテムボックス、v-forで通貨テーブルからループさせて描画する -->
-                <div class="c-checkbox__item">
-                  <label for="0"><input type="checkbox" name="Crypto" value="0" id="0">BTC</label>
-                </div>
-                <div class="c-checkbox__item">
-                  <label for="1"><input type="checkbox" name="Crypto" value="1" id="1">BTC</label>
-                </div>
-                <div class="c-checkbox__item">
-                  <label for="2"><input type="checkbox" name="Crypto" value="2" id="2">BTC</label>
+                <div
+                    class="c-checkbox__item"
+                    v-for="currency in fetchedBrands"
+                    :key="currency.id">
+                  <label :for="currency.id - 1"><input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">{{ currency.name }}</label>
                 </div>
               </div>
             </div>
@@ -141,6 +138,7 @@ export default {
       isNothingNews: false,
       isEditMode: false,
       fetchedNews: [],
+      fetchedBrands: [],
       searchData: {
         keywords: ''
       },
@@ -221,6 +219,15 @@ export default {
       }
     },
 
+
+
+
+    // 全ての仮想通貨情報を取得する。モーダルの選択肢を追加するときに使用される
+    async fetch_brand() {
+      const response = await axios.get('/api/brand');
+      this.fetchedBrands = response.data;
+    },
+
     // 検索設定をDBに保存するメソッド
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
     save_setting_search() {
@@ -248,6 +255,7 @@ export default {
         // ページの読み込み直後、DBから検索設定ワードを格納して、ニュース取得を行う
         await this.fetch_setting_search();
         await this.fetch_googleNews();
+        await this.fetch_brand();
       },
       immediate: true
     }

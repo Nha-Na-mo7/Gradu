@@ -33,17 +33,17 @@ class BrandGetAPITest extends TestCase
           ->assertJsonCount(10, 'id');
     }
     
-    /**
-     * @test
-     */
-    public function _指定の通貨名を取得する()
-    {
-      $response = $this->json('GET', route('get_brands.brandname'), [
-          'name' => $this->brand->name
-      ]);
-  
-      $response
-          ->assertStatus(200)
-          ->assertJson(['name' => $this->brand->name]);
-    }
+    // /**
+    //  * @test
+    //  */
+    // public function _指定の通貨名を取得する()
+    // {
+    //   $response = $this->json('GET', route('get_brands.brand_id'), [
+    //       'name' => $this->brand->name
+    //   ]);
+    //
+    //   $response
+    //       ->assertStatus(200)
+    //       ->assertJson(['name' => $this->brand->name]);
+    // }
 }

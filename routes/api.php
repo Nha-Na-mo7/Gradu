@@ -44,8 +44,8 @@ Route::get('/user', fn() => Auth::user())->name('user');
 // ===============
 // 通貨カラムを全て取得する
 Route::get('/brand', 'BrandController@get_brands')->name('get_brands');
-// 指定の通貨名のカラムを取得する
-Route::get('/brand/{brand_name}', 'BrandController@get_brands')->name('get_brands.brandname');
+// 指定の通貨のカラムを取得する
+Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.brandid');
 
 
 

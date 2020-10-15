@@ -3004,9 +3004,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 
 
 
@@ -3024,6 +3021,7 @@ var PAGE_TITLE = 'NEWS';
       isNothingNews: false,
       isEditMode: false,
       fetchedNews: [],
+      fetchedBrands: [],
       searchData: {
         keywords: ''
       }
@@ -3142,6 +3140,31 @@ var PAGE_TITLE = 'NEWS';
         }, _callee2);
       }))();
     },
+    // 全ての仮想通貨情報を取得する。モーダルの選択肢を追加するときに使用される
+    fetch_brand: function fetch_brand() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get('/api/brand');
+
+              case 2:
+                response = _context3.sent;
+                _this3.fetchedBrands = response.data;
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
     // 検索設定をDBに保存するメソッド
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
     save_setting_search: function save_setting_search() {// const response = await axios.post(`/api/news/setting/get`, { params });
@@ -3164,26 +3187,30 @@ var PAGE_TITLE = 'NEWS';
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this4 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
-                  _context3.next = 2;
-                  return _this3.fetch_setting_search();
+                  _context4.next = 2;
+                  return _this4.fetch_setting_search();
 
                 case 2:
-                  _context3.next = 4;
-                  return _this3.fetch_googleNews();
+                  _context4.next = 4;
+                  return _this4.fetch_googleNews();
 
                 case 4:
+                  _context4.next = 6;
+                  return _this4.fetch_brand();
+
+                case 6:
                 case "end":
-                  return _context3.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee3);
+          }, _callee4);
         }))();
       },
       immediate: true
@@ -45117,7 +45144,42 @@ var render = function() {
               _c("div", { staticClass: "c-modal" }, [
                 _vm._m(0),
                 _vm._v(" "),
-                _vm._m(1),
+                _c("div", { staticClass: "c-modal__foot" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "c-modal__index" }, [
+                    _c("p", { staticClass: "c-modal__index-title" }, [
+                      _vm._v("通貨で絞り込む")
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "c-checkbox__space" },
+                      _vm._l(_vm.fetchedBrands, function(currency) {
+                        return _c(
+                          "div",
+                          { key: currency.id, staticClass: "c-checkbox__item" },
+                          [
+                            _c("label", { attrs: { for: currency.id - 1 } }, [
+                              _c("input", {
+                                attrs: {
+                                  type: "checkbox",
+                                  name: "Crypto",
+                                  id: currency.id - 1
+                                },
+                                domProps: { value: currency.id - 1 }
+                              }),
+                              _vm._v(_vm._s(currency.name))
+                            ])
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "c-modal__btn-area" }, [
                   _c(
@@ -45190,88 +45252,55 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-modal__foot" }, [
-      _c("div", { staticClass: "c-modal__index" }, [
-        _c("p", { staticClass: "c-modal__index-title" }, [
-          _vm._v("記事の表示順")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-checkbox__space" }, [
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("input", {
-              attrs: {
-                type: "radio",
-                name: "CryptoSubject",
-                value: "kaso",
-                checked: ""
-              }
-            }),
-            _vm._v("新着順")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("input", {
-              attrs: { type: "radio", name: "CryptoSubject", value: "alto" }
-            }),
-            _vm._v("古い順")
-          ])
-        ])
+    return _c("div", { staticClass: "c-modal__index" }, [
+      _c("p", { staticClass: "c-modal__index-title" }, [
+        _vm._v("記事の表示順")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "c-modal__index" }, [
-        _c("p", { staticClass: "c-modal__index-title" }, [
-          _vm._v("通貨で絞り込む")
+      _c("div", { staticClass: "c-checkbox__space" }, [
+        _c("div", { staticClass: "c-checkbox__item" }, [
+          _c("input", {
+            attrs: {
+              type: "radio",
+              name: "CryptoSubject",
+              value: "kaso",
+              checked: ""
+            }
+          }),
+          _vm._v("新着順")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "c-checkbox__space" }, [
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "Crypto",
-                value: "kaso",
-                checked: ""
-              }
-            }),
-            _vm._v("仮想通貨")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("input", {
-              attrs: { type: "checkbox", name: "Crypto", value: "alto" }
-            }),
-            _vm._v("アルトコイン")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-checkbox__space" }, [
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("label", { attrs: { for: "0" } }, [
-              _c("input", {
-                attrs: { type: "checkbox", name: "Crypto", value: "0", id: "0" }
-              }),
-              _vm._v("BTC")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("label", { attrs: { for: "1" } }, [
-              _c("input", {
-                attrs: { type: "checkbox", name: "Crypto", value: "1", id: "1" }
-              }),
-              _vm._v("BTC")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-checkbox__item" }, [
-            _c("label", { attrs: { for: "2" } }, [
-              _c("input", {
-                attrs: { type: "checkbox", name: "Crypto", value: "2", id: "2" }
-              }),
-              _vm._v("BTC")
-            ])
-          ])
+        _c("div", { staticClass: "c-checkbox__item" }, [
+          _c("input", {
+            attrs: { type: "radio", name: "CryptoSubject", value: "alto" }
+          }),
+          _vm._v("古い順")
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-checkbox__space" }, [
+      _c("div", { staticClass: "c-checkbox__item" }, [
+        _c("input", {
+          attrs: {
+            type: "checkbox",
+            name: "Crypto",
+            value: "kaso",
+            checked: ""
+          }
+        }),
+        _vm._v("仮想通貨")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-checkbox__item" }, [
+        _c("input", {
+          attrs: { type: "checkbox", name: "Crypto", value: "alto" }
+        }),
+        _vm._v("アルトコイン")
       ])
     ])
   }
