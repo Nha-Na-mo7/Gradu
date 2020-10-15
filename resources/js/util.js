@@ -41,3 +41,6 @@ export const SEARCHING = '検索中'
 
 export const DEFAULT_SEARCHWORD = '仮想通貨';
 
+
+export const CURRENCY_ICON_PATH = 'storage/images/currency_svg/';
+

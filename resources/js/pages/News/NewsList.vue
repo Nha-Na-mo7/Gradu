@@ -74,7 +74,14 @@
                     class="c-checkbox__item"
                     v-for="currency in fetchedBrands"
                     :key="currency.id">
-                  <label :for="currency.id - 1"><input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">{{ currency.name }}</label>
+                  <label :for="currency.id - 1">
+                    <input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">                                  <img
+                        :src="currencyIconPath+currency.icon"
+                        :alt="currency.name"
+                        class="c-checkbox__icon"
+                      >
+                      {{ currency.name }}
+                  </label>
                 </div>
               </div>
             </div>
@@ -122,7 +129,7 @@ import News from './News.vue';
 import NothingNews from './NothingNews.vue';
 import Loading from '../../components/Loading.vue';
 import PageTitle from '../Components/PageTitle.vue';
-import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
+import { OK , SEARCHING, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH } from "../../util";
 
 const PAGE_TITLE = 'NEWS';
 
@@ -150,6 +157,9 @@ export default {
     },
     defaultSearchWord() {
       return DEFAULT_SEARCHWORD;
+    },
+    currencyIconPath() {
+      return CURRENCY_ICON_PATH;
     },
     // 検索欄にワードが存在するか
     isExistSearchWord() {
@@ -265,5 +275,8 @@ export default {
 </script>
 
 <style scoped>
-
+.c-checkbox__icon {
+  width: 1.6rem;
+  height: 1.6rem;
+}
 </style>
