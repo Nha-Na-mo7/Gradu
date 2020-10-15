@@ -3,6 +3,7 @@
 <!--===============-->
 <template>
   <div class="l-container__content">
+
     <!-- サイトリンク -->
     <div class="c-site-linknav">
       <RouterLink class="c-site__link-nav__to-top" to="/">トップ</RouterLink>
@@ -45,57 +46,10 @@
 
       <!-- 絞り込みモーダル -->
       <div class="c-modal__hide" v-if="modal">
-
-        <!-- モーダルカバー -->
-        <!-- 画面がクリックでモーダルを閉じる。.selfを付与して子要素にクローズイベントが伝播しないようにする-->
-        <div class="c-modal__cover" @click.self="closeModal"></div>
-        <!-- モーダルコンテンツ -->
-        <div class="c-modal">
-          <div class="c-modal__head"><span class="c-modal__head-title">検索条件設定</span></div>
-
-          <div class="c-modal__foot">
-            <div class="c-modal__index">
-              <p class="c-modal__index-title">記事の表示順</p>
-              <!-- 降順・昇順ドロップダウン -->
-              <div class="c-checkbox__space">
-                <div class="c-checkbox__item"><input type="radio" name="CryptoSubject" value="kaso" checked>新着順</div>
-                <div class="c-checkbox__item"><input type="radio" name="CryptoSubject" value="alto">古い順</div>
-              </div>
-            </div>
-            <div class="c-modal__index">
-              <p class="c-modal__index-title">通貨で絞り込む</p>
-              <div class="c-checkbox__space">
-                <div class="c-checkbox__item"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
-                <div class="c-checkbox__item"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
-              </div>
-              <div class="c-checkbox__space">
-                <!-- 通貨アイテムボックス、v-forで通貨テーブルからループさせて描画する -->
-                <div
-                    class="c-checkbox__item"
-                    v-for="currency in fetchedBrands"
-                    :key="currency.id">
-                  <label :for="currency.id - 1">
-                    <input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">                                  <img
-                        v-if="currency.icon"
-                        :src="currencyIconPath+currency.icon"
-                        :alt="currency.name"
-                        class="c-checkbox__icon"
-                      >
-                      {{ currency.name }}
-                  </label>
-                </div>
-              </div>
-            </div>
-
-
-          </div>
-          <div class="c-modal__btn-area">
-            <button class="c-btn" @click="fetch_googleNews">絞り込む</button>
-            <button class="c-btn" @click="closeModal">リセット</button>
-            <button class="c-btn" @click="closeModal">絞り込まずに閉じる</button>
-            <button class="c-btn" @click="closeModal">設定を保存</button>
-          </div>
-        </div>
+        <SearchModal
+          @closeModal="closeModal"
+          @fetch_googleNews="fetch_googleNews"
+        />
       </div>
 
       <!-- ニュース一覧 -->
@@ -128,9 +82,10 @@
 <script>
 import News from './News.vue';
 import NothingNews from './NothingNews.vue';
+import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
 import PageTitle from '../Components/PageTitle.vue';
-import { OK , SEARCHING, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH } from "../../util";
+import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 
 const PAGE_TITLE = 'NEWS';
 
@@ -146,7 +101,6 @@ export default {
       isNothingNews: false,
       isEditMode: false,
       fetchedNews: [],
-      fetchedBrands: [],
       searchData: {
         keywords: ''
       },
@@ -158,9 +112,6 @@ export default {
     },
     defaultSearchWord() {
       return DEFAULT_SEARCHWORD;
-    },
-    currencyIconPath() {
-      return CURRENCY_ICON_PATH;
     },
     // 検索欄にワードが存在するか
     isExistSearchWord() {
@@ -179,10 +130,6 @@ export default {
     // 検索欄を空欄にする
     resetSearchWord() {
       this.searchData.keywords = '';
-    },
-    // 編集モードに切り替え
-    toggleEditMode() {
-      this.isEditMode = !this.isEditMode
     },
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
@@ -230,35 +177,13 @@ export default {
       }
     },
 
-
-
-
-    // 全ての仮想通貨情報を取得する。モーダルの選択肢を追加するときに使用される
-    async fetch_brand() {
-      const response = await axios.get('/api/brand');
-      this.fetchedBrands = response.data;
-    },
-
-    // 検索設定をDBに保存するメソッド
-    // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
-    save_setting_search() {
-      // const response = await axios.post(`/api/news/setting/get`, { params });
-    },
-
-    // チェックボックスでチェックされた内容をsearchData.keywordsに入れる
-    getCheckboxWord() {
-      $('[name="Crypto"]').change(function(){
-        $('[name="Crypto"]:checked').each(function(index, element){
-          this.searchData.keywords.push($(element).val());
-        });
-      });
-    }
   },
   components: {
-    PageTitle,
     News,
     NothingNews,
-    Loading
+    SearchModal,
+    Loading,
+    PageTitle
   },
   watch: {
     $route: {
@@ -266,7 +191,6 @@ export default {
         // ページの読み込み直後、DBから検索設定ワードを格納して、ニュース取得を行う
         await this.fetch_setting_search();
         await this.fetch_googleNews();
-        await this.fetch_brand();
       },
       immediate: true
     }
@@ -276,8 +200,5 @@ export default {
 </script>
 
 <style scoped>
-.c-checkbox__icon {
-  width: 1.6rem;
-  height: 1.6rem;
-}
+
 </style>
