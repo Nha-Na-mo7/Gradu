@@ -3011,6 +3011,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -45231,13 +45232,15 @@ var render = function() {
                                 domProps: { value: currency.id - 1 }
                               }),
                               _vm._v(" "),
-                              _c("img", {
-                                staticClass: "c-checkbox__icon",
-                                attrs: {
-                                  src: _vm.currencyIconPath + currency.icon,
-                                  alt: currency.name
-                                }
-                              }),
+                              currency.icon
+                                ? _c("img", {
+                                    staticClass: "c-checkbox__icon",
+                                    attrs: {
+                                      src: _vm.currencyIconPath + currency.icon,
+                                      alt: currency.name
+                                    }
+                                  })
+                                : _vm._e(),
                               _vm._v(
                                 "\n                    " +
                                   _vm._s(currency.name) +

@@ -76,6 +76,7 @@
                     :key="currency.id">
                   <label :for="currency.id - 1">
                     <input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">                                  <img
+                        v-if="currency.icon"
                         :src="currencyIconPath+currency.icon"
                         :alt="currency.name"
                         class="c-checkbox__icon"
