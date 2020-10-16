@@ -2986,7 +2986,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
       isNothingNews: false,
       isEditMode: false,
       fetchedNews: [],
-      checkedSearchWords: ['プロ野球', 'ソフトバンク'],
+      checkedSearchWords: [],
       searchBoxWords: '',
       searchData: {
         keywords: ''
@@ -3004,6 +3004,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords: function margeSearchWords() {
       this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
+      console.log(this.searchData.keywords);
     }
   },
   methods: {
@@ -3019,11 +3020,33 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     resetSearchWord: function resetSearchWord() {
       this.searchBoxWords = '';
     },
+    // 配列内に同じ値が存在するかをチェックする
+    isArrayExists: function isArrayExists(array, value) {
+      // 配列の最後までループ
+      for (var i = 0, len = array.length; i < len; i++) {
+        if (value === array[i]) {
+          // 存在したらtrueを返す
+          return true;
+        }
+      } // 存在しない場合falseを返す
+
+
+      return false;
+    },
     // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
     checkedSearchWordByModal: function checkedSearchWordByModal(value) {
-      // 配列を探す。
-      if (true) {
-        this.checkedSearchWords = value;
+      // 長いので頭文字だけの変数にする
+      var CSW = this.checkedSearchWords;
+
+      if (this.isArrayExists(CSW, value)) {
+        // ワードが既に配列内に存在していた場合、それを取り除く。
+        // こちらはオリジナルのdataに入れなければならない
+        this.checkedSearchWords = CSW.filter(function (val) {
+          return val !== value;
+        });
+      } else {
+        // ワードがない場合は配列に追加する
+        CSW.push(value);
       }
     },
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
@@ -3087,6 +3110,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
         }, _callee);
       }))();
     },
+    // TODO DBから引っ張ってくる仕様自体が撤廃する可能性あり
     // DBからユーザーが保存した検索設定を取得し、checkedSearchWordsに入れる。
     // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
     fetch_setting_search: function fetch_setting_search() {
