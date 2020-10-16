@@ -19,19 +19,17 @@
 
       <!-- ヘッドライン -->
       <div class="p-news__headline">
-        <!-- 検索フォーム -->
+        <!-- 検索フォーム・コンポーネント検討 -->
         <form class="p-news__search">
 
           <!-- 検索虫眼鏡ボタン -->
           <div class="c-input__btn-area c-input__btn-area__search">
             <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
           </div>
-
           <!-- 検索欄 -->
           <div class="c-input__searcharea">
-            <input type="text" class="c-input" v-model="searchData.keywords" :placeholder="defaultSearchWord">
+            <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">
           </div>
-
           <!-- リセット用の✖️ボタン -->
           <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
             <button class="c-input__btn-circle" @click="resetSearchWord">×</button>
@@ -49,6 +47,7 @@
         <SearchModal
           @closeModal="closeModal"
           @fetch_googleNews="fetch_googleNews"
+          @checkedWord="checkedSearchWordByModal"
         />
       </div>
 
@@ -88,12 +87,14 @@ import PageTitle from '../Components/PageTitle.vue';
 import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 
 const PAGE_TITLE = 'NEWS';
+const PLACEHOLDER = '検索したいワードを追加することができます。';
 
 export default {
 
   data() {
     return {
       pageTitle: PAGE_TITLE,
+      placeholder: PLACEHOLDER,
       modal: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
@@ -101,6 +102,8 @@ export default {
       isNothingNews: false,
       isEditMode: false,
       fetchedNews: [],
+      checkedSearchWords: ['プロ野球', 'ソフトバンク'],
+      searchBoxWords: '',
       searchData: {
         keywords: ''
       },
@@ -110,13 +113,15 @@ export default {
     searchingWord() {
       return SEARCHING;
     },
-    defaultSearchWord() {
-      return DEFAULT_SEARCHWORD;
-    },
     // 検索欄にワードが存在するか
     isExistSearchWord() {
-      return this.searchData.keywords !== '';
+      return this.searchBoxWords !== '';
+    },
+    // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
+    margeSearchWords() {
+      this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
     }
+
   },
   methods: {
     // モーダルを開く
@@ -129,7 +134,14 @@ export default {
     },
     // 検索欄を空欄にする
     resetSearchWord() {
-      this.searchData.keywords = '';
+      this.searchBoxWords = '';
+    },
+    // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
+    checkedSearchWordByModal(value) {
+      // 配列を探す。
+      if(true){
+        this.checkedSearchWords = value;
+      }
     },
 
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
@@ -142,6 +154,9 @@ export default {
       this.isSearching = true;
       this.isNothingNews = false;
       this.modal = false;
+
+      // 検索ワードをマージさせる
+      this.margeSearchWords;
 
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
@@ -165,7 +180,7 @@ export default {
       return response.status;
     },
 
-    // DBからユーザーが保存した検索設定を取得し、searchData.keywordsに入れる。
+    // DBからユーザーが保存した検索設定を取得し、checkedSearchWordsに入れる。
     // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
     async fetch_setting_search() {
       // DBから取得してくる処理
@@ -173,7 +188,7 @@ export default {
 
       // DBから取得した値が空だった場合の処理
       if(true) {
-        this.searchData.keywords = DEFAULT_SEARCHWORD;
+        this.searchBoxWords = DEFAULT_SEARCHWORD;
       }
     },
 

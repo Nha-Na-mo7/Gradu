@@ -2966,7 +2966,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -2974,10 +2973,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var PAGE_TITLE = 'NEWS';
+var PLACEHOLDER = '検索したいワードを追加することができます。';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       pageTitle: PAGE_TITLE,
+      placeholder: PLACEHOLDER,
       modal: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
@@ -2985,6 +2986,8 @@ var PAGE_TITLE = 'NEWS';
       isNothingNews: false,
       isEditMode: false,
       fetchedNews: [],
+      checkedSearchWords: ['プロ野球', 'ソフトバンク'],
+      searchBoxWords: '',
       searchData: {
         keywords: ''
       }
@@ -2994,12 +2997,13 @@ var PAGE_TITLE = 'NEWS';
     searchingWord: function searchingWord() {
       return _util__WEBPACK_IMPORTED_MODULE_6__["SEARCHING"];
     },
-    defaultSearchWord: function defaultSearchWord() {
-      return _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"];
-    },
     // 検索欄にワードが存在するか
     isExistSearchWord: function isExistSearchWord() {
-      return this.searchData.keywords !== '';
+      return this.searchBoxWords !== '';
+    },
+    // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
+    margeSearchWords: function margeSearchWords() {
+      this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
     }
   },
   methods: {
@@ -3013,7 +3017,14 @@ var PAGE_TITLE = 'NEWS';
     },
     // 検索欄を空欄にする
     resetSearchWord: function resetSearchWord() {
-      this.searchData.keywords = '';
+      this.searchBoxWords = '';
+    },
+    // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
+    checkedSearchWordByModal: function checkedSearchWordByModal(value) {
+      // 配列を探す。
+      if (true) {
+        this.checkedSearchWords = value;
+      }
     },
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     fetch_googleNews: function fetch_googleNews() {
@@ -3036,18 +3047,20 @@ var PAGE_TITLE = 'NEWS';
                 // 検索開始、isSearchingをtrueに、isNothingNews、modalをfalseにする
                 _this.isSearching = true;
                 _this.isNothingNews = false;
-                _this.modal = false;
+                _this.modal = false; // 検索ワードをマージさせる
+
+                _this.margeSearchWords;
                 params = _this.searchData;
-                _context.next = 8;
+                _context.next = 9;
                 return axios.get("/api/news/get", {
                   params: params
                 });
 
-              case 8:
+              case 9:
                 response = _context.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_6__["OK"])) {
-                  _context.next = 12;
+                  _context.next = 13;
                   break;
                 }
 
@@ -3055,7 +3068,7 @@ var PAGE_TITLE = 'NEWS';
 
                 return _context.abrupt("return", false);
 
-              case 12:
+              case 13:
                 _this.fetchedNews = response.data; // 記事数が0の時、isNothingNewsをtrueにする
 
                 if (!_this.fetchedNews.length) {
@@ -3066,7 +3079,7 @@ var PAGE_TITLE = 'NEWS';
                 _this.isSearching = false;
                 return _context.abrupt("return", response.status);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -3074,7 +3087,7 @@ var PAGE_TITLE = 'NEWS';
         }, _callee);
       }))();
     },
-    // DBからユーザーが保存した検索設定を取得し、searchData.keywordsに入れる。
+    // DBからユーザーが保存した検索設定を取得し、checkedSearchWordsに入れる。
     // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
     fetch_setting_search: function fetch_setting_search() {
       var _this2 = this;
@@ -3088,7 +3101,7 @@ var PAGE_TITLE = 'NEWS';
                 // const response = await axios.get(`/api/news/setting/get`, { params });
                 // DBから取得した値が空だった場合の処理
                 if (true) {
-                  _this2.searchData.keywords = _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"];
+                  _this2.searchBoxWords = _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"];
                 }
 
               case 1:
@@ -3307,20 +3320,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    // changed
-    changed: function changed(item) {
-      alert('changed' + item.name);
+    // チェックボックスをクリックした時の操作
+    checkedWord: function checkedWord(currency_name) {
+      // クリックされたチェックボックスの値を親コンポーネントにemit
+      this.$emit('checkedWord', currency_name);
     },
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
     save_setting_search: function save_setting_search() {// const response = await axios.post(`/api/news/setting/get`, { params });
-    },
-    // チェックボックスでチェックされた内容を、親コンポーネントのsearchData.keywordsに入れる
-    getCheckboxWord: function getCheckboxWord() {// $('[name="Crypto"]').change(function(){
-      //   $('[name="Crypto"]:checked').each(function(index, element){
-      //     this.searchData.keywords.push($(element).val()); //ここで親コンポーネントに渡す
-      //   });
-      // });
     }
   },
   watch: {
@@ -45173,19 +45180,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.searchData.keywords,
-                    expression: "searchData.keywords"
+                    value: _vm.searchBoxWords,
+                    expression: "searchBoxWords"
                   }
                 ],
                 staticClass: "c-input",
-                attrs: { type: "text", placeholder: _vm.defaultSearchWord },
-                domProps: { value: _vm.searchData.keywords },
+                attrs: { type: "text", placeholder: _vm.placeholder },
+                domProps: { value: _vm.searchBoxWords },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.searchData, "keywords", $event.target.value)
+                    _vm.searchBoxWords = $event.target.value
                   }
                 }
               })
@@ -45229,7 +45236,8 @@ var render = function() {
                 _c("SearchModal", {
                   on: {
                     closeModal: _vm.closeModal,
-                    fetch_googleNews: _vm.fetch_googleNews
+                    fetch_googleNews: _vm.fetch_googleNews,
+                    checkedWord: _vm.checkedSearchWordByModal
                   }
                 })
               ],
@@ -45339,7 +45347,48 @@ var render = function() {
             _vm._v("通貨で絞り込む")
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { staticClass: "c-checkbox__space" }, [
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox__item",
+                on: {
+                  change: function($event) {
+                    return _vm.checkedWord(_vm.e.value)
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  attrs: {
+                    type: "checkbox",
+                    name: "Crypto",
+                    value: "kaso",
+                    checked: ""
+                  }
+                }),
+                _vm._v("仮想通貨")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox__item",
+                on: {
+                  change: function($event) {
+                    return _vm.checkedWord(_vm.e.value)
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  attrs: { type: "checkbox", name: "Crypto", value: "alto" }
+                }),
+                _vm._v("アルトコイン")
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -45352,7 +45401,7 @@ var render = function() {
                   staticClass: "c-checkbox__item",
                   on: {
                     change: function($event) {
-                      return _vm.changed(currency)
+                      return _vm.checkedWord(currency.name)
                     }
                   }
                 },
@@ -45364,7 +45413,7 @@ var render = function() {
                         name: "Crypto",
                         id: currency.id - 1
                       },
-                      domProps: { value: currency.id - 1 }
+                      domProps: { value: currency.name }
                     }),
                     _vm._v(" "),
                     currency.icon
@@ -45451,31 +45500,6 @@ var staticRenderFns = [
           }),
           _vm._v("古い順")
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-checkbox__space" }, [
-      _c("div", { staticClass: "c-checkbox__item" }, [
-        _c("input", {
-          attrs: {
-            type: "checkbox",
-            name: "Crypto",
-            value: "kaso",
-            checked: ""
-          }
-        }),
-        _vm._v("仮想通貨")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-checkbox__item" }, [
-        _c("input", {
-          attrs: { type: "checkbox", name: "Crypto", value: "alto" }
-        }),
-        _vm._v("アルトコイン")
       ])
     ])
   }

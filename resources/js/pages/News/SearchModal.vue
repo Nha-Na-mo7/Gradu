@@ -25,8 +25,8 @@
         <div class="c-modal__index">
           <p class="c-modal__index-title">通貨で絞り込む</p>
           <div class="c-checkbox__space">
-            <div class="c-checkbox__item"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
-            <div class="c-checkbox__item"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
+            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
+            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
           </div>
           <div class="c-checkbox__space">
 
@@ -35,10 +35,10 @@
                 class="c-checkbox__item"
                 v-for="currency in fetchedBrands"
                 :key="currency.id"
-                @change="changed(currency)"
+                @change="checkedWord(currency.name)"
             >
               <label :for="currency.id - 1">
-                <input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">
+                <input type="checkbox" name="Crypto" :value="currency.name" :id="currency.id - 1">
                 <img
                     v-if="currency.icon"
                     :src="currencyIconPath+currency.icon"
@@ -94,12 +94,11 @@ export default {
       this.fetchedBrands = response.data;
     },
 
-    // changed
-    changed(item) {
-      alert('changed'+item.name);
-
+    // チェックボックスをクリックした時の操作
+    checkedWord(currency_name) {
+      // クリックされたチェックボックスの値を親コンポーネントにemit
+      this.$emit('checkedWord', currency_name);
     },
-
 
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
@@ -107,14 +106,6 @@ export default {
       // const response = await axios.post(`/api/news/setting/get`, { params });
     },
 
-    // チェックボックスでチェックされた内容を、親コンポーネントのsearchData.keywordsに入れる
-    getCheckboxWord() {
-      // $('[name="Crypto"]').change(function(){
-      //   $('[name="Crypto"]:checked').each(function(index, element){
-      //     this.searchData.keywords.push($(element).val()); //ここで親コンポーネントに渡す
-      //   });
-      // });
-    }
   },
   watch: {
     $route: {
