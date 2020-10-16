@@ -34,7 +34,9 @@
             <div
                 class="c-checkbox__item"
                 v-for="currency in fetchedBrands"
-                :key="currency.id">
+                :key="currency.id"
+                @change="changed(currency)"
+            >
               <label :for="currency.id - 1">
                 <input type="checkbox" name="Crypto" :value="currency.id - 1" :id="currency.id - 1">
                 <img
@@ -90,6 +92,12 @@ export default {
     async fetch_brand() {
       const response = await axios.get('/api/brand');
       this.fetchedBrands = response.data;
+    },
+
+    // changed
+    changed(item) {
+      alert('changed'+item.name);
+
     },
 
 

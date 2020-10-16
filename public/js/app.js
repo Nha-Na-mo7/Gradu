@@ -3260,6 +3260,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3304,6 +3306,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }, _callee);
       }))();
+    },
+    // changed
+    changed: function changed(item) {
+      alert('changed' + item.name);
     },
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
@@ -45341,7 +45347,15 @@ var render = function() {
             _vm._l(_vm.fetchedBrands, function(currency) {
               return _c(
                 "div",
-                { key: currency.id, staticClass: "c-checkbox__item" },
+                {
+                  key: currency.id,
+                  staticClass: "c-checkbox__item",
+                  on: {
+                    change: function($event) {
+                      return _vm.changed(currency)
+                    }
+                  }
+                },
                 [
                   _c("label", { attrs: { for: currency.id - 1 } }, [
                     _c("input", {
