@@ -2966,6 +2966,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3004,7 +3010,6 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords: function margeSearchWords() {
       this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
-      console.log(this.searchData.keywords);
     }
   },
   methods: {
@@ -3022,30 +3027,26 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     },
     // 配列内に同じ値が存在するかをチェックする
     isArrayExists: function isArrayExists(array, value) {
-      // 配列の最後までループ
+      // 配列の最後までループ、値があればtrueを、なければfalseを返す
       for (var i = 0, len = array.length; i < len; i++) {
         if (value === array[i]) {
-          // 存在したらtrueを返す
           return true;
         }
-      } // 存在しない場合falseを返す
-
+      }
 
       return false;
     },
     // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
     checkedSearchWordByModal: function checkedSearchWordByModal(value) {
       // 長いので頭文字だけの変数にする
-      var CSW = this.checkedSearchWords;
+      var CSW = this.checkedSearchWords; // ワードを検索して、既に配列内に存在していた場合取り除く。
 
       if (this.isArrayExists(CSW, value)) {
-        // ワードが既に配列内に存在していた場合、それを取り除く。
         // こちらはオリジナルのdataに入れなければならない
         this.checkedSearchWords = CSW.filter(function (val) {
           return val !== value;
-        });
+        }); // ワードがない場合は配列に追加する
       } else {
-        // ワードがない場合は配列に追加する
         CSW.push(value);
       }
     },
@@ -45175,120 +45176,131 @@ var render = function() {
       _vm._v(" "),
       _c("PageTitle", { attrs: { title: _vm.pageTitle } }),
       _vm._v(" "),
-      _c("div", { staticClass: "p-news__container" }, [
-        _c("div", { staticClass: "p-news__headline" }, [
-          _c("form", { staticClass: "p-news__search" }, [
-            _c(
-              "div",
-              { staticClass: "c-input__btn-area c-input__btn-area__search" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "c-input__btn-circle",
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.fetch_googleNews($event)
-                      }
-                    }
-                  },
-                  [_vm._v("🔎")]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "c-input__searcharea" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.searchBoxWords,
-                    expression: "searchBoxWords"
-                  }
-                ],
-                staticClass: "c-input",
-                attrs: { type: "text", placeholder: _vm.placeholder },
-                domProps: { value: _vm.searchBoxWords },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.searchBoxWords = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm.isExistSearchWord
-              ? _c(
-                  "div",
-                  { staticClass: "c-input__btn-area c-input__btn-area__reset" },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "c-input__btn-circle",
-                        on: { click: _vm.resetSearchWord }
-                      },
-                      [_vm._v("×")]
-                    )
-                  ]
-                )
-              : _vm._e()
-          ]),
+      _c(
+        "div",
+        { staticClass: "p-news__container" },
+        [
+          _vm._l(_vm.checkedSearchWords, function(item) {
+            return _c("div", {}, [_c("div", [_c("p", [_vm._v(_vm._s(item))])])])
+          }),
           _vm._v(" "),
-          _c("div", { staticClass: "c-modal__title" }, [
-            _c(
-              "button",
-              {
-                staticClass: "c-btn c-btn__main c-btn--primary",
-                on: { click: _vm.showModal }
-              },
-              [_vm._v("条件設定")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _vm.modal
-          ? _c(
-              "div",
-              { staticClass: "c-modal__hide" },
-              [
-                _c("SearchModal", {
+          _c("div", { staticClass: "p-news__headline" }, [
+            _c("form", { staticClass: "p-news__search" }, [
+              _c(
+                "div",
+                { staticClass: "c-input__btn-area c-input__btn-area__search" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "c-input__btn-circle",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.fetch_googleNews($event)
+                        }
+                      }
+                    },
+                    [_vm._v("🔎")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "c-input__searcharea" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.searchBoxWords,
+                      expression: "searchBoxWords"
+                    }
+                  ],
+                  staticClass: "c-input",
+                  attrs: { type: "text", placeholder: _vm.placeholder },
+                  domProps: { value: _vm.searchBoxWords },
                   on: {
-                    closeModal: _vm.closeModal,
-                    fetch_googleNews: _vm.fetch_googleNews,
-                    checkedWord: _vm.checkedSearchWordByModal
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchBoxWords = $event.target.value
+                    }
                   }
                 })
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "p-news__list" },
-          _vm._l(_vm.fetchedNews, function(News) {
-            return _c("News", { key: News.id, attrs: { entry: News } })
-          }),
-          1
-        ),
-        _vm._v(" "),
-        _vm.isNothingNews ? _c("div", [_c("NothingNews")], 1) : _vm._e(),
-        _vm._v(" "),
-        _vm.isSearching
-          ? _c(
-              "div",
-              {},
-              [_c("Loading", { attrs: { title: _vm.searchingWord } })],
-              1
-            )
-          : _vm._e()
-      ])
+              ]),
+              _vm._v(" "),
+              _vm.isExistSearchWord
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "c-input__btn-area c-input__btn-area__reset"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "c-input__btn-circle",
+                          on: { click: _vm.resetSearchWord }
+                        },
+                        [_vm._v("×")]
+                      )
+                    ]
+                  )
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-modal__title" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "c-btn c-btn__main c-btn--primary",
+                  on: { click: _vm.showModal }
+                },
+                [_vm._v("条件設定")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _vm.modal
+            ? _c(
+                "div",
+                { staticClass: "c-modal__hide" },
+                [
+                  _c("SearchModal", {
+                    on: {
+                      closeModal: _vm.closeModal,
+                      fetch_googleNews: _vm.fetch_googleNews,
+                      checkedWord: _vm.checkedSearchWordByModal
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "p-news__list" },
+            _vm._l(_vm.fetchedNews, function(News) {
+              return _c("News", { key: News.id, attrs: { entry: News } })
+            }),
+            1
+          ),
+          _vm._v(" "),
+          _vm.isNothingNews ? _c("div", [_c("NothingNews")], 1) : _vm._e(),
+          _vm._v(" "),
+          _vm.isSearching
+            ? _c(
+                "div",
+                {},
+                [_c("Loading", { attrs: { title: _vm.searchingWord } })],
+                1
+              )
+            : _vm._e()
+        ],
+        2
+      )
     ],
     1
   )

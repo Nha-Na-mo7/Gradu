@@ -18,6 +18,12 @@
     <div class="p-news__container">
 
       <!-- ヘッドライン -->
+      <div class="" v-for="item in checkedSearchWords">
+        <div>
+          <p>{{ item }}</p>
+        </div>
+      </div>
+      
       <div class="p-news__headline">
         <!-- 検索フォーム・コンポーネント検討 -->
         <form class="p-news__search">
@@ -123,7 +129,6 @@ export default {
     // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords() {
       this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
-      console.log(this.searchData.keywords)
     }
 
   },
@@ -142,30 +147,27 @@ export default {
     },
     // 配列内に同じ値が存在するかをチェックする
     isArrayExists(array, value) {
-    // 配列の最後までループ
+    // 配列の最後までループ、値があればtrueを、なければfalseを返す
     for (var i = 0, len = array.length; i < len; i++) {
       if (value === array[i]) {
-        // 存在したらtrueを返す
         return true;
       }
     }
-    // 存在しない場合falseを返す
     return false;
   },
 
     // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
     checkedSearchWordByModal(value) {
-
       // 長いので頭文字だけの変数にする
       var CSW = this.checkedSearchWords
 
+      // ワードを検索して、既に配列内に存在していた場合取り除く。
       if(this.isArrayExists(CSW, value)) {
-        // ワードが既に配列内に存在していた場合、それを取り除く。
         // こちらはオリジナルのdataに入れなければならない
         this.checkedSearchWords = CSW.filter(val => val !== value);
 
-      } else {
         // ワードがない場合は配列に追加する
+      } else {
         CSW.push(value);
       }
     },
