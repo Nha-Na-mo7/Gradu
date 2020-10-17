@@ -52,7 +52,7 @@
                        name="currency"
                        :value="currency.name"
                        :id="currency.id - 1"
-                       :checked="isAllChecked"
+                       :checked="isChecked(currency.name)"
                 >
                 <img
                     v-if="currency.icon"
@@ -82,6 +82,7 @@
 
 <script>
 import {CURRENCY_ICON_PATH, isArrayExists} from "../../util";
+import { mapState } from "vuex";
 
 export default {
   data() {
@@ -96,6 +97,9 @@ export default {
     currencyIconPath() {
       return CURRENCY_ICON_PATH;
     },
+    ...mapState({
+      checkedCurrencies: state => state.news.checkedCurrencies,
+    })
   },
   methods: {
     // 親コンポーネント側でモーダルを閉じる
@@ -116,8 +120,18 @@ export default {
     // チェックボックスをクリックした時の操作
     checkedWord(currency_name) {
       this.$store.commit('news/setCheckedCurrencies', currency_name)
-      // // クリックされたチェックボックスの値を親コンポーネントにemit
-      // this.$emit('checkedWord', currency_name);
+    },
+
+    /* チェックボックスにチェックを入れるべきかを判定する。
+     * dataのisAllCheckedが付いていればtrue。
+     * そうでなけでばstoreのcheckedCurrenciesを確認して、値が存在すればtrueとする。
+     */
+    isChecked(currency_name) {
+      if (this.isAllChecked) {
+        return true
+      } else {
+        return isArrayExists(this.checkedCurrencies, currency_name)
+      }
     },
 
     // 全選択をクリックした時の操作

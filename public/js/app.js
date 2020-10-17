@@ -2979,8 +2979,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -3034,10 +3032,6 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     // モーダルを閉じる
     closeModal: function closeModal() {
       this.modal = false;
-    },
-    // チェックされたものを空にする
-    resetSearchWordByModal: function resetSearchWordByModal() {
-      this.$store.commit('news/resetCheckedCurrencies');
     },
     // 検索欄を空欄にする
     resetSearchWord: function resetSearchWord() {
@@ -3214,12 +3208,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3302,6 +3303,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3311,11 +3313,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       isAllChecked: false
     };
   },
-  computed: {
+  computed: _objectSpread({
     currencyIconPath: function currencyIconPath() {
       return _util__WEBPACK_IMPORTED_MODULE_1__["CURRENCY_ICON_PATH"];
     }
-  },
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
+    checkedCurrencies: function checkedCurrencies(state) {
+      return state.news.checkedCurrencies;
+    }
+  })),
   methods: {
     // 親コンポーネント側でモーダルを閉じる
     closeModal: function closeModal() {
@@ -3353,8 +3359,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // チェックボックスをクリックした時の操作
     checkedWord: function checkedWord(currency_name) {
-      this.$store.commit('news/setCheckedCurrencies', currency_name); // // クリックされたチェックボックスの値を親コンポーネントにemit
-      // this.$emit('checkedWord', currency_name);
+      this.$store.commit('news/setCheckedCurrencies', currency_name);
+    },
+
+    /* チェックボックスにチェックを入れるべきかを判定する。
+     * dataのisAllCheckedが付いていればtrue。
+     * そうでなけでばstoreのcheckedCurrenciesを確認して、値が存在すればtrueとする。
+     */
+    isChecked: function isChecked(currency_name) {
+      if (this.isAllChecked) {
+        return true;
+      } else {
+        return Object(_util__WEBPACK_IMPORTED_MODULE_1__["isArrayExists"])(this.checkedCurrencies, currency_name);
+      }
     },
     // 全選択をクリックした時の操作
     allCheckedSearchWord: function allCheckedSearchWord() {
@@ -45271,9 +45288,7 @@ var render = function() {
                   _c("SearchModal", {
                     on: {
                       closeModal: _vm.closeModal,
-                      fetch_googleNews: _vm.fetch_googleNews,
-                      checkedWord: _vm.checkedSearchWordByModal,
-                      resetSearchWordByModal: _vm.resetSearchWordByModal
+                      fetch_googleNews: _vm.fetch_googleNews
                     }
                   })
                 ],
@@ -45415,7 +45430,7 @@ var render = function() {
                       },
                       domProps: {
                         value: currency.name,
-                        checked: _vm.isAllChecked
+                        checked: _vm.isChecked(currency.name)
                       }
                     }),
                     _vm._v(" "),

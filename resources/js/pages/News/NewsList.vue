@@ -54,8 +54,6 @@
         <SearchModal
           @closeModal="closeModal"
           @fetch_googleNews="fetch_googleNews"
-          @checkedWord="checkedSearchWordByModal"
-          @resetSearchWordByModal="resetSearchWordByModal"
         />
       </div>
 
@@ -146,10 +144,6 @@ export default {
     // モーダルを閉じる
     closeModal(){
       this.modal = false;
-    },
-    // チェックされたものを空にする
-    resetSearchWordByModal() {
-      this.$store.commit('news/resetCheckedCurrencies');
     },
     // 検索欄を空欄にする
     resetSearchWord() {
