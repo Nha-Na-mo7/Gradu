@@ -28,6 +28,17 @@ export function getCookieValue(searchKey) {
   return val;
 }
 
+// 配列内に同じ値が存在するかをチェックする
+export function isArrayExists(array, value) {
+  // 配列の最後までループ、値があればtrueを、なければfalseを返す
+  for (var i = 0, len = array.length; i < len; i++) {
+    if (value === array[i]) {
+      return true;
+    }
+  }
+  return false;
+}
+
 
 export const OK = 200
 export const CREATED = 201
@@ -41,6 +52,6 @@ export const SEARCHING = '検索中'
 
 export const DEFAULT_SEARCHWORD = '仮想通貨';
 
-
+// 通貨アイコンのパス。storage/images/currency_svg/xxxxxx.svg
 export const CURRENCY_ICON_PATH = 'storage/images/currency_svg/';
 

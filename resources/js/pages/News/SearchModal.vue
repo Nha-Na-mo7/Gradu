@@ -21,13 +21,23 @@
           </div>
         </div>
 
+<!--        <div class="c-modal__index">-->
+<!--          <p class="c-modal__index-title">検索ワード選択(仮想通貨と関係のないニュースを除外するため、どちらかを選択していただきます。)</p>-->
+
+<!--          &lt;!&ndash; 仮想通貨/アルトコイン &ndash;&gt;-->
+<!--          <div class="c-checkbox__space">-->
+<!--            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>-->
+<!--            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>-->
+<!--          </div>-->
+<!--        </div>-->
+
         <!--  通過での絞り込み、加えて仮想通貨、アルトコインでも可-->
         <div class="c-modal__index">
-          <p class="c-modal__index-title">通貨で絞り込む</p>
-          <div class="c-checkbox__space">
-            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
-            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
-          </div>
+          <label>
+            <input type="checkbox" name="currency_all" @change="allCheckedSearchWord">
+          </label>
+          <p class="c-modal__index-title">通貨名<span class="c-modal__index-description">(仮想通貨と関係ないニュースを除外するため、検索ワードの前に「仮想通貨」が付与された状態で検索されます。)</span></p>
+
           <div class="c-checkbox__space">
 
             <!-- 通貨ボックス、brandsテーブルを参照している -->
@@ -38,7 +48,12 @@
                 @change="checkedWord(currency.name)"
             >
               <label :for="currency.id - 1">
-                <input type="checkbox" name="Crypto" :value="currency.name" :id="currency.id - 1">
+                <input type="checkbox"
+                       name="currency"
+                       :value="currency.name"
+                       :id="currency.id - 1"
+                       :checked="isAllChecked"
+                >
                 <img
                     v-if="currency.icon"
                     :src="currencyIconPath+currency.icon"
@@ -56,7 +71,6 @@
       <!-- 選択肢 -->
       <div class="c-modal__btn-area">
         <button class="c-btn" @click="fetch_googleNews">絞り込む</button>
-        <button class="c-btn" @click="closeModal">リセット</button>
         <button class="c-btn" @click="closeModal">絞り込まずに閉じる</button>
         <button class="c-btn" @click="closeModal">設定を保存</button>
       </div>
@@ -67,12 +81,15 @@
 </template>
 
 <script>
-import { CURRENCY_ICON_PATH } from "../../util";
+import {CURRENCY_ICON_PATH, isArrayExists} from "../../util";
 
 export default {
   data() {
     return {
       fetchedBrands: [],
+      checkedCurrencies: [],
+
+      isAllChecked: false
     }
   },
   computed: {
@@ -83,6 +100,8 @@ export default {
   methods: {
     // 親コンポーネント側でモーダルを閉じる
     closeModal() {
+      // ただモーダルを閉じるだけの時はチェックを元に戻すため、checkedCurrenciesはリセットする
+      this.checkedCurrencies.length = 0
       this.$emit('closeModal');
     },
     fetch_googleNews() {
@@ -96,8 +115,33 @@ export default {
 
     // チェックボックスをクリックした時の操作
     checkedWord(currency_name) {
+      // ワードを検索して、既に配列内に存在していた場合取り除く。
+      if(isArrayExists(this.checkedCurrencies, currency_name)) {
+        // そのワードを取り除いた新しい配列を作ってしまう
+        this.checkedCurrencies = this.checkedCurrencies.filter(val => val !== currency_name);
+        // ワードがない場合は配列に追加する
+      } else {
+        this.checkedCurrencies.push(currency_name);
+      }
+      // // クリックされたチェックボックスの値を親コンポーネントにemit
+      // this.$emit('checkedWord', currency_name);
+    },
+
+    // 全選択をクリックした時の操作
+    allCheckedSearchWord() {
+      this.isAllChecked = !this.isAllChecked
+      this.checkedCurrencies = []
+
+      console.log(this.fetchedBrands)
+      if (this.isAllChecked) {
+        for (let currency in this.fetchedBrands.name) {
+          this.checkedCurrencies.push(currency)
+        }
+      }
+      console.log(this.checkedCurrencies)
+
       // クリックされたチェックボックスの値を親コンポーネントにemit
-      this.$emit('checkedWord', currency_name);
+      // this.$emit('resetSearchWordByModal');
     },
 
     // 検索設定をDBに保存

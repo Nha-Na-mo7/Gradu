@@ -1061,6 +1061,10 @@ main {
   border-bottom: 1px solid #000;
 }
 
+.c-modal__index-description {
+  font-size: 0.8rem;
+}
+
 .c-modal__head {
   text-align: center;
 }

@@ -2972,6 +2972,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -3009,7 +3011,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     },
     // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords: function margeSearchWords() {
-      this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
+      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedSearchWords.join(' ');
     }
   },
   methods: {
@@ -3021,27 +3023,20 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     closeModal: function closeModal() {
       this.modal = false;
     },
+    // チェックされたものを空にする
+    resetSearchWordByModal: function resetSearchWordByModal() {
+      this.checkedSearchWords.length = 0;
+    },
     // 検索欄を空欄にする
     resetSearchWord: function resetSearchWord() {
       this.searchBoxWords = '';
-    },
-    // 配列内に同じ値が存在するかをチェックする
-    isArrayExists: function isArrayExists(array, value) {
-      // 配列の最後までループ、値があればtrueを、なければfalseを返す
-      for (var i = 0, len = array.length; i < len; i++) {
-        if (value === array[i]) {
-          return true;
-        }
-      }
-
-      return false;
     },
     // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
     checkedSearchWordByModal: function checkedSearchWordByModal(value) {
       // 長いので頭文字だけの変数にする
       var CSW = this.checkedSearchWords; // ワードを検索して、既に配列内に存在していた場合取り除く。
 
-      if (this.isArrayExists(CSW, value)) {
+      if (Object(_util__WEBPACK_IMPORTED_MODULE_6__["isArrayExists"])(CSW, value)) {
         // こちらはオリジナルのdataに入れなければならない
         this.checkedSearchWords = CSW.filter(function (val) {
           return val !== value;
@@ -3122,12 +3117,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // DBから取得してくる処理
-                // const response = await axios.get(`/api/news/setting/get`, { params });
-                // DBから取得した値が空だった場合の処理
-                if (true) {
-                  _this2.searchBoxWords = _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"];
-                }
+                _this2.searchBoxWords = _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"];
 
               case 1:
               case "end":
@@ -3300,11 +3290,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      fetchedBrands: []
+      fetchedBrands: [],
+      checkedCurrencies: [],
+      isAllChecked: false
     };
   },
   computed: {
@@ -3315,6 +3321,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     // 親コンポーネント側でモーダルを閉じる
     closeModal: function closeModal() {
+      // ただモーダルを閉じるだけの時はチェックを元に戻すため、checkedCurrenciesはリセットする
+      this.checkedCurrencies.length = 0;
       this.$emit('closeModal');
     },
     fetch_googleNews: function fetch_googleNews() {
@@ -3347,8 +3355,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // チェックボックスをクリックした時の操作
     checkedWord: function checkedWord(currency_name) {
-      // クリックされたチェックボックスの値を親コンポーネントにemit
-      this.$emit('checkedWord', currency_name);
+      // ワードを検索して、既に配列内に存在していた場合取り除く。
+      if (Object(_util__WEBPACK_IMPORTED_MODULE_1__["isArrayExists"])(this.checkedCurrencies, currency_name)) {
+        // そのワードを取り除いた新しい配列を作ってしまう
+        this.checkedCurrencies = this.checkedCurrencies.filter(function (val) {
+          return val !== currency_name;
+        }); // ワードがない場合は配列に追加する
+      } else {
+        this.checkedCurrencies.push(currency_name);
+      } // // クリックされたチェックボックスの値を親コンポーネントにemit
+      // this.$emit('checkedWord', currency_name);
+
+    },
+    // 全選択をクリックした時の操作
+    allCheckedSearchWord: function allCheckedSearchWord() {
+      this.isAllChecked = !this.isAllChecked;
+      this.checkedCurrencies = [];
+      console.log(this.fetchedBrands);
+
+      if (this.isAllChecked) {
+        for (var currency in this.fetchedBrands.name) {
+          this.checkedCurrencies.push(currency);
+        }
+      }
+
+      console.log(this.checkedCurrencies); // クリックされたチェックボックスの値を親コンポーネントにemit
+      // this.$emit('resetSearchWordByModal');
     },
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
@@ -45207,27 +45239,10 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "c-input__searcharea" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.searchBoxWords,
-                      expression: "searchBoxWords"
-                    }
-                  ],
-                  staticClass: "c-input",
-                  attrs: { type: "text", placeholder: _vm.placeholder },
-                  domProps: { value: _vm.searchBoxWords },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.searchBoxWords = $event.target.value
-                    }
-                  }
-                })
+                _c("p", [
+                  _vm._v("検索中のワード:"),
+                  _c("span", [_vm._v(_vm._s(_vm.searchData.keywords))])
+                ])
               ]),
               _vm._v(" "),
               _vm.isExistSearchWord
@@ -45271,7 +45286,8 @@ var render = function() {
                     on: {
                       closeModal: _vm.closeModal,
                       fetch_googleNews: _vm.fetch_googleNews,
-                      checkedWord: _vm.checkedSearchWordByModal
+                      checkedWord: _vm.checkedSearchWordByModal,
+                      resetSearchWordByModal: _vm.resetSearchWordByModal
                     }
                   })
                 ],
@@ -45379,52 +45395,14 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "c-modal__index" }, [
-          _c("p", { staticClass: "c-modal__index-title" }, [
-            _vm._v("通貨で絞り込む")
+          _c("label", [
+            _c("input", {
+              attrs: { type: "checkbox", name: "currency_all" },
+              on: { change: _vm.allCheckedSearchWord }
+            })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "c-checkbox__space" }, [
-            _c(
-              "div",
-              {
-                staticClass: "c-checkbox__item",
-                on: {
-                  change: function($event) {
-                    return _vm.checkedWord(_vm.e.value)
-                  }
-                }
-              },
-              [
-                _c("input", {
-                  attrs: {
-                    type: "checkbox",
-                    name: "Crypto",
-                    value: "kaso",
-                    checked: ""
-                  }
-                }),
-                _vm._v("仮想通貨")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "c-checkbox__item",
-                on: {
-                  change: function($event) {
-                    return _vm.checkedWord(_vm.e.value)
-                  }
-                }
-              },
-              [
-                _c("input", {
-                  attrs: { type: "checkbox", name: "Crypto", value: "alto" }
-                }),
-                _vm._v("アルトコイン")
-              ]
-            )
-          ]),
+          _vm._m(2),
           _vm._v(" "),
           _c(
             "div",
@@ -45446,10 +45424,13 @@ var render = function() {
                     _c("input", {
                       attrs: {
                         type: "checkbox",
-                        name: "Crypto",
+                        name: "currency",
                         id: currency.id - 1
                       },
-                      domProps: { value: currency.name }
+                      domProps: {
+                        value: currency.name,
+                        checked: _vm.isAllChecked
+                      }
                     }),
                     _vm._v(" "),
                     currency.icon
@@ -45462,9 +45443,9 @@ var render = function() {
                         })
                       : _vm._e(),
                     _vm._v(
-                      "\n              " +
+                      "\n                " +
                         _vm._s(currency.name) +
-                        "\n            "
+                        "\n              "
                     )
                   ])
                 ]
@@ -45481,10 +45462,6 @@ var render = function() {
           { staticClass: "c-btn", on: { click: _vm.fetch_googleNews } },
           [_vm._v("絞り込む")]
         ),
-        _vm._v(" "),
-        _c("button", { staticClass: "c-btn", on: { click: _vm.closeModal } }, [
-          _vm._v("リセット")
-        ]),
         _vm._v(" "),
         _c("button", { staticClass: "c-btn", on: { click: _vm.closeModal } }, [
           _vm._v("絞り込まずに閉じる")
@@ -45536,6 +45513,19 @@ var staticRenderFns = [
           }),
           _vm._v("古い順")
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "c-modal__index-title" }, [
+      _vm._v("通貨名"),
+      _c("span", { staticClass: "c-modal__index-description" }, [
+        _vm._v(
+          "(仮想通貨と関係ないニュースを除外するため、検索ワードの前に「仮想通貨」が付与された状態で検索されます。)"
+        )
       ])
     ])
   }
@@ -64010,12 +64000,13 @@ var mutations = {
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: getCookieValue, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOADING, SEARCHING, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH */
+/*! exports provided: getCookieValue, isArrayExists, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOADING, SEARCHING, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCookieValue", function() { return getCookieValue; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isArrayExists", function() { return isArrayExists; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OK", function() { return OK; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CREATED", function() { return CREATED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NOT_FOUND", function() { return NOT_FOUND; });
@@ -64068,6 +64059,17 @@ function getCookieValue(searchKey) {
     }
   });
   return val;
+} // 配列内に同じ値が存在するかをチェックする
+
+function isArrayExists(array, value) {
+  // 配列の最後までループ、値があればtrueを、なければfalseを返す
+  for (var i = 0, len = array.length; i < len; i++) {
+    if (value === array[i]) {
+      return true;
+    }
+  }
+
+  return false;
 }
 var OK = 200;
 var CREATED = 201;
@@ -64079,7 +64081,8 @@ var UNPROCESSABLE_ENTITY = 422; //バリデーションエラー
 var INTERNAL_SERVER_ERROR = 500;
 var LOADING = '読み込み中';
 var SEARCHING = '検索中';
-var DEFAULT_SEARCHWORD = '仮想通貨';
+var DEFAULT_SEARCHWORD = '仮想通貨'; // 通貨アイコンのパス。storage/images/currency_svg/xxxxxx.svg
+
 var CURRENCY_ICON_PATH = 'storage/images/currency_svg/';
 
 /***/ }),

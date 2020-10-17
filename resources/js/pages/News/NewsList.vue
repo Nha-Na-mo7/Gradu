@@ -23,7 +23,7 @@
           <p>{{ item }}</p>
         </div>
       </div>
-      
+
       <div class="p-news__headline">
         <!-- 検索フォーム・コンポーネント検討 -->
         <form class="p-news__search">
@@ -34,7 +34,8 @@
           </div>
           <!-- 検索欄 -->
           <div class="c-input__searcharea">
-            <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">
+            <p>検索中のワード:<span>{{ searchData.keywords }}</span></p>
+<!--            <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">-->
           </div>
           <!-- リセット用の✖️ボタン -->
           <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
@@ -54,6 +55,7 @@
           @closeModal="closeModal"
           @fetch_googleNews="fetch_googleNews"
           @checkedWord="checkedSearchWordByModal"
+          @resetSearchWordByModal="resetSearchWordByModal"
         />
       </div>
 
@@ -90,7 +92,7 @@ import NothingNews from './NothingNews.vue';
 import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
 import PageTitle from '../Components/PageTitle.vue';
-import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
+import { OK , SEARCHING, DEFAULT_SEARCHWORD, isArrayExists } from "../../util";
 
 const PAGE_TITLE = 'NEWS';
 const PLACEHOLDER = '検索したいワードを追加することができます。';
@@ -128,7 +130,7 @@ export default {
     },
     // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords() {
-      this.searchData.keywords = this.checkedSearchWords.join(' ') + ' ' + this.searchBoxWords;
+      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedSearchWords.join(' ');
     }
 
   },
@@ -141,20 +143,15 @@ export default {
     closeModal(){
       this.modal = false;
     },
+    // チェックされたものを空にする
+    resetSearchWordByModal() {
+      this.checkedSearchWords.length =  0;
+    },
     // 検索欄を空欄にする
     resetSearchWord() {
       this.searchBoxWords = '';
     },
-    // 配列内に同じ値が存在するかをチェックする
-    isArrayExists(array, value) {
-    // 配列の最後までループ、値があればtrueを、なければfalseを返す
-    for (var i = 0, len = array.length; i < len; i++) {
-      if (value === array[i]) {
-        return true;
-      }
-    }
-    return false;
-  },
+
 
     // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
     checkedSearchWordByModal(value) {
@@ -162,7 +159,7 @@ export default {
       var CSW = this.checkedSearchWords
 
       // ワードを検索して、既に配列内に存在していた場合取り除く。
-      if(this.isArrayExists(CSW, value)) {
+      if(isArrayExists(CSW, value)) {
         // こちらはオリジナルのdataに入れなければならない
         this.checkedSearchWords = CSW.filter(val => val !== value);
 
@@ -212,13 +209,7 @@ export default {
     // DBからユーザーが保存した検索設定を取得し、checkedSearchWordsに入れる。
     // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
     async fetch_setting_search() {
-      // DBから取得してくる処理
-      // const response = await axios.get(`/api/news/setting/get`, { params });
-
-      // DBから取得した値が空だった場合の処理
-      if(true) {
-        this.searchBoxWords = DEFAULT_SEARCHWORD;
-      }
+      this.searchBoxWords = DEFAULT_SEARCHWORD;
     },
 
   },
