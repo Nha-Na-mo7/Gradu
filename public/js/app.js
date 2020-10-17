@@ -63931,9 +63931,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./auth */ "./resources/js/store/auth.js");
 /* harmony import */ var _error__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./error */ "./resources/js/store/error.js");
 /* harmony import */ var _message__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./message */ "./resources/js/store/message.js");
+/* harmony import */ var _news__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./news */ "./resources/js/store/news.js");
 // ====================
 // ルート用Store
 // ====================
+
 
 
 
@@ -63944,7 +63946,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
     auth: _auth__WEBPACK_IMPORTED_MODULE_2__["default"],
     error: _error__WEBPACK_IMPORTED_MODULE_3__["default"],
-    message: _message__WEBPACK_IMPORTED_MODULE_4__["default"]
+    message: _message__WEBPACK_IMPORTED_MODULE_4__["default"],
+    news: _news__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 });
 /* harmony default export */ __webpack_exports__["default"] = (store);
@@ -63992,6 +63995,56 @@ var mutations = {
   namespaced: true,
   state: state,
   mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/store/news.js":
+/*!************************************!*\
+  !*** ./resources/js/store/news.js ***!
+  \************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// ====================
+// Store News
+// ====================
+// Googleニュース取得ページで使用するストア
+// ===============
+// state
+// ===============
+var state = {
+  // 実際にAPIを使ってのニュース検索ワード
+  // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
+  searchBoxWords: '',
+  // チェックボックスでチェックされたワードの配列
+  checkedCurrencies: [],
+  // DBから取得した通貨データを格納した配列
+  fetchedBrands: []
+}; // ===============
+// getter
+// ===============
+
+var getter = {}; // ===============
+// mutations
+// ===============
+
+var mutations = {}; // ===============
+// actions
+// ===============
+
+var actions = {}; // ================
+// export default
+// ================
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  getter: getter,
+  mutations: mutations,
+  actions: actions
 });
 
 /***/ }),

@@ -14381,10 +14381,10 @@ var actions={};// ================
 // ================
 /* harmony default export */__webpack_exports__["default"]={namespaced:true,state:state,getter:getter,mutations:mutations,actions:actions};/***/},/***/"./resources/js/store/index.js":/*!*************************************!*\
   !*** ./resources/js/store/index.js ***!
-  \*************************************/ /*! exports provided: default */ /***/function resourcesJsStoreIndexJs(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.r(__webpack_exports__);/* harmony import */var vue__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(/*! vue */"./node_modules/vue/dist/vue.common.js");/* harmony import */var vue__WEBPACK_IMPORTED_MODULE_0___default=/*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);/* harmony import */var vuex__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(/*! vuex */"./node_modules/vuex/dist/vuex.esm.js");/* harmony import */var _auth__WEBPACK_IMPORTED_MODULE_2__=__webpack_require__(/*! ./auth */"./resources/js/store/auth.js");/* harmony import */var _error__WEBPACK_IMPORTED_MODULE_3__=__webpack_require__(/*! ./error */"./resources/js/store/error.js");/* harmony import */var _message__WEBPACK_IMPORTED_MODULE_4__=__webpack_require__(/*! ./message */"./resources/js/store/message.js");// ====================
+  \*************************************/ /*! exports provided: default */ /***/function resourcesJsStoreIndexJs(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.r(__webpack_exports__);/* harmony import */var vue__WEBPACK_IMPORTED_MODULE_0__=__webpack_require__(/*! vue */"./node_modules/vue/dist/vue.common.js");/* harmony import */var vue__WEBPACK_IMPORTED_MODULE_0___default=/*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);/* harmony import */var vuex__WEBPACK_IMPORTED_MODULE_1__=__webpack_require__(/*! vuex */"./node_modules/vuex/dist/vuex.esm.js");/* harmony import */var _auth__WEBPACK_IMPORTED_MODULE_2__=__webpack_require__(/*! ./auth */"./resources/js/store/auth.js");/* harmony import */var _error__WEBPACK_IMPORTED_MODULE_3__=__webpack_require__(/*! ./error */"./resources/js/store/error.js");/* harmony import */var _message__WEBPACK_IMPORTED_MODULE_4__=__webpack_require__(/*! ./message */"./resources/js/store/message.js");/* harmony import */var _news__WEBPACK_IMPORTED_MODULE_5__=__webpack_require__(/*! ./news */"./resources/js/store/news.js");// ====================
 // ルート用Store
 // ====================
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);var store=new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({modules:{auth:_auth__WEBPACK_IMPORTED_MODULE_2__["default"],error:_error__WEBPACK_IMPORTED_MODULE_3__["default"],message:_message__WEBPACK_IMPORTED_MODULE_4__["default"]}});/* harmony default export */__webpack_exports__["default"]=store;/***/},/***/"./resources/js/store/message.js":/*!***************************************!*\
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);var store=new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({modules:{auth:_auth__WEBPACK_IMPORTED_MODULE_2__["default"],error:_error__WEBPACK_IMPORTED_MODULE_3__["default"],message:_message__WEBPACK_IMPORTED_MODULE_4__["default"],news:_news__WEBPACK_IMPORTED_MODULE_5__["default"]}});/* harmony default export */__webpack_exports__["default"]=store;/***/},/***/"./resources/js/store/message.js":/*!***************************************!*\
   !*** ./resources/js/store/message.js ***!
   \***************************************/ /*! exports provided: default */ /***/function resourcesJsStoreMessageJs(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.r(__webpack_exports__);// ====================
 // message (フラッシュメッセージ)
@@ -14400,7 +14400,32 @@ var mutations={// フラッシュメッセージをセットする。
 setContent:function setContent(state,_ref){var content=_ref.content,_ref$timeout=_ref.timeout,timeout=_ref$timeout===void 0?5000:_ref$timeout;state.content=content;setTimeout(function(){return state.content='';},timeout);}};// ================
 // export default
 // ================
-/* harmony default export */__webpack_exports__["default"]={namespaced:true,state:state,mutations:mutations};/***/},/***/"./resources/js/util.js":/*!******************************!*\
+/* harmony default export */__webpack_exports__["default"]={namespaced:true,state:state,mutations:mutations};/***/},/***/"./resources/js/store/news.js":/*!************************************!*\
+  !*** ./resources/js/store/news.js ***!
+  \************************************/ /*! exports provided: default */ /***/function resourcesJsStoreNewsJs(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.r(__webpack_exports__);// ====================
+// Store News
+// ====================
+// Googleニュース取得ページで使用するストア
+// ===============
+// state
+// ===============
+var state={// 実際にAPIを使ってのニュース検索ワード
+// デフォルトの検索ワード(仮想通貨とかアルトコインとか)
+searchBoxWords:'',// チェックボックスでチェックされたワードの配列
+checkedCurrencies:[],// DBから取得した通貨データを格納した配列
+fetchedBrands:[]};// ===============
+// getter
+// ===============
+var getter={};// ===============
+// mutations
+// ===============
+var mutations={};// ===============
+// actions
+// ===============
+var actions={};// ================
+// export default
+// ================
+/* harmony default export */__webpack_exports__["default"]={namespaced:true,state:state,getter:getter,mutations:mutations,actions:actions};/***/},/***/"./resources/js/util.js":/*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/ /*! exports provided: getCookieValue, isArrayExists, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOADING, SEARCHING, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH */ /***/function resourcesJsUtilJs(module,__webpack_exports__,__webpack_require__){"use strict";__webpack_require__.r(__webpack_exports__);/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"getCookieValue",function(){return getCookieValue;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"isArrayExists",function(){return isArrayExists;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"OK",function(){return OK;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"CREATED",function(){return CREATED;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"NOT_FOUND",function(){return NOT_FOUND;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"UNAUTHORIZED",function(){return UNAUTHORIZED;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"UNPROCESSABLE_ENTITY",function(){return UNPROCESSABLE_ENTITY;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"INTERNAL_SERVER_ERROR",function(){return INTERNAL_SERVER_ERROR;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"LOADING",function(){return LOADING;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"SEARCHING",function(){return SEARCHING;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"DEFAULT_SEARCHWORD",function(){return DEFAULT_SEARCHWORD;});/* harmony export (binding) */__webpack_require__.d(__webpack_exports__,"CURRENCY_ICON_PATH",function(){return CURRENCY_ICON_PATH;});function _slicedToArray(arr,i){return _arrayWithHoles(arr)||_iterableToArrayLimit(arr,i)||_unsupportedIterableToArray(arr,i)||_nonIterableRest();}function _nonIterableRest(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o,minLen){if(!o)return;if(typeof o==="string")return _arrayLikeToArray(o,minLen);var n=Object.prototype.toString.call(o).slice(8,-1);if(n==="Object"&&o.constructor)n=o.constructor.name;if(n==="Map"||n==="Set")return Array.from(o);if(n==="Arguments"||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n))return _arrayLikeToArray(o,minLen);}function _arrayLikeToArray(arr,len){if(len==null||len>arr.length)len=arr.length;for(var i=0,arr2=new Array(len);i<len;i++){arr2[i]=arr[i];}return arr2;}function _iterableToArrayLimit(arr,i){if(typeof Symbol==="undefined"||!(Symbol.iterator in Object(arr)))return;var _arr=[];var _n=true;var _d=false;var _e=undefined;try{for(var _i=arr[Symbol.iterator](),_s;!(_n=(_s=_i.next()).done);_n=true){_arr.push(_s.value);if(i&&_arr.length===i)break;}}catch(err){_d=true;_e=err;}finally{try{if(!_n&&_i["return"]!=null)_i["return"]();}finally{if(_d)throw _e;}}return _arr;}function _arrayWithHoles(arr){if(Array.isArray(arr))return arr;}// ==============
 // utility
