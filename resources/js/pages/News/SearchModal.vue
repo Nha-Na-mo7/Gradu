@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       fetchedBrands: [],
-      checkedCurrencies: [],
+      // checkedCurrencies: [],
 
       isAllChecked: false
     }
@@ -101,7 +101,7 @@ export default {
     // 親コンポーネント側でモーダルを閉じる
     closeModal() {
       // ただモーダルを閉じるだけの時はチェックを元に戻すため、checkedCurrenciesはリセットする
-      this.checkedCurrencies.length = 0
+      this.$store.commit('news/resetCheckedCurrencies');
       this.$emit('closeModal');
     },
     fetch_googleNews() {
@@ -115,14 +115,7 @@ export default {
 
     // チェックボックスをクリックした時の操作
     checkedWord(currency_name) {
-      // ワードを検索して、既に配列内に存在していた場合取り除く。
-      if(isArrayExists(this.checkedCurrencies, currency_name)) {
-        // そのワードを取り除いた新しい配列を作ってしまう
-        this.checkedCurrencies = this.checkedCurrencies.filter(val => val !== currency_name);
-        // ワードがない場合は配列に追加する
-      } else {
-        this.checkedCurrencies.push(currency_name);
-      }
+      this.$store.commit('news/setCheckedCurrencies', currency_name)
       // // クリックされたチェックボックスの値を親コンポーネントにemit
       // this.$emit('checkedWord', currency_name);
     },
@@ -130,16 +123,14 @@ export default {
     // 全選択をクリックした時の操作
     allCheckedSearchWord() {
       this.isAllChecked = !this.isAllChecked
-      this.checkedCurrencies = []
+      this.$store.commit('news/resetCheckedCurrencies');
 
-      console.log(this.fetchedBrands)
       if (this.isAllChecked) {
-        for (let currency in this.fetchedBrands.name) {
-          this.checkedCurrencies.push(currency)
+        for (let i = 0; i < this.fetchedBrands.length; i++) {
+          // TODO ベタがきはしないべき？
+          this.$store.commit('news/setCheckedCurrencies', this.fetchedBrands[i].name);
         }
       }
-      console.log(this.checkedCurrencies)
-
       // クリックされたチェックボックスの値を親コンポーネントにemit
       // this.$emit('resetSearchWordByModal');
     },

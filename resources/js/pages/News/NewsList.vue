@@ -18,7 +18,7 @@
     <div class="p-news__container">
 
       <!-- ヘッドライン -->
-      <div class="" v-for="item in checkedSearchWords">
+      <div class="" v-for="item in checkedCurrencies">
         <div>
           <p>{{ item }}</p>
         </div>
@@ -93,6 +93,7 @@ import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import { OK , SEARCHING, DEFAULT_SEARCHWORD, isArrayExists } from "../../util";
+import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'NEWS';
 const PLACEHOLDER = '検索したいワードを追加することができます。';
@@ -128,10 +129,13 @@ export default {
     isExistSearchWord() {
       return this.searchBoxWords !== '';
     },
-    // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
+    // checkedCurrencyとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords() {
-      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedSearchWords.join(' ');
-    }
+      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedCurrencies.join(' ');
+    },
+    ...mapState({
+      checkedCurrencies: state => state.news.checkedCurrencies,
+    })
 
   },
   methods: {
@@ -145,7 +149,7 @@ export default {
     },
     // チェックされたものを空にする
     resetSearchWordByModal() {
-      this.checkedSearchWords.length =  0;
+      this.$store.commit('news/resetCheckedCurrencies');
     },
     // 検索欄を空欄にする
     resetSearchWord() {

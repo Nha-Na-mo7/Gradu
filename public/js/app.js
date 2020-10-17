@@ -2880,12 +2880,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Loading_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Loading.vue */ "./resources/js/components/Loading.vue");
 /* harmony import */ var _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Components/PageTitle.vue */ "./resources/js/pages/Components/PageTitle.vue");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2974,6 +2981,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+
 
 
 
@@ -3001,7 +3009,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
       }
     };
   },
-  computed: {
+  computed: _objectSpread({
     searchingWord: function searchingWord() {
       return _util__WEBPACK_IMPORTED_MODULE_6__["SEARCHING"];
     },
@@ -3009,11 +3017,15 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     isExistSearchWord: function isExistSearchWord() {
       return this.searchBoxWords !== '';
     },
-    // checkedSearchWordsとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
+    // checkedCurrencyとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords: function margeSearchWords() {
-      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedSearchWords.join(' ');
+      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedCurrencies.join(' ');
     }
-  },
+  }, Object(vuex__WEBPACK_IMPORTED_MODULE_7__["mapState"])({
+    checkedCurrencies: function checkedCurrencies(state) {
+      return state.news.checkedCurrencies;
+    }
+  })),
   methods: {
     // モーダルを開く
     showModal: function showModal() {
@@ -3025,7 +3037,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     },
     // チェックされたものを空にする
     resetSearchWordByModal: function resetSearchWordByModal() {
-      this.checkedSearchWords.length = 0;
+      this.$store.commit('news/resetCheckedCurrencies');
     },
     // 検索欄を空欄にする
     resetSearchWord: function resetSearchWord() {
@@ -3309,7 +3321,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   data: function data() {
     return {
       fetchedBrands: [],
-      checkedCurrencies: [],
+      // checkedCurrencies: [],
       isAllChecked: false
     };
   },
@@ -3322,7 +3334,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // 親コンポーネント側でモーダルを閉じる
     closeModal: function closeModal() {
       // ただモーダルを閉じるだけの時はチェックを元に戻すため、checkedCurrenciesはリセットする
-      this.checkedCurrencies.length = 0;
+      this.$store.commit('news/resetCheckedCurrencies');
       this.$emit('closeModal');
     },
     fetch_googleNews: function fetch_googleNews() {
@@ -3355,32 +3367,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // チェックボックスをクリックした時の操作
     checkedWord: function checkedWord(currency_name) {
-      // ワードを検索して、既に配列内に存在していた場合取り除く。
-      if (Object(_util__WEBPACK_IMPORTED_MODULE_1__["isArrayExists"])(this.checkedCurrencies, currency_name)) {
-        // そのワードを取り除いた新しい配列を作ってしまう
-        this.checkedCurrencies = this.checkedCurrencies.filter(function (val) {
-          return val !== currency_name;
-        }); // ワードがない場合は配列に追加する
-      } else {
-        this.checkedCurrencies.push(currency_name);
-      } // // クリックされたチェックボックスの値を親コンポーネントにemit
+      this.$store.commit('news/setCheckedCurrencies', currency_name); // // クリックされたチェックボックスの値を親コンポーネントにemit
       // this.$emit('checkedWord', currency_name);
-
     },
     // 全選択をクリックした時の操作
     allCheckedSearchWord: function allCheckedSearchWord() {
       this.isAllChecked = !this.isAllChecked;
-      this.checkedCurrencies = [];
-      console.log(this.fetchedBrands);
+      this.$store.commit('news/resetCheckedCurrencies');
 
       if (this.isAllChecked) {
-        for (var currency in this.fetchedBrands.name) {
-          this.checkedCurrencies.push(currency);
+        for (var i = 0; i < this.fetchedBrands.length; i++) {
+          // TODO ベタがきはしないべき？
+          this.$store.commit('news/setCheckedCurrencies', this.fetchedBrands[i].name);
         }
-      }
-
-      console.log(this.checkedCurrencies); // クリックされたチェックボックスの値を親コンポーネントにemit
+      } // クリックされたチェックボックスの値を親コンポーネントにemit
       // this.$emit('resetSearchWordByModal');
+
     },
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
@@ -45212,7 +45214,7 @@ var render = function() {
         "div",
         { staticClass: "p-news__container" },
         [
-          _vm._l(_vm.checkedSearchWords, function(item) {
+          _vm._l(_vm.checkedCurrencies, function(item) {
             return _c("div", {}, [_c("div", [_c("p", [_vm._v(_vm._s(item))])])])
           }),
           _vm._v(" "),
@@ -64008,30 +64010,50 @@ var mutations = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../util */ "./resources/js/util.js");
 // ====================
 // Store News
 // ====================
 // Googleニュース取得ページで使用するストア
-// ===============
+ // ===============
 // state
 // ===============
+
 var state = {
   // 実際にAPIを使ってのニュース検索ワード
   // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
   searchBoxWords: '',
   // チェックボックスでチェックされたワードの配列
-  checkedCurrencies: [],
-  // DBから取得した通貨データを格納した配列
-  fetchedBrands: []
+  checkedCurrencies: []
 }; // ===============
 // getter
 // ===============
 
-var getter = {}; // ===============
+var getter = {
+  checkedCurrencies: function checkedCurrencies(state) {
+    return state.checkedCurrencies;
+  }
+}; // ===============
 // mutations
 // ===============
 
-var mutations = {}; // ===============
+var mutations = {
+  setCheckedCurrencies: function setCheckedCurrencies(state, currency_name) {
+    // 既に配列内に同じ値があれば外す
+    if (Object(_util__WEBPACK_IMPORTED_MODULE_0__["isArrayExists"])(state.checkedCurrencies, currency_name)) {
+      state.checkedCurrencies = state.checkedCurrencies.filter(function (val) {
+        return val !== currency_name;
+      });
+    } else {
+      // なければいれる
+      state.checkedCurrencies.push(currency_name);
+    }
+  },
+  // 配列をリセットする
+  resetCheckedCurrencies: function resetCheckedCurrencies(state) {
+    state.checkedCurrencies = [];
+  }
+}; // ===============
 // actions
 // ===============
 

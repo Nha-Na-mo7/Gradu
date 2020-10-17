@@ -2,6 +2,7 @@
 // Store News
 // ====================
 // Googleニュース取得ページで使用するストア
+import { OK, CREATED, UNPROCESSABLE_ENTITY, isArrayExists } from '../util';
 
 // ===============
 // state
@@ -13,20 +14,33 @@ const state = {
   searchBoxWords: '',
   // チェックボックスでチェックされたワードの配列
   checkedCurrencies: [],
-  // DBから取得した通貨データを格納した配列
-  fetchedBrands: []
-  
 }
 
 // ===============
 // getter
 // ===============
-const getter = {}
+const getter = {
+  checkedCurrencies: state => state.checkedCurrencies
+}
 
 // ===============
 // mutations
 // ===============
-const mutations = {}
+const mutations = {
+  setCheckedCurrencies(state, currency_name) {
+    // 既に配列内に同じ値があれば外す
+    if(isArrayExists(state.checkedCurrencies, currency_name)) {
+      state.checkedCurrencies = state.checkedCurrencies.filter(val => val !== currency_name);
+    }else {
+      // なければいれる
+      state.checkedCurrencies.push(currency_name);
+    }
+  },
+  // 配列をリセットする
+  resetCheckedCurrencies(state) {
+    state.checkedCurrencies = [];
+  },
+}
 
 // ===============
 // actions
