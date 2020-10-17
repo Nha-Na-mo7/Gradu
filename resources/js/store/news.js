@@ -8,10 +8,8 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY, isArrayExists } from '../util';
 // state
 // ===============
 const state = {
-  // 実際にAPIを使ってのニュース検索ワード
-  
   // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
-  searchBoxWords: '',
+  requireSearchWords: '',
   // チェックボックスでチェックされたワードの配列
   checkedCurrencies: [],
 }

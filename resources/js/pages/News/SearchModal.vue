@@ -131,8 +131,6 @@ export default {
           this.$store.commit('news/setCheckedCurrencies', this.fetchedBrands[i].name);
         }
       }
-      // クリックされたチェックボックスの値を親コンポーネントにemit
-      // this.$emit('resetSearchWordByModal');
     },
 
     // 検索設定をDBに保存

@@ -156,23 +156,6 @@ export default {
       this.searchBoxWords = '';
     },
 
-
-    // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
-    checkedSearchWordByModal(value) {
-      // 長いので頭文字だけの変数にする
-      var CSW = this.checkedSearchWords
-
-      // ワードを検索して、既に配列内に存在していた場合取り除く。
-      if(isArrayExists(CSW, value)) {
-        // こちらはオリジナルのdataに入れなければならない
-        this.checkedSearchWords = CSW.filter(val => val !== value);
-
-        // ワードがない場合は配列に追加する
-      } else {
-        CSW.push(value);
-      }
-    },
-
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     async fetch_googleNews() {
       // 検索中には呼び出せないようにする

@@ -3043,20 +3043,6 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
     resetSearchWord: function resetSearchWord() {
       this.searchBoxWords = '';
     },
-    // モーダルから与えられたワードを検索欄にいれ、既に入っていた場合は消す。
-    checkedSearchWordByModal: function checkedSearchWordByModal(value) {
-      // 長いので頭文字だけの変数にする
-      var CSW = this.checkedSearchWords; // ワードを検索して、既に配列内に存在していた場合取り除く。
-
-      if (Object(_util__WEBPACK_IMPORTED_MODULE_6__["isArrayExists"])(CSW, value)) {
-        // こちらはオリジナルのdataに入れなければならない
-        this.checkedSearchWords = CSW.filter(function (val) {
-          return val !== value;
-        }); // ワードがない場合は配列に追加する
-      } else {
-        CSW.push(value);
-      }
-    },
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     fetch_googleNews: function fetch_googleNews() {
       var _this = this;
@@ -3380,9 +3366,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           // TODO ベタがきはしないべき？
           this.$store.commit('news/setCheckedCurrencies', this.fetchedBrands[i].name);
         }
-      } // クリックされたチェックボックスの値を親コンポーネントにemit
-      // this.$emit('resetSearchWordByModal');
-
+      }
     },
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
@@ -64020,9 +64004,8 @@ __webpack_require__.r(__webpack_exports__);
 // ===============
 
 var state = {
-  // 実際にAPIを使ってのニュース検索ワード
   // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
-  searchBoxWords: '',
+  requireSearchWords: '',
   // チェックボックスでチェックされたワードの配列
   checkedCurrencies: []
 }; // ===============
