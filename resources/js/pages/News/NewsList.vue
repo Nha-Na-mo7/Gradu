@@ -5,11 +5,7 @@
   <div class="l-container__content">
 
     <!-- サイトリンク -->
-    <div class="c-site-linknav">
-      <RouterLink class="c-site__link-nav__to-top" to="/">トップ</RouterLink>
-      <span>></span>
-      <RouterLink class="c-site__link-nav__to-content" to="/news">ニュース</RouterLink>
-    </div>
+    <SiteLinknav :currentPageTitle='pageTitle'/>
 
     <!-- ページタイトル -->
     <PageTitle :title='pageTitle'/>
@@ -83,6 +79,7 @@ import News from './News.vue';
 import NothingNews from './NothingNews.vue';
 import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
+import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
@@ -180,6 +177,7 @@ export default {
 
   },
   components: {
+    SiteLinknav,
     News,
     NothingNews,
     SearchModal,

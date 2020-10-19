@@ -5,11 +5,7 @@
   <div class="l-container__content">
 
     <!-- サイトリンク -->
-    <div class="c-site-linknav">
-      <RouterLink class="c-site__link-nav__to-top" to="/">トップ</RouterLink>
-      <span>></span>
-      <RouterLink class="c-site__link-nav__to-content" to="/news">仮想通貨アカウント一覧</RouterLink>
-    </div>
+    <SiteLinknav :currentPageTitle='pageTitle'/>
 
     <!-- ページタイトル -->
     <PageTitle :title='pageTitle'/>
@@ -25,6 +21,7 @@
 <script>
 import Account from './Account.vue';
 import Loading from '../../components/Loading.vue';
+import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import { OK , DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
@@ -40,6 +37,7 @@ export default {
   components: {
     Account,
     Loading,
+    SiteLinknav,
     PageTitle
   },
   // watch: {
