@@ -3281,6 +3281,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3364,17 +3365,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return Object(_util__WEBPACK_IMPORTED_MODULE_1__["isArrayExists"])(this.checkedCurrencies, currency_name);
       }
     },
-    // 全選択をクリックした時の操作
-    allCheckedSearchWord: function allCheckedSearchWord() {
-      this.isAllChecked = !this.isAllChecked;
+    // リセットをクリックした時の操作
+    // TODO 全選択を付けるかは要検討
+    resetSearchWord: function resetSearchWord() {
       this.$store.commit('news/resetCheckedCurrencies');
-
-      if (this.isAllChecked) {
-        for (var i = 0; i < this.fetchedBrands.length; i++) {
-          // TODO ベタがきはしないべき？
-          this.$store.commit('news/setCheckedCurrencies', this.fetchedBrands[i].name);
-        }
-      }
     },
     // チェックボックスが全て埋まっている場合、全選択にもチェックがつく
     allchecked: function allchecked() {
@@ -45384,9 +45378,13 @@ var render = function() {
         _c("div", { staticClass: "c-modal__index" }, [
           _c("label", [
             _c("input", {
-              attrs: { type: "checkbox", name: "currency_all" },
-              domProps: { checked: _vm.allchecked },
-              on: { change: _vm.allCheckedSearchWord }
+              staticClass: "c-btn",
+              attrs: {
+                type: "button",
+                name: "currency_all",
+                value: "リセット"
+              },
+              on: { click: _vm.resetSearchWord }
             })
           ]),
           _vm._v(" "),

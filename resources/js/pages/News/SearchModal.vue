@@ -15,10 +15,11 @@
         <div class="c-modal__index">
           <label>
             <input
-                type="checkbox"
+                type="button"
                 name="currency_all"
-                @change="allCheckedSearchWord"
-                :checked="allchecked"
+                class="c-btn"
+                value="リセット"
+                @click="resetSearchWord"
             >
           </label>
           <p class="c-modal__index-title">通貨名<span class="c-modal__index-description">(仮想通貨と関係ないニュースを除外するため、検索ワードの前に「仮想通貨」が付与された状態で検索されます。)</span></p>
@@ -128,17 +129,10 @@ export default {
       }
     },
 
-    // 全選択をクリックした時の操作
-    allCheckedSearchWord() {
-      this.isAllChecked = !this.isAllChecked
+    // リセットをクリックした時の操作
+    // TODO 全選択を付けるかは要検討
+    resetSearchWord() {
       this.$store.commit('news/resetCheckedCurrencies');
-
-      if (this.isAllChecked) {
-        for (let i = 0; i < this.fetchedBrands.length; i++) {
-          // TODO ベタがきはしないべき？
-          this.$store.commit('news/setCheckedCurrencies', this.fetchedBrands[i].name);
-        }
-      }
     },
 
     // チェックボックスが全て埋まっている場合、全選択にもチェックがつく
