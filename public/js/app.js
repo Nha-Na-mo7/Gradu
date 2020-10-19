@@ -2031,6 +2031,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
@@ -44296,6 +44299,19 @@ var render = function() {
             _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/news" } }, [
               _vm._v("ニュース")
             ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "p-navbar__item" },
+          [
+            _c(
+              "RouterLink",
+              { staticClass: "c-btn", attrs: { to: "/accounts" } },
+              [_vm._v("Twitterアカウント一覧")]
+            )
           ],
           1
         ),

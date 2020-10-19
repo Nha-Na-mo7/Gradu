@@ -9,6 +9,9 @@
         <RouterLink class="c-btn" to="/news">ニュース</RouterLink>
       </div>
       <div class="p-navbar__item">
+        <RouterLink class="c-btn" to="/accounts">Twitterアカウント一覧</RouterLink>
+      </div>
+      <div class="p-navbar__item">
         <RouterLink class="c-btn" to="/">アカウント設定</RouterLink>
       </div>
       <div class="p-navbar__item" v-if="isLogin">
