@@ -37,11 +37,6 @@ export default {
       is24h: false,
     }
   },
-  methods: {
-    // async emitFetchReports() {
-    //   this.$emit('reloadReports');
-    // }
-  },
   computed: {
     // " - "で区切る
     splitTitle() {
