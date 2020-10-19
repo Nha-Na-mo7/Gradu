@@ -3288,8 +3288,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       fetchedBrands: [],
       isAllChecked: false,
-      checkedBoxWhenOpened: [] // オープン時にチェックされていた選択肢を格納、絞り込みせずに閉じる場合にここを参照する
-
+      // オープン時にチェックされていた選択肢を格納、絞り込みせずに閉じる場合にここを参照する。
+      checkedBoxWhenOpened: []
     };
   },
   computed: _objectSpread({
@@ -3304,8 +3304,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     // モーダルのオープン時に、チェック済みの選択肢を保存する
     keepCheckedBoxWhenOpened: function keepCheckedBoxWhenOpened() {
-      this.checkedBoxWhenOpened = this.checkedCurrencies;
-      console.log(this.checkedBoxWhenOpened);
+      // checkedCurrenciesのストアをそのまま参照すると値が変わってしまうので、1つ1つ新しい配列として入れ直す
+      for (var i = 0; i < this.checkedCurrencies.length; i++) {
+        this.checkedBoxWhenOpened.push(this.checkedCurrencies[i]);
+      }
     },
     // 親コンポーネント側でモーダルを閉じる
     closeModal: function closeModal() {
@@ -3313,7 +3315,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$store.commit('news/resetCheckedCurrencies');
 
       for (var i = 0; i < this.checkedBoxWhenOpened.length; i++) {
-        // TODO ベタがきはしないべき？
         this.$store.commit('news/setCheckedCurrencies', this.checkedBoxWhenOpened[i]);
       }
 
