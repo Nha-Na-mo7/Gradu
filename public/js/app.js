@@ -2928,8 +2928,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      currentPath: this.$route.path,
-      is24h: false
+      currentPath: this.$route.path
     };
   },
   computed: {
@@ -2955,52 +2954,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return arr[arr.length - 1];
     },
     // 投稿された記事が、現在時刻から見て24時間以内の投稿記事かを判定する
-    getTime: function getTime() {
-      var _this = this;
+    is24hour: function is24hour() {
+      var now = Date.now(); //現在時刻
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var now, entryday;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                now = Date.now(); //現在時刻
+      var updatedTimeStamp = Date.parse(this.entry.updated); //記事の投稿時刻
+      // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
 
-                entryday = Date.parse(_this.entry.updated); //記事の投稿時刻
-                // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
-
-                if ((now - entryday) / 1000 < 60 * 60 * 24) {
-                  _this.is24h = true;
-                }
-
-              case 3:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
+      return (now - updatedTimeStamp) / 1000 < 60 * 60 * 24;
     }
   },
   watch: {
     $route: {
       handler: function handler() {
-        var _this2 = this;
+        var _this = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context.prev = _context.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.getTime;
+                  _context.next = 2;
+                  return _this.getTime;
 
                 case 2:
                 case "end":
-                  return _context2.stop();
+                  return _context.stop();
               }
             }
-          }, _callee2);
+          }, _callee);
         }))();
       },
       immediate: true
@@ -45447,7 +45428,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "p-news__item" }, [
-    _vm.is24h
+    _vm.is24hour
       ? _c("span", { staticClass: "c-icon" }, [_vm._v("NEW!!")])
       : _vm._e(),
     _vm._v(" "),

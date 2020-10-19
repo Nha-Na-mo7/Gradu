@@ -4,7 +4,7 @@
 <template>
   <div class="p-news__item">
     <!-- 24H以内の記事に付与されるアイコン -->
-    <span v-if="is24h" class="c-icon">NEW!!</span>
+    <span v-if="is24hour" class="c-icon">NEW!!</span>
     <!-- 写真 -->
     <div class="p-news__item--picture"></div>
     <!-- 記事のタイトル -->
@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       currentPath: this.$route.path,
-      is24h: false,
     }
   },
   computed: {
@@ -59,14 +58,12 @@ export default {
     },
 
     // 投稿された記事が、現在時刻から見て24時間以内の投稿記事かを判定する
-    async getTime() {
+    is24hour() {
       const now = Date.now(); //現在時刻
-      const entryday = Date.parse(this.entry.updated); //記事の投稿時刻
+      const updatedTimeStamp = Date.parse(this.entry.updated); //記事の投稿時刻
 
       // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
-      if( (now - entryday) / 1000  < 60 * 60 * 24) {
-        this.is24h = true;
-      }
+      return (now - updatedTimeStamp) / 1000 < 60 * 60 * 24;
     }
   },
   watch: {
