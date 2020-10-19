@@ -3298,16 +3298,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45418,7 +45408,56 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "c-modal__foot" }, [
-        _vm._m(1),
+        _c("div", { staticClass: "c-modal__index" }, [
+          _c("p", { staticClass: "c-modal__index-title" }, [
+            _vm._v(
+              "検索ワード入力 (未入力の場合は「仮想通貨」で検索されます。)"
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-checkbox__space" }, [
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox__item",
+                on: {
+                  change: function($event) {
+                    return _vm.checkedWord(_vm.e.value)
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  attrs: {
+                    type: "checkbox",
+                    name: "Crypto",
+                    value: "kaso",
+                    checked: ""
+                  }
+                }),
+                _vm._v("仮想通貨")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "c-checkbox__item",
+                on: {
+                  change: function($event) {
+                    return _vm.checkedWord(_vm.e.value)
+                  }
+                }
+              },
+              [
+                _c("input", {
+                  attrs: { type: "checkbox", name: "Crypto", value: "alto" }
+                }),
+                _vm._v("アルトコイン")
+              ]
+            )
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "c-modal__index" }, [
           _c("label", [
@@ -45429,7 +45468,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c(
             "div",
@@ -45470,9 +45509,9 @@ var render = function() {
                         })
                       : _vm._e(),
                     _vm._v(
-                      "\n                " +
+                      "\n              " +
                         _vm._s(currency.name) +
-                        "\n              "
+                        "\n            "
                     )
                   ])
                 ]
@@ -45509,37 +45548,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-modal__head" }, [
       _c("span", { staticClass: "c-modal__head-title" }, [
         _vm._v("検索条件設定")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-modal__index" }, [
-      _c("p", { staticClass: "c-modal__index-title" }, [
-        _vm._v("記事の表示順")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-checkbox__space" }, [
-        _c("div", { staticClass: "c-checkbox__item" }, [
-          _c("input", {
-            attrs: {
-              type: "radio",
-              name: "CryptoSubject",
-              value: "kaso",
-              checked: ""
-            }
-          }),
-          _vm._v("新着順")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-checkbox__item" }, [
-          _c("input", {
-            attrs: { type: "radio", name: "CryptoSubject", value: "alto" }
-          }),
-          _vm._v("古い順")
-        ])
       ])
     ])
   },

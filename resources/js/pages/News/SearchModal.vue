@@ -12,24 +12,14 @@
       <div class="c-modal__foot">
 
         <div class="c-modal__index">
-          <p class="c-modal__index-title">記事の表示順</p>
+          <p class="c-modal__index-title">検索ワード入力 (未入力の場合は「仮想通貨」で検索されます。)</p>
 
-          <!-- 降順・昇順ドロップダウン -->
+          <!-- 仮想通貨/アルトコイン -->
           <div class="c-checkbox__space">
-            <div class="c-checkbox__item"><input type="radio" name="CryptoSubject" value="kaso" checked>新着順</div>
-            <div class="c-checkbox__item"><input type="radio" name="CryptoSubject" value="alto">古い順</div>
+            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
+            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
           </div>
         </div>
-
-<!--        <div class="c-modal__index">-->
-<!--          <p class="c-modal__index-title">検索ワード選択(仮想通貨と関係のないニュースを除外するため、どちらかを選択していただきます。)</p>-->
-
-<!--          &lt;!&ndash; 仮想通貨/アルトコイン &ndash;&gt;-->
-<!--          <div class="c-checkbox__space">-->
-<!--            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>-->
-<!--            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>-->
-<!--          </div>-->
-<!--        </div>-->
 
         <!--  通過での絞り込み、加えて仮想通貨、アルトコインでも可-->
         <div class="c-modal__index">

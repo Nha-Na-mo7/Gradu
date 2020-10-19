@@ -75,8 +75,8 @@ class GoogleNewsController extends Controller
   
     }
     
-    // 記事を並べ替える。デフォルトでは新着順に並べる。
-    // TODO GETパラメータによって降順・昇順、あるいは他の条件か選択できるようにする
+    // 記事を新着順に並べ替える。
+    // GoogleニュースAPIが取得する順番は必ずしも新着順ではなく、またこのサービスはトレンドを見る為のものなので新着順に並べるのが効果的と判断。
     foreach ($list as $key => $value) {
       $updated[$key] = $value['updated'];
     }
