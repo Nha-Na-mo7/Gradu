@@ -11,17 +11,7 @@
 
       <div class="c-modal__foot">
 
-        <div class="c-modal__index">
-          <p class="c-modal__index-title">検索ワード入力 (未入力の場合は「仮想通貨」で検索されます。)</p>
-
-          <!-- 仮想通貨/アルトコイン -->
-          <div class="c-checkbox__space">
-            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="kaso" checked>仮想通貨</div>
-            <div class="c-checkbox__item" @change="checkedWord(e.value)"><input type="checkbox" name="Crypto" value="alto">アルトコイン</div>
-          </div>
-        </div>
-
-        <!--  通過での絞り込み、加えて仮想通貨、アルトコインでも可-->
+        <!--  通過での絞り込み -->
         <div class="c-modal__index">
           <label>
             <input
@@ -65,9 +55,8 @@
 
       <!-- 選択肢 -->
       <div class="c-modal__btn-area">
-        <button class="c-btn" @click="fetch_googleNews">絞り込む</button>
+        <button class="c-btn" @click="fetch_googleNews">反映して絞り込む</button>
         <button class="c-btn" @click="closeModal">絞り込まずに閉じる</button>
-        <button class="c-btn" @click="closeModal">設定を保存</button>
       </div>
 
     </div>

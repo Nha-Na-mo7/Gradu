@@ -18,12 +18,6 @@
     <div class="p-news__container">
 
       <!-- ヘッドライン -->
-      <div class="" v-for="item in checkedCurrencies">
-        <div>
-          <p>{{ item }}</p>
-        </div>
-      </div>
-
       <div class="p-news__headline">
         <!-- 検索フォーム・コンポーネント検討 -->
         <form class="p-news__search">

@@ -2973,12 +2973,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3221,17 +3215,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -45226,113 +45209,102 @@ var render = function() {
       _vm._v(" "),
       _c("PageTitle", { attrs: { title: _vm.pageTitle } }),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "p-news__container" },
-        [
-          _vm._l(_vm.checkedCurrencies, function(item) {
-            return _c("div", {}, [_c("div", [_c("p", [_vm._v(_vm._s(item))])])])
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-news__headline" }, [
-            _c("form", { staticClass: "p-news__search" }, [
-              _c(
-                "div",
-                { staticClass: "c-input__btn-area c-input__btn-area__search" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "c-input__btn-circle",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.fetch_googleNews($event)
-                        }
+      _c("div", { staticClass: "p-news__container" }, [
+        _c("div", { staticClass: "p-news__headline" }, [
+          _c("form", { staticClass: "p-news__search" }, [
+            _c(
+              "div",
+              { staticClass: "c-input__btn-area c-input__btn-area__search" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "c-input__btn-circle",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.fetch_googleNews($event)
                       }
-                    },
-                    [_vm._v("🔎")]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "c-input__searcharea" }, [
-                _c("p", [
-                  _vm._v("検索中のワード:"),
-                  _c("span", [_vm._v(_vm._s(_vm.searchData.keywords))])
-                ])
-              ]),
-              _vm._v(" "),
-              _vm.isExistSearchWord
-                ? _c(
-                    "div",
-                    {
-                      staticClass: "c-input__btn-area c-input__btn-area__reset"
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "c-input__btn-circle",
-                          on: { click: _vm.resetSearchWord }
-                        },
-                        [_vm._v("×")]
-                      )
-                    ]
-                  )
-                : _vm._e()
+                    }
+                  },
+                  [_vm._v("🔎")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "c-input__searcharea" }, [
+              _c("p", [
+                _vm._v("検索中のワード:"),
+                _c("span", [_vm._v(_vm._s(_vm.searchData.keywords))])
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "c-modal__title" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "c-btn c-btn__main c-btn--primary",
-                  on: { click: _vm.showModal }
-                },
-                [_vm._v("条件設定")]
-              )
-            ])
+            _vm.isExistSearchWord
+              ? _c(
+                  "div",
+                  { staticClass: "c-input__btn-area c-input__btn-area__reset" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "c-input__btn-circle",
+                        on: { click: _vm.resetSearchWord }
+                      },
+                      [_vm._v("×")]
+                    )
+                  ]
+                )
+              : _vm._e()
           ]),
           _vm._v(" "),
-          _vm.modal
-            ? _c(
-                "div",
-                { staticClass: "c-modal__hide" },
-                [
-                  _c("SearchModal", {
-                    on: {
-                      closeModal: _vm.closeModal,
-                      fetch_googleNews: _vm.fetch_googleNews
-                    }
-                  })
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "p-news__list" },
-            _vm._l(_vm.fetchedNews, function(News) {
-              return _c("News", { key: News.id, attrs: { entry: News } })
-            }),
-            1
-          ),
-          _vm._v(" "),
-          _vm.isNothingNews ? _c("div", [_c("NothingNews")], 1) : _vm._e(),
-          _vm._v(" "),
-          _vm.isSearching
-            ? _c(
-                "div",
-                {},
-                [_c("Loading", { attrs: { title: _vm.searchingWord } })],
-                1
-              )
-            : _vm._e()
-        ],
-        2
-      )
+          _c("div", { staticClass: "c-modal__title" }, [
+            _c(
+              "button",
+              {
+                staticClass: "c-btn c-btn__main c-btn--primary",
+                on: { click: _vm.showModal }
+              },
+              [_vm._v("条件設定")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm.modal
+          ? _c(
+              "div",
+              { staticClass: "c-modal__hide" },
+              [
+                _c("SearchModal", {
+                  on: {
+                    closeModal: _vm.closeModal,
+                    fetch_googleNews: _vm.fetch_googleNews
+                  }
+                })
+              ],
+              1
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "p-news__list" },
+          _vm._l(_vm.fetchedNews, function(News) {
+            return _c("News", { key: News.id, attrs: { entry: News } })
+          }),
+          1
+        ),
+        _vm._v(" "),
+        _vm.isNothingNews ? _c("div", [_c("NothingNews")], 1) : _vm._e(),
+        _vm._v(" "),
+        _vm.isSearching
+          ? _c(
+              "div",
+              {},
+              [_c("Loading", { attrs: { title: _vm.searchingWord } })],
+              1
+            )
+          : _vm._e()
+      ])
     ],
     1
   )
@@ -45409,57 +45381,6 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "c-modal__foot" }, [
         _c("div", { staticClass: "c-modal__index" }, [
-          _c("p", { staticClass: "c-modal__index-title" }, [
-            _vm._v(
-              "検索ワード入力 (未入力の場合は「仮想通貨」で検索されます。)"
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-checkbox__space" }, [
-            _c(
-              "div",
-              {
-                staticClass: "c-checkbox__item",
-                on: {
-                  change: function($event) {
-                    return _vm.checkedWord(_vm.e.value)
-                  }
-                }
-              },
-              [
-                _c("input", {
-                  attrs: {
-                    type: "checkbox",
-                    name: "Crypto",
-                    value: "kaso",
-                    checked: ""
-                  }
-                }),
-                _vm._v("仮想通貨")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "c-checkbox__item",
-                on: {
-                  change: function($event) {
-                    return _vm.checkedWord(_vm.e.value)
-                  }
-                }
-              },
-              [
-                _c("input", {
-                  attrs: { type: "checkbox", name: "Crypto", value: "alto" }
-                }),
-                _vm._v("アルトコイン")
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "c-modal__index" }, [
           _c("label", [
             _c("input", {
               attrs: { type: "checkbox", name: "currency_all" },
@@ -45526,15 +45447,11 @@ var render = function() {
         _c(
           "button",
           { staticClass: "c-btn", on: { click: _vm.fetch_googleNews } },
-          [_vm._v("絞り込む")]
+          [_vm._v("反映して絞り込む")]
         ),
         _vm._v(" "),
         _c("button", { staticClass: "c-btn", on: { click: _vm.closeModal } }, [
           _vm._v("絞り込まずに閉じる")
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "c-btn", on: { click: _vm.closeModal } }, [
-          _vm._v("設定を保存")
         ])
       ])
     ])
