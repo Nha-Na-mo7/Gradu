@@ -758,6 +758,14 @@ main {
   box-shadow: #929292 0 1px 5px;
 }
 
+.p-news__modal {
+  width: 30%;
+}
+
+.p-news__modal-show {
+  text-align: end;
+}
+
 .p-news__headline {
   margin: 20px 30px;
   display: flex;
@@ -1074,11 +1082,6 @@ main {
   font-weight: bold;
 }
 
-.c-modal__title {
-  width: 30%;
-  border: 1px solid #000;
-}
-
 .title {
   font-weight: bold;
   margin: 2rem 0;
@@ -1134,6 +1137,14 @@ main {
 .p-news__search:focus-within {
   background: #FFF;
   box-shadow: #929292 0 1px 5px;
+}
+
+.p-news__modal {
+  width: 30%;
+}
+
+.p-news__modal-show {
+  text-align: end;
 }
 
 .p-news__headline {

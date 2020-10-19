@@ -34,7 +34,7 @@
         </form>
 
         <!-- 絞り込みモーダルボタン -->
-        <div class="c-modal__title">
+        <div class="p-news__modal p-news__modal-show">
           <button class="c-btn c-btn__main c-btn--primary" @click="showModal">条件設定</button>
         </div>
       </div>

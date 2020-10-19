@@ -26,6 +26,13 @@
     }
   }
 
+  &__modal {
+    width: 30%;
+    &-show {
+      text-align: end;
+    }
+  }
+
   &__headline {
     margin: 20px 30px;
     display: flex;

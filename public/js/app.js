@@ -45531,7 +45531,7 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "c-modal__title" }, [
+          _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
             _c(
               "button",
               {
