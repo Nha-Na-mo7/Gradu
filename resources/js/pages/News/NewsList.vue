@@ -84,7 +84,7 @@ import NothingNews from './NothingNews.vue';
 import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
 import PageTitle from '../Components/PageTitle.vue';
-import { OK , SEARCHING, DEFAULT_SEARCHWORD, isArrayExists } from "../../util";
+import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'NEWS';
@@ -107,7 +107,7 @@ export default {
       fetchedNews: [],
 
       checkedSearchWords: [],
-      searchBoxWords: '',
+      searchBoxWords: DEFAULT_SEARCHWORD,
       searchData: {
         keywords: ''
       },
@@ -176,15 +176,7 @@ export default {
 
       // 検索終了、isSearchingをfalseに戻す
       this.isSearching = false;
-
       return response.status;
-    },
-
-    // TODO DBから引っ張ってくる仕様自体が撤廃する可能性あり
-    // DBからユーザーが保存した検索設定を取得し、checkedSearchWordsに入れる。
-    // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
-    async fetch_setting_search() {
-      this.searchBoxWords = DEFAULT_SEARCHWORD;
     },
 
   },
@@ -198,8 +190,7 @@ export default {
   watch: {
     $route: {
       async handler() {
-        // ページの読み込み直後、DBから検索設定ワードを格納して、ニュース取得を行う
-        await this.fetch_setting_search();
+        // ページの読み込み直後、ニュース取得
         await this.fetch_googleNews();
       },
       immediate: true

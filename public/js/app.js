@@ -2995,7 +2995,7 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
       isEditMode: false,
       fetchedNews: [],
       checkedSearchWords: [],
-      searchBoxWords: '',
+      searchBoxWords: _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"],
       searchData: {
         keywords: ''
       }
@@ -3091,27 +3091,6 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
           }
         }, _callee);
       }))();
-    },
-    // TODO DBから引っ張ってくる仕様自体が撤廃する可能性あり
-    // DBからユーザーが保存した検索設定を取得し、checkedSearchWordsに入れる。
-    // 検索設定が保存されていない場合、'仮想通貨'とデフォルトで格納する。
-    fetch_setting_search: function fetch_setting_search() {
-      var _this2 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                _this2.searchBoxWords = _util__WEBPACK_IMPORTED_MODULE_6__["DEFAULT_SEARCHWORD"];
-
-              case 1:
-              case "end":
-                return _context2.stop();
-            }
-          }
-        }, _callee2);
-      }))();
     }
   },
   components: {
@@ -3124,26 +3103,22 @@ var PLACEHOLDER = '検索したいワードを追加することができます�
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this2 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context2.prev = _context2.next) {
                 case 0:
-                  _context3.next = 2;
-                  return _this3.fetch_setting_search();
+                  _context2.next = 2;
+                  return _this2.fetch_googleNews();
 
                 case 2:
-                  _context3.next = 4;
-                  return _this3.fetch_googleNews();
-
-                case 4:
                 case "end":
-                  return _context3.stop();
+                  return _context2.stop();
               }
             }
-          }, _callee3);
+          }, _callee2);
         }))();
       },
       immediate: true
@@ -3288,7 +3263,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       fetchedBrands: [],
-      isAllChecked: false,
       // オープン時にチェックされていた選択肢を格納、絞り込みせずに閉じる場合にここを参照する。
       checkedBoxWhenOpened: []
     };
@@ -3321,6 +3295,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$emit('closeModal');
     },
+    // 親コンポーネントのGoogleニュース取得メソッドを発火させる
     fetch_googleNews: function fetch_googleNews() {
       this.$emit('fetch_googleNews');
     },
@@ -3349,34 +3324,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee);
       }))();
     },
-    // チェックボックスをクリックした時の操作
-    checkedWord: function checkedWord(currency_name) {
+    // チェックボックスをチェックした時、チェックされた通貨を保存するストアに値をセットする
+    setCheckedCurrency: function setCheckedCurrency(currency_name) {
       this.$store.commit('news/setCheckedCurrencies', currency_name);
     },
-
-    /* チェックボックスにチェックを入れるべきかを判定する。
-     * dataのisAllCheckedが付いていればtrue。
-     * そうでなけでばstoreのcheckedCurrenciesを確認して、値が存在すればtrueとする。
-     */
+    // 既にチェックされているボックスかを判定する。モーダルのオープン時に使われる
     isChecked: function isChecked(currency_name) {
-      if (this.isAllChecked) {
-        return true;
-      } else {
-        return Object(_util__WEBPACK_IMPORTED_MODULE_1__["isArrayExists"])(this.checkedCurrencies, currency_name);
-      }
+      return Object(_util__WEBPACK_IMPORTED_MODULE_1__["isArrayExists"])(this.checkedCurrencies, currency_name);
     },
-    // リセットをクリックした時の操作
+    // リセットをクリックした時、チェック済みの値を管理する配列を空にする
     // TODO 全選択を付けるかは要検討
     resetSearchWord: function resetSearchWord() {
       this.$store.commit('news/resetCheckedCurrencies');
-    },
-    // チェックボックスが全て埋まっている場合、全選択にもチェックがつく
-    allchecked: function allchecked() {
-      return this.checkedCurrencies.length !== this.fetchedBrands.length;
-    },
-    // 検索設定をDBに保存
-    // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
-    save_setting_search: function save_setting_search() {// const response = await axios.post(`/api/news/setting/get`, { params });
     }
   },
   watch: {
@@ -45401,7 +45360,7 @@ var render = function() {
                   staticClass: "c-checkbox__item",
                   on: {
                     change: function($event) {
-                      return _vm.checkedWord(currency.name)
+                      return _vm.setCheckedCurrency(currency.name)
                     }
                   }
                 },

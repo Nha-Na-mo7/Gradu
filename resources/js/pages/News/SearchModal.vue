@@ -31,7 +31,7 @@
                 class="c-checkbox__item"
                 v-for="currency in fetchedBrands"
                 :key="currency.id"
-                @change="checkedWord(currency.name)"
+                @change="setCheckedCurrency(currency.name)"
             >
               <label :for="currency.id - 1">
                 <input type="checkbox"
@@ -73,7 +73,6 @@ export default {
   data() {
     return {
       fetchedBrands: [],
-      isAllChecked: false,
       // オープン時にチェックされていた選択肢を格納、絞り込みせずに閉じる場合にここを参照する。
       checkedBoxWhenOpened: []
     }
@@ -94,6 +93,7 @@ export default {
         this.checkedBoxWhenOpened.push(this.checkedCurrencies[i]);
       }
     },
+
     // 親コンポーネント側でモーダルを閉じる
     closeModal() {
       // 検索せずにモーダルを閉じるだけなので、checkedBoxWhenOpenedの値を使って選択を元に戻す
@@ -103,47 +103,32 @@ export default {
       }
       this.$emit('closeModal');
     },
+
+    // 親コンポーネントのGoogleニュース取得メソッドを発火させる
     fetch_googleNews() {
       this.$emit('fetch_googleNews');
     },
+
     // 全ての仮想通貨情報を取得する。モーダルの選択肢を追加するときに使用される
     async fetch_brand() {
       const response = await axios.get('/api/brand');
       this.fetchedBrands = response.data;
     },
 
-    // チェックボックスをクリックした時の操作
-    checkedWord(currency_name) {
+    // チェックボックスをチェックした時、チェックされた通貨を保存するストアに値をセットする
+    setCheckedCurrency(currency_name) {
       this.$store.commit('news/setCheckedCurrencies', currency_name)
     },
 
-    /* チェックボックスにチェックを入れるべきかを判定する。
-     * dataのisAllCheckedが付いていればtrue。
-     * そうでなけでばstoreのcheckedCurrenciesを確認して、値が存在すればtrueとする。
-     */
+    // 既にチェックされているボックスかを判定する。モーダルのオープン時に使われる
     isChecked(currency_name) {
-      if (this.isAllChecked) {
-        return true
-      } else {
-        return isArrayExists(this.checkedCurrencies, currency_name)
-      }
+      return isArrayExists(this.checkedCurrencies, currency_name);
     },
 
-    // リセットをクリックした時の操作
+    // リセットをクリックした時、チェック済みの値を管理する配列を空にする
     // TODO 全選択を付けるかは要検討
     resetSearchWord() {
       this.$store.commit('news/resetCheckedCurrencies');
-    },
-
-    // チェックボックスが全て埋まっている場合、全選択にもチェックがつく
-    allchecked(){
-      return this.checkedCurrencies.length !== this.fetchedBrands.length
-    },
-
-    // 検索設定をDBに保存
-    // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
-    save_setting_search() {
-      // const response = await axios.post(`/api/news/setting/get`, { params });
     },
 
   },
