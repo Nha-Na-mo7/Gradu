@@ -48,6 +48,10 @@ Route::get('/brand', 'BrandController@get_brands')->name('get_brands');
 Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.brandid');
 
 
+// ======================
+// TwitterAccount一覧関連
+// ======================
+
 
 // ===============
 // GoogleNews関連

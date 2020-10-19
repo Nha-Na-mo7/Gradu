@@ -11,9 +11,11 @@ import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
 import PassResetForm from './pages/Auths/PassResetForm.vue';
 // Googleニュース
 import NewsList from './pages/News/NewsList.vue';
+// Twitterアカウント一覧
+import AccountList from './pages/AccountLists/AccountList.vue';
+
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
-
 
 // ストアのインポート
 import store from './store';
@@ -76,7 +78,19 @@ const routes = [
     component: PassResetForm,
     props: true
   },
-  
+  {
+    path: '/accounts',
+    component: AccountList,
+    props: true,
+    beforeEnter(to, from, next) {
+      // 未ログイン状態ならログインチェックに戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
+      }
+    }
+  },
   {
     path: '/news',
     component: NewsList,
