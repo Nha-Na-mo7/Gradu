@@ -3303,14 +3303,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       fetchedBrands: [],
-      // checkedCurrencies: [],
-      isAllChecked: false
+      isAllChecked: false,
+      checkedBoxWhenOpened: [] // オープン時にチェックされていた選択肢を格納、絞り込みせずに閉じる場合にここを参照する
+
     };
   },
   computed: _objectSpread({
@@ -3323,10 +3329,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   })),
   methods: {
+    // モーダルのオープン時に、チェック済みの選択肢を保存する
+    keepCheckedBoxWhenOpened: function keepCheckedBoxWhenOpened() {
+      this.checkedBoxWhenOpened = this.checkedCurrencies;
+      console.log(this.checkedBoxWhenOpened);
+    },
     // 親コンポーネント側でモーダルを閉じる
     closeModal: function closeModal() {
-      // ただモーダルを閉じるだけの時はチェックを元に戻すため、checkedCurrenciesはリセットする
+      // 検索せずにモーダルを閉じるだけなので、checkedBoxWhenOpenedの値を使って選択を元に戻す
       this.$store.commit('news/resetCheckedCurrencies');
+
+      for (var i = 0; i < this.checkedBoxWhenOpened.length; i++) {
+        // TODO ベタがきはしないべき？
+        this.$store.commit('news/setCheckedCurrencies', this.checkedBoxWhenOpened[i]);
+      }
+
       this.$emit('closeModal');
     },
     fetch_googleNews: function fetch_googleNews() {
@@ -3385,6 +3402,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       }
     },
+    // チェックボックスが全て埋まっている場合、全選択にもチェックがつく
+    allchecked: function allchecked() {
+      return this.checkedCurrencies.length !== this.fetchedBrands.length;
+    },
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
     save_setting_search: function save_setting_search() {// const response = await axios.post(`/api/news/setting/get`, { params });
@@ -3404,6 +3425,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   return _this2.fetch_brand();
 
                 case 2:
+                  _context2.next = 4;
+                  return _this2.keepCheckedBoxWhenOpened();
+
+                case 4:
                 case "end":
                   return _context2.stop();
               }
@@ -45399,6 +45424,7 @@ var render = function() {
           _c("label", [
             _c("input", {
               attrs: { type: "checkbox", name: "currency_all" },
+              domProps: { checked: _vm.allchecked },
               on: { change: _vm.allCheckedSearchWord }
             })
           ]),

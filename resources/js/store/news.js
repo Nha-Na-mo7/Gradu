@@ -2,7 +2,7 @@
 // Store News
 // ====================
 // Googleニュース取得ページで使用するストア
-import { OK, CREATED, UNPROCESSABLE_ENTITY, isArrayExists } from '../util';
+import { isArrayExists } from '../util';
 
 // ===============
 // state
@@ -18,7 +18,7 @@ const state = {
 // getter
 // ===============
 const getter = {
-  checkedCurrencies: state => state.checkedCurrencies
+  checkedCurrencies: state => state.checkedCurrencies,
 }
 
 // ===============

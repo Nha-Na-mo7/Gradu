@@ -34,7 +34,12 @@
         <!--  通過での絞り込み、加えて仮想通貨、アルトコインでも可-->
         <div class="c-modal__index">
           <label>
-            <input type="checkbox" name="currency_all" @change="allCheckedSearchWord">
+            <input
+                type="checkbox"
+                name="currency_all"
+                @change="allCheckedSearchWord"
+                :checked="allchecked"
+            >
           </label>
           <p class="c-modal__index-title">通貨名<span class="c-modal__index-description">(仮想通貨と関係ないニュースを除外するため、検索ワードの前に「仮想通貨」が付与された状態で検索されます。)</span></p>
 
@@ -88,9 +93,8 @@ export default {
   data() {
     return {
       fetchedBrands: [],
-      // checkedCurrencies: [],
-
-      isAllChecked: false
+      isAllChecked: false,
+      checkedBoxWhenOpened: [] // オープン時にチェックされていた選択肢を格納、絞り込みせずに閉じる場合にここを参照する
     }
   },
   computed: {
@@ -102,10 +106,19 @@ export default {
     })
   },
   methods: {
+    // モーダルのオープン時に、チェック済みの選択肢を保存する
+    keepCheckedBoxWhenOpened() {
+      this.checkedBoxWhenOpened = this.checkedCurrencies
+      console.log(this.checkedBoxWhenOpened);
+    },
     // 親コンポーネント側でモーダルを閉じる
     closeModal() {
-      // ただモーダルを閉じるだけの時はチェックを元に戻すため、checkedCurrenciesはリセットする
+      // 検索せずにモーダルを閉じるだけなので、checkedBoxWhenOpenedの値を使って選択を元に戻す
       this.$store.commit('news/resetCheckedCurrencies');
+      for (let i = 0; i < this.checkedBoxWhenOpened.length; i++) {
+        // TODO ベタがきはしないべき？
+        this.$store.commit('news/setCheckedCurrencies', this.checkedBoxWhenOpened[i]);
+      }
       this.$emit('closeModal');
     },
     fetch_googleNews() {
@@ -147,6 +160,11 @@ export default {
       }
     },
 
+    // チェックボックスが全て埋まっている場合、全選択にもチェックがつく
+    allchecked(){
+      return this.checkedCurrencies.length !== this.fetchedBrands.length
+    },
+
     // 検索設定をDBに保存
     // TODO この処理はPHP側でやるのかJS側でやるのか検討、おそらくはModelを作成してPHP側で処理させる
     save_setting_search() {
@@ -159,6 +177,7 @@ export default {
       async handler() {
         // ページの読み込み直後、brandsテーブルから通過情報全てを取得する
         await this.fetch_brand();
+        await this.keepCheckedBoxWhenOpened();
       },
       immediate: true
     }
