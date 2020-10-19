@@ -88,15 +88,11 @@ import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'NEWS';
-const PLACEHOLDER = '検索したいワードを追加することができます。';
 
 export default {
 
   data() {
     return {
-      pageTitle: PAGE_TITLE,
-      placeholder: PLACEHOLDER,
-
       modal: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
@@ -114,6 +110,9 @@ export default {
     }
   },
   computed: {
+    pageTitle() {
+      return PAGE_TITLE;
+    },
     searchingWord() {
       return SEARCHING;
     },
