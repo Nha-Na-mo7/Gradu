@@ -80,7 +80,16 @@ const routes = [
   {
     path: '/news',
     component: NewsList,
-    props: true
+    props: true,
+    // TODO ニュースリストは分岐させなくても良い？
+    beforeEnter(to, from, next) {
+      // 未ログイン状態ならログインチェックに戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
+      }
+    }
   },
   {
     path: '/500',

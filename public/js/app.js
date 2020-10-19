@@ -63363,7 +63363,16 @@ var routes = [{
 }, {
   path: '/news',
   component: _pages_News_NewsList_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-  props: true
+  props: true,
+  // TODO ニュースリストは分岐させなくても良い？
+  beforeEnter: function beforeEnter(to, from, next) {
+    // 未ログイン状態ならログインチェックに戻す
+    if (_store__WEBPACK_IMPORTED_MODULE_10__["default"].getters['auth/loginCheck']) {
+      next();
+    } else {
+      next('/login');
+    }
+  }
 }, {
   path: '/500',
   component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
