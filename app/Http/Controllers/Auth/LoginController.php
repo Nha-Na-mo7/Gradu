@@ -67,7 +67,8 @@ class LoginController extends Controller
       // twitterアプリ側から返ってきた情報を取得する
       try {
         // TODO 確認:$user = Socialite::with("twitter")->user();、withメソッドは消滅した？
-        $user = Socialite::driver("twitter")->user();
+        // $user = Socialite::driver("twitter")->user();
+        $user = Socialite::with("twitter")->user();
       }
       catch (\Exception $e) {
         // エラーならログイン画面へ戻す

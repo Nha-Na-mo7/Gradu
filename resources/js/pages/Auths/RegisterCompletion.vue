@@ -9,15 +9,23 @@
       <RouterLink
           to="/"
           class="c-btn"
-      >マイページ</RouterLink>
+      >マイページ
+      </RouterLink>
+      <RouterLink
+          to="/account"
+          class="c-btn"
+      >Twitterアカウント一覧
+      </RouterLink>
       <RouterLink
           to="/"
           class="c-btn"
-      >Twitterトレンド分析</RouterLink>
+      >終値分析
+      </RouterLink>
       <RouterLink
-          to="/"
+          to="/news"
           class="c-btn"
-      >ニュース</RouterLink>
+      >ニュース
+      </RouterLink>
     </div>
   </div>
 </template>

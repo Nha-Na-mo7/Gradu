@@ -4,6 +4,7 @@
 <template>
   <div class="l-container--authform p-auth">
     <h2 class="p-auth__title">アカウントを作成</h2>
+    <p>CryptoTrendは、Twitterと連携することでサービスを最大限に利用することが可能です！</p>
     <form class="p-form" @submit.prevent="register" autocomplete="off">
 
 
@@ -43,7 +44,14 @@
     <div class="p-auth__dividingText">
       <span class="p-auth__dividingText-spanborder">または</span>
     </div>
-    <p>Twitterで新規登録</p>
+
+    <!-- @click.stopは現状@clickを持つ親コンポーネントで囲んでいない為無意味だが、どう転ぶか不明なので、不要になった段階で外してください-->
+    <a
+        class="c-btn c-btn--primary c-btn__twitter--login"
+        title="Start for Twitter!"
+        @click.stop
+        :href="`/login/twitter`"
+    >Twitterでログイン</a>
   </div>
 </template>
 

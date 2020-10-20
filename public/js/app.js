@@ -2349,6 +2349,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2725,6 +2731,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2793,6 +2807,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -44778,7 +44800,19 @@ var render = function() {
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
-      _c("p", [_vm._v("Twitterでログイン")]),
+      _c(
+        "a",
+        {
+          staticClass: "c-btn c-btn--primary c-btn__twitter--login",
+          attrs: { title: "Start for Twitter!", href: "/login/twitter" },
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+            }
+          }
+        },
+        [_vm._v("Twitterで始める")]
+      ),
       _vm._v(" "),
       _c("h2", [_vm._v("アカウントをまだ作成していない方は")]),
       _vm._v(" "),
@@ -45125,6 +45159,12 @@ var render = function() {
   return _c("div", { staticClass: "l-container--authform p-auth" }, [
     _c("h2", { staticClass: "p-auth__title" }, [_vm._v("アカウントを作成")]),
     _vm._v(" "),
+    _c("p", [
+      _vm._v(
+        "CryptoTrendは、Twitterと連携することでサービスを最大限に利用することが可能です！"
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "form",
       {
@@ -45289,7 +45329,19 @@ var render = function() {
     _vm._v(" "),
     _vm._m(0),
     _vm._v(" "),
-    _c("p", [_vm._v("Twitterで新規登録")])
+    _c(
+      "a",
+      {
+        staticClass: "c-btn c-btn--primary c-btn__twitter--login",
+        attrs: { title: "Start for Twitter!", href: "/login/twitter" },
+        on: {
+          click: function($event) {
+            $event.stopPropagation()
+          }
+        }
+      },
+      [_vm._v("Twitterでログイン")]
+    )
   ])
 }
 var staticRenderFns = [
@@ -45336,15 +45388,19 @@ var render = function() {
         _c("p", [_vm._v("登録してくれてありがとう！")]),
         _vm._v(" "),
         _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
-          _vm._v("マイページ")
+          _vm._v("マイページ\n    ")
+        ]),
+        _vm._v(" "),
+        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/account" } }, [
+          _vm._v("Twitterアカウント一覧\n    ")
         ]),
         _vm._v(" "),
         _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
-          _vm._v("Twitterトレンド分析")
+          _vm._v("終値分析\n    ")
         ]),
         _vm._v(" "),
-        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
-          _vm._v("ニュース")
+        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/news" } }, [
+          _vm._v("ニュース\n    ")
         ])
       ],
       1

@@ -27,12 +27,18 @@
 
       <button type="submit" class="c-btn c-btn__main c-btn--primary">ログイン</button>
     </form>
+
     <RouterLink class="c-btn c-btn--primary" to="/password/reset">パスワードを忘れた方はこちら</RouterLink>
 
     <div class="p-auth__dividingText">
       <span class="p-auth__dividingText-spanborder">または</span>
     </div>
-    <p>Twitterでログイン</p>
+    <a
+        class="c-btn c-btn--primary c-btn__twitter--login"
+        title="Start for Twitter!"
+        @click.stop
+        :href="`/login/twitter`"
+    >Twitterで始める</a>
 
     <h2>アカウントをまだ作成していない方は</h2>
     <RouterLink class="c-btn c-btn--primary" to="/register">新規アカウント登録</RouterLink>
