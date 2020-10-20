@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
@@ -63,18 +64,23 @@ class LoginController extends Controller
     // Twitterコールバック
     // ===================
     public function handleTwitterProviderCallback(){
+      Log::debug('いきスギィ！');
       
       // twitterアプリ側から返ってきた情報を取得する
       try {
+        Log::debug('浮きすぎィ！');
+  
         // TODO 確認:$user = Socialite::with("twitter")->user();、withメソッドは消滅した？
         // $user = Socialite::driver("twitter")->user();
         $user = Socialite::with("twitter")->user();
       }
       catch (\Exception $e) {
+        Log::debug('エラすぎィ！');
         // エラーならログイン画面へ戻す
         return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
       }
-      
+      Log::debug('ん...！');
+  
       // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認
       // レコードがある時、$myinfoにそのレコードをオブジェクトで代入
       // レコードがない場合→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
@@ -82,6 +88,8 @@ class LoginController extends Controller
       $myinfo = User::firstOrCreate(['token' => $user->token ],
           ['name' => $user->nickname,'email' => $user->getEmail()]);
       Auth::login($myinfo);
+      
+      Log::debug('おDBのん');
       return redirect()->to('/'); // ホームへ転送
       
     }
