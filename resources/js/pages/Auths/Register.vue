@@ -5,6 +5,17 @@
   <div class="l-container--authform p-auth">
     <h2 class="p-auth__title">アカウントを作成</h2>
     <form class="p-form" @submit.prevent="register" autocomplete="off">
+
+
+
+      <label for="name">名前</label>
+      <!--      エラー表示は要修正-->
+      <div v-if="registerErrors">
+        <span v-if="registerErrors.name">{{ registerErrors.name[0] }}</span>
+      </div>
+      <input type="text" class="p-form__item" id="name" v-model="registerForm.name">
+
+
       <label for="email">メールアドレス</label>
       <!--      エラー表示は要修正-->
       <div v-if="registerErrors">
@@ -43,6 +54,7 @@ export default {
   data() {
     return {
       registerForm: {
+        name: '',
         email: '',
         password: '',
         password_confirmation: ''

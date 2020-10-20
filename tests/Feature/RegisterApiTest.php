@@ -18,6 +18,7 @@ class RegisterApiTest extends TestCase
     public function _新規ユーザー作成APItest()
     {
       $data = [
+          'name' => 'testUser name',
           'email' => 'example@gmail.com',
           'password' => 'Crypto9999',
           'password_confirmation' => 'Crypto9999'
@@ -26,10 +27,10 @@ class RegisterApiTest extends TestCase
       $response = $this->json('POST', route('register'), $data);
       
       $user = User::first();
-      $this->assertEquals($data['email'], $user->email);
+      $this->assertEquals($data['name'], $user->name);
       
       $response
           ->assertStatus(201)
-          ->assertJson(['email' => $user->email]);
+          ->assertJson(['name' => $user->name]);
     }
 }

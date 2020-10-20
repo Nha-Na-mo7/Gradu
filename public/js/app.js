@@ -2714,11 +2714,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       registerForm: {
+        name: '',
         email: '',
         password: '',
         password_confirmation: ''
@@ -45126,6 +45138,38 @@ var render = function() {
         }
       },
       [
+        _c("label", { attrs: { for: "name" } }, [_vm._v("名前")]),
+        _vm._v(" "),
+        _vm.registerErrors
+          ? _c("div", [
+              _vm.registerErrors.name
+                ? _c("span", [_vm._v(_vm._s(_vm.registerErrors.name[0]))])
+                : _vm._e()
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.registerForm.name,
+              expression: "registerForm.name"
+            }
+          ],
+          staticClass: "p-form__item",
+          attrs: { type: "text", id: "name" },
+          domProps: { value: _vm.registerForm.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.registerForm, "name", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
         _c("label", { attrs: { for: "email" } }, [_vm._v("メールアドレス")]),
         _vm._v(" "),
         _vm.registerErrors
