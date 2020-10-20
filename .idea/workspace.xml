@@ -23,10 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CryptoTrend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CryptoTrend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -291,7 +289,7 @@
       <workItem from="1602742994833" duration="214000" />
       <workItem from="1602743474097" duration="357000" />
       <workItem from="1602743845766" duration="1692000" />
-      <workItem from="1602745583214" duration="55850000" />
+      <workItem from="1602745583214" duration="56250000" />
     </task>
     <servers />
   </component>
@@ -330,10 +328,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1602743696991" />
-    <state x="959" y="386" key="#ウェブブラウザー" timestamp="1602035824091">
+    <state x="959" y="386" key="#ウェブブラウザー" timestamp="1603152581889">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="959" y="386" key="#ウェブブラウザー/0.23.1920.1177@0.23.1920.1177" timestamp="1602035824091" />
+    <state x="959" y="386" key="#ウェブブラウザー/0.23.1920.1177@0.23.1920.1177" timestamp="1603152581889" />
     <state width="1729" height="319" key="GridCell.Tab.0.bottom" timestamp="1602915356587">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>

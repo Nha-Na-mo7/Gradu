@@ -39,14 +39,25 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
   
-    // ログイン用
+    // ====================
+    // ログイン(フォームから)
+    // ====================
     protected function authenticated(Request $request, $user)
     {
       return $user;
     }
+  
+    // ====================
+    // ログイン(Twitter)
+    // ====================
+    // public function redirectToTwitterProvider()
+    // {
+    //   return Socialite::driver('twitter')->redirect();
+    // }
     
-    
+    // // =======================================
     // // ログイン維持(remember_me)の期間を変更する
+    // // =======================================
     // // Laravelのデフォルトで5年維持するようハードコーディングされてしまっているので
     // //  一度登録されたremember_meトークンを、期間を変更して再登録する。
     // protected function sendLoginResponse(Request $request)
@@ -61,8 +72,10 @@ class LoginController extends Controller
     //   return $this->authenticated($request, $this->guard()->user())
     //       ?: redirect()->intended($this->redirectPath());
     // }
-    
-    // ログアウト用
+  
+    // =============
+    // ログアウト
+    // =============
     // AuthenticatesUsersトレイトの logout メソッド内、loggetOutメソッドのオーバーライドでレスポンスにセッションの再生成を含ませる。
     protected function loggedOut(Request $request)
     {
