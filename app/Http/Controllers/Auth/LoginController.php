@@ -65,22 +65,15 @@ class LoginController extends Controller
     // ===================
     // Twitterログイン後にでTwitterAPI側から帰ってくる情報たち。
     public function handleTwitterProviderCallback(){
-      Log::debug('いきスギィ！');
       
       // twitterアプリ側から返ってきた情報を取得する
       try {
-        Log::debug('浮きすぎィ！');
-  
-        // TODO 確認:$user = Socialite::with("twitter")->user();、withメソッドは消滅した？
-        // $user = Socialite::driver("twitter")->user();
         $user = Socialite::with("twitter")->user();
       }
       catch (\Exception $e) {
-        Log::debug('エラすぎィ！');
         // エラーならログイン画面へ戻す
         return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
       }
-      Log::debug('ん...！');
   
       // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
       // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
@@ -104,7 +97,6 @@ class LoginController extends Controller
        * ・CryptoTrendでもこれを実装したい。
        */
       
-      Log::debug('おDBのん');
       return redirect()->to('/'); // ホームへ転送
       
     }
