@@ -29,10 +29,10 @@ Route::get('/login/twitter', 'Auth\LoginController@redirectToTwitterProvider');
 // Twitterアプリケーション側から情報が返ってくるURL
 Route::get('/login/twitter/callback', 'Auth\LoginController@handleTwitterProviderCallback');
 
-
 // ================
 // other
 // ================
-// あらゆるURLはindex.blade.phpを返す
+// APIのURL以外のあらゆるリクエストに対してはindex.bladeテンプレートを返す
+// 画面遷移はフロントエンドのVueRouterが制御する
 Route::get('/{any?}', fn() => view('index'))->where('any', '.+');
 

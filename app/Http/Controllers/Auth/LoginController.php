@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -50,10 +53,37 @@ class LoginController extends Controller
     // ====================
     // ログイン(Twitter)
     // ====================
-    // public function redirectToTwitterProvider()
-    // {
-    //   return Socialite::driver('twitter')->redirect();
-    // }
+    // Twitter認証ページへユーザーをリダイレクトする
+    public function redirectToTwitterProvider()
+    {
+      return Socialite::driver('twitter')->redirect();
+    }
+    
+    // ===================
+    // Twitterコールバック
+    // ===================
+    public function handleTwitterProviderCallback(){
+      
+      // twitterアプリ側から返ってきた情報を取得する
+      try {
+        // TODO 確認:$user = Socialite::with("twitter")->user();、withメソッドは消滅した？
+        $user = Socialite::driver("twitter")->user();
+      }
+      catch (\Exception $e) {
+        // エラーならログイン画面へ戻す
+        return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
+      }
+      
+      // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認
+      // レコードがある時、$myinfoにそのレコードをオブジェクトで代入
+      // レコードがない場合→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
+      
+      $myinfo = User::firstOrCreate(['token' => $user->token ],
+          ['name' => $user->nickname,'email' => $user->getEmail()]);
+      Auth::login($myinfo);
+      return redirect()->to('/'); // ホームへ転送
+      
+    }
     
     // // =======================================
     // // ログイン維持(remember_me)の期間を変更する
