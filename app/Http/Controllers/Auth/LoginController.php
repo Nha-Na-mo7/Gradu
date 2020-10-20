@@ -83,7 +83,7 @@ class LoginController extends Controller
       Log::debug('ん...！');
   
       // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
-      // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認
+      // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
       // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
       // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
       $myinfo = User::firstOrCreate(['token' => $user->token ],
