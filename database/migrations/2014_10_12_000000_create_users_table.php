@@ -18,8 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->string('token')->nullable();
+            $table->string('password')->nullable(); //セキュリティ的に大問題なので必ずnullableは後で外すこと！
+            $table->string('token')->nullable(); //TwitterToken
             $table->rememberToken();
             $table->timestamps();
         });

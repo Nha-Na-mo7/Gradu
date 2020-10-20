@@ -63,6 +63,7 @@ class LoginController extends Controller
     // ===================
     // Twitterコールバック
     // ===================
+    // Twitterログイン後にでTwitterAPI側から帰ってくる情報たち。
     public function handleTwitterProviderCallback(){
       Log::debug('いきスギィ！');
       
@@ -81,13 +82,27 @@ class LoginController extends Controller
       }
       Log::debug('ん...！');
   
+      // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
       // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認
-      // レコードがある時、$myinfoにそのレコードをオブジェクトで代入
-      // レコードがない場合→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
-      
+      // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
+      // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
       $myinfo = User::firstOrCreate(['token' => $user->token ],
           ['name' => $user->nickname,'email' => $user->getEmail()]);
       Auth::login($myinfo);
+  
+      /* TODO:  新規ユーザーの登録について
+       * ・この例文のコードをそのまま貼り付けてTwitterによる新規登録を行った場合、
+       *  パスワードを入力する過程がない為、nullableにしない限りエラーが発生する。
+       * ・パスワード未入力で承認させるのは流石にトラブルの元になる為避けたい
+       *
+       * 【参考:pixiv】
+       * ・pixivでは、Twitter新規登録の場合はまずアプリケーション連携を行う。
+       * その後、「メールアドレス」「パスワード」「ユーザーネーム」「その他登録に必要な情報」
+       * これらを入力させる画面に遷移した。
+       * ・おそらく、あらかじめTwitterトークンをhiddenでどこかにinputフォームとして用意しておき、
+       * ・フォーム送信の際に同時に入力させる仕様になっている。
+       * ・CryptoTrendでもこれを実装したい。
+       */
       
       Log::debug('おDBのん');
       return redirect()->to('/'); // ホームへ転送
