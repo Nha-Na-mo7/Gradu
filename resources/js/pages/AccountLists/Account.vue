@@ -76,10 +76,12 @@
           <!-- 取得したツイートと日付 -->
           <div class="item-4 item-4-bottom">
             <p>キリトかなーやっぱりww
-              自分は思わないんだけど周りにキリトに似てるってよく言われるwww
-              こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww
-              ちなみに彼女もアスナに似てる(聞いてないw)
-              F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！</p>
+自分は思わないんだけど周りにキリトに似てるってよく言われるwww
+こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww
+ちなみに彼女もアスナに似てる(聞いてないw)
+
+F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！
+            </p>
             <span>20/08/10 11:45:14</span>
           </div>
 
@@ -121,7 +123,7 @@ export default {
 .item-1 {
   height: 100%;
   box-sizing: border-box;
-  padding: 10px 15px 25px 15px;
+  padding: 20px 15px;
   border-radius: 4px;
   /*background: #deefe9;*/
   display: flex;
@@ -143,7 +145,7 @@ export default {
 .item-3-right-top {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
 
 }
 .item-3-right-bottom {
@@ -178,6 +180,11 @@ export default {
   height: auto;
   width: 100%;
   padding: 10px 15px;
+
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+
   font-size: 15px;
   line-height: 20px;
 }
