@@ -112,12 +112,13 @@ export default {
 
 <style scoped>
 .p-accounts__item {
+  box-shadow: 0 0 2px #cdcdcd;
+  transition: .5s all;
   width: 100%;
-  /*background: #f7fff1;*/
+  background: #ffffff;
   color: #0b2e13;
   font-size: 15px;
   margin-bottom: 5px;
-  border: 1px solid #000000;
 }
 
 .item-1 {
@@ -125,7 +126,6 @@ export default {
   box-sizing: border-box;
   padding: 20px 15px;
   border-radius: 4px;
-  /*background: #deefe9;*/
   display: flex;
 }
 .item-2 {
@@ -218,7 +218,7 @@ export default {
 }
 .item-6-Account {
   width: 100%;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
 
   margin-bottom: 5px;

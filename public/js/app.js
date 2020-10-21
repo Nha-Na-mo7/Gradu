@@ -2339,17 +2339,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3703,7 +3692,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.p-accounts__item[data-v-2fe28b22] {\n  width: 100%;\n  /*background: #f7fff1;*/\n  color: #0b2e13;\n  font-size: 15px;\n  margin-bottom: 5px;\n  border: 1px solid #000000;\n}\n.item-1[data-v-2fe28b22] {\n  height: 100%;\n  box-sizing: border-box;\n  padding: 20px 15px;\n  border-radius: 4px;\n  /*background: #deefe9;*/\n  display: flex;\n}\n.item-2[data-v-2fe28b22] {\n  /*background: #c5ccd9;*/\n  display: flex;\n  flex-direction: column;\n}\n.item2-left[data-v-2fe28b22] {\n  margin-right: 20px;\n}\n.item2-right[data-v-2fe28b22] {\n  width: auto;\n}\n.item-3[data-v-2fe28b22] {\n  /*background: #bfabcb;*/\n}\n.item-3-right-top[data-v-2fe28b22] {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 35px;\n}\n.item-3-right-bottom[data-v-2fe28b22] {\n  border-top: 1px solid #d8d8d8;\n  padding-top: 15px;\n}\n.item-3-image[data-v-2fe28b22] {\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n  border: 1px solid #000;\n  /*background: #FFF;*/\n}\n.item-4[data-v-2fe28b22] {\n  display: flex;\n  flex-direction: column;\n  /*background: #d7d3b5;*/\n}\n.item-4-left[data-v-2fe28b22] {\n  width: 80%;\n}\n.item-4-right[data-v-2fe28b22] {\n  width: 20%;\n}\n.item-4-top-title[data-v-2fe28b22] {\n  font-size: 20px;\n  margin-bottom: 10px;\n}\n.item-4-bottom[data-v-2fe28b22] {\n  /*background: #f5fff3;*/\n  border: 1px solid #888;\n  height: auto;\n  width: 100%;\n  padding: 10px 15px;\n\n  white-space: pre-wrap;\n  white-space: -moz-pre-wrap;\n  white-space: -o-pre-wrap;\n\n  font-size: 15px;\n  line-height: 20px;\n}\n.item-5[data-v-2fe28b22] {\n  /*background: #d7c7b9;*/\n}\n.item-5-top-prof[data-v-2fe28b22] {\n  margin-bottom: 5px;\n}\n.item-5-top-btnarea[data-v-2fe28b22] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-bottom: 15px;\n}\n.item-5-bottom-FFArea[data-v-2fe28b22] {\n  display: flex;\n  justify-content: space-between;\n}\n.item-5-bottom-profile[data-v-2fe28b22] {\n  line-height: 22px;\n  font-size: 15px;\n}\n.item-5-bottom-profile span[data-v-2fe28b22] {\n  font-size: 10px;\n  font-weight: bold;\n  color: #b7b7b7;\n}\n.item-6[data-v-2fe28b22] {\n  /*background: #d2b0ca;*/\n}\n.item-6-Account[data-v-2fe28b22] {\n  width: 100%;\n  font-size: 24px;\n  font-weight: bold;\n\n  margin-bottom: 5px;\n}\n.item-6-username[data-v-2fe28b22] {\n  width: 100%;\n  font-size: 12px;\n  color: #f63030;\n}\n.item-6-ff[data-v-2fe28b22] {\n  width: 50%;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n}\n.item-7[data-v-2fe28b22] {\n  height: 50%;\n  width: 100%;\n  /*background: #eacaca;*/\n}\n.item-7-top-counter[data-v-2fe28b22] {\n  font-size: 15px;\n  font-weight: bold;\n  margin-bottom: 10px;\n}\n.item-7-bottom-title[data-v-2fe28b22] {\n  font-size: 5px;\n  letter-spacing: .5px;\n  color: #5d5d5d;\n}\n", ""]);
+exports.push([module.i, "\n.p-accounts__item[data-v-2fe28b22] {\n  box-shadow: 0 0 2px #cdcdcd;\n  transition: .5s all;\n  width: 100%;\n  background: #ffffff;\n  color: #0b2e13;\n  font-size: 15px;\n  margin-bottom: 5px;\n}\n.item-1[data-v-2fe28b22] {\n  height: 100%;\n  box-sizing: border-box;\n  padding: 20px 15px;\n  border-radius: 4px;\n  display: flex;\n}\n.item-2[data-v-2fe28b22] {\n  /*background: #c5ccd9;*/\n  display: flex;\n  flex-direction: column;\n}\n.item2-left[data-v-2fe28b22] {\n  margin-right: 20px;\n}\n.item2-right[data-v-2fe28b22] {\n  width: auto;\n}\n.item-3[data-v-2fe28b22] {\n  /*background: #bfabcb;*/\n}\n.item-3-right-top[data-v-2fe28b22] {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 35px;\n}\n.item-3-right-bottom[data-v-2fe28b22] {\n  border-top: 1px solid #d8d8d8;\n  padding-top: 15px;\n}\n.item-3-image[data-v-2fe28b22] {\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n  border: 1px solid #000;\n  /*background: #FFF;*/\n}\n.item-4[data-v-2fe28b22] {\n  display: flex;\n  flex-direction: column;\n  /*background: #d7d3b5;*/\n}\n.item-4-left[data-v-2fe28b22] {\n  width: 80%;\n}\n.item-4-right[data-v-2fe28b22] {\n  width: 20%;\n}\n.item-4-top-title[data-v-2fe28b22] {\n  font-size: 20px;\n  margin-bottom: 10px;\n}\n.item-4-bottom[data-v-2fe28b22] {\n  /*background: #f5fff3;*/\n  border: 1px solid #888;\n  height: auto;\n  width: 100%;\n  padding: 10px 15px;\n\n  white-space: pre-wrap;\n  white-space: -moz-pre-wrap;\n  white-space: -o-pre-wrap;\n\n  font-size: 15px;\n  line-height: 20px;\n}\n.item-5[data-v-2fe28b22] {\n  /*background: #d7c7b9;*/\n}\n.item-5-top-prof[data-v-2fe28b22] {\n  margin-bottom: 5px;\n}\n.item-5-top-btnarea[data-v-2fe28b22] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-bottom: 15px;\n}\n.item-5-bottom-FFArea[data-v-2fe28b22] {\n  display: flex;\n  justify-content: space-between;\n}\n.item-5-bottom-profile[data-v-2fe28b22] {\n  line-height: 22px;\n  font-size: 15px;\n}\n.item-5-bottom-profile span[data-v-2fe28b22] {\n  font-size: 10px;\n  font-weight: bold;\n  color: #b7b7b7;\n}\n.item-6[data-v-2fe28b22] {\n  /*background: #d2b0ca;*/\n}\n.item-6-Account[data-v-2fe28b22] {\n  width: 100%;\n  font-size: 22px;\n  font-weight: bold;\n\n  margin-bottom: 5px;\n}\n.item-6-username[data-v-2fe28b22] {\n  width: 100%;\n  font-size: 12px;\n  color: #f63030;\n}\n.item-6-ff[data-v-2fe28b22] {\n  width: 50%;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n}\n.item-7[data-v-2fe28b22] {\n  height: 50%;\n  width: 100%;\n  /*background: #eacaca;*/\n}\n.item-7-top-counter[data-v-2fe28b22] {\n  font-size: 15px;\n  font-weight: bold;\n  margin-bottom: 10px;\n}\n.item-7-bottom-title[data-v-2fe28b22] {\n  font-size: 5px;\n  letter-spacing: .5px;\n  color: #5d5d5d;\n}\n", ""]);
 
 // exports
 
@@ -3722,7 +3711,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.p-accounts__list[data-v-231ee6a6] {\n  margin: 20px 30px;\n}\n\n", ""]);
+exports.push([module.i, "\n.p-accounts__container[data-v-231ee6a6] {\n  background: #f5f6ff;\n  box-shadow: #f5f6ff 0 0 20px;\n  margin-top: 20px;\n  padding: 15px 25px;\n}\n.p-accounts__list[data-v-231ee6a6] {\n  margin: 20px 30px;\n}\n\n", ""]);
 
 // exports
 
@@ -44811,14 +44800,22 @@ var render = function() {
       _vm._v(" "),
       _c("PageTitle", { attrs: { title: _vm.pageTitle } }),
       _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "p-accounts__list" },
-        [_c("Account"), _vm._v(" "), _c("Account"), _vm._v(" "), _c("Account")],
-        1
-      )
+      _c("div", { staticClass: "p-accounts__container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "p-accounts__list" },
+          [
+            _c("Account"),
+            _vm._v(" "),
+            _c("Account"),
+            _vm._v(" "),
+            _c("Account")
+          ],
+          1
+        )
+      ])
     ],
     1
   )
@@ -44828,26 +44825,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-accounts__container" }, [
-      _c("div", { staticClass: "p-news__headline" }, [
-        _c("form", { staticClass: "p-news__search" }, [
-          _c(
-            "div",
-            { staticClass: "c-input__btn-area c-input__btn-area__search" },
-            [
-              _c("button", { staticClass: "c-input__btn-circle" }, [
-                _vm._v("🔎")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-input__searcharea" })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
-          _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
-            _vm._v("自動フォロー")
-          ])
+    return _c("div", { staticClass: "p-news__headline" }, [
+      _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
+        _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
+          _vm._v("自動フォロー")
         ])
       ])
     ])

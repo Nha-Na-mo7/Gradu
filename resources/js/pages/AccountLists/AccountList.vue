@@ -15,33 +15,22 @@
 
       <!-- ヘッドライン -->
       <div class="p-news__headline">
-        <!-- 検索フォーム・コンポーネント検討 -->
-        <form class="p-news__search">
 
-          <!-- 検索虫眼鏡ボタン -->
-          <div class="c-input__btn-area c-input__btn-area__search">
-            <button class="c-input__btn-circle">🔎</button>
-          </div>
-          <!-- 検索欄 -->
-          <div class="c-input__searcharea">
-            <!--            <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">-->
-          </div>
-
-        </form>
-
-        <!-- 絞り込みモーダルボタン -->
+        <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">
           <button class="c-btn c-btn__main c-btn--primary">自動フォロー</button>
         </div>
       </div>
 
-      </div>
-
+      <!-- アカウントリスト -->
       <div class="p-accounts__list">
         <Account />
         <Account />
         <Account />
       </div>
+
+    </div>
+
     </div>
   </div>
 
@@ -83,6 +72,12 @@ export default {
 </script>
 
 <style scoped>
+.p-accounts__container {
+  background: #f5f6ff;
+  box-shadow: #f5f6ff 0 0 20px;
+  margin-top: 20px;
+  padding: 15px 25px;
+}
 .p-accounts__list {
   margin: 20px 30px;
 }
