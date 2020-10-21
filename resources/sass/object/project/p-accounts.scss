@@ -1,0 +1,188 @@
+// ==============
+//  p-account
+//  =============
+.p-accounts{
+  &__container {
+    background: #f5f6ff;
+    box-shadow: #f5f6ff 0 0 20px;
+    margin-top: 20px;
+    padding: 15px 25px;
+  }
+
+  // 枠組み全体 TODO 要レイアウト系の修正
+  &__item {
+    box-shadow: 0 0 2px #cdcdcd;
+    transition: .5s all;
+    width: 100%;
+    background: #ffffff;
+    color: #0b2e13;
+    font-size: 15px;
+    margin-bottom: 5px;
+
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px 15px;
+    border-radius: 4px;
+    display: flex;
+  }
+
+  // コンポーネントの左サイド。
+  // アカウントのアイコンが表示されるだけのエリア
+  &__left-side {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  // アカウントのアイコン
+  &__icon {
+
+    // アイコンの表示エリア
+    // TODO アイコンの大きさやレイアウトなどを修正すること
+    &--area {
+      height: 80px;
+      width: 80px;
+      border-radius: 50%;
+      border: 1px solid #000;
+    }
+  }
+
+  // コンポーネントの右サイド。
+  // プロフィール、FF比、フォローボタン、最新のツイートなどが表示される
+  &__right-side {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  // プロフィール・及びフォロー関係のエリア。
+  &__data {
+    &--area {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 35px;
+    }
+  }
+
+  // プロフィールエリア、右サイドの左上部分。
+  &__profile{
+    // アカウント名とユーザー名のエリア
+    margin-bottom: 5px;
+
+    // アカウント名・ユーザー名・デスクリプションのエリア
+    &--area {
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+    }
+    // アカウント名
+    &--nickname {
+      width: 100%;
+      font-size: 22px;
+      font-weight: bold;
+
+      margin-bottom: 5px;
+    }
+    // ユーザー名(@XXXXxxxxXXXXxxxx)
+    &--username {
+      // TODO
+      width: 100%;
+      font-size: 12px;
+      color: #f63030;
+    }
+    // デスクリプション。アカウントのプロフィール
+    &--description {
+      line-height: 22px;
+      font-size: 15px;
+      // 投稿時刻
+      & span {
+        font-size: 10px;
+        font-weight: bold;
+        color: #b7b7b7;
+      }
+    }
+  }
+
+  &__follow{
+    // フォローボタンとフォロー・フォロワー数のエリア
+    &--area {
+      display: flex;
+      flex-direction: column;
+      width: 20%;
+    }
+
+    // フォローボタンのエリア
+    &-btn--area {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+  }
+
+
+  // フォロー数とフォロワー数
+  &__ff {
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    // 表示エリア
+    &--area {
+      display: flex;
+      justify-content: space-around;
+    }
+    // そのアカウントユーザーのフォロー数orフォロワー数を表す数字
+    &--count {
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    // フォロー中 or フォロワー の文言
+    &--title {
+      font-size: 5px;
+      letter-spacing: .5px;
+      color: #5d5d5d;
+    }
+    // 共通要素
+    &--item {
+      height: 50%;
+    }
+  }
+
+  // 新着ツイート
+  &__tweet {
+    font-size: 20px;
+    margin-bottom: 10px;
+
+    display: flex;
+    flex-direction: column;
+    // 表示エリア
+    &--area {
+      border-top: 1px solid #d8d8d8;
+      padding-top: 15px;
+    }
+
+    // 新着ツイートと、日付
+    &--data {
+      display: flex;
+      flex-direction: column;
+
+      border: 1px solid #888;
+      height: auto;
+      width: 100%;
+      padding: 10px 15px;
+
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -o-pre-wrap;
+
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
+
+
+
+}

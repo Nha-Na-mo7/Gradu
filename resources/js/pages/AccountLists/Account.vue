@@ -1,96 +1,100 @@
 <!--=======================================================-->
 <!--アカウント一覧画面でいくつも描画される各twitterアカウントの情報-->
 <!--=======================================================-->
+
+<!-- item2~7のクラス、及びscope内のスタイルは、本番に上げる前に外してください！ -->
+
+
 <template>
+
   <div class="p-accounts__item">
 
-    <div class="item-1">
 
-
-      <!-- サムネイル表示エリア、縦に長く、他のコンテンツは設置しない -->
-      <div class="item-2 item2-left">
-        <div class="item-3 thumnale-area">
-          <div class="item-3-image"></div>
-          <!--<img src="" alt="サムネホイホイ">-->
-        </div>
+    <!-- サムネイル表示エリア、縦に長く、他のコンテンツは設置しない -->
+    <div class="item-2 item2-left p-accounts__left-side">
+      <div class="item-3 p-accounts__icon--area">
+        <div class="p-accounts__icon"></div>
+        <!--<img src="" alt="サムネホイホイ">-->
       </div>
+    </div>
 
 
-      <div class="item-2 item2-right">
+    <div class="item-2 p-accounts__right-side">
 
-        <!-- プロフィールとフォロー関連のエリア -->
-        <div class="item-3 item-3-right-top">
+      <!-- プロフィールとフォロー関連のエリア -->
+      <div class="item-3 p-accounts__data--area">
 
-          <!-- プロフィールエリア -->
-          <div class="item-4 item-4-left">
-            <div class="item-5 item-5-top-prof">
-              <div class="item-6 item-6-Account">
-                <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶</p>
-              </div>
-              <div class="item-6 item-6-username">
-                <p>@oaijgoaja9494293</p>
-              </div>
+        <!-- プロフィールエリア -->
+        <div class="item-4 p-accounts__profile--area">
+          <div class="item-5 p-accounts__profile">
+            <div class="item-6 p-accounts__profile--nickname">
+<!--              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶</p>-->
+              <p>草</p>
             </div>
-
-            <div class="item-5 item-5-bottom-profile">
-              <p>
-                三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から
-                都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web
-                アプリを開発中/自動車メカエンジニアからITエンジニアに転身
-              </p>
+            <div class="item-6 p-accounts__profile--username">
+              <p>@oaijgoaja9494293</p>
             </div>
           </div>
 
-          <!-- フォローボタンとFF数のエリア -->
-          <div class="item-4 item-4-right">
-
-            <!-- フォローボタン -->
-            <div class="item-5 item-5-top-btnarea">
-              <button class="c-btn">フォロ</button>
-            </div>
-
-            <!-- FF数 -->
-            <div class="item-5 item-5-bottom-FFArea">
-
-              <div class="item-6 item-6-ff">
-                <div class="item-7 item-7-top-counter"><p>777</p></div>
-                <div class="item-7 item-7-bottom-title"><p>フォロー中</p></div>
-              </div>
-              <div class="item-6 item-6-ff">
-                <div class="item-7 item-7-top-counter"><p>9,999</p></div>
-                <div class="item-7 item-7-bottom-title"><p>フォロワー</p></div>
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- 新着ツイート1件表示エリア -->
-        <div class="item-3 item-3-right-bottom">
-          <div class="item-4 item-4-top-title">
-            <p>新着ツイート</p>
-          </div>
-
-          <!-- 取得したツイートと日付 -->
-          <div class="item-4 item-4-bottom">
-            <p>キリトかなーやっぱりww
-自分は思わないんだけど周りにキリトに似てるってよく言われるwww
-こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww
-ちなみに彼女もアスナに似てる(聞いてないw)
-
-F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！
+          <div class="item-5 p-accounts__profile--description">
+            <p>
+<!--              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から-->
+<!--              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web-->
+<!--              アプリを開発中/自動車メカエンジニアからITエンジニアに転身-->
+              三浦鈴木
             </p>
-            <span>20/08/10 11:45:14</span>
+          </div>
+        </div>
+
+        <!-- フォローボタンとFF数のエリア -->
+        <div class="item-4 p-accounts__follow--area">
+
+          <!-- フォローボタン -->
+          <div class="item-5 p-accounts__follow-btn--area">
+            <button class="c-btn">フォロ</button>
+          </div>
+
+          <!-- FF数 -->
+          <div class="item-5 p-accounts__ff--area">
+
+            <div class="item-6 p-accounts__ff--item">
+              <div class="item-7 p-accounts__ff--count"><p>777</p></div>
+              <div class="item-7 p-accounts__ff--title"><p>フォロー中</p></div>
+            </div>
+            <div class="item-6 item-6-ff">
+              <div class="item-7 p-accounts__ff--count"><p>9,999</p></div>
+              <div class="item-7 p-accounts__ff--title"><p>フォロワー</p></div>
+            </div>
+
           </div>
 
         </div>
 
       </div>
 
+      <!-- 新着ツイート1件表示エリア -->
+      <div class="item-3 p-accounts__tweet--area">
+        <div class="item-4 p-accounts__tweet">
+          <p>新着ツイート</p>
+        </div>
+
+        <!-- 取得したツイートと日付 -->
+        <div class="item-4 p-accounts__tweet--data">
+<!--          <p>キリトかなーやっぱりww-->
+<!--自分は思わないんだけど周りにキリトに似てるってよく言われるwww-->
+<!--こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww-->
+<!--ちなみに彼女もアスナに似てる(聞いてないw)-->
+
+<!--F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！-->
+<!--          </p>-->
+          <p>キリトかなーやっぱりww</p>
+          <span>20/08/10 11:45:14</span>
+        </div>
+
+      </div>
 
     </div>
+
 
   </div>
 </template>
@@ -111,143 +115,25 @@ export default {
 </script>
 
 <style scoped>
-.p-accounts__item {
-  box-shadow: 0 0 2px #cdcdcd;
-  transition: .5s all;
-  width: 100%;
-  background: #ffffff;
-  color: #0b2e13;
-  font-size: 15px;
-  margin-bottom: 5px;
-}
 
-.item-1 {
-  height: 100%;
-  box-sizing: border-box;
-  padding: 20px 15px;
-  border-radius: 4px;
-  display: flex;
-}
+
 .item-2 {
   /*background: #c5ccd9;*/
-  display: flex;
-  flex-direction: column;
-}
-.item2-left {
-  margin-right: 20px;
-}
-.item2-right {
-  width: auto;
 }
 .item-3 {
   /*background: #bfabcb;*/
 }
-.item-3-right-top {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 35px;
-
-}
-.item-3-right-bottom {
-  border-top: 1px solid #d8d8d8;
-  padding-top: 15px;
-}
-.item-3-image {
-  height: 80px;
-  width: 80px;
-  border-radius: 50%;
-  border: 1px solid #000;
-  /*background: #FFF;*/
-}
 .item-4 {
-  display: flex;
-  flex-direction: column;
   /*background: #d7d3b5;*/
-}
-.item-4-left {
-  width: 80%;
-}
-.item-4-right {
-  width: 20%;
-}
-.item-4-top-title {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-.item-4-bottom {
-  /*background: #f5fff3;*/
-  border: 1px solid #888;
-  height: auto;
-  width: 100%;
-  padding: 10px 15px;
-
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -o-pre-wrap;
-
-  font-size: 15px;
-  line-height: 20px;
 }
 .item-5 {
   /*background: #d7c7b9;*/
 }
-.item-5-top-prof {
-  margin-bottom: 5px;
-}
-.item-5-top-btnarea {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 15px;
-}
-.item-5-bottom-FFArea {
-  display: flex;
-  justify-content: space-between;
-}
-.item-5-bottom-profile {
-  line-height: 22px;
-  font-size: 15px;
-}
-.item-5-bottom-profile span {
-  font-size: 10px;
-  font-weight: bold;
-  color: #b7b7b7;
-}
 .item-6 {
   /*background: #d2b0ca;*/
 }
-.item-6-Account {
-  width: 100%;
-  font-size: 22px;
-  font-weight: bold;
-
-  margin-bottom: 5px;
-}
-.item-6-username {
-  width: 100%;
-  font-size: 12px;
-  color: #f63030;
-}
-.item-6-ff {
-  width: 50%;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
 .item-7 {
-  height: 50%;
-  width: 100%;
   /*background: #eacaca;*/
 }
-.item-7-top-counter {
-  font-size: 15px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.item-7-bottom-title {
-  font-size: 5px;
-  letter-spacing: .5px;
-  color: #5d5d5d;
-}
+
 </style>

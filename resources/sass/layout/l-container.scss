@@ -20,8 +20,7 @@
     }
   }
   &__content {
-    padding: 15px 25px;
-    margin: 0 auto;
+    margin-bottom: 50px;
     max-width: 100%;
     @include mq($breakpoint: md) {
       max-width: 100%;

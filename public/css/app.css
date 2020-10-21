@@ -620,8 +620,7 @@ main {
 }
 
 .l-container__content {
-  padding: 15px 25px;
-  margin: 0 auto;
+  margin-bottom: 50px;
   max-width: 100%;
 }
 
@@ -867,6 +866,156 @@ main {
 
 .p-news__item--nothing p {
   font-size: 18px;
+}
+
+.p-accounts__container {
+  background: #f5f6ff;
+  box-shadow: #f5f6ff 0 0 20px;
+  margin-top: 20px;
+  padding: 15px 25px;
+}
+
+.p-accounts__item {
+  box-shadow: 0 0 2px #cdcdcd;
+  transition: 0.5s all;
+  width: 100%;
+  background: #ffffff;
+  color: #0b2e13;
+  font-size: 15px;
+  margin-bottom: 5px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 20px 15px;
+  border-radius: 4px;
+  display: flex;
+}
+
+.p-accounts__left-side {
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-accounts__icon--area {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  border: 1px solid #000;
+}
+
+.p-accounts__right-side {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-accounts__data--area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}
+
+.p-accounts__profile {
+  margin-bottom: 5px;
+}
+
+.p-accounts__profile--area {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-accounts__profile--nickname {
+  width: 100%;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.p-accounts__profile--username {
+  width: 100%;
+  font-size: 12px;
+  color: #f63030;
+}
+
+.p-accounts__profile--description {
+  line-height: 22px;
+  font-size: 15px;
+}
+
+.p-accounts__profile--description span {
+  font-size: 10px;
+  font-weight: bold;
+  color: #b7b7b7;
+}
+
+.p-accounts__follow--area {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.p-accounts__follow-btn--area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.p-accounts__ff {
+  width: 50%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.p-accounts__ff--area {
+  display: flex;
+  justify-content: space-around;
+}
+
+.p-accounts__ff--count {
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.p-accounts__ff--title {
+  font-size: 5px;
+  letter-spacing: 0.5px;
+  color: #5d5d5d;
+}
+
+.p-accounts__ff--item {
+  height: 50%;
+}
+
+.p-accounts__tweet {
+  font-size: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.p-accounts__tweet--area {
+  border-top: 1px solid #d8d8d8;
+  padding-top: 15px;
+}
+
+.p-accounts__tweet--data {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #888;
+  height: auto;
+  width: 100%;
+  padding: 10px 15px;
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -o-pre-wrap;
+  font-size: 15px;
+  line-height: 20px;
 }
 
 .c-btn {
