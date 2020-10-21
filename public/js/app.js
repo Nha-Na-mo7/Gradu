@@ -2204,6 +2204,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({// watch: {
   //   $route: {
   //     async handler() {
@@ -2232,8 +2299,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/PageTitle.vue */ "./resources/js/pages/Components/PageTitle.vue");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-//
-//
 //
 //
 //
@@ -3605,7 +3670,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.p-accounts__item[data-v-2fe28b22] {\n  width: 100%;\n  height: 250px;\n  background: #f7fff1;\n  color: #0b2e13;\n  font-size: 15px;\n  margin-bottom: 5px;\n  border: 1px solid #000000;\n}\n", ""]);
+exports.push([module.i, "\n.p-accounts__item[data-v-2fe28b22] {\n  width: 100%;\n  /*background: #f7fff1;*/\n  color: #0b2e13;\n  font-size: 15px;\n  margin-bottom: 5px;\n  border: 1px solid #000000;\n}\n.item-1[data-v-2fe28b22] {\n  height: 100%;\n  box-sizing: border-box;\n  padding: 10px 15px 25px 15px;\n  border-radius: 4px;\n  /*background: #deefe9;*/\n  display: flex;\n}\n.item-2[data-v-2fe28b22] {\n  /*background: #c5ccd9;*/\n  display: flex;\n  flex-direction: column;\n}\n.item2-left[data-v-2fe28b22] {\n  margin-right: 20px;\n}\n.item2-right[data-v-2fe28b22] {\n  width: auto;\n}\n.item-3[data-v-2fe28b22] {\n  /*background: #bfabcb;*/\n}\n.item-3-right-top[data-v-2fe28b22] {\n  display: flex;\n  justify-content: space-between;\n  margin-bottom: 30px;\n}\n.item-3-right-bottom[data-v-2fe28b22] {\n  border-top: 1px solid #d8d8d8;\n  padding-top: 15px;\n}\n.item-3-image[data-v-2fe28b22] {\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n  border: 1px solid #000;\n  /*background: #FFF;*/\n}\n.item-4[data-v-2fe28b22] {\n  display: flex;\n  flex-direction: column;\n  /*background: #d7d3b5;*/\n}\n.item-4-left[data-v-2fe28b22] {\n  width: 80%;\n}\n.item-4-right[data-v-2fe28b22] {\n  width: 20%;\n}\n.item-4-top-title[data-v-2fe28b22] {\n  font-size: 20px;\n  margin-bottom: 10px;\n}\n.item-4-bottom[data-v-2fe28b22] {\n  /*background: #f5fff3;*/\n  border: 1px solid #888;\n  height: auto;\n  width: 100%;\n  padding: 10px 15px;\n  font-size: 15px;\n  line-height: 20px;\n}\n.item-5[data-v-2fe28b22] {\n  /*background: #d7c7b9;*/\n}\n.item-5-top-prof[data-v-2fe28b22] {\n  margin-bottom: 5px;\n}\n.item-5-top-btnarea[data-v-2fe28b22] {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  margin-bottom: 15px;\n}\n.item-5-bottom-FFArea[data-v-2fe28b22] {\n  display: flex;\n  justify-content: space-between;\n}\n.item-5-bottom-profile[data-v-2fe28b22] {\n  line-height: 22px;\n  font-size: 15px;\n}\n.item-5-bottom-profile span[data-v-2fe28b22] {\n  font-size: 10px;\n  font-weight: bold;\n  color: #b7b7b7;\n}\n.item-6[data-v-2fe28b22] {\n  /*background: #d2b0ca;*/\n}\n.item-6-Account[data-v-2fe28b22] {\n  width: 100%;\n  font-size: 24px;\n  font-weight: bold;\n\n  margin-bottom: 5px;\n}\n.item-6-username[data-v-2fe28b22] {\n  width: 100%;\n  font-size: 12px;\n  color: #f63030;\n}\n.item-6-ff[data-v-2fe28b22] {\n  width: 50%;\n  margin: 0 auto;\n  display: flex;\n  flex-direction: column;\n  text-align: center;\n}\n.item-7[data-v-2fe28b22] {\n  height: 50%;\n  width: 100%;\n  /*background: #eacaca;*/\n}\n.item-7-top-counter[data-v-2fe28b22] {\n  font-size: 15px;\n  font-weight: bold;\n  margin-bottom: 10px;\n}\n.item-7-bottom-title[data-v-2fe28b22] {\n  font-size: 5px;\n  letter-spacing: .5px;\n  color: #5d5d5d;\n}\n", ""]);
 
 // exports
 
@@ -44553,37 +44618,85 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "p-accounts__item" }, [
-      _c("h2", [_vm._v("アカウント名")]),
-      _vm._v(" "),
-      _c("ul", [
-        _c("li", [_vm._v("@yaju8101919")]),
+      _c("div", { staticClass: "item-1" }, [
+        _c("div", { staticClass: "item-2 item2-left" }, [
+          _c("div", { staticClass: "item-3 thumnale-area" }, [
+            _c("div", { staticClass: "item-3-image" })
+          ])
+        ]),
         _vm._v(" "),
-        _c("li", [_vm._v("フォロー : 114")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("フォロワー : 514")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "p-accounts__profile-area" }, [
-        _c("h3", [_vm._v("プロフィール")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！自分RTいいっすか？淫夢知ってそうだしリストにぶちこんでやるぜ〜フォローしてください！オナシャス！なんでもしますから！（なんでもするとは言っていない）"
-          )
+        _c("div", { staticClass: "item-2 item2-right" }, [
+          _c("div", { staticClass: "item-3 item-3-right-top" }, [
+            _c("div", { staticClass: "item-4 item-4-left" }, [
+              _c("div", { staticClass: "item-5 item-5-top-prof" }, [
+                _c("div", { staticClass: "item-6 item-6-Account" }, [
+                  _c("p", [
+                    _vm._v(
+                      "スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶"
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "item-6 item-6-username" }, [
+                  _c("p", [_vm._v("@oaijgoaja9494293")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "item-5 item-5-bottom-profile" }, [
+                _c("p", [
+                  _vm._v(
+                    "\n              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から\n              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web\n              アプリを開発中/自動車メカエンジニアからITエンジニアに転身\n            "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item-4 item-4-right" }, [
+              _c("div", { staticClass: "item-5 item-5-top-btnarea" }, [
+                _c("button", { staticClass: "c-btn" }, [_vm._v("フォロ")])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "item-5 item-5-bottom-FFArea" }, [
+                _c("div", { staticClass: "item-6 item-6-ff" }, [
+                  _c("div", { staticClass: "item-7 item-7-top-counter" }, [
+                    _c("p", [_vm._v("777")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "item-7 item-7-bottom-title" }, [
+                    _c("p", [_vm._v("フォロー中")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "item-6 item-6-ff" }, [
+                  _c("div", { staticClass: "item-7 item-7-top-counter" }, [
+                    _c("p", [_vm._v("9,999")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "item-7 item-7-bottom-title" }, [
+                    _c("p", [_vm._v("フォロワー")])
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "item-3 item-3-right-bottom" }, [
+            _c("div", { staticClass: "item-4 item-4-top-title" }, [
+              _c("p", [_vm._v("新着ツイート")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item-4 item-4-bottom" }, [
+              _c("p", [
+                _vm._v(
+                  "キリトかなーやっぱりww\n            自分は思わないんだけど周りにキリトに似てるってよく言われるwww\n            こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww\n            ちなみに彼女もアスナに似てる(聞いてないw)\n            F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！"
+                )
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("20/08/10 11:45:14")])
+            ])
+          ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "saishin-tweet" }, [
-        _c("h2", [_vm._v("1999/08/10 11:45:14")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "キリトかなーやっぱりww\n      自分は思わないんだけど周りにキリトに似てるってよく言われるwww\n      こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww\n      ちなみに彼女もアスナに似てる(聞いてないw)"
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "c-btn" }, [_vm._v("フォローする")])
+      ])
     ])
   }
 ]
@@ -44615,10 +44728,6 @@ var render = function() {
       _c("SiteLinknav", { attrs: { currentPageTitle: _vm.pageTitle } }),
       _vm._v(" "),
       _c("PageTitle", { attrs: { title: _vm.pageTitle } }),
-      _vm._v(" "),
-      _c("Account"),
-      _vm._v(" "),
-      _c("Account"),
       _vm._v(" "),
       _c("Account")
     ],

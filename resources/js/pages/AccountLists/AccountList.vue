@@ -12,8 +12,6 @@
 
     <!--メインレイアウト-->
     <Account />
-    <Account />
-    <Account />
   </div>
 
 </template>
