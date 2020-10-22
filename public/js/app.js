@@ -44706,13 +44706,7 @@ var staticRenderFns = [
               _c(
                 "div",
                 { staticClass: "item-6 p-accounts__profile--nickname" },
-                [
-                  _c("p", [
-                    _vm._v(
-                      "スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国"
-                    )
-                  ])
-                ]
+                [_c("p", [_vm._v("草")])]
               ),
               _vm._v(" "),
               _c(

@@ -923,11 +923,7 @@ main {
 
 .p-accounts__profile {
   margin-bottom: 5px;
-}
-
-.p-accounts__profile:hover {
-  cursor: pointer;
-  text-decoration: underline;
+  line-height: 150%;
 }
 
 .p-accounts__profile--area {
@@ -943,14 +939,24 @@ main {
   margin-bottom: 5px;
 }
 
+.p-accounts__profile--nickname:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .p-accounts__profile--username {
   width: 100%;
-  font-size: 12px;
+  font-size: 15px;
   color: #f63030;
 }
 
+.p-accounts__profile--username:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .p-accounts__profile--description {
-  line-height: 22px;
+  line-height: 150%;
   font-size: 15px;
 }
 
@@ -1014,6 +1020,7 @@ main {
 .p-accounts__tweet {
   font-size: 20px;
   margin-bottom: 10px;
+  line-height: 150%;
   display: flex;
   flex-direction: column;
 }

@@ -28,8 +28,8 @@
         <div class="item-4 p-accounts__profile--area">
           <div class="item-5 p-accounts__profile">
             <div class="item-6 p-accounts__profile--nickname">
-              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国</p>
-<!--              <p>草</p>-->
+<!--              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国</p>-->
+              <p>草</p>
             </div>
             <div class="item-6 p-accounts__profile--username">
               <p>@oaijgoaja9494293</p>
