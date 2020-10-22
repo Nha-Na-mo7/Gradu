@@ -14,7 +14,7 @@
     <div class="p-accounts__container">
 
       <!-- ヘッドライン -->
-      <div class="p-news__headline">
+      <div class="p-accounts__headline">
 
         <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">

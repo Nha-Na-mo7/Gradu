@@ -3696,7 +3696,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.item-2[data-v-2fe28b22] {\n  /*background: #c5ccd9;*/\n}\n.item-3[data-v-2fe28b22] {\n  /*background: #bfabcb;*/\n}\n.item-4[data-v-2fe28b22] {\n  /*background: #d7d3b5;*/\n}\n.item-5[data-v-2fe28b22] {\n  /*background: #d7c7b9;*/\n}\n.item-6[data-v-2fe28b22] {\n  /*background: #d2b0ca;*/\n}\n.item-7[data-v-2fe28b22] {\n  /*background: #eacaca;*/\n}\n\n", ""]);
+exports.push([module.i, "\n.item-2[data-v-2fe28b22] {\n  /*background: #c5ccd9;*/\n}\n.item-3[data-v-2fe28b22] {\n  /*background: #bfabcb;*/\n}\n.item-4[data-v-2fe28b22] {\n  /*background: #c4ceff;*/\n}\n.item-5[data-v-2fe28b22] {\n  /*background: #d2eed5;*/\n}\n.item-6[data-v-2fe28b22] {\n  /*background: #ffdaf7;*/\n}\n.item-7[data-v-2fe28b22] {\n  /*background: #b5fff0;*/\n}\n\n", ""]);
 
 // exports
 
@@ -44706,7 +44706,13 @@ var staticRenderFns = [
               _c(
                 "div",
                 { staticClass: "item-6 p-accounts__profile--nickname" },
-                [_c("p", [_vm._v("草")])]
+                [
+                  _c("p", [
+                    _vm._v(
+                      "スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国"
+                    )
+                  ])
+                ]
               ),
               _vm._v(" "),
               _c(
@@ -44719,7 +44725,13 @@ var staticRenderFns = [
             _c(
               "div",
               { staticClass: "item-5 p-accounts__profile--description" },
-              [_c("p", [_vm._v("\n              三浦鈴木\n            ")])]
+              [
+                _c("p", [
+                  _vm._v(
+                    "\n              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から\n              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web\n              アプリを開発中/自動車メカエンジニアからITエンジニアに転身\n"
+                  )
+                ])
+              ]
             )
           ]),
           _vm._v(" "),
@@ -44739,9 +44751,9 @@ var staticRenderFns = [
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "item-6 item-6-ff" }, [
+              _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
                 _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
-                  _c("p", [_vm._v("9,999")])
+                  _c("p", [_vm._v("999999")])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "item-7 p-accounts__ff--title" }, [
@@ -44758,9 +44770,11 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-            _c("p", [_vm._v("キリトかなーやっぱりww")]),
-            _vm._v(" "),
-            _c("span", [_vm._v("20/08/10 11:45:14")])
+            _c("p", [
+              _vm._v(
+                "キリトかなーやっぱりww\n自分は思わないんだけど周りにキリトに似てるってよく言われるwww\nこないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww\nちなみに彼女もアスナに似てる(聞いてないw)\n\nF外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！\n          "
+              )
+            ])
           ])
         ])
       ])
@@ -44821,7 +44835,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-news__headline" }, [
+    return _c("div", { staticClass: "p-accounts__headline" }, [
       _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
         _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
           _vm._v("自動フォロー")

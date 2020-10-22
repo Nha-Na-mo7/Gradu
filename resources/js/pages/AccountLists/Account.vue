@@ -28,8 +28,8 @@
         <div class="item-4 p-accounts__profile--area">
           <div class="item-5 p-accounts__profile">
             <div class="item-6 p-accounts__profile--nickname">
-<!--              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶</p>-->
-              <p>草</p>
+              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国</p>
+<!--              <p>草</p>-->
             </div>
             <div class="item-6 p-accounts__profile--username">
               <p>@oaijgoaja9494293</p>
@@ -38,10 +38,10 @@
 
           <div class="item-5 p-accounts__profile--description">
             <p>
-<!--              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から-->
-<!--              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web-->
-<!--              アプリを開発中/自動車メカエンジニアからITエンジニアに転身-->
-              三浦鈴木
+              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から
+              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web
+              アプリを開発中/自動車メカエンジニアからITエンジニアに転身
+<!--              三浦鈴木-->
             </p>
           </div>
         </div>
@@ -61,8 +61,8 @@
               <div class="item-7 p-accounts__ff--count"><p>777</p></div>
               <div class="item-7 p-accounts__ff--title"><p>フォロー中</p></div>
             </div>
-            <div class="item-6 item-6-ff">
-              <div class="item-7 p-accounts__ff--count"><p>9,999</p></div>
+            <div class="item-6 p-accounts__ff--item">
+              <div class="item-7 p-accounts__ff--count"><p>999999</p></div>
               <div class="item-7 p-accounts__ff--title"><p>フォロワー</p></div>
             </div>
 
@@ -80,15 +80,15 @@
 
         <!-- 取得したツイートと日付 -->
         <div class="item-4 p-accounts__tweet--data">
-<!--          <p>キリトかなーやっぱりww-->
-<!--自分は思わないんだけど周りにキリトに似てるってよく言われるwww-->
-<!--こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww-->
-<!--ちなみに彼女もアスナに似てる(聞いてないw)-->
+          <p>キリトかなーやっぱりww
+自分は思わないんだけど周りにキリトに似てるってよく言われるwww
+こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww
+ちなみに彼女もアスナに似てる(聞いてないw)
 
-<!--F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！-->
-<!--          </p>-->
-          <p>キリトかなーやっぱりww</p>
-          <span>20/08/10 11:45:14</span>
+F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！
+          </p>
+<!--          <p>キリトかなーやっぱりww</p>-->
+<!--          <span>20/08/10 11:45:14</span>-->
         </div>
 
       </div>
@@ -124,16 +124,16 @@ export default {
   /*background: #bfabcb;*/
 }
 .item-4 {
-  /*background: #d7d3b5;*/
+  /*background: #c4ceff;*/
 }
 .item-5 {
-  /*background: #d7c7b9;*/
+  /*background: #d2eed5;*/
 }
 .item-6 {
-  /*background: #d2b0ca;*/
+  /*background: #ffdaf7;*/
 }
 .item-7 {
-  /*background: #eacaca;*/
+  /*background: #b5fff0;*/
 }
 
 </style>
