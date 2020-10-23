@@ -2343,6 +2343,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3715,7 +3721,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.p-accounts__container[data-v-231ee6a6] {\n  background: #f5f6ff;\n  box-shadow: #f5f6ff 0 0 20px;\n  margin-top: 20px;\n  padding: 15px 25px;\n}\n.p-accounts__list[data-v-231ee6a6] {\n  margin: 20px 30px;\n}\n\n", ""]);
+exports.push([module.i, "\n.c-ribbon[data-v-231ee6a6] {\n  height: 40px;\n  width: 100%;\n  color: #FFF;\n  font-size: 20px;\n  margin-bottom: 15px;\n  background: #1d7ebe;\n  border-radius: 4px;\n\n  position: relative;\n}\n.c-ribbon__content[data-v-231ee6a6] {\n  position: absolute;\n  padding: 8px 20px;\n}\n.c-ribbon__content--left[data-v-231ee6a6] {\n  left: 0;\n}\n.c-ribbon__content--right[data-v-231ee6a6] {\n  right: 0;\n}\n.c-ribbon__date[data-v-231ee6a6] {\n  font-weight: bold;\n}\n", ""]);
 
 // exports
 
@@ -44807,6 +44813,8 @@ var render = function() {
       _c("div", { staticClass: "p-accounts__container" }, [
         _vm._m(0),
         _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "p-accounts__list" },
@@ -44825,6 +44833,24 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "c-ribbon" }, [
+      _c("p", { staticClass: "c-ribbon__content c-ribbon__content--left" }, [
+        _vm._v("Twitterアカウント一覧")
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "c-ribbon__content c-ribbon__content--right" }, [
+        _vm._v("最終更新: "),
+        _c("span", { staticClass: "c-ribbon__date" }, [
+          _vm._v("2020/12/31 09:00")
+        ]),
+        _vm._v(" JST")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

@@ -6,7 +6,11 @@
     background: #f5f6ff;
     box-shadow: #f5f6ff 0 0 20px;
     margin-top: 20px;
-    padding: 15px 25px;
+    padding: 15px 40px;
+  }
+
+  &__list {
+    margin-bottom: 20px;
   }
 
   // 枠組み全体 TODO 要レイアウト系の修正
@@ -27,7 +31,7 @@
   }
 
   &__headline {
-    margin: 20px 30px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: row-reverse;
   }

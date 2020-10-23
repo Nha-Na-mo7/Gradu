@@ -13,6 +13,13 @@
     <!--メインレイアウト-->
     <div class="p-accounts__container">
 
+      <!-- リボンタグ -->
+      <div class="c-ribbon">
+
+        <p class="c-ribbon__content c-ribbon__content--left">Twitterアカウント一覧</p>
+        <p class="c-ribbon__content c-ribbon__content--right">最終更新: <span class="c-ribbon__date">2020/12/31 09:00</span> JST</p>
+      </div>
+
       <!-- ヘッドライン -->
       <div class="p-accounts__headline">
 
@@ -31,7 +38,6 @@
 
     </div>
 
-    </div>
   </div>
 
 </template>
@@ -72,14 +78,29 @@ export default {
 </script>
 
 <style scoped>
-.p-accounts__container {
-  background: #f5f6ff;
-  box-shadow: #f5f6ff 0 0 20px;
-  margin-top: 20px;
-  padding: 15px 25px;
+.c-ribbon {
+  height: 40px;
+  width: 100%;
+  color: #FFF;
+  font-size: 20px;
+  margin-bottom: 15px;
+  background: #1d7ebe;
+  border-radius: 4px;
+
+  position: relative;
 }
-.p-accounts__list {
-  margin: 20px 30px;
+.c-ribbon__content {
+  position: absolute;
+  padding: 8px 20px;
+}
+.c-ribbon__content--left {
+  left: 0;
+}
+.c-ribbon__content--right {
+  right: 0;
 }
 
+.c-ribbon__date {
+  font-weight: bold;
+}
 </style>
