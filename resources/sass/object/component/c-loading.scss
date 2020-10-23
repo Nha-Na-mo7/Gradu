@@ -29,8 +29,8 @@
       height: 20%;
 
       // 1秒ごとにループ。
-      -webkit-animation: c-loading__circleFadeDelay 1s ease-in-out infinite both;
-      animation: c-loading__circleFadeDelay 1s ease-in-out infinite both;
+      -webkit-animation: c-loading__circle--fadeout 1s ease-in-out infinite both;
+      animation: c-loading__circle--fadeout 1s ease-in-out infinite both;
     }
 
     // 10個の円があり、時計回りに置かれている。アニメーションの開始を0.1sごとにずらしている
@@ -120,11 +120,11 @@
 }
 
 // 0%~60%にかけて徐々に薄くする。60%~100%の間は表示させない。
-@-webkit-keyframes c-loading__circleFadeDelay {
+@-webkit-keyframes c-loading__circle--fadeout {
   0% { opacity: 1; }
   60%, 100% { opacity: 0; }
 }
-@keyframes c-loading__circleFadeDelay {
+@keyframes c-loading__circle--fadeout {
   0% { opacity: 1; }
   60%, 100% { opacity: 0; }
 }

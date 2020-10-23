@@ -1245,8 +1245,8 @@ main {
   margin: 0 auto;
   width: 20%;
   height: 20%;
-  -webkit-animation: c-loading__circleFadeDelay 1s ease-in-out infinite both;
-  animation: c-loading__circleFadeDelay 1s ease-in-out infinite both;
+  -webkit-animation: c-loading__circle--fadeout 1s ease-in-out infinite both;
+  animation: c-loading__circle--fadeout 1s ease-in-out infinite both;
 }
 
 .c-loading .c-loading__circle--2 {
@@ -1330,7 +1330,7 @@ main {
   animation-delay: -0.1s;
 }
 
-@-webkit-keyframes c-loading__circleFadeDelay {
+@-webkit-keyframes c-loading__circle--fadeout {
   0% {
     opacity: 1;
   }
@@ -1340,7 +1340,7 @@ main {
   }
 }
 
-@keyframes c-loading__circleFadeDelay {
+@keyframes c-loading__circle--fadeout {
   0% {
     opacity: 1;
   }
