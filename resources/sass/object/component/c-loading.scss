@@ -2,45 +2,129 @@
 //  c-loading
 //  =============
 // 検索中・読み込み中・待機中などに表示する、丸をグルグルさせる時のコンポーネント
+// 参考: SpinKitさん
 
-// TODO 全然できていないので修正ください
-.c-loading{
-  font-size: inherit;
+.c-loading {
+  // 表示エリア
+  margin: 40px auto;
+  width: 40px;
+  height: 40px;
+  position: relative;
 
-  width: 20%;
-  height: 20%;
-  position: fixed;
-  display: flex;
-  flex-direction: column;
+  // 表示エリアの左右中央に配置する
+  & .c-loading__circle {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    &:before {
+      background-color: #4FB4D7;
+      border-radius: 50%;
 
-  top: 40%;
-  left: 40%;
-  z-index: 4;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #dedede;
+      content: '';
+      display: inline-block;
+      margin: 0 auto;
+      width: 20%;
+      height: 20%;
 
-  background: #f3ffdc;
+      // 1秒ごとにループ。
+      -webkit-animation: c-loading__circleFadeDelay 1s ease-in-out infinite both;
+      animation: c-loading__circleFadeDelay 1s ease-in-out infinite both;
+    }
 
-  &__message-area {
-    height: 20%;
-    text-align: center;
-    margin: auto 0;
-
-    background: #f66d9b;
-  }
-
-  &__title {
-    font-size: 20px;
-  }
-
-  &__circle{
-    border-radius: 50%;
-    background: #4FB4D7;
-    margin: 0 auto;
-    height: 100px;
-    width: 100px;
-    &__circle-area {
-      height: 70%;
+    // 10個の円があり、時計回りに置かれている。アニメーションの開始を0.1sごとにずらしている
+    // TODO 角度表記はベタ書きで提出するかだけ事前に確認してください
+    &--2 {
+      -webkit-transform: rotate(36deg);
+      -ms-transform: rotate(36deg);
+      transform: rotate(36deg);
+      &:before {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+      }
+    }
+    &--3 {
+      -webkit-transform: rotate(72deg);
+      -ms-transform: rotate(72deg);
+      transform: rotate(72deg);
+      &:before {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+      }
+    }
+    &--4 {
+      -webkit-transform: rotate(108deg);
+      -ms-transform: rotate(108deg);
+      transform: rotate(108deg);
+      &:before {
+        -webkit-animation-delay: -0.7s;
+        animation-delay: -0.7s;
+      }
+    }
+    &--5 {
+      -webkit-transform: rotate(144deg);
+      -ms-transform: rotate(144deg);
+      transform: rotate(144deg);
+      &:before {
+        -webkit-animation-delay: -0.6s;
+        animation-delay: -0.6s;
+      }
+    }
+    &--6 {
+      -webkit-transform: rotate(180deg);
+      -ms-transform: rotate(180deg);
+      transform: rotate(180deg);
+      &:before {
+        -webkit-animation-delay: -0.5s;
+        animation-delay: -0.5s;
+      }
+    }
+    &--7 {
+      -webkit-transform: rotate(216deg);
+      -ms-transform: rotate(216deg);
+      transform: rotate(216deg);
+      &:before {
+        -webkit-animation-delay: -0.4s;
+        animation-delay: -0.4s;
+      }
+    }
+    &--8 {
+      -webkit-transform: rotate(252deg);
+      -ms-transform: rotate(252deg);
+      transform: rotate(252deg);
+      &:before {
+        -webkit-animation-delay: -0.3s;
+        animation-delay: -0.3s;
+      }
+    }
+    &--9 {
+      -webkit-transform: rotate(288deg);
+      -ms-transform: rotate(288deg);
+      transform: rotate(288deg);
+      &:before {
+        -webkit-animation-delay: -0.2s;
+        animation-delay: -0.2s;
+      }
+    }
+    &--10 {
+      -webkit-transform: rotate(324deg);
+      -ms-transform: rotate(324deg);
+      transform: rotate(324deg);
+      &:before {
+        -webkit-animation-delay: -0.1s;
+        animation-delay: -0.1s;
+      }
     }
   }
+}
+
+// 0%~60%にかけて徐々に薄くする。60%~100%の間は表示させない。
+@-webkit-keyframes c-loading__circleFadeDelay {
+  0% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+@keyframes c-loading__circleFadeDelay {
+  0% { opacity: 1; }
+  60%, 100% { opacity: 0; }
 }

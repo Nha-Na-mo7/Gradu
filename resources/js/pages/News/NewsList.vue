@@ -49,7 +49,13 @@
 
       <!-- ニュース一覧 -->
       <div class="p-news__list">
+        <!-- 検索中 -->
+        <div v-if="isSearching" class="">
+          <Loading />
+        </div>
+        <!-- ニュースコンポーネント、検索中は非表示 -->
         <News
+            v-else
             v-for="News in fetchedNews"
             :key="News.id"
             :entry="News"
@@ -59,13 +65,6 @@
       <!-- 記事がない時 -->
       <div v-if="isNothingNews">
         <NothingNews />
-      </div>
-
-      <!-- 検索中 -->
-      <div v-if="isSearching" class="">
-        <Loading
-          :title="searchingWord"
-        />
       </div>
 
     </div>
@@ -81,7 +80,7 @@ import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
 import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
-import { OK , SEARCHING, DEFAULT_SEARCHWORD } from "../../util";
+import { OK ,DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'NEWS';
@@ -109,9 +108,6 @@ export default {
   computed: {
     pageTitle() {
       return PAGE_TITLE;
-    },
-    searchingWord() {
-      return SEARCHING;
     },
     // 検索欄にワードが存在するか
     isExistSearchWord() {

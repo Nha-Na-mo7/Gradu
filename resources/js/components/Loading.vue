@@ -1,32 +1,23 @@
-<!--ローディングはマスクをかけず、円がグルグルするだけに変更するかもしれない-->
+<!--ローディング中や検索中に表示するコンポーネント-->
 
 <template>
-  <div>
-    <!-- 四角い表示画面-->
-    <div class="c-loading">
-
-      <!-- 円がグルグルしているエリア -->
-      <div class="c-loading__circle-area">
-        <span class="c-loading__circle">●</span>
-      </div>
-
-      <!-- メッセージのタイトル(例「検索中」) -->
-      <div class="c-loading__message-area">
-        <p class="c-loading__title">{{ this.title }}</p>
-      </div>
-
-    </div>
+  <div class="c-loading">
+    <span class="c-loading__circle c-loading__circle--1"></span>
+    <span class="c-loading__circle c-loading__circle--2"></span>
+    <span class="c-loading__circle c-loading__circle--3"></span>
+    <span class="c-loading__circle c-loading__circle--4"></span>
+    <span class="c-loading__circle c-loading__circle--5"></span>
+    <span class="c-loading__circle c-loading__circle--6"></span>
+    <span class="c-loading__circle c-loading__circle--7"></span>
+    <span class="c-loading__circle c-loading__circle--8"></span>
+    <span class="c-loading__circle c-loading__circle--9"></span>
+    <span class="c-loading__circle c-loading__circle--10"></span>
   </div>
 </template>
 
 <script>
 export default {
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
+
 }
 </script>
 

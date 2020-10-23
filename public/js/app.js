@@ -2094,18 +2094,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  }
-});
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -2352,8 +2341,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -2371,9 +2358,6 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   computed: {
     pageTitle: function pageTitle() {
       return PAGE_TITLE;
-    },
-    searchingWord: function searchingWord() {
-      return _util__WEBPACK_IMPORTED_MODULE_5__["SEARCHING"];
     },
     // TODO リボンタグ用・最終更新日を1日1回更新していれる、このcomputed自体は削除予定
     today: function today() {
@@ -3296,7 +3280,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -3326,9 +3309,6 @@ var PAGE_TITLE = 'NEWS';
   computed: _objectSpread({
     pageTitle: function pageTitle() {
       return PAGE_TITLE;
-    },
-    searchingWord: function searchingWord() {
-      return _util__WEBPACK_IMPORTED_MODULE_7__["SEARCHING"];
     },
     // 検索欄にワードが存在するか
     isExistSearchWord: function isExistSearchWord() {
@@ -44549,25 +44529,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "c-loading" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "c-loading__message-area" }, [
-        _c("p", { staticClass: "c-loading__title" }, [
-          _vm._v(_vm._s(this.title))
-        ])
-      ])
-    ])
-  ])
+  return _vm._m(0)
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "c-loading__circle-area" }, [
-      _c("span", { staticClass: "c-loading__circle" }, [_vm._v("●")])
+    return _c("div", { staticClass: "c-loading" }, [
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--1" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--2" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--3" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--4" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--5" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--6" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--7" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--8" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--9" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "c-loading__circle c-loading__circle--10" })
     ])
   }
 ]
@@ -44794,14 +44782,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.isSearching
-            ? _c(
-                "div",
-                {},
-                [_c("Loading", { attrs: { title: _vm.searchingWord } })],
-                1
-              )
-            : _vm._e()
+          _vm.isSearching ? _c("div", {}, [_c("Loading")], 1) : _vm._e()
         ],
         1
       )
@@ -45899,22 +45880,17 @@ var render = function() {
         _c(
           "div",
           { staticClass: "p-news__list" },
-          _vm._l(_vm.fetchedNews, function(News) {
-            return _c("News", { key: News.id, attrs: { entry: News } })
-          }),
-          1
+          [
+            _vm.isSearching
+              ? _c("div", {}, [_c("Loading")], 1)
+              : _vm._l(_vm.fetchedNews, function(News) {
+                  return _c("News", { key: News.id, attrs: { entry: News } })
+                })
+          ],
+          2
         ),
         _vm._v(" "),
-        _vm.isNothingNews ? _c("div", [_c("NothingNews")], 1) : _vm._e(),
-        _vm._v(" "),
-        _vm.isSearching
-          ? _c(
-              "div",
-              {},
-              [_c("Loading", { attrs: { title: _vm.searchingWord } })],
-              1
-            )
-          : _vm._e()
+        _vm.isNothingNews ? _c("div", [_c("NothingNews")], 1) : _vm._e()
       ])
     ],
     1
@@ -64939,7 +64915,7 @@ var actions = {}; // ================
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: getCookieValue, isArrayExists, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, LOADING, SEARCHING, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH */
+/*! exports provided: getCookieValue, isArrayExists, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -64952,8 +64928,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNAUTHORIZED", function() { return UNAUTHORIZED; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOADING", function() { return LOADING; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SEARCHING", function() { return SEARCHING; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_SEARCHWORD", function() { return DEFAULT_SEARCHWORD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CURRENCY_ICON_PATH", function() { return CURRENCY_ICON_PATH; });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -65018,8 +64992,6 @@ var UNAUTHORIZED = 419; //認証切れ
 var UNPROCESSABLE_ENTITY = 422; //バリデーションエラー
 
 var INTERNAL_SERVER_ERROR = 500;
-var LOADING = '読み込み中';
-var SEARCHING = '検索中';
 var DEFAULT_SEARCHWORD = '仮想通貨'; // 通貨アイコンのパス。storage/images/currency_svg/xxxxxx.svg
 
 var CURRENCY_ICON_PATH = 'storage/images/currency_svg/';
