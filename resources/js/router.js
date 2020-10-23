@@ -13,6 +13,8 @@ import PassResetForm from './pages/Auths/PassResetForm.vue';
 import NewsList from './pages/News/NewsList.vue';
 // Twitterアカウント一覧
 import AccountList from './pages/AccountLists/AccountList.vue';
+// 仮想通貨人気ツイートランキングページ
+import TrendList from './pages/Trends/TrendList.vue';
 
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
@@ -77,6 +79,19 @@ const routes = [
     path: '/password/reset/:token',
     component: PassResetForm,
     props: true
+  },
+  {
+    path: '/trends',
+    component: TrendList,
+    props: true,
+    beforeEnter(to, from, next) {
+      // 未ログイン状態ならログインチェックに戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
+      }
+    }
   },
   {
     path: '/accounts',

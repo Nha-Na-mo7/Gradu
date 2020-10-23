@@ -3,7 +3,7 @@
     <RouterLink to="/">CryptoTrend(ロゴ)</RouterLink>
     <div class="p-navbar__menu">
       <div class="p-navbar__item">
-        <RouterLink class="c-btn" to="/">トレンド</RouterLink>
+        <RouterLink class="c-btn" to="/trends">トレンド通貨ランキング</RouterLink>
       </div>
       <div class="p-navbar__item">
         <RouterLink class="c-btn" to="/news">ニュース</RouterLink>
