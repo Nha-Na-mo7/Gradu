@@ -1108,6 +1108,34 @@ main {
   padding: 1.5rem;
 }
 
+.c-ribbon {
+  height: 40px;
+  width: 100%;
+  color: #FFF;
+  font-size: 20px;
+  margin-bottom: 15px;
+  background: #1d7ebe;
+  border-radius: 4px;
+  position: relative;
+}
+
+.c-ribbon__content {
+  position: absolute;
+  padding: 8px 20px;
+}
+
+.c-ribbon__content--left {
+  left: 0;
+}
+
+.c-ribbon__content--right {
+  right: 0;
+}
+
+.c-ribbon__date {
+  font-weight: bold;
+}
+
 .tab {
   display: flex;
   list-style: none;

@@ -1,0 +1,35 @@
+// ==============
+//  c-title
+//  =============
+.c-ribbon {
+  height: 40px;
+  width: 100%;
+
+  color: #FFF;
+
+  font-size: 20px;
+
+  margin-bottom: 15px;
+
+  background: #1d7ebe;
+  border-radius: 4px;
+
+  position: relative;
+
+  &__content {
+    position: absolute;
+    padding: 8px 20px;
+
+
+    &--left {
+      left: 0;
+    }
+    &--right {
+      right: 0;
+    }
+  }
+
+  &__date {
+    font-weight: bold;
+  }
+}

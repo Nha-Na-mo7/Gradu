@@ -14,11 +14,10 @@
     <div class="p-accounts__container">
 
       <!-- リボンタグ -->
-      <div class="c-ribbon">
-
-        <p class="c-ribbon__content c-ribbon__content--left">Twitterアカウント一覧</p>
-        <p class="c-ribbon__content c-ribbon__content--right">最終更新: <span class="c-ribbon__date">2020/12/31 09:00</span> JST</p>
-      </div>
+      <Ribbonnav
+          :title='pageTitle'
+          :date='today'
+      />
 
       <!-- ヘッドライン -->
       <div class="p-accounts__headline">
@@ -47,6 +46,7 @@ import Account from './Account.vue';
 import Loading from '../../components/Loading.vue';
 import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
+import Ribbonnav from '../Components/Ribbonnav.vue';
 import { OK , DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
 
@@ -57,12 +57,18 @@ export default {
     pageTitle(){
       return PAGE_TITLE;
     },
+
+    // TODO リボンタグ用・最終更新日を1日1回更新していれる、このcomputed自体は削除予定
+    today() {
+      return new Date();
+    }
   },
   components: {
     Account,
     Loading,
     SiteLinknav,
-    PageTitle
+    PageTitle,
+    Ribbonnav
   },
   // watch: {
   //   $route: {
@@ -78,29 +84,5 @@ export default {
 </script>
 
 <style scoped>
-.c-ribbon {
-  height: 40px;
-  width: 100%;
-  color: #FFF;
-  font-size: 20px;
-  margin-bottom: 15px;
-  background: #1d7ebe;
-  border-radius: 4px;
 
-  position: relative;
-}
-.c-ribbon__content {
-  position: absolute;
-  padding: 8px 20px;
-}
-.c-ribbon__content--left {
-  left: 0;
-}
-.c-ribbon__content--right {
-  right: 0;
-}
-
-.c-ribbon__date {
-  font-weight: bold;
-}
 </style>
