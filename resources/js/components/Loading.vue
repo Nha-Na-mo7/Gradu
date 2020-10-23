@@ -45,6 +45,9 @@ export default {
   z-index: 4;
   border-radius: 10px;
   box-shadow: 0 0 15px #dedede;
+
+  background: #f3ffdc;
+
 }
 .c-loading__message-area {
   height: 20%;
@@ -58,7 +61,6 @@ export default {
 .c-loading__circle-area {
   height: 70%;
   padding: 0 10%;
-  background: #ffffff;
 }
 .c-loading__circle{
   border-radius: 25px;

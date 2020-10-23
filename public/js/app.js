@@ -2349,6 +2349,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2358,9 +2365,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var PAGE_TITLE = '仮想通貨アカウント一覧';
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      isSearching: false
+    };
+  },
   computed: {
     pageTitle: function pageTitle() {
       return PAGE_TITLE;
+    },
+    searchingWord: function searchingWord() {
+      return _util__WEBPACK_IMPORTED_MODULE_5__["SEARCHING"];
     },
     // TODO リボンタグ用・最終更新日を1日1回更新していれる、このcomputed自体は削除予定
     today: function today() {
@@ -3714,7 +3729,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.c-loading[data-v-6ca9e6be]{\n  width: 20%;\n  height: 20%;\n  position: fixed;\n  display: flex;\n  flex-direction: column;\n\n  top: 40%;\n  left: 40%;\n  z-index: 4;\n  border-radius: 10px;\n  box-shadow: 0 0 15px #dedede;\n}\n.c-loading__message-area[data-v-6ca9e6be] {\n  height: 20%;\n  text-align: center;\n  margin: auto 0;\n}\n.c-loading__title[data-v-6ca9e6be] {\n  font-size: 20px;\n}\n.c-loading__circle-area[data-v-6ca9e6be] {\n  height: 70%;\n  padding: 0 10%;\n  background: #ffffff;\n}\n.c-loading__circle[data-v-6ca9e6be]{\n  border-radius: 25px;\n  background: #4FB4D7;\n  margin: 0 auto;\n  height: 80px;\n  width: 80px;\n}\n.c-loading__cover[data-v-6ca9e6be] {\n  transition: .1s all;\n  width: 100%;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 5;\n  opacity: 0.1;\n  background: #000000;\n}\n", ""]);
+exports.push([module.i, "\n.c-loading[data-v-6ca9e6be]{\n  width: 20%;\n  height: 20%;\n  position: fixed;\n  display: flex;\n  flex-direction: column;\n\n  top: 40%;\n  left: 40%;\n  z-index: 4;\n  border-radius: 10px;\n  box-shadow: 0 0 15px #dedede;\n\n  background: #f3ffdc;\n}\n.c-loading__message-area[data-v-6ca9e6be] {\n  height: 20%;\n  text-align: center;\n  margin: auto 0;\n}\n.c-loading__title[data-v-6ca9e6be] {\n  font-size: 20px;\n}\n.c-loading__circle-area[data-v-6ca9e6be] {\n  height: 70%;\n  padding: 0 10%;\n}\n.c-loading__circle[data-v-6ca9e6be]{\n  border-radius: 25px;\n  background: #4FB4D7;\n  margin: 0 auto;\n  height: 80px;\n  width: 80px;\n}\n.c-loading__cover[data-v-6ca9e6be] {\n  transition: .1s all;\n  width: 100%;\n  height: 100vh;\n  position: fixed;\n  top: 0;\n  left: 0;\n  z-index: 5;\n  opacity: 0.1;\n  background: #000000;\n}\n", ""]);
 
 // exports
 
@@ -44830,7 +44845,16 @@ var render = function() {
               _c("Account")
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _vm.isSearching
+            ? _c(
+                "div",
+                {},
+                [_c("Loading", { attrs: { title: _vm.searchingWord } })],
+                1
+              )
+            : _vm._e()
         ],
         1
       )
