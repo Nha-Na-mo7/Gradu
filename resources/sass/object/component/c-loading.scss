@@ -1,0 +1,46 @@
+// ==============
+//  c-loading
+//  =============
+// 検索中・読み込み中・待機中などに表示する、丸をグルグルさせる時のコンポーネント
+
+// TODO 全然できていないので修正ください
+.c-loading{
+  font-size: inherit;
+
+  width: 20%;
+  height: 20%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+
+  top: 40%;
+  left: 40%;
+  z-index: 4;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #dedede;
+
+  background: #f3ffdc;
+
+  &__message-area {
+    height: 20%;
+    text-align: center;
+    margin: auto 0;
+
+    background: #f66d9b;
+  }
+
+  &__title {
+    font-size: 20px;
+  }
+
+  &__circle{
+    border-radius: 50%;
+    background: #4FB4D7;
+    margin: 0 auto;
+    height: 100px;
+    width: 100px;
+    &__circle-area {
+      height: 70%;
+    }
+  }
+}
