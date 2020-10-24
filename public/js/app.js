@@ -44515,11 +44515,9 @@ var render = function() {
           "div",
           { staticClass: "p-navbar__item" },
           [
-            _c(
-              "RouterLink",
-              { staticClass: "c-btn", attrs: { to: "/trends" } },
-              [_vm._v("トレンド通貨ランキング")]
-            )
+            _c("RouterLink", { attrs: { to: "/trends" } }, [
+              _vm._v("トレンド通貨ランキング")
+            ])
           ],
           1
         ),
@@ -44527,9 +44525,16 @@ var render = function() {
         _c(
           "div",
           { staticClass: "p-navbar__item" },
+          [_c("RouterLink", { attrs: { to: "/news" } }, [_vm._v("ニュース")])],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "p-navbar__item" },
           [
-            _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/news" } }, [
-              _vm._v("ニュース")
+            _c("RouterLink", { attrs: { to: "/accounts" } }, [
+              _vm._v("Twitterアカウント一覧")
             ])
           ],
           1
@@ -44539,44 +44544,25 @@ var render = function() {
           "div",
           { staticClass: "p-navbar__item" },
           [
-            _c(
-              "RouterLink",
-              { staticClass: "c-btn", attrs: { to: "/accounts" } },
-              [_vm._v("Twitterアカウント一覧")]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "p-navbar__item" },
-          [
-            _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
-              _vm._v("アカウント設定")
-            ])
+            _c("RouterLink", { attrs: { to: "/" } }, [_vm._v("アカウント設定")])
           ],
           1
         ),
         _vm._v(" "),
         _vm.isLogin
           ? _c("div", { staticClass: "p-navbar__item" }, [
-              _c(
-                "button",
-                { staticClass: "c-btn", on: { click: _vm.logout } },
-                [_vm._v("ログアウト")]
-              )
+              _c("button", { on: { click: _vm.logout } }, [
+                _vm._v("ログアウト")
+              ])
             ])
           : _c("div", [
               _c(
                 "div",
                 { staticClass: "p-navbar__item" },
                 [
-                  _c(
-                    "RouterLink",
-                    { staticClass: "c-btn", attrs: { to: "/login" } },
-                    [_vm._v("ログイン")]
-                  )
+                  _c("RouterLink", { attrs: { to: "/login" } }, [
+                    _vm._v("ログイン")
+                  ])
                 ],
                 1
               ),
@@ -44585,11 +44571,9 @@ var render = function() {
                 "div",
                 { staticClass: "p-navbar__item" },
                 [
-                  _c(
-                    "RouterLink",
-                    { staticClass: "c-btn", attrs: { to: "/register" } },
-                    [_vm._v("新規登録")]
-                  )
+                  _c("RouterLink", { attrs: { to: "/register" } }, [
+                    _vm._v("新規登録")
+                  ])
                 ],
                 1
               )

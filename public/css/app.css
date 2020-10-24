@@ -580,6 +580,7 @@ main {
   position: fixed;
   z-index: 3;
   top: 0;
+  padding: 0;
 }
 
 .l-footer {
@@ -713,7 +714,7 @@ main {
 
 .p-navbar {
   width: 100%;
-  height: 64px;
+  height: 50px;
   background: #ecf0f1;
   display: flex;
   justify-content: space-between;
@@ -725,6 +726,28 @@ main {
   display: flex;
   justify-content: right;
   flex-wrap: nowrap;
+}
+
+.p-navbar__item {
+  cursor: pointer;
+  padding: 0 10px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  line-height: 150%;
+  position: relative;
+  font-size: 15px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+  transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  color: #08246e;
+}
+
+.p-navbar__item:hover {
+  background: #d9deef;
 }
 
 .p-footer {
@@ -1049,24 +1072,21 @@ main {
 }
 
 .c-btn {
-  border-radius: 4px;
   cursor: pointer;
+  text-decoration: none;
   display: inline-block;
   font-family: inherit;
-  font-weight: bold;
   line-height: 1;
   padding: 10px 50px;
-  text-decoration: none;
   transition: all 0.5s;
   -moz-transition: all 0.5s;
   -webkit-transition: all 0.5s;
   color: #f1f1f1;
-  border: 1px solid #50cdcd;
-  background: #8a92b2;
+  background: #6c84f3;
 }
 
 .c-btn:hover {
-  background: #6da099;
+  background: #7eb1d6;
 }
 
 .c-btn--link {
@@ -1426,7 +1446,7 @@ main {
 .c-site__link-nav {
   font-weight: bold;
   margin-left: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   text-shadow: #dedede 0 2px 2px;
 }
 
