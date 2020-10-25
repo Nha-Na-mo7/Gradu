@@ -19,11 +19,23 @@
           :date='today'
       />
 
-      <!-- ヘッドライン -->
-
-      <!-- 検索中 -->
-      <div v-if="isSearching" class="">
-        <Loading />
+      <!-- ランキング -->
+      <div class="p-news__list">
+        <!-- 検索中 -->
+        <div v-if="isSearching" class="">
+          <Loading />
+        </div>
+        <!-- ランキングパネル -->
+<!--        <News-->
+<!--            v-else-->
+<!--            v-for="News in fetchedNews"-->
+<!--            :key="News.id"-->
+<!--            :entry="News"-->
+<!--        />-->
+        <Ranking />
+        <Ranking />
+        <Ranking />
+        
       </div>
 
     </div>
@@ -37,6 +49,7 @@ import Loading from '../../components/Loading.vue';
 import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Ribbonnav from '../Components/Ribbonnav.vue';
+import Ranking from './Ranking.vue';
 import { OK } from "../../util";
 import { mapState } from 'vuex';
 
@@ -61,7 +74,8 @@ export default {
     Loading,
     SiteLinknav,
     PageTitle,
-    Ribbonnav
+    Ribbonnav,
+    Ranking
   },
   // watch: {
   //   $route: {

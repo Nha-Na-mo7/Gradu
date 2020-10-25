@@ -3688,6 +3688,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Trends/Ranking.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Trends/Ranking.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Ranking.vue"
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Trends/TrendList.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Trends/TrendList.vue?vue&type=script&lang=js& ***!
@@ -3701,8 +3739,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/SiteLinknav.vue */ "./resources/js/pages/Components/SiteLinknav.vue");
 /* harmony import */ var _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Components/PageTitle.vue */ "./resources/js/pages/Components/PageTitle.vue");
 /* harmony import */ var _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/Ribbonnav.vue */ "./resources/js/pages/Components/Ribbonnav.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _Ranking_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Ranking.vue */ "./resources/js/pages/Trends/Ranking.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -3737,6 +3776,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -3763,7 +3815,8 @@ var PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
     Loading: _components_Loading_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     SiteLinknav: _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     PageTitle: _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Ribbonnav: _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    Ribbonnav: _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Ranking: _Ranking_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   } // watch: {
   //   $route: {
   //     async handler() {
@@ -46214,6 +46267,53 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Trends/Ranking.vue?vue&type=template&id=6e7588c6&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Trends/Ranking.vue?vue&type=template&id=6e7588c6&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-news__item" }, [
+      _c("div", { staticClass: "p-news__item--picture" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-news__item--title" }, [
+        _c("h2", {}, [_vm._v("行き過ぎぃ")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-news__item--data" }, [
+        _c("div", { staticClass: "p-news__item--time" }, [
+          _c("p", [_vm._v("んほー")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "p-news__item--media" }, [
+          _c("p", [_vm._v("んほー")])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Trends/TrendList.vue?vue&type=template&id=5429d82a&scoped=true&":
 /*!**************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Trends/TrendList.vue?vue&type=template&id=5429d82a&scoped=true& ***!
@@ -46243,7 +46343,20 @@ var render = function() {
         [
           _c("Ribbonnav", { attrs: { title: _vm.pageTitle, date: _vm.today } }),
           _vm._v(" "),
-          _vm.isSearching ? _c("div", {}, [_c("Loading")], 1) : _vm._e()
+          _c(
+            "div",
+            { staticClass: "p-news__list" },
+            [
+              _vm.isSearching ? _c("div", {}, [_c("Loading")], 1) : _vm._e(),
+              _vm._v(" "),
+              _c("Ranking"),
+              _vm._v(" "),
+              _c("Ranking"),
+              _vm._v(" "),
+              _c("Ranking")
+            ],
+            1
+          )
         ],
         1
       )
@@ -64289,6 +64402,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchModal_vue_vue_type_template_id_0555f592_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SearchModal_vue_vue_type_template_id_0555f592_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/Trends/Ranking.vue":
+/*!***********************************************!*\
+  !*** ./resources/js/pages/Trends/Ranking.vue ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Ranking_vue_vue_type_template_id_6e7588c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Ranking.vue?vue&type=template&id=6e7588c6&scoped=true& */ "./resources/js/pages/Trends/Ranking.vue?vue&type=template&id=6e7588c6&scoped=true&");
+/* harmony import */ var _Ranking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Ranking.vue?vue&type=script&lang=js& */ "./resources/js/pages/Trends/Ranking.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Ranking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Ranking_vue_vue_type_template_id_6e7588c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Ranking_vue_vue_type_template_id_6e7588c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "6e7588c6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/Trends/Ranking.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Trends/Ranking.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./resources/js/pages/Trends/Ranking.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ranking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ranking.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Trends/Ranking.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Ranking_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Trends/Ranking.vue?vue&type=template&id=6e7588c6&scoped=true&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/Trends/Ranking.vue?vue&type=template&id=6e7588c6&scoped=true& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ranking_vue_vue_type_template_id_6e7588c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Ranking.vue?vue&type=template&id=6e7588c6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Trends/Ranking.vue?vue&type=template&id=6e7588c6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ranking_vue_vue_type_template_id_6e7588c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Ranking_vue_vue_type_template_id_6e7588c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
