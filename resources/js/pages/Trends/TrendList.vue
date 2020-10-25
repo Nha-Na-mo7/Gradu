@@ -20,7 +20,7 @@
       />
 
       <!-- ランキング -->
-      <div class="p-news__list">
+      <div class="p-trends__list">
         <!-- 検索中 -->
         <div v-if="isSearching" class="">
           <Loading />
@@ -35,7 +35,7 @@
         <Ranking />
         <Ranking />
         <Ranking />
-        
+
       </div>
 
     </div>
