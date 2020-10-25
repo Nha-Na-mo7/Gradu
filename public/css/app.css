@@ -584,10 +584,6 @@ main {
 }
 
 .l-footer {
-  align-items: center;
-  display: flex;
-  height: 180px;
-  justify-content: center;
   margin-top: auto;
 }
 
