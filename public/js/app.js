@@ -2146,6 +2146,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Footer.vue"
 });
@@ -44692,9 +44706,56 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("h1", [_vm._v("Footer")])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "p-footer__main" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-footer__item" }, [
+        _c("h4", [_vm._v("サービス")]),
+        _vm._v(" "),
+        _c("ul", { staticClass: "p-footer__menus" }, [
+          _c(
+            "li",
+            [
+              _c("RouterLink", { attrs: { to: "/trends" } }, [
+                _vm._v("トレンド通貨ランキング")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            [
+              _c("RouterLink", { attrs: { to: "/news" } }, [_vm._v("ニュース")])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "li",
+            [
+              _c("RouterLink", { attrs: { to: "/accounts" } }, [
+                _vm._v("Twitterアカウント一覧")
+              ])
+            ],
+            1
+          )
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-footer__item" }, [
+      _c("a", { attrs: { href: "" } }, [_vm._v("ロゴマーク")])
+    ])
+  }
+]
 render._withStripped = true
 
 
