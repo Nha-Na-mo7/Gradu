@@ -2032,8 +2032,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
@@ -44555,29 +44553,29 @@ var render = function() {
                 _vm._v("ログアウト")
               ])
             ])
-          : _c("div", [
-              _c(
-                "div",
-                { staticClass: "p-navbar__item" },
-                [
-                  _c("RouterLink", { attrs: { to: "/login" } }, [
-                    _vm._v("ログイン")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "p-navbar__item" },
-                [
-                  _c("RouterLink", { attrs: { to: "/register" } }, [
-                    _vm._v("新規登録")
-                  ])
-                ],
-                1
-              )
-            ])
+          : _c(
+              "div",
+              { staticClass: "p-navbar__item" },
+              [
+                _c("RouterLink", { attrs: { to: "/login" } }, [
+                  _vm._v("ログイン")
+                ])
+              ],
+              1
+            ),
+        _vm._v(" "),
+        !_vm.isLogin
+          ? _c(
+              "div",
+              { staticClass: "p-navbar__item" },
+              [
+                _c("RouterLink", { attrs: { to: "/register" } }, [
+                  _vm._v("新規登録")
+                ])
+              ],
+              1
+            )
+          : _vm._e()
       ])
     ],
     1

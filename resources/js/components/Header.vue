@@ -17,13 +17,11 @@
       <div class="p-navbar__item" v-if="isLogin">
         <button class="" @click="logout">ログアウト</button>
       </div>
-      <div v-else>
-        <div class="p-navbar__item">
-          <RouterLink class="" to="/login">ログイン</RouterLink>
-        </div>
-        <div class="p-navbar__item">
-          <RouterLink class="" to="/register">新規登録</RouterLink>
-        </div>
+      <div class="p-navbar__item" v-else>
+        <RouterLink class="" to="/login">ログイン</RouterLink>
+      </div>
+      <div class="p-navbar__item" v-if="!isLogin">
+        <RouterLink class="" to="/register">新規登録</RouterLink>
       </div>
     </div>
   </nav>
