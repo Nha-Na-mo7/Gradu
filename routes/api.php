@@ -48,14 +48,22 @@ Route::get('/brand', 'BrandController@get_brands')->name('get_brands');
 Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.brandid');
 
 
-// ======================
-// TwitterAccount一覧関連
-// ======================
+// ===============
+// Twitter関連
+// ===============
+// 該当のTwitterアカウントを取得する
+Route::get('/accounts/get', 'TwitterController@get_accounts')->name('get_accounts');
+// 指定したTwitterアカウントをフォローする
+// Route::get('/accounts/get', 'TwitterController@')->name('');
+// 指定したTwitterアカウントのフォローを外す
+// Route::get('/accounts/get', 'TwitterController@')->name('');
+// Twitterアカウントの自動フォローを開始する
 
 
 // ===============
 // GoogleNews関連
 // ===============
+// 指定したワードでGoogleNewsAPIを使用し、ニュースを取得する
 Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 
 
