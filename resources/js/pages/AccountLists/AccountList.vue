@@ -60,7 +60,8 @@ const PAGE_TITLE = '仮想通貨アカウント一覧';
 export default {
   data() {
     return {
-      isSearching: false
+      isSearching: false, // 検索中か
+      isNothingAccounts: false // 検索した結果アカウントが見つからなかったか
     }
   },
   computed: {
@@ -79,6 +80,47 @@ export default {
     PageTitle,
     Ribbonnav
   },
+  methods: {
+    // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
+    async fetch_TwitterAccounts() {
+
+      // 検索中には呼び出せないようにする
+      if(this.isSearching) {
+        return false;
+      }
+
+      // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
+      this.isSearching = true;
+      this.isNothingAccounts = false;
+
+      // 検索ワードをマージさせる(必要？)
+      // this.margeSearchWords;
+
+      // APIにアクセス
+      const params = this.searchData;
+      const response = await axios.get(`/api/news/get`, { params });
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status)
+        return false
+      }
+
+      // レスポンスの結果を変数に格納
+      this.fetchedAccounts = response.data;
+
+      // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
+      if(!this.fetchedAccounts.length) {
+        this.isNothingNews = true;
+      }
+      // 検索終了、isSearchingをfalseに戻す
+      this.isSearching = false;
+
+      // ステータス番号を返す
+      return response.status;
+    },
+
+  }
   // watch: {
   //   $route: {
   //     async handler() {
