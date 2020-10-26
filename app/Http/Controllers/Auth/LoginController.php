@@ -64,11 +64,18 @@ class LoginController extends Controller
     // Twitterコールバック
     // ===================
     // Twitterログイン後にでTwitterAPI側から帰ってくる情報たち。
+    // Twitterアクセストークンもここで取得する
     public function handleTwitterProviderCallback(){
       
       // twitterアプリ側から返ってきた情報を取得する
       try {
-        $user = Socialite::with("twitter")->user();
+        $twitter_user = Socialite::with("twitter")->user();
+        // アクセストークンの取得
+        $token = $twitter_user->token;
+        $token_secret = $twitter_user->tokenSecret;
+        
+        
+        
       }
       catch (\Exception $e) {
         // エラーならログイン画面へ戻す
@@ -79,8 +86,12 @@ class LoginController extends Controller
       // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
       // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
       // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
-      $myinfo = User::firstOrCreate(['token' => $user->token ],
-          ['name' => $user->nickname,'email' => $user->getEmail()]);
+      $myinfo = User::firstOrCreate(
+          ['token' => $twitter_user->token ],
+          [
+              'name' => $twitter_user->nickname,
+              'email' => $twitter_user->getEmail()
+          ]);
       Auth::login($myinfo);
   
       /* TODO:  新規ユーザーの登録について

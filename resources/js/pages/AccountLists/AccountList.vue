@@ -22,6 +22,7 @@
       <!-- ヘッドライン -->
       <div class="p-accounts__headline">
 
+        <button class="c-btn" @click="fetch_TwitterAccounts">サーチ！</button>
         <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">
           <button class="c-btn c-btn__main c-btn--primary">自動フォロー</button>
@@ -61,7 +62,11 @@ export default {
   data() {
     return {
       isSearching: false, // 検索中か
-      isNothingAccounts: false // 検索した結果アカウントが見つからなかったか
+      isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
+      fetchedAccounts: [],
+      searchData: {
+        keywords: '仮想通貨'
+      }
     }
   },
   computed: {
@@ -93,12 +98,9 @@ export default {
       this.isSearching = true;
       this.isNothingAccounts = false;
 
-      // 検索ワードをマージさせる(必要？)
-      // this.margeSearchWords;
-
       // APIにアクセス
       const params = this.searchData;
-      const response = await axios.get(`/api/news/get`, { params });
+      const response = await axios.get(`/api/twitter/index`, { params });
 
       // エラー時
       if (response.status !== OK) {
@@ -108,6 +110,7 @@ export default {
 
       // レスポンスの結果を変数に格納
       this.fetchedAccounts = response.data;
+      console.log(this.fetchedAccounts)
 
       // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
       if(!this.fetchedAccounts.length) {
@@ -119,7 +122,6 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
-
   }
   // watch: {
   //   $route: {

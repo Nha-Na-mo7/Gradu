@@ -2378,6 +2378,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2391,8 +2392,12 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     return {
       isSearching: false,
       // 検索中か
-      isNothingAccounts: false // 検索した結果アカウントが見つからなかったか
-
+      isNothingAccounts: false,
+      // 検索した結果アカウントが見つからなかったか
+      fetchedAccounts: [],
+      searchData: {
+        keywords: '仮想通貨'
+      }
     };
   },
   computed: {
@@ -2432,13 +2437,11 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
               case 2:
                 // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
                 _this.isSearching = true;
-                _this.isNothingAccounts = false; // 検索ワードをマージさせる(必要？)
-                // this.margeSearchWords;
-                // APIにアクセス
+                _this.isNothingAccounts = false; // APIにアクセス
 
                 params = _this.searchData;
                 _context.next = 7;
-                return axios.get("/api/news/get", {
+                return axios.get("/api/twitter/index", {
                   params: params
                 });
 
@@ -2456,7 +2459,8 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
               case 11:
                 // レスポンスの結果を変数に格納
-                _this.fetchedAccounts = response.data; // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
+                _this.fetchedAccounts = response.data;
+                console.log(_this.fetchedAccounts); // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
 
                 if (!_this.fetchedAccounts.length) {
                   _this.isNothingNews = true;
@@ -2467,7 +2471,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context.abrupt("return", response.status);
 
-              case 15:
+              case 16:
               case "end":
                 return _context.stop();
             }
@@ -45208,7 +45212,18 @@ var render = function() {
         [
           _c("Ribbonnav", { attrs: { title: _vm.pageTitle, date: _vm.today } }),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "p-accounts__headline" }, [
+            _c(
+              "button",
+              {
+                staticClass: "c-btn",
+                on: { click: _vm.fetch_TwitterAccounts }
+              },
+              [_vm._v("サーチ！")]
+            ),
+            _vm._v(" "),
+            _vm._m(0)
+          ]),
           _vm._v(" "),
           _c(
             "div",
@@ -45236,11 +45251,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-accounts__headline" }, [
-      _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
-        _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
-          _vm._v("自動フォロー")
-        ])
+    return _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
+      _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
+        _vm._v("自動フォロー")
       ])
     ])
   }

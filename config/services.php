@@ -30,10 +30,12 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     
-    // Twitter認証用に追加。.envから情報を拾うように.envにも設定
+    // Twitter用に追加。.envから情報を拾うように.envにも設定
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
+        'access_token' => env('TWITTER_ACCESS_TOKEN'),
+        'access_token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET'),
         'redirect' => env('CALLBACK_URL')
     ],
 
