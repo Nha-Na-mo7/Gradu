@@ -51,13 +51,23 @@ class TwitterController extends Controller
       
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
       
-      // TwitterAPIにリクエストを投げる
+      // TwitterAPIにリクエストを投げ、情報を取得する
       // q:必須/検索キーワード
       // page:取得する結果のページを指定します。
       // count:ページごとに取得するユーザー結果の数。（最大値は20）
       // include_entities:entitiesの取得を省略
       $twitterRequest = $connection->get('users/search', array( "q" => $query, "count" => 20));
+  
+      // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)
+      // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
+      foreach($twitterRequest as $res){
+        $image = $res->profile_image_url_https;
+        $fullImg = str_replace('_normal', '', $image);
+        $res->full_img = $fullImg;
+        $twitterRes[] = $res;
+      }
       
+      // Vueファイルにデータを返すのでJSON形式
       return response()->json(['result'=>$twitterRequest], 200);
     }
 
