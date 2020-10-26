@@ -80,7 +80,7 @@
         <!-- 取得したツイートと日付 -->
         <div class="item-4 p-accounts__tweet--data">
           <p>{{ this.account_text }}</p>
-          <span>{{ this.account_text_created_at }}</span>
+          <span>{{ this.account_text_created_at | newTweet }}</span>
         </div>
 
       </div>
@@ -92,6 +92,8 @@
 </template>
 
 <script>
+
+import moment from "moment";
 
 export default {
   props: {
@@ -113,16 +115,12 @@ export default {
     account_text_created_at() {
       return this.account.status.created_at;
     },
+  },
+  filters: {
+    newTweet: function (date) {
+      return moment(date).format('YYYY-MM-DD HH:mm:ss')
+    }
   }
-  // watch: {
-  //   $route: {
-  //     async handler() {
-  //       // ページの読み込み直後にもニュース取得を行う
-  //       // await this.getTime
-  //     },
-  //     immediate: true
-  //   }
-  // },
 }
 </script>
 

@@ -2192,6 +2192,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2285,6 +2287,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     account: {
@@ -2305,16 +2308,12 @@ __webpack_require__.r(__webpack_exports__);
     account_text_created_at: function account_text_created_at() {
       return this.account.status.created_at;
     }
-  } // watch: {
-  //   $route: {
-  //     async handler() {
-  //       // ページの読み込み直後にもニュース取得を行う
-  //       // await this.getTime
-  //     },
-  //     immediate: true
-  //   }
-  // },
-
+  },
+  filters: {
+    newTweet: function newTweet(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY-MM-DD HH:mm:ss');
+    }
+  }
 });
 
 /***/ }),
@@ -45188,7 +45187,9 @@ var render = function() {
         _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
           _c("p", [_vm._v(_vm._s(this.account_text))]),
           _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(this.account_text_created_at))])
+          _c("span", [
+            _vm._v(_vm._s(_vm._f("newTweet")(this.account_text_created_at)))
+          ])
         ])
       ])
     ])
