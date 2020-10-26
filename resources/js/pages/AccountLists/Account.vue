@@ -13,8 +13,10 @@
     <!-- サムネイル表示エリア、縦に長く、他のコンテンツは設置しない -->
     <div class="item-2 item2-left p-accounts__left-side">
       <div class="item-3 p-accounts__icon--area">
-        <div class="p-accounts__icon"></div>
-        <!--<img src="" alt="サムネホイホイ">-->
+        <img
+            class="p-accounts__icon"
+            :src="account.profile_image_url_https"
+            alt="picture">
       </div>
     </div>
 
@@ -29,40 +31,37 @@
           <div class="item-5 p-accounts__profile">
             <div class="item-6 p-accounts__profile--nickname">
 <!--              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国</p>-->
-              <p>草</p>
+              <p>{{ account.name }}</p>
             </div>
             <div class="item-6 p-accounts__profile--username">
-              <p>@oaijgoaja9494293</p>
+              <p>{{ this.screen_name }}</p>
             </div>
           </div>
 
           <div class="item-5 p-accounts__profile--description">
-            <p>
-              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から
-              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web
-              アプリを開発中/自動車メカエンジニアからITエンジニアに転身
-<!--              三浦鈴木-->
-            </p>
+            <p>{{ account.description }}</p>
           </div>
         </div>
 
         <!-- フォローボタンとFF数のエリア -->
         <div class="item-4 p-accounts__follow--area">
 
-          <!-- フォローボタン -->
+          <!-- フォローボタンエリア、そのユーザーがTwitterアカウントを連携していない場合非表示 -->
           <div class="item-5 p-accounts__follow-btn--area">
-            <button class="c-btn">フォロ</button>
+            <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
+            <button class="c-btn" v-if="isFollowing">フォロー中</button>
+            <button class="c-btn" v-else>フォロー</button>
           </div>
 
           <!-- FF数 -->
           <div class="item-5 p-accounts__ff--area">
 
             <div class="item-6 p-accounts__ff--item">
-              <div class="item-7 p-accounts__ff--count"><p>777</p></div>
+              <div class="item-7 p-accounts__ff--count"><p>{{ account.friends_count }}</p></div>
               <div class="item-7 p-accounts__ff--title"><p>フォロー中</p></div>
             </div>
             <div class="item-6 p-accounts__ff--item">
-              <div class="item-7 p-accounts__ff--count"><p>999999</p></div>
+              <div class="item-7 p-accounts__ff--count"><p>{{ account.followers_count }}</p></div>
               <div class="item-7 p-accounts__ff--title"><p>フォロワー</p></div>
             </div>
 
@@ -80,15 +79,8 @@
 
         <!-- 取得したツイートと日付 -->
         <div class="item-4 p-accounts__tweet--data">
-          <p>キリトかなーやっぱりww
-自分は思わないんだけど周りにキリトに似てるってよく言われるwww
-こないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww
-ちなみに彼女もアスナに似てる(聞いてないw)
-
-F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！
-          </p>
-<!--          <p>キリトかなーやっぱりww</p>-->
-<!--          <span>20/08/10 11:45:14</span>-->
+          <p>{{ this.account_text }}</p>
+          <span>{{ this.account_text_created_at }}</span>
         </div>
 
       </div>
@@ -102,6 +94,26 @@ F外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！
 <script>
 
 export default {
+  props: {
+    account: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    screen_name() {
+      return '@' +  this.account.screen_name;
+    },
+    isFollowing() {
+      return this.account.following;
+    },
+    account_text() {
+      return this.account.status.text;
+    },
+    account_text_created_at() {
+      return this.account.status.created_at;
+    },
+  }
   // watch: {
   //   $route: {
   //     async handler() {

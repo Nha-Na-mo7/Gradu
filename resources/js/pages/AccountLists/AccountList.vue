@@ -21,8 +21,6 @@
 
       <!-- ヘッドライン -->
       <div class="p-accounts__headline">
-
-        <button class="c-btn" @click="fetch_TwitterAccounts">サーチ！</button>
         <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">
           <button class="c-btn c-btn__main c-btn--primary">自動フォロー</button>
@@ -31,15 +29,19 @@
 
       <!-- アカウントリスト -->
       <div class="p-accounts__list">
-        <Account />
-        <Account />
-        <Account />
+        <!-- 検索中 -->
+        <div v-if="isSearching" class="">
+          <Loading />
+        </div>
+        <!-- アカウント -->
+        <Account
+            v-else
+            v-for="Accounts in fetchedAccounts"
+            :key="Accounts.id"
+            :account="Accounts"
+        />
       </div>
 
-      <!-- 検索中 -->
-      <div v-if="isSearching" class="">
-        <Loading />
-      </div>
 
     </div>
 
@@ -109,8 +111,14 @@ export default {
       }
 
       // レスポンスの結果を変数に格納
-      this.fetchedAccounts = response.data;
-      console.log(this.fetchedAccounts)
+      // TwitterAPIは配列で返してくるので、オブジェクト形式に変更
+      const res = {};
+      for(let i = 0, l = response.data.result.length; i < l; i += 1) {
+        const data = response.data.result[i];
+        res[data.id] = data;
+      }
+      this.fetchedAccounts = res;
+      // console.log(this.fetchedAccounts)
 
       // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
       if(!this.fetchedAccounts.length) {
@@ -122,16 +130,16 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
+  },
+  watch: {
+    $route: {
+      async handler() {
+        // ページの読み込み直後、Twitterアカウント一覧を取得
+        await this.fetch_TwitterAccounts();
+      },
+      immediate: true
+    }
   }
-  // watch: {
-  //   $route: {
-  //     async handler() {
-  //       // ページの読み込み直後、Twitterアカウント一覧を取得
-  //       await this.fetch_TwitterAccount();
-  //     },
-  //     immediate: true
-  //   }
-  // }
 
 }
 </script>

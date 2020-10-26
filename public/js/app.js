@@ -2285,15 +2285,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({// watch: {
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    account: {
+      type: Object,
+      required: true
+    }
+  },
+  computed: {
+    screen_name: function screen_name() {
+      return '@' + this.account.screen_name;
+    },
+    isFollowing: function isFollowing() {
+      return this.account.following;
+    },
+    account_text: function account_text() {
+      return this.account.status.text;
+    },
+    account_text_created_at: function account_text_created_at() {
+      return this.account.status.created_at;
+    }
+  } // watch: {
   //   $route: {
   //     async handler() {
   //       // ページの読み込み直後にもニュース取得を行う
@@ -2302,6 +2314,7 @@ __webpack_require__.r(__webpack_exports__);
   //     immediate: true
   //   }
   // },
+
 });
 
 /***/ }),
@@ -2330,6 +2343,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -2422,7 +2437,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var params, response;
+        var params, response, res, i, l, data;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2459,8 +2474,16 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
               case 11:
                 // レスポンスの結果を変数に格納
-                _this.fetchedAccounts = response.data;
-                console.log(_this.fetchedAccounts); // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
+                // TwitterAPIは配列で返してくるので、オブジェクト形式に変更
+                res = {};
+
+                for (i = 0, l = response.data.result.length; i < l; i += 1) {
+                  data = response.data.result[i];
+                  res[data.id] = data;
+                }
+
+                _this.fetchedAccounts = res; // console.log(this.fetchedAccounts)
+                // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
 
                 if (!_this.fetchedAccounts.length) {
                   _this.isNothingNews = true;
@@ -2471,7 +2494,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context.abrupt("return", response.status);
 
-              case 16:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -2479,16 +2502,31 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee);
       }))();
     }
-  } // watch: {
-  //   $route: {
-  //     async handler() {
-  //       // ページの読み込み直後、Twitterアカウント一覧を取得
-  //       await this.fetch_TwitterAccount();
-  //     },
-  //     immediate: true
-  //   }
-  // }
+  },
+  watch: {
+    $route: {
+      handler: function handler() {
+        var _this2 = this;
 
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+            while (1) {
+              switch (_context2.prev = _context2.next) {
+                case 0:
+                  _context2.next = 2;
+                  return _this2.fetch_TwitterAccounts();
+
+                case 2:
+                case "end":
+                  return _context2.stop();
+              }
+            }
+          }, _callee2);
+        }))();
+      },
+      immediate: true
+    }
+  }
 });
 
 /***/ }),
@@ -45087,93 +45125,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "p-accounts__item" }, [
+    _c("div", { staticClass: "item-2 item2-left p-accounts__left-side" }, [
+      _c("div", { staticClass: "item-3 p-accounts__icon--area" }, [
+        _c("img", {
+          staticClass: "p-accounts__icon",
+          attrs: { src: _vm.account.profile_image_url_https, alt: "picture" }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "item-2 p-accounts__right-side" }, [
+      _c("div", { staticClass: "item-3 p-accounts__data--area" }, [
+        _c("div", { staticClass: "item-4 p-accounts__profile--area" }, [
+          _c("div", { staticClass: "item-5 p-accounts__profile" }, [
+            _c("div", { staticClass: "item-6 p-accounts__profile--nickname" }, [
+              _c("p", [_vm._v(_vm._s(_vm.account.name))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item-6 p-accounts__profile--username" }, [
+              _c("p", [_vm._v(_vm._s(this.screen_name))])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "item-5 p-accounts__profile--description" },
+            [_c("p", [_vm._v(_vm._s(_vm.account.description))])]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "item-4 p-accounts__follow--area" }, [
+          _c("div", { staticClass: "item-5 p-accounts__follow-btn--area" }, [
+            _vm.isFollowing
+              ? _c("button", { staticClass: "c-btn" }, [_vm._v("フォロー中")])
+              : _c("button", { staticClass: "c-btn" }, [_vm._v("フォロー")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "item-5 p-accounts__ff--area" }, [
+            _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
+              _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
+                _c("p", [_vm._v(_vm._s(_vm.account.friends_count))])
+              ]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
+              _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
+                _c("p", [_vm._v(_vm._s(_vm.account.followers_count))])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
+          _c("p", [_vm._v(_vm._s(this.account_text))]),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(this.account_text_created_at))])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-accounts__item" }, [
-      _c("div", { staticClass: "item-2 item2-left p-accounts__left-side" }, [
-        _c("div", { staticClass: "item-3 p-accounts__icon--area" }, [
-          _c("div", { staticClass: "p-accounts__icon" })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "item-2 p-accounts__right-side" }, [
-        _c("div", { staticClass: "item-3 p-accounts__data--area" }, [
-          _c("div", { staticClass: "item-4 p-accounts__profile--area" }, [
-            _c("div", { staticClass: "item-5 p-accounts__profile" }, [
-              _c(
-                "div",
-                { staticClass: "item-6 p-accounts__profile--nickname" },
-                [_c("p", [_vm._v("草")])]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "item-6 p-accounts__profile--username" },
-                [_c("p", [_vm._v("@oaijgoaja9494293")])]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "item-5 p-accounts__profile--description" },
-              [
-                _c("p", [
-                  _vm._v(
-                    "\n              三浦鈴木 / 個人で製造業向け業務改善webアプリを開発中/ 自動車メカエンジニアからITエンジニアに転身 / 転職4回 /群馬から\n              都内へ通勤 / 2児の父書類通過率90％以上の職務経歴書を販売してますこちらから↓田所浩二 / 個人で製造業向け業務改善web\n              アプリを開発中/自動車メカエンジニアからITエンジニアに転身\n"
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "item-4 p-accounts__follow--area" }, [
-            _c("div", { staticClass: "item-5 p-accounts__follow-btn--area" }, [
-              _c("button", { staticClass: "c-btn" }, [_vm._v("フォロ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "item-5 p-accounts__ff--area" }, [
-              _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
-                _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
-                  _c("p", [_vm._v("777")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "item-7 p-accounts__ff--title" }, [
-                  _c("p", [_vm._v("フォロー中")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
-                _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
-                  _c("p", [_vm._v("999999")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "item-7 p-accounts__ff--title" }, [
-                  _c("p", [_vm._v("フォロワー")])
-                ])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
-          _c("div", { staticClass: "item-4 p-accounts__tweet" }, [
-            _c("p", [_vm._v("新着ツイート")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-            _c("p", [
-              _vm._v(
-                "キリトかなーやっぱりww\n自分は思わないんだけど周りにキリトに似てるってよく言われるwww\nこないだDQNに絡まれた時も気が付いたら意識無くて周りに人が血だらけで倒れてたしなwww\nちなみに彼女もアスナに似てる(聞いてないw)\n\nF外から失礼するゾ〜（謝罪）このツイート面白ｽｷﾞｨ！\n          "
-              )
-            ])
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "item-7 p-accounts__ff--title" }, [
+      _c("p", [_vm._v("フォロー中")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "item-7 p-accounts__ff--title" }, [
+      _c("p", [_vm._v("フォロワー")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "item-4 p-accounts__tweet" }, [
+      _c("p", [_vm._v("新着ツイート")])
     ])
   }
 ]
@@ -45212,33 +45255,23 @@ var render = function() {
         [
           _c("Ribbonnav", { attrs: { title: _vm.pageTitle, date: _vm.today } }),
           _vm._v(" "),
-          _c("div", { staticClass: "p-accounts__headline" }, [
-            _c(
-              "button",
-              {
-                staticClass: "c-btn",
-                on: { click: _vm.fetch_TwitterAccounts }
-              },
-              [_vm._v("サーチ！")]
-            ),
-            _vm._v(" "),
-            _vm._m(0)
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "p-accounts__list" },
             [
-              _c("Account"),
-              _vm._v(" "),
-              _c("Account"),
-              _vm._v(" "),
-              _c("Account")
+              _vm.isSearching
+                ? _c("div", {}, [_c("Loading")], 1)
+                : _vm._l(_vm.fetchedAccounts, function(Accounts) {
+                    return _c("Account", {
+                      key: Accounts.id,
+                      attrs: { account: Accounts }
+                    })
+                  })
             ],
-            1
-          ),
-          _vm._v(" "),
-          _vm.isSearching ? _c("div", {}, [_c("Loading")], 1) : _vm._e()
+            2
+          )
         ],
         1
       )
@@ -45251,9 +45284,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
-      _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
-        _vm._v("自動フォロー")
+    return _c("div", { staticClass: "p-accounts__headline" }, [
+      _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
+        _c("button", { staticClass: "c-btn c-btn__main c-btn--primary" }, [
+          _vm._v("自動フォロー")
+        ])
       ])
     ])
   }

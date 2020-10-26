@@ -1002,6 +1002,12 @@ main {
   flex-direction: column;
 }
 
+.p-accounts__icon {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+}
+
 .p-accounts__icon--area {
   height: 80px;
   width: 80px;
