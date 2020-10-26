@@ -104,8 +104,8 @@ export default {
 
       // エラー時
       if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status)
-        return false
+        this.$store.commit('error/setErrorCode', response.status);
+        return false;
       }
 
       // レスポンスの結果を変数に格納

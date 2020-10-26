@@ -41,8 +41,6 @@ class TwitterController extends Controller
       // 検索キーワード
       $query = $request->keywords;
       
-      Log::debug('TwitterController . query :' . $query);
-      
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
