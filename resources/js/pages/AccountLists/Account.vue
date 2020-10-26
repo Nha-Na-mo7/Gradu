@@ -15,7 +15,7 @@
       <div class="item-3 p-accounts__icon--area">
         <img
             class="p-accounts__icon"
-            :src="account.profile_image_url_https"
+            :src="account.replaced_full_img"
             alt="picture">
       </div>
     </div>

@@ -118,7 +118,7 @@ export default {
         res[data.id] = data;
       }
       this.fetchedAccounts = res;
-      // console.log(this.fetchedAccounts)
+      console.log(this.fetchedAccounts)
 
       // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
       if(!this.fetchedAccounts.length) {

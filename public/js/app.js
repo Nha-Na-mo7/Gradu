@@ -2481,8 +2481,8 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
                   res[data.id] = data;
                 }
 
-                _this.fetchedAccounts = res; // console.log(this.fetchedAccounts)
-                // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
+                _this.fetchedAccounts = res;
+                console.log(_this.fetchedAccounts); // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
 
                 if (!_this.fetchedAccounts.length) {
                   _this.isNothingNews = true;
@@ -2493,7 +2493,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context.abrupt("return", response.status);
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -45129,7 +45129,7 @@ var render = function() {
       _c("div", { staticClass: "item-3 p-accounts__icon--area" }, [
         _c("img", {
           staticClass: "p-accounts__icon",
-          attrs: { src: _vm.account.profile_image_url_https, alt: "picture" }
+          attrs: { src: _vm.account.replaced_full_img, alt: "picture" }
         })
       ])
     ]),

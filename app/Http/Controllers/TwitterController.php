@@ -60,8 +60,8 @@ class TwitterController extends Controller
       // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
       foreach($twitterRequest as $res){
         $image = $res->profile_image_url_https;
-        $fullImg = str_replace('_normal', '', $image);
-        $res->full_img = $fullImg;
+        $replaced_fullImg = str_replace('_normal', '', $image);
+        $res->replaced_full_img = $replaced_fullImg;
         $twitterRes[] = $res;
       }
       
