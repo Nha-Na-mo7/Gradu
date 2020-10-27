@@ -27,10 +27,7 @@
             <p>検索中のワード:<span>{{ searchData.keywords }}</span></p>
 <!--            <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">-->
           </div>
-          <!-- リセット用の✖️ボタン -->
-          <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
-            <button class="c-input__btn-circle" @click="resetSearchWord">×</button>
-          </div>
+
         </form>
 
         <!-- 絞り込みモーダルボタン -->
@@ -131,6 +128,7 @@ export default {
     closeModal(){
       this.modal = false;
     },
+    // TODO 現状使っていないので最後まで必要なければ削除してください
     // 検索欄を空欄にする
     resetSearchWord() {
       this.searchBoxWords = '';

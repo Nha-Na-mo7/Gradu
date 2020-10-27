@@ -3426,9 +3426,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
@@ -3481,6 +3478,7 @@ var PAGE_TITLE = 'NEWS';
     closeModal: function closeModal() {
       this.modal = false;
     },
+    // TODO 現状使っていないので最後まで必要なければ削除してください
     // 検索欄を空欄にする
     resetSearchWord: function resetSearchWord() {
       this.searchBoxWords = '';
@@ -46330,24 +46328,7 @@ var render = function() {
                 _vm._v("検索中のワード:"),
                 _c("span", [_vm._v(_vm._s(_vm.searchData.keywords))])
               ])
-            ]),
-            _vm._v(" "),
-            _vm.isExistSearchWord
-              ? _c(
-                  "div",
-                  { staticClass: "c-input__btn-area c-input__btn-area__reset" },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "c-input__btn-circle",
-                        on: { click: _vm.resetSearchWord }
-                      },
-                      [_vm._v("×")]
-                    )
-                  ]
-                )
-              : _vm._e()
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
