@@ -2287,6 +2287,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2296,9 +2298,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   computed: {
-    screen_name: function screen_name() {
-      return '@' + this.account.screen_name;
-    },
     isFollowing: function isFollowing() {
       return this.account.following;
     },
@@ -2310,8 +2309,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   filters: {
-    newTweet: function newTweet(date) {
+    new_tweet_date: function new_tweet_date(date) {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY-MM-DD HH:mm:ss');
+    },
+    // ユーザー名にはレスポンスに"@"が付いていないので、付与する
+    add_AtSign_to_screen_name: function add_AtSign_to_screen_name(screen_name) {
+      return '@' + screen_name;
     }
   }
 });
@@ -45143,7 +45146,13 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "item-6 p-accounts__profile--username" }, [
-              _c("p", [_vm._v(_vm._s(this.screen_name))])
+              _c("p", [
+                _vm._v(
+                  _vm._s(
+                    _vm._f("add_AtSign_to_screen_name")(_vm.account.screen_name)
+                  )
+                )
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -45188,7 +45197,9 @@ var render = function() {
           _c("p", [_vm._v(_vm._s(this.account_text))]),
           _vm._v(" "),
           _c("span", [
-            _vm._v(_vm._s(_vm._f("newTweet")(this.account_text_created_at)))
+            _vm._v(
+              _vm._s(_vm._f("new_tweet_date")(this.account_text_created_at))
+            )
           ])
         ])
       ])

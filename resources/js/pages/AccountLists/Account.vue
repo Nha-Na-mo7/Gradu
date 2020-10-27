@@ -29,15 +29,17 @@
         <!-- プロフィールエリア -->
         <div class="item-4 p-accounts__profile--area">
           <div class="item-5 p-accounts__profile">
+            <!-- アカウント名 -->
             <div class="item-6 p-accounts__profile--nickname">
-<!--              <p>スーパーフェニミストヴィーガン=カルロスゴーン・ネオ麦茶大日本帝国</p>-->
               <p>{{ account.name }}</p>
             </div>
+            <!-- Twitterユーザー名 -->
             <div class="item-6 p-accounts__profile--username">
-              <p>{{ this.screen_name }}</p>
+              <p>{{ account.screen_name |  add_AtSign_to_screen_name }}</p>
             </div>
           </div>
 
+          <!-- Twitterプロフィール -->
           <div class="item-5 p-accounts__profile--description">
             <p>{{ account.description }}</p>
           </div>
@@ -80,7 +82,7 @@
         <!-- 取得したツイートと日付 -->
         <div class="item-4 p-accounts__tweet--data">
           <p>{{ this.account_text }}</p>
-          <span>{{ this.account_text_created_at | newTweet }}</span>
+          <span>{{ this.account_text_created_at | new_tweet_date }}</span>
         </div>
 
       </div>
@@ -103,9 +105,6 @@ export default {
     }
   },
   computed: {
-    screen_name() {
-      return '@' +  this.account.screen_name;
-    },
     isFollowing() {
       return this.account.following;
     },
@@ -117,8 +116,12 @@ export default {
     },
   },
   filters: {
-    newTweet: function (date) {
+    new_tweet_date: function (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
+    },
+    // ユーザー名にはレスポンスに"@"が付いていないので、付与する
+    add_AtSign_to_screen_name: function (screen_name)  {
+      return '@' + screen_name
     }
   }
 }
