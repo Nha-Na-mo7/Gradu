@@ -23,7 +23,10 @@
       <div class="p-accounts__headline">
         <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">
-          <button class="c-btn c-btn__main c-btn--primary">自動フォロー</button>
+          <button
+              class="c-btn c-btn__main c-btn--primary"
+              @click="auto_following"
+          >自動フォロー</button>
         </div>
       </div>
 
@@ -130,6 +133,10 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
+    // オートフォローをオンにする
+    auto_following() {
+      alert('AUTO-FOLLOWING!');
+    }
   },
   watch: {
     $route: {
