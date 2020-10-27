@@ -18,6 +18,7 @@ import TrendList from './pages/Trends/TrendList.vue';
 
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
+import NotFound404 from './pages/errors/NotFound.vue';
 
 // ストアのインポート
 import store from './store';
@@ -123,6 +124,10 @@ const routes = [
   {
     path: '/500',
     component: SystemError500
+  },
+  {
+    path: '*',
+    component: NotFound404
   }
 ]
 

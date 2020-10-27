@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./util.js";
+import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./util.js";
 import Message from './components/Message.vue';
 import Header from './components/Header.vue';
 import Footer from './components/footer.vue';
@@ -46,16 +46,19 @@ export default {
     errorCode: {
       async handler(val) {
         // TODO 500エラーが発生した時、500エラー用のコンポーネントに遷移させる、要確認
-        if(val === INTERNAL_SERVER_ERROR) {
+        if (val === INTERNAL_SERVER_ERROR) {
           this.$router.push('/500');
-        // 認証エラーの場合
-        } elseif (val === UNAUTHORIZED) {
+        // 認証エラー
+        } else if (val === UNAUTHORIZED) {
           // トークンリフレッシュ
           await axios.get('/api/refresh-token');
           // ストアのuserをクリアする
           this.$store.commit('auth/setUser', null);
           // ログイン画面へ遷移
           this.$router.push('/login');
+        // 404エラー
+        } else if (val === NOT_FOUND) {
+          this.$router.push('/404');
         }
       },
       // 最初の読み込みの段階からこのハンドラーは実行される
