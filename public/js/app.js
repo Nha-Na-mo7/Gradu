@@ -2047,13 +2047,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                console.log('logout!');
+                _context.next = 3;
                 return _this.$store.dispatch('auth/logout');
 
-              case 2:
+              case 3:
+                console.log('this.apiStatus:' + _this.apiStatus()); // // apiStatusがtrue(ステータスコードが200)の時
+                // if(this.apiStatus) {
+                //
+                //   // フラッシュメッセージテスト
+                //   this.$store.commit('message/setContent', {
+                //     content: 'ログインしました！'
+                //   });
+                //
+                //   // トップページへ遷移
+                //   this.$router.push('/');
+                // }
+
                 _this.$router.push('/login');
 
-              case 3:
+              case 5:
               case "end":
                 return _context.stop();
             }

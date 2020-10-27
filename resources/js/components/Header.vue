@@ -36,7 +36,23 @@ export default {
   },
   methods: {
     async logout() {
+      console.log('logout!')
+
       await this.$store.dispatch('auth/logout');
+
+      console.log('this.apiStatus:' + this.apiStatus())
+
+      // // apiStatusがtrue(ステータスコードが200)の時
+      // if(this.apiStatus) {
+      //
+      //   // フラッシュメッセージテスト
+      //   this.$store.commit('message/setContent', {
+      //     content: 'ログインしました！'
+      //   });
+      //
+      //   // トップページへ遷移
+      //   this.$router.push('/');
+      // }
 
       this.$router.push('/login');
     }
