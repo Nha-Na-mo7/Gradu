@@ -1011,8 +1011,6 @@ main {
 .p-accounts__icon--area {
   height: 80px;
   width: 80px;
-  border-radius: 50%;
-  border: 1px solid #000;
 }
 
 .p-accounts__right-side {
