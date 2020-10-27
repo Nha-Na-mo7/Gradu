@@ -67,3 +67,16 @@ Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 
 
 
+
+// ===============
+// その他
+// ===============
+// トークンリフレッシュAPI
+Route::get('/reflesh-token', function (Request $request) {
+  $request->session()->regenerateToken();
+  
+  return response()->json();
+});
+
+
+
