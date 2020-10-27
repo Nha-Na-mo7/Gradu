@@ -128,7 +128,17 @@ export default {
 </script>
 
 <style scoped>
-
+.p-accounts__item {
+  animation: fadeIn 1s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .item-2 {
   /*background: #c5ccd9;*/

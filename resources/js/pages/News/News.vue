@@ -84,5 +84,15 @@ export default {
 </script>
 
 <style scoped>
-
+  .p-news__item {
+    animation: fadeIn 1s;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 </style>
