@@ -4060,6 +4060,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "NotFound.vue"
 });
@@ -4116,7 +4124,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.item1[data-v-585a4226] {\n  /*background: #dd69cd;*/\n}\n.item2[data-v-585a4226] {\n  /*background: #ffcd22;*/\n}\n.item3[data-v-585a4226] {\n  /*background: #82AAFF;*/\n}\n.p-footer__container[data-v-585a4226] {\n  margin: 0 auto;\n  max-width: 1200px;\n  box-sizing: border-box;\n\n  color: #09093e;\n}\n.p-footer__item[data-v-585a4226] {\n  width: 25%;\n  margin-right: 20px;\n}\n.p-footer__logo[data-v-585a4226] {\n  width: 50%;\n  height: 100px;\n  border-radius: 15px;\n  margin-right: 50px;\n  margin-right: 100px;\n  background: #82AAFF;\n}\n.p-footer__main[data-v-585a4226] {\n  /*-webkit-box-align: center;*/\n  /*align-items: center;*/\n  display: flex;\n  justify-content: center;\n\n  padding-top: 50px;\n  padding-bottom: 50px;\n}\n.p-footer__item--title[data-v-585a4226] {\n  font-size: 1.2rem;\n  margin-bottom: 15px;\n}\n.p-footer__menus li[data-v-585a4226] {\n  padding-top: 10px;\n}\n.p-footer__menus li[data-v-585a4226] :hover {\n  text-decoration: underline;\n  cursor: pointer;\n}\n.p-footer__copyright[data-v-585a4226] {\n  text-align: center;\n  font-size: 1rem;\n  padding: 25px 0;\n}\n\n\n", ""]);
+exports.push([module.i, "\n.item1[data-v-585a4226] {\n  /*background: #dd69cd;*/\n}\n.item2[data-v-585a4226] {\n  /*background: #ffcd22;*/\n}\n.item3[data-v-585a4226] {\n  /*background: #82AAFF;*/\n}\n.p-footer__container[data-v-585a4226] {\n  margin: 0 auto;\n  max-width: 1200px;\n  box-sizing: border-box;\n\n  color: #09093e;\n}\n.p-footer__item[data-v-585a4226] {\n  width: 25%;\n  margin-right: 20px;\n}\n.p-footer__logo[data-v-585a4226] {\n  width: 50%;\n  height: 100px;\n  border-radius: 15px;\n  margin-right: 100px;\n  background: #82AAFF;\n}\n.p-footer__main[data-v-585a4226] {\n  /*-webkit-box-align: center;*/\n  /*align-items: center;*/\n  display: flex;\n  justify-content: center;\n\n  padding-top: 40px;\n  padding-bottom: 40px;\n}\n.p-footer__item--title[data-v-585a4226] {\n  font-size: 1.2rem;\n  margin-bottom: 15px;\n}\n.p-footer__menus li[data-v-585a4226] {\n  padding-top: 10px;\n}\n.p-footer__menus li[data-v-585a4226] :hover {\n  text-decoration: underline;\n  cursor: pointer;\n}\n.p-footer__copyright[data-v-585a4226] {\n  text-align: center;\n  font-size: 1rem;\n  padding: 25px 0;\n}\n\n\n", ""]);
 
 // exports
 
@@ -46765,7 +46773,26 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("お探しのページは見つかりませんでした＾＾")])
+  return _c(
+    "div",
+    [
+      _c("h2", [_vm._v("404")]),
+      _c("span", [_vm._v("Not Found")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("お探しのページは見つかりませんでした")]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。 また、URL、ファイル名にタイプミスがないか再度ご確認ください。"
+        )
+      ]),
+      _vm._v(" "),
+      _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
+        _vm._v("トップページへ戻る")
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

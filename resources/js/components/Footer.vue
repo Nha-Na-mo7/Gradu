@@ -65,7 +65,6 @@ name: "Footer.vue"
   width: 50%;
   height: 100px;
   border-radius: 15px;
-  margin-right: 50px;
   margin-right: 100px;
   background: #82AAFF;
 }
@@ -78,8 +77,8 @@ name: "Footer.vue"
   -webkit-box-pack: center;
   justify-content: center;
 
-  padding-top: 50px;
-  padding-bottom: 50px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 .p-footer__item--title {
   font-size: 1.2rem;
