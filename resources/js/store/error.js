@@ -9,13 +9,6 @@ const state = {
   errorCode: null
 }
 
-
-// ===============
-// getter
-// ===============
-const getter = {}
-
-
 // ===============
 // mutations
 // ===============
@@ -27,19 +20,11 @@ const mutations = {
 }
 
 
-// ===============
-// actions
-// ===============
-const actions = {}
-
-
 // ================
 // export default
 // ================
 export default {
   namespaced: true,
   state,
-  getter,
-  mutations,
-  actions
+  mutations
 }

@@ -1969,7 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
     // ストアのerrorCodeステートを監視
     errorCode: {
       handler: function handler(val) {
-        // 500エラーが発生した時、500エラー用のコンポーネントに遷移させる、要確認
+        // TODO 500エラーが発生した時、500エラー用のコンポーネントに遷移させる、要確認
         if (val === _util_js__WEBPACK_IMPORTED_MODULE_0__["INTERNAL_SERVER_ERROR"]) {
           this.$router.push('/500');
         }
@@ -2034,6 +2034,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
+    apiStatus: function apiStatus() {
+      return this.$store.auth.apiStatus();
+    },
     isLogin: function isLogin() {
       return this.$store.getters['auth/loginCheck'];
     }
@@ -2047,26 +2050,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('logout!');
-                _context.next = 3;
+                _context.next = 2;
                 return _this.$store.dispatch('auth/logout');
 
+              case 2:
+                // apiStatusがtrue(ステータスコードが200)の時
+                if (_this.apiStatus) {
+                  // ログインページへ遷移
+                  _this.$router.push('/login');
+                }
+
               case 3:
-                console.log('this.apiStatus:' + _this.apiStatus()); // // apiStatusがtrue(ステータスコードが200)の時
-                // if(this.apiStatus) {
-                //
-                //   // フラッシュメッセージテスト
-                //   this.$store.commit('message/setContent', {
-                //     content: 'ログインしました！'
-                //   });
-                //
-                //   // トップページへ遷移
-                //   this.$router.push('/');
-                // }
-
-                _this.$router.push('/login');
-
-              case 5:
               case "end":
                 return _context.stop();
             }
@@ -65522,10 +65516,6 @@ __webpack_require__.r(__webpack_exports__);
 var state = {
   errorCode: null
 }; // ===============
-// getter
-// ===============
-
-var getter = {}; // ===============
 // mutations
 // ===============
 
@@ -65534,20 +65524,14 @@ var mutations = {
   setErrorCode: function setErrorCode(state, code) {
     state.errorCode = code;
   }
-}; // ===============
-// actions
-// ===============
-
-var actions = {}; // ================
+}; // ================
 // export default
 // ================
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: state,
-  getter: getter,
-  mutations: mutations,
-  actions: actions
+  mutations: mutations
 });
 
 /***/ }),

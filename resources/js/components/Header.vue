@@ -30,31 +30,22 @@
 <script>
 export default {
   computed: {
+    apiStatus() {
+      return this.$store.auth.apiStatus();
+    },
     isLogin() {
       return this.$store.getters['auth/loginCheck'];
     }
   },
   methods: {
     async logout() {
-      console.log('logout!')
-
       await this.$store.dispatch('auth/logout');
 
-      console.log('this.apiStatus:' + this.apiStatus())
-
-      // // apiStatusがtrue(ステータスコードが200)の時
-      // if(this.apiStatus) {
-      //
-      //   // フラッシュメッセージテスト
-      //   this.$store.commit('message/setContent', {
-      //     content: 'ログインしました！'
-      //   });
-      //
-      //   // トップページへ遷移
-      //   this.$router.push('/');
-      // }
-
-      this.$router.push('/login');
+      // apiStatusがtrue(ステータスコードが200)の時
+      if(this.apiStatus) {
+        // ログインページへ遷移
+        this.$router.push('/login');
+      }
     }
   }
 }
