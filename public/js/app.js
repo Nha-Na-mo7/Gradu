@@ -2648,34 +2648,21 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var params, response;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                alert('oh'); // 検索中には呼び出せないようにする
+                alert('oh'); // APIにアクセス
 
-                if (!_this2.isSearching) {
-                  _context2.next = 3;
-                  break;
-                }
-
-                return _context2.abrupt("return", false);
-
-              case 3:
-                // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
-                _this2.isSearching = true;
-                _this2.isNothingAccounts = false; // APIにアクセス
-
-                params = _this2.searchData;
-                _context2.next = 8;
+                _context2.next = 3;
                 return axios.get("/api/twitter/index2");
 
-              case 8:
+              case 3:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_7__["OK"])) {
-                  _context2.next = 12;
+                  _context2.next = 7;
                   break;
                 }
 
@@ -2683,14 +2670,14 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context2.abrupt("return", false);
 
-              case 12:
+              case 7:
                 // 検索終了、isSearchingをfalseに戻す
                 _this2.isSearching = false;
                 alert('yes!'); // ステータス番号を返す
 
                 return _context2.abrupt("return", response.status);
 
-              case 15:
+              case 10:
               case "end":
                 return _context2.stop();
             }

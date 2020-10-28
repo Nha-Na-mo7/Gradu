@@ -100,7 +100,7 @@ class TwitterController extends Controller
     
     // バッチ処理ver Twitterアカウント検索 ①
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
-    public function twitter_index2()
+    public function twitter_index2(Request $request)
     {
       // 実行時間。90秒。
       set_time_limit(90);
@@ -134,9 +134,15 @@ class TwitterController extends Controller
         
         
         Log::debug('現在ここで詰まっています');
+        // $twitter_account->fill($value)->save();にした場合
+        // must be of the type array, object given.
+        // 配列型である必要があり、オブジェクトが指定されています。
+        // つまりオブジェクト型な$valueを配列に戻してあげれば...?
+        
         // 取得したアカウントをDBに登録する
-        foreach($twitterRequest as $req){
-          $twitter_account->fill($req)->save();
+        foreach($twitterRequest as $req => $value){
+          Log::debug('aaaaid:' . $value->id);
+          $twitter_account->fill($value)->save();
         }
   
         // 2:取得したアカウントの件数を確認する

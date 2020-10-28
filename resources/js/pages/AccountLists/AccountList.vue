@@ -157,17 +157,7 @@ export default {
 
       alert('oh');
 
-      // 検索中には呼び出せないようにする
-      if(this.isSearching) {
-        return false;
-      }
-
-      // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
-      this.isSearching = true;
-      this.isNothingAccounts = false;
-
       // APIにアクセス
-      const params = this.searchData;
       const response = await axios.get(`/api/twitter/index2`);
 
       // エラー時
