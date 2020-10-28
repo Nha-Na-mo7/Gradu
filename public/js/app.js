@@ -2520,6 +2520,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2643,6 +2644,60 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee);
       }))();
     },
+    accountfooo: function accountfooo() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var params, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                alert('oh'); // 検索中には呼び出せないようにする
+
+                if (!_this2.isSearching) {
+                  _context2.next = 3;
+                  break;
+                }
+
+                return _context2.abrupt("return", false);
+
+              case 3:
+                // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
+                _this2.isSearching = true;
+                _this2.isNothingAccounts = false; // APIにアクセス
+
+                params = _this2.searchData;
+                _context2.next = 8;
+                return axios.get("/api/twitter/index2");
+
+              case 8:
+                response = _context2.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_7__["OK"])) {
+                  _context2.next = 12;
+                  break;
+                }
+
+                _this2.$store.commit('error/setErrorCode', response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 12:
+                // 検索終了、isSearchingをfalseに戻す
+                _this2.isSearching = false;
+                alert('yes!'); // ステータス番号を返す
+
+                return _context2.abrupt("return", response.status);
+
+              case 15:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
     // オートフォローをオンにする
     auto_following: function auto_following() {
       alert('AUTO-FOLLOWING!');
@@ -2650,23 +2705,19 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   },
   watch: {
     $route: {
-      handler: function handler() {
-        var _this2 = this;
+      handler: function handler() {// ページの読み込み直後、Twitterアカウント一覧を取得
+        // await this.fetch_TwitterAccounts();
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
-              switch (_context2.prev = _context2.next) {
+              switch (_context3.prev = _context3.next) {
                 case 0:
-                  _context2.next = 2;
-                  return _this2.fetch_TwitterAccounts();
-
-                case 2:
                 case "end":
-                  return _context2.stop();
+                  return _context3.stop();
               }
             }
-          }, _callee2);
+          }, _callee3);
         }))();
       },
       immediate: true
@@ -45702,7 +45753,13 @@ var render = function() {
                 },
                 [_vm._v("自動フォロー")]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "c-btn", on: { click: _vm.accountfooo } },
+              [_vm._v("ニュースをDBに格納！")]
+            )
           ]),
           _vm._v(" "),
           _c(

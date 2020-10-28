@@ -28,6 +28,7 @@
               @click="auto_following"
           >自動フォロー</button>
         </div>
+        <button class="c-btn" @click="accountfooo">ニュースをDBに格納！</button>
       </div>
 
       <!-- アカウントリスト -->
@@ -152,6 +153,37 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
+    async accountfooo() {
+
+      alert('oh');
+
+      // 検索中には呼び出せないようにする
+      if(this.isSearching) {
+        return false;
+      }
+
+      // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
+      this.isSearching = true;
+      this.isNothingAccounts = false;
+
+      // APIにアクセス
+      const params = this.searchData;
+      const response = await axios.get(`/api/twitter/index2`);
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status);
+        return false;
+      }
+
+      // 検索終了、isSearchingをfalseに戻す
+      this.isSearching = false;
+
+      alert('yes!');
+
+      // ステータス番号を返す
+      return response.status;
+    },
     // オートフォローをオンにする
     auto_following() {
       alert('AUTO-FOLLOWING!');
@@ -161,7 +193,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、Twitterアカウント一覧を取得
-        await this.fetch_TwitterAccounts();
+        // await this.fetch_TwitterAccounts();
       },
       immediate: true
     }

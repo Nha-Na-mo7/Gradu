@@ -53,6 +53,8 @@ Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.
 // ===============
 // Twitterアカウント一覧取得
 Route::get('/twitter/index', 'TwitterController@twitter_index')->name('accounts.twitter_index');
+// バッチ用・Twitterアカウント一覧取得
+Route::get('/twitter/index2', 'TwitterController@twitter_index2')->name('accounts.twitter_index2');
 // 指定したTwitterアカウントをフォローする
 // Route::get('/accounts/get', 'TwitterController@')->name('');
 // 指定したTwitterアカウントのフォローを外す

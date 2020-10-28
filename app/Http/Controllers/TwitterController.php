@@ -84,7 +84,7 @@ class TwitterController extends Controller
       // count:ページごとに取得するユーザー結果の数。（最大値は20）
       // include_entities:entitiesの取得を省略(画像など)
       $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => 20));
-  
+      
       // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)
       // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
       foreach($twitterRequest as $res){
@@ -100,11 +100,10 @@ class TwitterController extends Controller
     
     // バッチ処理ver Twitterアカウント検索 ①
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
-    public function twitter_index2(Request $request)
+    public function twitter_index2()
     {
       // 実行時間。90秒。
       set_time_limit(90);
-      
       
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
@@ -117,34 +116,40 @@ class TwitterController extends Controller
       $access_token_secret = config('services.twitter')['access_token_secret'];
       
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
-      
-      // TwitterAPIにリクエストを投げ、情報を取得する
-      // q:必須/検索キーワード
-      // page:取得する結果のページを指定
-      // count:ページごとに取得するユーザー結果の数。（最大値は20）
-      // include_entities:entitiesの取得を省略(画像など)
-      $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => $count));
-      
+  
       // TwitterAPIからのレスポンスの内容を、DBテーブルに登録する
       $twitter_account = new TwitterAccount();
+      
+      // 0、twitter_accountsテーブルの全レコードを削除し、プライマリーキーをリセット
+      $twitter_account->truncate();
+
+      // $pageで検索
+      while ($page) {
+        // TwitterAPIにリクエストを投げ、情報を取得する
+        // q:必須/検索キーワード
+        // page:取得する結果のページを指定
+        // count:ページごとに取得するユーザー結果の数。（最大値は20）
+        // include_entities:entitiesの取得を省略(画像など)
+        $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => $count));
+        
+        
+        Log::debug('現在ここで詰まっています');
+        // 取得したアカウントをDBに登録する
+        foreach($twitterRequest as $req){
+          $twitter_account->fill($req)->save();
+        }
   
-      
-      /*
-       * 0:テーブルのレコードを全て削除し、プライマリーキーをリセットする
-       * 1:page=1で検索する
-       * 2:取得したアカウントの件数を確認する
-       *
-       * 3:20個取得できていた場合、20件分の配列が尽きるまで繰り返し1つずつDBに登録する
-       * 4:pageの値を1つ増やして1に戻る
-       *
-       * 5:20個未満の場合、取得できた分だけ配列が尽きるまで繰り返し1つずつDBに登録する
-       * 6:ループを抜ける
-       */
-      
-      
-      
-      $twitter_account->fill($twitterRequest->all())->save();
-      
+        // 2:取得したアカウントの件数を確認する
+        //   件数が最大取得件数(20件)より下回っていた場合、$pageを0にしてループを脱出する
+        if(count($twitterRequest) < $count) {
+          $page = 0;
+        // 最大取得件数だけ取得していた場合、pageを1増やしてループのはじめに戻る
+        } else {
+          $page++;
+        }
+      }
+  
+      Log::debug('it is gonenu');
   
       // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)
       // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
@@ -156,7 +161,7 @@ class TwitterController extends Controller
       // }
       
       // Vueファイルにデータを返すのでJSON形式
-      return response()->json(['result'=>$twitterRequest], 200);
+      return response(200);
     }
 
 }
