@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\BatchTest;
+
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        // ここに作成したCommandsのクラスを追加します
+        BatchTest::class,
     ];
 
     /**
@@ -24,7 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
+        // ここに記述することで指定のスケジュールでタスクが実行される
+        // $schedule
+        //     ->command('batchtest')
+        //     ->everyMinute();
         //          ->hourly();
     }
 
