@@ -13,27 +13,50 @@
     <!--メインレイアウト-->
     <div class="p-news__container">
 
-      <!-- ヘッドライン -->
-      <div class="p-news__headline">
-        <!-- 検索フォーム・コンポーネント検討 -->
-        <form class="p-news__search">
+      <!-- サーチボックス -->
+      <div class="p-news__searchBox--Inner">
 
-          <!-- 検索虫眼鏡ボタン -->
-          <div class="c-input__btn-area c-input__btn-area__search">
-            <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
+        <div class="p-news__searchBox"><!-- 元ヘッドライン -->
+
+          <div class="p-news__searchBox--Item">
+            <div class="p-news__searchBox--title"><p>フリーワード</p></div>
+            <div class="p-news__searchBox--content">
+              <!-- 検索フォーム・コンポーネント検討 -->
+              <form class="p-news__search">
+                <!-- 検索虫眼鏡ボタン -->
+                <div class="c-input__btn-area c-input__btn-area__search">
+                  <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
+                </div>
+                <!-- 検索欄 -->
+                <div class="c-input__searcharea">
+                  <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">
+                </div>
+                <!-- リセット用の✖️ボタン -->
+                <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
+                  <button class="c-input__btn-circle" @click="resetSearchWord">×</button>
+                </div>
+              </form>
+            </div>
           </div>
-          <!-- 検索欄 -->
-          <div class="c-input__searcharea">
-            <p>検索中のワード:<span>{{ searchData.keywords }}</span></p>
-<!--            <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">-->
+          <div class="p-news__searchBox--Item">
+            <div class="p-news__searchBox--title"><p>検索条件</p></div>
+            <div class="p-news__searchBox--content">
+
+              <div class="p-news__searchBox--content--searchWords">
+                <span>{{ default_and_checkedSearchWords }}</span>
+              </div>
+
+              <!-- 絞り込みモーダルボタン -->
+              <div class="p-news__modal p-news__modal-show">
+                <button class="c-btn c-btn__main c-btn--primary" @click="showModal">設定</button>
+              </div>
+
+            </div>
           </div>
 
-        </form>
 
-        <!-- 絞り込みモーダルボタン -->
-        <div class="p-news__modal p-news__modal-show">
-          <button class="c-btn c-btn__main c-btn--primary" @click="showModal">条件設定</button>
         </div>
+
       </div>
 
       <!-- 絞り込みモーダル -->
@@ -96,7 +119,7 @@ export default {
       fetchedNews: [],
 
       checkedSearchWords: [],
-      searchBoxWords: DEFAULT_SEARCHWORD,
+      searchBoxWords: '',
       searchData: {
         keywords: ''
       },
@@ -106,13 +129,19 @@ export default {
     pageTitle() {
       return PAGE_TITLE;
     },
+    placeholder() {
+      return '追加したい検索ワードを入れることができます'
+    },
     // 検索欄にワードが存在するか
     isExistSearchWord() {
       return this.searchBoxWords !== '';
     },
+    default_and_checkedSearchWords() {
+      return DEFAULT_SEARCHWORD + ' ' + this.checkedCurrencies.join(' ');
+    },
     // checkedCurrencyとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
     margeSearchWords() {
-      this.searchData.keywords = this.searchBoxWords + ' ' + this.checkedCurrencies.join(' ');
+      this.searchData.keywords = this.default_and_checkedSearchWords + ' ' + this.searchBoxWords;
     },
     ...mapState({
       checkedCurrencies: state => state.news.checkedCurrencies,
@@ -128,12 +157,10 @@ export default {
     closeModal(){
       this.modal = false;
     },
-    // TODO 現状使っていないので最後まで必要なければ削除してください
     // 検索欄を空欄にする
     resetSearchWord() {
       this.searchBoxWords = '';
     },
-
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     async fetch_googleNews() {
       // 検索中には呼び出せないようにする
@@ -192,5 +219,71 @@ export default {
 </script>
 
 <style scoped>
+.p-news__searchBox {
+  border-bottom: solid 1px #DDD;
+  margin-bottom: 30px;
+  padding-bottom: 18px;
 
+  width: inherit;
+}
+
+.p-news__search {
+  width: 100%;
+}
+.p-news__searchBox--Inner {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 100%;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+.p-news__searchBox--Item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.p-news__searchBox--title {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #AAA;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 140px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.p-news__searchBox--content {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+.p-news__searchBox--content--searchWords {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
 </style>
