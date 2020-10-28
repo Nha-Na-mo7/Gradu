@@ -48,6 +48,8 @@
 
     </div>
 
+<!--    <Pagination :current-page="currentPage" :last-page="lastPage" />-->
+
   </div>
 
 </template>
@@ -58,19 +60,30 @@ import Loading from '../../components/Loading.vue';
 import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Ribbonnav from '../Components/Ribbonnav.vue';
+import Pagination from '../Components/Pagination.vue';
 import {OK, DEFAULT_SEARCHWORD} from "../../util";
 import { mapState } from 'vuex';
 
 const PAGE_TITLE = '仮想通貨アカウント一覧';
 
 export default {
+  props: {
+    p: {
+      type: Number,
+      required: false,
+      default: 1
+    }
+  },
   data() {
     return {
       isSearching: false, // 検索中か
       isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
       fetchedAccounts: [],
+      currentPage: 0,
+      lastPage: 0,
       searchData: {
-        keywords: '仮想通貨'
+        keywords: '仮想通貨',
+        page: this.p
       }
     }
   },
@@ -88,7 +101,8 @@ export default {
     Loading,
     SiteLinknav,
     PageTitle,
-    Ribbonnav
+    Ribbonnav,
+    Pagination
   },
   methods: {
     // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
@@ -129,6 +143,9 @@ export default {
       }
       // 検索終了、isSearchingをfalseに戻す
       this.isSearching = false;
+
+      this.currentPage = response.data.current_page
+      this.lastPage = response.data.last_page
 
       // ステータス番号を返す
       return response.status;

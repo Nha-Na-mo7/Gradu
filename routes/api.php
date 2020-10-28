@@ -51,7 +51,7 @@ Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.
 // ===============
 // Twitter関連
 // ===============
-// 該当ワードのTwitterアカウントを取得する
+// Twitterアカウント一覧取得
 Route::get('/twitter/index', 'TwitterController@twitter_index')->name('accounts.twitter_index');
 // 指定したTwitterアカウントをフォローする
 // Route::get('/accounts/get', 'TwitterController@')->name('');

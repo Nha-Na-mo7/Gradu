@@ -29,7 +29,8 @@ use Illuminate\Support\Facades\Log;
  */
 
 
-// TODO 新しい開発者用のユーザーアカウントを新たに作成すること、フォロー0人の開発者用アカウントがないと、鍵垢のユーザーのツイートを晒すことになる
+// TODO 1、新しい開発者用のユーザーアカウントを新たに作成すること、フォロー0人の開発者用アカウントがないと、鍵垢のユーザーのツイートを晒すことになる
+// TODO 2、ログインユーザーがTwitterアカウントを連携している場合、既にフォロー済みのアカウントは表示させない
 class TwitterController extends Controller
 {
     //Twitterのアカウント検索 ①
@@ -40,6 +41,11 @@ class TwitterController extends Controller
       
       // 検索キーワード
       $query = $request->keywords;
+      Log::debug($request);
+      // ページネーション用、検索ページ
+      // TwitterAPIは1ページごとに最大20件までしか取得できないがページネーションに対応している
+      $page = $request->page;
+      Log::debug($page);
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -54,7 +60,7 @@ class TwitterController extends Controller
       // page:取得する結果のページを指定します。
       // count:ページごとに取得するユーザー結果の数。（最大値は20）
       // include_entities:entitiesの取得を省略
-      $twitterRequest = $connection->get('users/search', array( "q" => $query, "count" => 20));
+      $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => 20));
   
       // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)
       // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
