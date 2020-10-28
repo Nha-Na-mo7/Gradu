@@ -784,13 +784,9 @@ main {
   text-align: end;
 }
 
-.p-news__headline {
-  margin: 20px 30px;
-  display: flex;
-}
-
 .p-news__list {
-  margin: 20px 30px;
+  margin-bottom: 30px;
+  padding: 0 30px;
 }
 
 .p-news__item {
@@ -1579,13 +1575,9 @@ main {
   text-align: end;
 }
 
-.p-news__headline {
-  margin: 20px 30px;
-  display: flex;
-}
-
 .p-news__list {
-  margin: 20px 30px;
+  margin-bottom: 30px;
+  padding: 0 30px;
 }
 
 .p-news__item {

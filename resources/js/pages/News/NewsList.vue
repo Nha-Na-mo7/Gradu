@@ -16,7 +16,7 @@
       <!-- サーチボックス -->
       <div class="p-news__searchBox--Inner">
 
-        <div class="p-news__searchBox"><!-- 元ヘッドライン -->
+        <div class="p-news__searchBox">
 
           <div class="p-news__searchBox--Item">
             <div class="p-news__searchBox--title"><p>フリーワード</p></div>
@@ -246,6 +246,7 @@ export default {
   margin-right: auto;
 
   width: 100%;
+  padding: 0 30px;
 
   font-size: 16px;
   line-height: 1.5;
@@ -258,6 +259,9 @@ export default {
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+
   margin-top: 15px;
 }
 
@@ -273,8 +277,7 @@ export default {
   display: flex;
   width: 140px;
 
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 .p-news__searchBox--content {
   width: 80%;

@@ -32,13 +32,9 @@
       text-align: end;
     }
   }
-
-  &__headline {
-    margin: 20px 30px;
-    display: flex;
-  }
   &__list {
-    margin: 20px 30px;
+    margin-bottom: 30px;
+    padding: 0 30px;
   }
 
   // ニュースの一覧表示画面で出てくる用のコンポーネント
