@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Models\TwitterAccount;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,8 +58,7 @@ class TwitterController extends Controller
   
   
   
-    //Twitterのアカウント検索 ①
-    // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
+    // 廃止予定メソッド、ページの生合成を保つため、下記にあるtwitter_index2メソッドが完成したら削除
     public function twitter_index(Request $request)
     {
       // 実行時間。90秒。
@@ -93,6 +93,67 @@ class TwitterController extends Controller
         $res->replaced_full_img = $replaced_fullImg;
         $twitterRes[] = $res;
       }
+      
+      // Vueファイルにデータを返すのでJSON形式
+      return response()->json(['result'=>$twitterRequest], 200);
+    }
+    
+    // バッチ処理ver Twitterアカウント検索 ①
+    // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
+    public function twitter_index2(Request $request)
+    {
+      // 実行時間。90秒。
+      set_time_limit(90);
+      
+      
+      $query = '仮想通貨'; // 検索キーワード
+      $count = 20; // 1回の取得件数
+      $page = 1; // 検索ページ。これを終わるまで繰り返す。
+      
+      // API keyなどを定義・エイリアスにするか検討
+      $consumer_key = config('services.twitter')['client_id'];
+      $consumer_secret = config('services.twitter')['client_secret'];
+      $access_token = config('services.twitter')['access_token'];
+      $access_token_secret = config('services.twitter')['access_token_secret'];
+      
+      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      
+      // TwitterAPIにリクエストを投げ、情報を取得する
+      // q:必須/検索キーワード
+      // page:取得する結果のページを指定
+      // count:ページごとに取得するユーザー結果の数。（最大値は20）
+      // include_entities:entitiesの取得を省略(画像など)
+      $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => $count));
+      
+      // TwitterAPIからのレスポンスの内容を、DBテーブルに登録する
+      $twitter_account = new TwitterAccount();
+  
+      
+      /*
+       * 0:テーブルのレコードを全て削除し、プライマリーキーをリセットする
+       * 1:page=1で検索する
+       * 2:取得したアカウントの件数を確認する
+       *
+       * 3:20個取得できていた場合、20件分の配列が尽きるまで繰り返し1つずつDBに登録する
+       * 4:pageの値を1つ増やして1に戻る
+       *
+       * 5:20個未満の場合、取得できた分だけ配列が尽きるまで繰り返し1つずつDBに登録する
+       * 6:ループを抜ける
+       */
+      
+      
+      
+      $twitter_account->fill($twitterRequest->all())->save();
+      
+  
+      // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)
+      // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
+      // foreach($twitterRequest as $res){
+      //   $image = $res->profile_image_url_https;
+      //   $replaced_fullImg = str_replace('_normal', '', $image);
+      //   $res->replaced_full_img = $replaced_fullImg;
+      //   $twitterRes[] = $res;
+      // }
       
       // Vueファイルにデータを返すのでJSON形式
       return response()->json(['result'=>$twitterRequest], 200);

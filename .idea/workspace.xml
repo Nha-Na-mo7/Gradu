@@ -25,6 +25,7 @@
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TwitterAccount.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -294,7 +295,10 @@
       <workItem from="1603696104807" duration="23829000" />
       <workItem from="1603855387884" duration="1072000" />
       <workItem from="1603857201080" duration="14096000" />
-      <workItem from="1603881499792" duration="913000" />
+      <workItem from="1603881499792" duration="1329000" />
+      <workItem from="1603882929095" duration="537000" />
+      <workItem from="1603883493531" duration="51000" />
+      <workItem from="1603883574432" duration="350000" />
     </task>
     <servers />
   </component>
