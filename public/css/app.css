@@ -1009,6 +1009,10 @@ main {
   width: 80px;
 }
 
+.p-accounts__icon--area img :hover {
+  cursor: pointer;
+}
+
 .p-accounts__right-side {
   width: 100%;
   display: flex;

@@ -2388,6 +2388,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45400,10 +45406,22 @@ var render = function() {
   return _c("div", { staticClass: "p-accounts__item" }, [
     _c("div", { staticClass: "item-2 item2-left p-accounts__left-side" }, [
       _c("div", { staticClass: "item-3 p-accounts__icon--area" }, [
-        _c("img", {
-          staticClass: "p-accounts__icon",
-          attrs: { src: _vm.account.replaced_full_img, alt: "picture" }
-        })
+        _c(
+          "a",
+          {
+            attrs: {
+              href: _vm.twitter_account_url,
+              target: "_blank",
+              rel: "noopener noreferrer"
+            }
+          },
+          [
+            _c("img", {
+              staticClass: "p-accounts__icon",
+              attrs: { src: _vm.account.replaced_full_img, alt: "picture" }
+            })
+          ]
+        )
       ])
     ]),
     _vm._v(" "),

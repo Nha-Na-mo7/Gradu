@@ -55,6 +55,11 @@
     &--area {
       height: 80px;
       width: 80px;
+      & img {
+        :hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 

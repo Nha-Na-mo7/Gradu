@@ -13,10 +13,16 @@
     <!-- サムネイル表示エリア、縦に長く、他のコンテンツは設置しない -->
     <div class="item-2 item2-left p-accounts__left-side">
       <div class="item-3 p-accounts__icon--area">
+        <a
+            :href="twitter_account_url"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
         <img
             class="p-accounts__icon"
             :src="account.replaced_full_img"
             alt="picture">
+        </a>
       </div>
     </div>
 
