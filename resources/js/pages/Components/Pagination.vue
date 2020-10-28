@@ -1,14 +1,14 @@
 <template>
   <div class="c-pagination">
     <RouterLink
-        v-if="! isFirstPage"
+        v-if="!isFirstPage"
         :to="`/?p=${currentPage - 1}`"
-        class="button"
+        class="c-btn"
     >&laquo; prev</RouterLink>
     <RouterLink
-        v-if="! isLastPage"
+        v-if="!isLastPage"
         :to="`/?p=${currentPage + 1}`"
-        class="button"
+        class="c-btn"
     >next &raquo;</RouterLink>
   </div>
 </template>

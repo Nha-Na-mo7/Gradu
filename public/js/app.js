@@ -2629,12 +2629,13 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
 
                 _this.isSearching = false;
+                console.log(response.data);
                 _this.currentPage = response.data.current_page;
                 _this.lastPage = response.data.last_page; // ステータス番号を返す
 
                 return _context.abrupt("return", response.status);
 
-              case 20:
+              case 21:
               case "end":
                 return _context.stop();
             }
@@ -45721,7 +45722,11 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("Pagination", {
+        attrs: { "current-page": _vm.currentPage, "last-page": _vm.lastPage }
+      })
     ],
     1
   )
@@ -46564,7 +46569,7 @@ var render = function() {
         ? _c(
             "RouterLink",
             {
-              staticClass: "button",
+              staticClass: "c-btn",
               attrs: { to: "/?p=" + (_vm.currentPage - 1) }
             },
             [_vm._v("« prev")]
@@ -46575,7 +46580,7 @@ var render = function() {
         ? _c(
             "RouterLink",
             {
-              staticClass: "button",
+              staticClass: "c-btn",
               attrs: { to: "/?p=" + (_vm.currentPage + 1) }
             },
             [_vm._v("next »")]

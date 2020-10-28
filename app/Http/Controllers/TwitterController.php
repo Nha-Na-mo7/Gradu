@@ -33,7 +33,31 @@ use Illuminate\Support\Facades\Log;
 // TODO 2、ログインユーザーがTwitterアカウントを連携している場合、既にフォロー済みのアカウントは表示させない
 class TwitterController extends Controller
 {
+
+  
+    /*
+     * バッチ処理の流れ
+     * 1, 1日1回、指定時刻になったら、Laravelスケジューラを起動しバッチ処理を開始する
+     * ＞指定時刻は朝9時ごろが理想？
+     *
+     * 2, twitter_indexメソッドを起動し、検索結果を取得する
+     * ＞20件ずつしか取得できず、TwitterAPIは1000件までしか対応していない。実際は1019件でるみたいだが...?
+     * ＞アカウントが取得できなくなるまでwhile文で回す。
+     *
+     * 3, 取得した情報は、DBのfetchedAccountsテーブルにそれぞれ必要な情報を格納する
+     * ＞テーブル名は仮のもの。
+     * ＞既にレコードが存在する場合、一度全てのレコードを空にしてから格納する
+     * ＞プライマリーキーもリセットする
+     *
+     * 4, 仮想通貨アカウント一覧ページにて、fetchedAccountsテーブルから必要情報を取得し表示させる
+     *
+     *
+     */
+  
+  
+  
     //Twitterのアカウント検索 ①
+    // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
     public function twitter_index(Request $request)
     {
       // 実行時間。90秒。
@@ -41,11 +65,9 @@ class TwitterController extends Controller
       
       // 検索キーワード
       $query = $request->keywords;
-      Log::debug($request);
       // ページネーション用、検索ページ
       // TwitterAPIは1ページごとに最大20件までしか取得できないがページネーションに対応している
       $page = $request->page;
-      Log::debug($page);
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -57,9 +79,9 @@ class TwitterController extends Controller
       
       // TwitterAPIにリクエストを投げ、情報を取得する
       // q:必須/検索キーワード
-      // page:取得する結果のページを指定します。
+      // page:取得する結果のページを指定
       // count:ページごとに取得するユーザー結果の数。（最大値は20）
-      // include_entities:entitiesの取得を省略
+      // include_entities:entitiesの取得を省略(画像など)
       $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => 20));
   
       // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)

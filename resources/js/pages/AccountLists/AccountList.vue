@@ -48,7 +48,7 @@
 
     </div>
 
-<!--    <Pagination :current-page="currentPage" :last-page="lastPage" />-->
+    <Pagination :current-page="currentPage" :last-page="lastPage" />
 
   </div>
 
@@ -143,6 +143,8 @@ export default {
       }
       // 検索終了、isSearchingをfalseに戻す
       this.isSearching = false;
+
+      console.log(response.data)
 
       this.currentPage = response.data.current_page
       this.lastPage = response.data.last_page
