@@ -3,12 +3,10 @@
 <!--============================================-->
 <template>
   <div>
-    <div class="p-news__item">
+    <div class="p-news__item p-news__item--nothing">
       <!-- 記事のタイトル -->
-      <div class="p-news__item--nothing">
-        <h2 class="">{{ title }}</h2>
-        <p>{{ description }}</p>
-      </div>
+      <h2 class="">{{ title }}</h2>
+      <p>{{ description }}</p>
     </div>
   </div>
 </template>

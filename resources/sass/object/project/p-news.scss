@@ -39,7 +39,6 @@
 
   // ニュースの一覧表示画面で出てくる用のコンポーネント
   &__item {
-    box-sizing: border-box;
     border-radius: 4px;
     min-height: 150px; //TODO
     width: 100%;
@@ -60,12 +59,12 @@
     &:nth-child(2n+1){
       background: #ffffff;
     }
-
-
-    &:hover {
-      background: #fef7ff;
-      border: 1px solid #f66d9b;
-      box-shadow: 0 0 3px #f66d9b;
+    &--entry {
+      &:hover {
+        background: #fef7ff;
+        border: 1px solid #f66d9b;
+        box-shadow: 0 0 3px #f66d9b;
+      }
     }
     &--picture {
       height: 120px;
@@ -110,16 +109,17 @@
     }
     // 記事がない時に表示する
     &--nothing {
-      text-align: center;
-      box-sizing: border-box;
       padding: 15px 25px;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       h2 {
         font-weight: bold;
-        font-size: 25px;
+        font-size: 20px;
         margin-bottom: 20px;
       }
       p {
-        font-size: 18px;
+        font-size: 15px;
       }
     }
   }

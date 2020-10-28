@@ -3859,8 +3859,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 var NOTHING_NEWS_TITLE = '記事が見つかりませんでした。';
 var NOTHING_NEWS_DESCRIPTION = '検索ワードを変えるか、しばらく経ってからもう一度お試しください。';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -46768,7 +46766,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "p-news__item" }, [
+  return _c("div", { staticClass: "p-news__item p-news__item--entry" }, [
     _vm.is24hour
       ? _c("span", { staticClass: "c-icon" }, [_vm._v("NEW!!")])
       : _vm._e(),
@@ -47005,12 +47003,10 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "p-news__item" }, [
-      _c("div", { staticClass: "p-news__item--nothing" }, [
-        _c("h2", {}, [_vm._v(_vm._s(_vm.title))]),
-        _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.description))])
-      ])
+    _c("div", { staticClass: "p-news__item p-news__item--nothing" }, [
+      _c("h2", {}, [_vm._v(_vm._s(_vm.title))]),
+      _vm._v(" "),
+      _c("p", [_vm._v(_vm._s(_vm.description))])
     ])
   ])
 }
