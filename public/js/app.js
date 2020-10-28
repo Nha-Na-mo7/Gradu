@@ -2350,7 +2350,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
+var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     account: {
@@ -2367,6 +2406,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     account_text_created_at: function account_text_created_at() {
       return this.account.status.created_at;
+    },
+    twitter_account_url: function twitter_account_url() {
+      return DEFAULT_TWITTER_URL + this.account.screen_name;
+    },
+    twitter_following_url: function twitter_following_url() {
+      return this.twitter_account_url + '/following';
+    },
+    twitter_followers_url: function twitter_followers_url() {
+      return this.twitter_account_url + '/followers';
+    },
+    twitter_tweet_url: function twitter_tweet_url() {
+      return this.twitter_account_url + '/status/' + this.account.status.id_str;
     }
   },
   filters: {
@@ -45361,15 +45412,49 @@ var render = function() {
         _c("div", { staticClass: "item-4 p-accounts__profile--area" }, [
           _c("div", { staticClass: "item-5 p-accounts__profile" }, [
             _c("div", { staticClass: "item-6 p-accounts__profile--nickname" }, [
-              _c("p", [_vm._v(_vm._s(_vm.account.name))])
+              _c("p", [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: _vm.twitter_account_url,
+                      target: "_blank",
+                      rel: "noopener noreferrer"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.account.name) +
+                        "\n              "
+                    )
+                  ]
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "item-6 p-accounts__profile--username" }, [
-              _c("p", [
-                _vm._v(
-                  _vm._s(
-                    _vm._f("add_AtSign_to_screen_name")(_vm.account.screen_name)
-                  )
+              _c("span", [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: _vm.twitter_account_url,
+                      target: "_blank",
+                      rel: "noopener noreferrer"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(
+                          _vm._f("add_AtSign_to_screen_name")(
+                            _vm.account.screen_name
+                          )
+                        ) +
+                        "\n              "
+                    )
+                  ]
                 )
               ])
             ])
@@ -45392,7 +45477,25 @@ var render = function() {
           _c("div", { staticClass: "item-5 p-accounts__ff--area" }, [
             _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
               _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
-                _c("p", [_vm._v(_vm._s(_vm.account.friends_count))])
+                _c("p", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: _vm.twitter_following_url,
+                        target: "_blank",
+                        rel: "noopener noreferrer"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(_vm.account.friends_count) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ])
               ]),
               _vm._v(" "),
               _vm._m(0)
@@ -45400,7 +45503,25 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "item-6 p-accounts__ff--item" }, [
               _c("div", { staticClass: "item-7 p-accounts__ff--count" }, [
-                _c("p", [_vm._v(_vm._s(_vm.account.followers_count))])
+                _c("p", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: _vm.twitter_followers_url,
+                        target: "_blank",
+                        rel: "noopener noreferrer"
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                  " +
+                          _vm._s(_vm.account.followers_count) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                ])
               ]),
               _vm._v(" "),
               _vm._m(1)
@@ -45410,14 +45531,24 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
-        _vm._m(2),
-        _vm._v(" "),
         _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
           _c("p", [_vm._v(_vm._s(this.account_text))]),
           _vm._v(" "),
           _c("span", [
-            _vm._v(
-              _vm._s(_vm._f("new_tweet_date")(this.account_text_created_at))
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: _vm.twitter_tweet_url,
+                  target: "_blank",
+                  rel: "noopener noreferrer"
+                }
+              },
+              [
+                _vm._v(
+                  _vm._s(_vm._f("new_tweet_date")(this.account_text_created_at))
+                )
+              ]
             )
           ])
         ])
@@ -45440,14 +45571,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "item-7 p-accounts__ff--title" }, [
       _c("p", [_vm._v("フォロワー")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "item-4 p-accounts__tweet" }, [
-      _c("p", [_vm._v("新着ツイート")])
     ])
   }
 ]

@@ -31,11 +31,27 @@
           <div class="item-5 p-accounts__profile">
             <!-- アカウント名 -->
             <div class="item-6 p-accounts__profile--nickname">
-              <p>{{ account.name }}</p>
+              <p>
+                <a
+                    :href="twitter_account_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  {{ account.name }}
+                </a>
+              </p>
             </div>
             <!-- Twitterユーザー名 -->
             <div class="item-6 p-accounts__profile--username">
-              <p>{{ account.screen_name |  add_AtSign_to_screen_name }}</p>
+              <span>
+                <a
+                    :href="twitter_account_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  {{ account.screen_name |  add_AtSign_to_screen_name }}
+                </a>
+              </span>
             </div>
           </div>
 
@@ -59,11 +75,31 @@
           <div class="item-5 p-accounts__ff--area">
 
             <div class="item-6 p-accounts__ff--item">
-              <div class="item-7 p-accounts__ff--count"><p>{{ account.friends_count }}</p></div>
+              <div class="item-7 p-accounts__ff--count">
+                <p>
+                  <a
+                    :href="twitter_following_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{ account.friends_count }}
+                  </a>
+                </p>
+              </div>
               <div class="item-7 p-accounts__ff--title"><p>フォロー中</p></div>
             </div>
             <div class="item-6 p-accounts__ff--item">
-              <div class="item-7 p-accounts__ff--count"><p>{{ account.followers_count }}</p></div>
+              <div class="item-7 p-accounts__ff--count">
+                <p>
+                  <a
+                      :href="twitter_followers_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                  >
+                    {{ account.followers_count }}
+                  </a>
+                </p>
+              </div>
               <div class="item-7 p-accounts__ff--title"><p>フォロワー</p></div>
             </div>
 
@@ -75,14 +111,16 @@
 
       <!-- 新着ツイート1件表示エリア -->
       <div class="item-3 p-accounts__tweet--area">
-        <div class="item-4 p-accounts__tweet">
-          <p>新着ツイート</p>
-        </div>
-
         <!-- 取得したツイートと日付 -->
         <div class="item-4 p-accounts__tweet--data">
           <p>{{ this.account_text }}</p>
-          <span>{{ this.account_text_created_at | new_tweet_date }}</span>
+          <span>
+            <a
+              :href="twitter_tweet_url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ this.account_text_created_at | new_tweet_date }}</a>
+          </span>
         </div>
 
       </div>
@@ -96,6 +134,7 @@
 <script>
 
 import moment from "moment";
+const DEFAULT_TWITTER_URL = 'https://twitter.com/';
 
 export default {
   props: {
@@ -114,6 +153,19 @@ export default {
     account_text_created_at() {
       return this.account.status.created_at;
     },
+    twitter_account_url() {
+      return DEFAULT_TWITTER_URL + this.account.screen_name;
+    },
+    twitter_following_url() {
+      return this.twitter_account_url + '/following';
+    },
+    twitter_followers_url() {
+      return this.twitter_account_url + '/followers';
+    },
+    twitter_tweet_url() {
+      return this.twitter_account_url + '/status/' + this.account.status.id_str;
+    },
+
   },
   filters: {
     new_tweet_date: function (date) {

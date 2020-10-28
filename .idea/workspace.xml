@@ -28,8 +28,8 @@
       <change beforePath="$PROJECT_DIR$/public/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -296,7 +296,7 @@
       <workItem from="1602743474097" duration="357000" />
       <workItem from="1602743845766" duration="1692000" />
       <workItem from="1602745583214" duration="160168000" />
-      <workItem from="1603696104807" duration="17681000" />
+      <workItem from="1603696104807" duration="21685000" />
     </task>
     <servers />
   </component>

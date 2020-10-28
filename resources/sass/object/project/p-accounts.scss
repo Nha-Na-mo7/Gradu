@@ -71,7 +71,7 @@
     &--area {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 35px;
+      margin-bottom: 20px;
     }
   }
 
@@ -79,7 +79,7 @@
   &__profile{
     // アカウント名とユーザー名のエリア
     margin-bottom: 5px;
-    line-height: 150%;
+    line-height: 120%;
 
     // アカウント名・ユーザー名・デスクリプションのエリア
     &--area {
@@ -91,9 +91,9 @@
     // アカウント名
     &--nickname {
       width: 100%;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
-      &:hover {
+      & p:hover {
         cursor: pointer;
         text-decoration: underline;
       }
@@ -103,10 +103,9 @@
     // ユーザー名(@XXXXxxxxXXXXxxxx)
     &--username {
       // TODO
-      width: 100%;
-      font-size: 15px;
-      color: #f63030;
-      &:hover {
+      font-size: 12px;
+      color: #a4a4a4;
+      & span:hover {
         cursor: pointer;
         text-decoration: underline;
       }
@@ -118,7 +117,6 @@
       // 投稿時刻
       & span {
         font-size: 10px;
-        font-weight: bold;
         color: #b4b4b4;
       }
     }
@@ -185,16 +183,14 @@
 
   // 新着ツイート
   &__tweet {
-    font-size: 20px;
-    margin-bottom: 10px;
-    line-height: 150%;
-
-    display: flex;
-    flex-direction: column;
+    //font-size: 20px;
+    //margin-bottom: 10px;
+    //line-height: 150%;
+    //
+    //display: flex;
+    //flex-direction: column;
     // 表示エリア
     &--area {
-      border-top: 1px solid #d8d8d8;
-      padding-top: 15px;
     }
 
     // 新着ツイートと、日付
@@ -202,20 +198,28 @@
       display: flex;
       flex-direction: column;
 
-      border: 1px solid #888;
+      border: 1px solid #cacaca;
+      border-radius: 4px;
       height: auto;
       width: 100%;
-      padding: 10px 15px;
+      padding: 5px 10px;
 
       white-space: pre-wrap;
       white-space: -moz-pre-wrap;
       white-space: -o-pre-wrap;
 
-      font-size: 15px;
+      font-size: 14px;
       line-height: 20px;
+
+      & span {
+        font-size: 12px;
+        color: #a4a4a4;
+        text-align: right;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
     }
   }
-
-
-
 }
