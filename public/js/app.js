@@ -2528,7 +2528,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 
@@ -45776,13 +45775,7 @@ var render = function() {
             _c(
               "button",
               { staticClass: "c-btn", on: { click: _vm.twitter_index } },
-              [_vm._v("ニュースをDBに格納！")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "c-btn", on: { click: _vm.fetchAccounts } },
-              [_vm._v("DBからニュースを取得するぞ！")]
+              [_vm._v("バッチ処理・ニュースをDBに格納")]
             )
           ]),
           _vm._v(" "),

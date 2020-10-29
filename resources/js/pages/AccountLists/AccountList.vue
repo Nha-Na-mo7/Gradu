@@ -28,8 +28,7 @@
               @click="auto_following"
           >自動フォロー</button>
         </div>
-        <button class="c-btn" @click="twitter_index">ニュースをDBに格納！</button>
-        <button class="c-btn" @click="fetchAccounts">DBからニュースを取得するぞ！</button>
+        <button class="c-btn" @click="twitter_index">バッチ処理・ニュースをDBに格納</button>
       </div>
 
       <!-- アカウントリスト -->
