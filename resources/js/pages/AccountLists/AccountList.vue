@@ -29,6 +29,7 @@
           >自動フォロー</button>
         </div>
         <button class="c-btn" @click="twitter_index">ニュースをDBに格納！</button>
+        <button class="c-btn" @click="fetchAccounts">DBからニュースを取得するぞ！</button>
       </div>
 
       <!-- アカウントリスト -->
@@ -40,7 +41,7 @@
         <!-- アカウント -->
         <Account
             v-else
-            v-for="Accounts in fetchedAccounts"
+            v-for="Accounts in accounts"
             :key="Accounts.id"
             :account="Accounts"
         />
@@ -79,7 +80,7 @@ export default {
     return {
       isSearching: false, // 検索中か
       isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
-      fetchedAccounts: [],
+      accounts: [],
       currentPage: 0,
       lastPage: 0,
       searchData: {
@@ -96,14 +97,6 @@ export default {
     today() {
       return new Date();
     }
-  },
-  components: {
-    Account,
-    Loading,
-    SiteLinknav,
-    PageTitle,
-    Ribbonnav,
-    Pagination
   },
   methods: {
     // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
@@ -153,6 +146,7 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
+    // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     async twitter_index() {
 
       // APIにアクセス
@@ -169,15 +163,42 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
+
+
+    // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
+    async fetchAccounts() {
+      const response = await axios.get(`/api/accounts/index/?page=${this.p}`);
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status)
+        return false
+      }
+
+      console.log(response)
+
+      this.accounts = response.data.data
+      this.currentPage = response.data.current_page
+      this.lastPage = response.data.last_page
+    },
     // オートフォローをオンにする
     auto_following() {
       alert('AUTO-FOLLOWING!');
     }
   },
+  components: {
+    Account,
+    Loading,
+    SiteLinknav,
+    PageTitle,
+    Ribbonnav,
+    Pagination
+  },
   watch: {
     $route: {
       async handler() {
-        // ページの読み込み直後、Twitterアカウント一覧を取得
+        // ページの読み込み直後、DBからTwitterアカウント一覧を取得
+        await this.fetchAccounts();
         // await this.fetch_TwitterAccountsOld();
       },
       immediate: true

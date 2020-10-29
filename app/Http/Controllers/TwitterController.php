@@ -160,13 +160,12 @@ class TwitterController extends Controller
     }
   
     
-    // =================================
-    // アカウント一覧の取得
-    // =================================
+    // =======================================
+    // アカウント一覧ページ/DBからアカウント一覧の取得
+    // =======================================
     public function accounts_index()
     {
       Log::debug('TwitterController : accounts_index : アカウント一覧全部取得');
-      
       $accounts = TwitterAccount::orderBy('account_created_at', 'desc')->paginate();
   
       return $accounts;

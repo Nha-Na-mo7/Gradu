@@ -20,7 +20,7 @@
         >
         <img
             class="p-accounts__icon"
-            :src="account.replaced_full_img"
+            :src="account.profile_image_url_https"
             alt="picture">
         </a>
       </div>
@@ -120,17 +120,18 @@
           class="item-3 p-accounts__tweet--area"
           v-if="!twitter_protected"
       >
+        <h1>あぼーん</h1>
         <!-- 取得したツイートと日付 -->
-        <div class="item-4 p-accounts__tweet--data">
-          <p>{{ this.account_text }}</p>
-          <span>
-            <a
-              :href="twitter_tweet_url"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ this.account_text_created_at | new_tweet_date }}</a>
-          </span>
-        </div>
+<!--        <div class="item-4 p-accounts__tweet&#45;&#45;data">-->
+<!--          <p>{{ this.account_text }}</p>-->
+<!--          <span>-->
+<!--            <a-->
+<!--              :href="twitter_tweet_url"-->
+<!--              target="_blank"-->
+<!--              rel="noopener noreferrer"-->
+<!--            >{{ this.account_text_created_at | new_tweet_date }}</a>-->
+<!--          </span>-->
+<!--        </div>-->
 
       </div>
 
@@ -156,12 +157,12 @@ export default {
     isFollowing() {
       return this.account.following;
     },
-    account_text() {
-      return this.account.status.text;
-    },
-    account_text_created_at() {
-      return this.account.status.created_at;
-    },
+    // account_text() {
+    //   return this.account.status.text;
+    // },
+    // account_text_created_at() {
+    //   return this.account.status.created_at;
+    // },
     twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account.screen_name;
     },

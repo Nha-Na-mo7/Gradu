@@ -2397,6 +2397,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2410,12 +2411,12 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
     isFollowing: function isFollowing() {
       return this.account.following;
     },
-    account_text: function account_text() {
-      return this.account.status.text;
-    },
-    account_text_created_at: function account_text_created_at() {
-      return this.account.status.created_at;
-    },
+    // account_text() {
+    //   return this.account.status.text;
+    // },
+    // account_text_created_at() {
+    //   return this.account.status.created_at;
+    // },
     twitter_account_url: function twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account.screen_name;
     },
@@ -2527,6 +2528,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2550,7 +2552,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
       // 検索中か
       isNothingAccounts: false,
       // 検索した結果アカウントが見つからなかったか
-      fetchedAccounts: [],
+      accounts: [],
       currentPage: 0,
       lastPage: 0,
       searchData: {
@@ -2567,14 +2569,6 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     today: function today() {
       return new Date();
     }
-  },
-  components: {
-    Account: _Account_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Loading: _components_Loading_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    SiteLinknav: _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    PageTitle: _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Ribbonnav: _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   methods: {
     // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
@@ -2650,6 +2644,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee);
       }))();
     },
+    // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     twitter_index: function twitter_index() {
       var _this2 = this;
 
@@ -2687,26 +2682,77 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee2);
       }))();
     },
+    // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
+    fetchAccounts: function fetchAccounts() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return axios.get("/api/accounts/index/?page=".concat(_this3.p));
+
+              case 2:
+                response = _context3.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_7__["OK"])) {
+                  _context3.next = 6;
+                  break;
+                }
+
+                _this3.$store.commit('error/setErrorCode', response.status);
+
+                return _context3.abrupt("return", false);
+
+              case 6:
+                console.log(response);
+                _this3.accounts = response.data.data;
+                _this3.currentPage = response.data.current_page;
+                _this3.lastPage = response.data.last_page;
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
+    },
     // オートフォローをオンにする
     auto_following: function auto_following() {
       alert('AUTO-FOLLOWING!');
     }
   },
+  components: {
+    Account: _Account_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Loading: _components_Loading_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    SiteLinknav: _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    PageTitle: _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Ribbonnav: _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Pagination: _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+  },
   watch: {
     $route: {
-      handler: function handler() {// ページの読み込み直後、Twitterアカウント一覧を取得
-        // await this.fetch_TwitterAccountsOld();
+      handler: function handler() {
+        var _this4 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context3.prev = _context3.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
+                  _context4.next = 2;
+                  return _this4.fetchAccounts();
+
+                case 2:
                 case "end":
-                  return _context3.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee3);
+          }, _callee4);
         }))();
       },
       immediate: true
@@ -45521,7 +45567,10 @@ var render = function() {
           [
             _c("img", {
               staticClass: "p-accounts__icon",
-              attrs: { src: _vm.account.replaced_full_img, alt: "picture" }
+              attrs: {
+                src: _vm.account.profile_image_url_https,
+                alt: "picture"
+              }
             })
           ]
         )
@@ -45545,9 +45594,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                " +
+                      "\n                  " +
                         _vm._s(_vm.account.name) +
-                        "\n              "
+                        "\n                "
                     )
                   ]
                 )
@@ -45567,13 +45616,13 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                " +
+                      "\n                  " +
                         _vm._s(
                           _vm._f("add_AtSign_to_screen_name")(
                             _vm.account.screen_name
                           )
                         ) +
-                        "\n              "
+                        "\n                "
                     )
                   ]
                 )
@@ -45610,9 +45659,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                  " +
+                        "\n                    " +
                           _vm._s(_vm.account.friends_count) +
-                          "\n                "
+                          "\n                  "
                       )
                     ]
                   )
@@ -45636,9 +45685,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                  " +
+                        "\n                    " +
                           _vm._s(_vm.account.followers_count) +
-                          "\n                "
+                          "\n                  "
                       )
                     ]
                   )
@@ -45653,29 +45702,7 @@ var render = function() {
       _vm._v(" "),
       !_vm.twitter_protected
         ? _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
-            _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-              _c("p", [_vm._v(_vm._s(this.account_text))]),
-              _vm._v(" "),
-              _c("span", [
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      href: _vm.twitter_tweet_url,
-                      target: "_blank",
-                      rel: "noopener noreferrer"
-                    }
-                  },
-                  [
-                    _vm._v(
-                      _vm._s(
-                        _vm._f("new_tweet_date")(this.account_text_created_at)
-                      )
-                    )
-                  ]
-                )
-              ])
-            ])
+            _c("h1", [_vm._v("あぼーん")])
           ])
         : _vm._e()
     ])
@@ -45750,6 +45777,12 @@ var render = function() {
               "button",
               { staticClass: "c-btn", on: { click: _vm.twitter_index } },
               [_vm._v("ニュースをDBに格納！")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "c-btn", on: { click: _vm.fetchAccounts } },
+              [_vm._v("DBからニュースを取得するぞ！")]
             )
           ]),
           _vm._v(" "),
@@ -45759,7 +45792,7 @@ var render = function() {
             [
               _vm.isSearching
                 ? _c("div", {}, [_c("Loading")], 1)
-                : _vm._l(_vm.fetchedAccounts, function(Accounts) {
+                : _vm._l(_vm.accounts, function(Accounts) {
                     return _c("Account", {
                       key: Accounts.id,
                       attrs: { account: Accounts }

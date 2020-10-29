@@ -52,9 +52,14 @@ Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.
 // Twitter関連
 // ===============
 // 廃止予定・Twitterアカウント一覧取得
-Route::get('/twitter/index_old', 'TwitterController@twitter_index_old')->name('accounts.twitter_index_old');
+Route::get('/twitter/index_old', 'TwitterController@twitter_index_old')->name('twitter.twitter_index_old');
 // バッチ用・Twitterアカウント一覧取得
-Route::get('/twitter/index', 'TwitterController@twitter_index')->name('accounts.twitter_index');
+Route::get('/twitter/index', 'TwitterController@twitter_index')->name('twitter.twitter_index');
+
+// アカウント一覧画面/テーブルからアカウント情報を取得
+Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');
+
+
 // 指定したTwitterアカウントをフォローする
 // Route::get('/accounts/get', 'TwitterController@')->name('');
 // 指定したTwitterアカウントのフォローを外す

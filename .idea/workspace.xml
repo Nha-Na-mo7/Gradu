@@ -28,6 +28,7 @@
       <change beforePath="$PROJECT_DIR$/public/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
@@ -305,7 +306,10 @@
       <workItem from="1603883574432" duration="761000" />
       <workItem from="1603884367572" duration="2328000" />
       <workItem from="1603886718134" duration="159000" />
-      <workItem from="1603886898862" duration="19893000" />
+      <workItem from="1603886898862" duration="20170000" />
+      <workItem from="1603962477870" duration="684000" />
+      <workItem from="1603963225660" duration="238000" />
+      <workItem from="1603963550394" duration="3979000" />
     </task>
     <servers />
   </component>
@@ -340,10 +344,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="636" y="354" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1603167200484" />
-    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1603167274455">
+    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1603963253139">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1603167274455" />
+    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1603963253139" />
     <state x="959" y="386" key="#ウェブブラウザー" timestamp="1603152581889">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
