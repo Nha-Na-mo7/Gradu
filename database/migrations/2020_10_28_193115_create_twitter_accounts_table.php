@@ -22,6 +22,7 @@ class CreateTwitterAccountsTable extends Migration
             $table->boolean('protected'); // 鍵アカウントであるか
             $table->integer('friends_count'); // フォロー数
             $table->integer('followers_count'); // フォロワー数
+            $table->dateTime('account_created_at'); // アカウントが作られた日時
             // $table->string('status_id_str')->unique()->nullable(); // 最新ツイートのID
             // $table->text('status_text')->nullable(); // 最新ツイートの内容
             // $table->timestamp('status_created_at')->nullable(); // 最新ツイートの投稿時刻

@@ -145,6 +145,7 @@ class TwitterController extends Controller
               'protected' => $req->protected,
               'friends_count' => $req->friends_count,
               'followers_count' => $req->followers_count,
+              'account_created_at' => date('Y-m-d H:i:s', strtotime($req->created_at)),
               'profile_image_url_https' => $replaced_fullImg
           );
   
@@ -158,6 +159,24 @@ class TwitterController extends Controller
       }
       // TODO レスポンスの成功を返すが、バッチ処理なので必要なのかは不明
       return response(200);
+    }
+  
+    /**
+     * アカウント一覧の取得
+     */
+    public function accounts_index($page = null)
+    {
+      Log::debug('TwitterController : accounts_index : アカウント一覧取得');
+      // 引数に指定がなかった場合、全ての日誌一覧を取得する
+      if($page == null) {
+        Log::debug('アカウント一覧取得 : 引数オプショナルの場合(全部取得)');
+        // withメソッドでリレーションを事前ロード
+        $accounts = TwitterAccount::all()->orderBy(TwitterAccount::ID, 'desc')->paginate();
+      
+        return $accounts;
+      }
+      
+      return $accounts;
     }
 
 }
