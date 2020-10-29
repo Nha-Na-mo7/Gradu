@@ -178,7 +178,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、Twitterアカウント一覧を取得
-        await this.fetch_TwitterAccounts();
+        // await this.fetch_TwitterAccounts();
       },
       immediate: true
     }

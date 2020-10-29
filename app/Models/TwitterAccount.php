@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TwitterAccount extends Model
 {
+  // タイムスタンプカラムは用意していないので、無理やり挿入しようとしてエラーにならないようにfalseにする
+  public $timestamps = false;
+  
   protected $fillable = [
       'account_id',
       'name',
@@ -14,9 +17,6 @@ class TwitterAccount extends Model
       'protected',
       'friends_count',
       'followers_count',
-      'status_id_str',
-      'status_text',
-      'status_created_at',
       'profile_image_url_https'
   ];
 }
