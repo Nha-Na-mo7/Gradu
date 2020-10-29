@@ -20,12 +20,12 @@ class CreateTwitterAccountNewTweetsTable extends Migration
             $table->text('tweet_text')->nullable(); // ツイート内容
             $table->dateTime('tweet_created_at')->nullable(); //ツイート日時
   
-          //外部キーでtwitter_accountsのaccount_idと紐付け。
-          //主テーブルのレコードが削除されたら、このテーブルのデータも一緒に消える。
-          $table->foreign('account_id')
-                ->references('account_id')
-                ->on('twitter_accounts')
-                ->onDelete('cascade');
+            //外部キーでtwitter_accountsのaccount_idと紐付け。
+            //主テーブルのレコードが削除されたら、このテーブルのデータも一緒に消える。
+            $table->foreign('account_id')
+                  ->references('account_id')
+                  ->on('twitter_accounts')
+                  ->onDelete('cascade');
         });
     }
 

@@ -37,4 +37,15 @@ class TwitterAccount extends Model
       'account_created_at',
       'profile_image_url_https'
   ];
+  
+  /**
+   * リレーション - twitter_account_new_tweetsテーブル
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function new_tweet()
+  // モデル名と関係ない名前(new_tweet)のため、hasOneメソッドの引数は省略せずに記載
+  {
+    return $this->hasOne('App\Models\TwitterAccountNewTweet', 'account_id', 'account_id');
+  }
+  
 }

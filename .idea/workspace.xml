@@ -24,7 +24,9 @@
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TwitterAccount.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_29_210016_create_twitter_account_new_tweets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_29_210016_create_twitter_account_new_tweets_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,19 +170,19 @@
     <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.notifications" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/lang" />
-      <recent name="$PROJECT_DIR$/app" />
-      <recent name="$PROJECT_DIR$/tests/Feature" />
-      <recent name="$PROJECT_DIR$/resources" />
-      <recent name="$PROJECT_DIR$/resources/js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/Models" />
       <recent name="$PROJECT_DIR$/resources/sass/object/project" />
       <recent name="$PROJECT_DIR$/resources/js/pages/Auths" />
       <recent name="$PROJECT_DIR$/resources/views/emails" />
       <recent name="$PROJECT_DIR$/resources/sass/layout" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/lang" />
+      <recent name="$PROJECT_DIR$/app" />
+      <recent name="$PROJECT_DIR$/tests/Feature" />
+      <recent name="$PROJECT_DIR$/resources" />
+      <recent name="$PROJECT_DIR$/resources/js" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.auth.js">
@@ -304,7 +306,14 @@
       <workItem from="1603962477870" duration="684000" />
       <workItem from="1603963225660" duration="238000" />
       <workItem from="1603963550394" duration="4476000" />
-      <workItem from="1603969282155" duration="115000" />
+      <workItem from="1603969282155" duration="3584000" />
+      <workItem from="1603973525576" duration="111000" />
+      <workItem from="1603973653558" duration="86000" />
+      <workItem from="1603973790626" duration="924000" />
+      <workItem from="1603974745311" duration="81000" />
+      <workItem from="1603974846515" duration="77000" />
+      <workItem from="1603974953706" duration="115000" />
+      <workItem from="1603975081271" duration="304000" />
     </task>
     <servers />
   </component>
