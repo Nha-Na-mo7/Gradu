@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Models\TwitterAccount;
+use App\Models\TwitterAccountNewTweet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -103,7 +104,7 @@ class TwitterController extends Controller
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 1; // 検索ページ。これを終わるまで繰り返す。
+      $page = 49; // 検索ページ。これを終わるまで繰り返す。
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -113,8 +114,8 @@ class TwitterController extends Controller
       
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
       
-      // twitter_accountsテーブルの全レコードを削除し、プライマリーキーをリセット
-      TwitterAccount::truncate();
+      // twitter_accountsテーブルの全レコードを削除
+      TwitterAccount::query()->delete();
 
       // $pageで検索
       while ($page) {
@@ -129,6 +130,11 @@ class TwitterController extends Controller
         // 取得したアカウント情報をDBに登録する
         // アカウント検索API(users/search)ではリツイート・リプライも含めた最新ツイートが取得されてしまうため、後に改めて該当ユーザーの最新ツイートを取得する
         foreach($twitterRequest as $req){
+          
+          $account_id = $req->id;
+          Log::debug('~~~~~~~~~~~~~~~~~~~~~~~');
+          Log::debug('最初にここで定義したアカウントIDはこちら'.$account_id);
+          
           // プロフィール画像のURLから _normalの文字列を省く
           // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
           $image = $req->profile_image_url_https;
@@ -136,7 +142,7 @@ class TwitterController extends Controller
 
           // 配列に格納
           $requestlist = array(
-              'account_id' => $req->id,
+              'account_id' => $account_id,
               'name' => $req->name,
               'screen_name' => $req->screen_name,
               'description' => $req->description,
@@ -151,6 +157,69 @@ class TwitterController extends Controller
           $twitter_account = new TwitterAccount();
           // テーブル登録
           $twitter_account->fill($requestlist)->save();
+          Log::debug('第一のテーブル');
+  
+  
+          // accountsテーブルに登録後、
+          // TwitterAPIに投げて、リプライ・リツイートでは無い最新のツイート1件を探す
+          // GET statuses/user_timelineを使う
+          // user_idまたはscreen_idが検索には必須だが、screen_idは変更される場合があるのでuser_idで検索をかける
+          
+          // ツイートをしていない場合→ []で帰ってくる
+          // 鍵垢→ Not authorized
+          
+          // リプライを含めない exclude_replies→true
+          // RTを含め無い include_rts→false
+          // ややこしい
+          
+          // 鍵垢では無い場合、最新ツイート検索をする
+          if(!$req->protected) {
+  
+            Log::debug('鍵垢ではありません');
+            $tweetRequest = $connection->get('statuses/user_timeline',
+                array(
+                    "user_id" => $account_id,
+                    "count" => 1,
+                    "exclude_replies" => true,
+                    "include_rts" => false
+                ));
+            
+            Log::debug('アクセス完了しました');
+            // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
+            foreach ($tweetRequest as $tweetreq) {
+              Log::debug('検証シリーズ・アカウントIDを探ろう:'. $account_id);
+              // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
+              if(isset($tweetreq)) {
+                Log::debug('アカウントID:' .  $account_id);
+                Log::debug('ID_str:' .  var_dump($tweetreq));
+                $addlist = array(
+                    'account_id' => $account_id,
+                    'tweet_id_str' => $tweetreq->id_str,
+                    'tweet_text' => $tweetreq->text,
+                    'tweet_created_at' => date('Y-m-d H:i:s', strtotime($tweetreq->created_at))
+                );
+                Log::debug('一番最初は:'.$addlist['account_id']);
+                $tweetlist = $addlist;
+              } else {
+                $tweetlist = array('account_id' => $account_id);
+              }
+            }
+          } else {
+            Log::debug('鍵垢でした！ロック！');
+            $tweetlist = array('account_id' => $account_id);
+          }
+          // モデルを作成
+          $new_tweet = new TwitterAccountNewTweet();
+          // テーブル登録
+          $new_tweet->fill($tweetlist)->save();
+          Log::debug('第二のテーブル');
+          Log::debug('^^^^^^^^^^^^^^^^^^^^^^^^^');
+  
+  
+  
+  
+  
+  
         }
         // ページカウントを1増やす
         $page++;

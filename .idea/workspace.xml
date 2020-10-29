@@ -25,7 +25,6 @@
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TwitterAccount.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_29_210016_create_twitter_account_new_tweets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_29_210016_create_twitter_account_new_tweets_table.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -313,7 +312,8 @@
       <workItem from="1603974745311" duration="81000" />
       <workItem from="1603974846515" duration="77000" />
       <workItem from="1603974953706" duration="115000" />
-      <workItem from="1603975081271" duration="304000" />
+      <workItem from="1603975081271" duration="4047000" />
+      <workItem from="1603979164778" duration="792000" />
     </task>
     <servers />
   </component>
