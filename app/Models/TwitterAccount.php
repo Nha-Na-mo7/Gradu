@@ -12,6 +12,19 @@ class TwitterAccount extends Model
   // ページネーションで1ページに表示させる数
   protected $perPage = 20;
   
+  // JSONに含める属性
+  // テーブルidとcreated_atは表示させるのに必要な情報では無いため含めない
+  protected $visible = [
+      'account_id',
+      'name',
+      'screen_name',
+      'description',
+      'protected',
+      'friends_count',
+      'followers_count',
+      'profile_image_url_https'
+  ];
+  
   // fillable
   protected $fillable = [
       'account_id',
