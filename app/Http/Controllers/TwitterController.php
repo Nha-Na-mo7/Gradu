@@ -104,7 +104,7 @@ class TwitterController extends Controller
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 49; // 検索ページ。これを終わるまで繰り返す。
+      $page = 50; // 検索ページ。これを終わるまで繰り返す。
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -191,7 +191,8 @@ class TwitterController extends Controller
               // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
               if(isset($tweetreq)) {
                 Log::debug('アカウントID:' .  $account_id);
-                Log::debug('ID_str:' .  var_dump($tweetreq));
+                Log::debug('created_at:' .  $tweetreq->created_at);
+                Log::debug('ID_str:' .  $tweetreq->id_str);
                 $addlist = array(
                     'account_id' => $account_id,
                     'tweet_id_str' => $tweetreq->id_str,

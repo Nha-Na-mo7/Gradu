@@ -16,7 +16,7 @@ class CreateTwitterAccountNewTweetsTable extends Migration
         Schema::create('twitter_account_new_tweets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('account_id'); // ツイート主のアカウントID
-            $table->bigInteger('tweet_id_str')->unique()->nullable(); // ツイートのID
+            $table->bigInteger('tweet_id_str')->nullable(); // ツイートのID
             $table->text('tweet_text')->nullable(); // ツイート内容
             $table->dateTime('tweet_created_at')->nullable(); //ツイート日時
   
