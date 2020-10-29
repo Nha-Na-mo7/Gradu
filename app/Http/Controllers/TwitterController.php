@@ -43,24 +43,20 @@ class TwitterController extends Controller
      * ＞指定時刻は朝9時ごろが理想？
      *
      * 2, twitter_indexメソッドを起動し、検索結果を取得する
-     * ＞20件ずつしか取得できず、TwitterAPIは1000件までしか対応していない。実際は1019件でるみたいだが...?
-     * ＞アカウントが取得できなくなるまでwhile文で回す。
+     * 3, 取得した情報は、twitter_accountsテーブルに格納する
      *
-     * 3, 取得した情報は、DBのfetchedAccountsテーブルにそれぞれ必要な情報を格納する
-     * ＞テーブル名は仮のもの。
-     * ＞既にレコードが存在する場合、一度全てのレコードを空にしてから格納する
-     * ＞プライマリーキーもリセットする
+     * 4, twitter_accountsテーブルに登録した情報を元にして、最新のツイートを取得する
+     * ＞ users/searchAPIでは、リツイートやリプライも無作為に取得してしまうため
+     * ＞ また、鍵アカウントの区別が無いため不要なエラーの原因にもなる
+     * ＞ 鍵アカウントであった場合、その項目をnull扱いにすることで対処できる
      *
-     * 4, 仮想通貨アカウント一覧ページにて、fetchedAccountsテーブルから必要情報を取得し表示させる
+     * 5, 仮想通貨アカウント一覧ページにて、fetchedAccountsテーブルから必要情報を取得し表示させる
      *
      * つまり、2 ~ 4までの処理をバッチとしてまとめ、それを1日ごとに実行するのが1での役割である
-     * 2 ~ 4をひとまとめにした処理を作成するところからスタートである。
      */
   
-  
-  
     // 廃止予定メソッド、ページの生合成を保つため、下記にあるtwitter_index2メソッドが完成したら削除
-    public function twitter_index(Request $request)
+    public function twitter_index_old(Request $request)
     {
       // 実行時間。90秒。
       set_time_limit(90);
@@ -106,7 +102,7 @@ class TwitterController extends Controller
     
     // バッチ処理ver Twitterアカウント検索 ①
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
-    public function twitter_index2()
+    public function twitter_index()
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数

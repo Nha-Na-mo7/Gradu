@@ -28,7 +28,7 @@
               @click="auto_following"
           >自動フォロー</button>
         </div>
-        <button class="c-btn" @click="accountfooo">ニュースをDBに格納！</button>
+        <button class="c-btn" @click="twitter_index">ニュースをDBに格納！</button>
       </div>
 
       <!-- アカウントリスト -->
@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
-    async fetch_TwitterAccounts() {
+    async fetch_TwitterAccountsOld() {
 
       // 検索中には呼び出せないようにする
       if(this.isSearching) {
@@ -120,7 +120,7 @@ export default {
 
       // APIにアクセス
       const params = this.searchData;
-      const response = await axios.get(`/api/twitter/index`, { params });
+      const response = await axios.get(`/api/twitter/index_old`, { params });
 
       // エラー時
       if (response.status !== OK) {
@@ -153,10 +153,10 @@ export default {
       // ステータス番号を返す
       return response.status;
     },
-    async accountfooo() {
+    async twitter_index() {
 
       // APIにアクセス
-      const response = await axios.get(`/api/twitter/index2`);
+      const response = await axios.get(`/api/twitter/index`);
 
       // エラー時
       if (response.status !== OK) {
@@ -178,7 +178,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、Twitterアカウント一覧を取得
-        // await this.fetch_TwitterAccounts();
+        // await this.fetch_TwitterAccountsOld();
       },
       immediate: true
     }

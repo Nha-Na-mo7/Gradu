@@ -2578,7 +2578,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   },
   methods: {
     // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
-    fetch_TwitterAccounts: function fetch_TwitterAccounts() {
+    fetch_TwitterAccountsOld: function fetch_TwitterAccountsOld() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
@@ -2601,7 +2601,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 params = _this.searchData;
                 _context.next = 7;
-                return axios.get("/api/twitter/index", {
+                return axios.get("/api/twitter/index_old", {
                   params: params
                 });
 
@@ -2650,7 +2650,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee);
       }))();
     },
-    accountfooo: function accountfooo() {
+    twitter_index: function twitter_index() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
@@ -2660,7 +2660,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get("/api/twitter/index2");
+                return axios.get("/api/twitter/index");
 
               case 2:
                 response = _context2.sent;
@@ -2695,7 +2695,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   watch: {
     $route: {
       handler: function handler() {// ページの読み込み直後、Twitterアカウント一覧を取得
-        // await this.fetch_TwitterAccounts();
+        // await this.fetch_TwitterAccountsOld();
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
@@ -45748,7 +45748,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "c-btn", on: { click: _vm.accountfooo } },
+              { staticClass: "c-btn", on: { click: _vm.twitter_index } },
               [_vm._v("ニュースをDBに格納！")]
             )
           ]),
