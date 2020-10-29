@@ -95,12 +95,9 @@ class TwitterController extends Controller
       return response()->json(['result'=>$twitterRequest], 200);
     }
     
-    
-    
-    
-    
-    
+    // ==================================
     // バッチ処理ver Twitterアカウント検索 ①
+    // ==================================
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
     public function twitter_index()
     {
@@ -142,6 +139,7 @@ class TwitterController extends Controller
               'account_id' => $req->id,
               'name' => $req->name,
               'screen_name' => $req->screen_name,
+              'description' => $req->description,
               'protected' => $req->protected,
               'friends_count' => $req->friends_count,
               'followers_count' => $req->followers_count,
@@ -161,21 +159,16 @@ class TwitterController extends Controller
       return response(200);
     }
   
-    /**
-     * アカウント一覧の取得
-     */
-    public function accounts_index($page = null)
+    
+    // =================================
+    // アカウント一覧の取得
+    // =================================
+    public function accounts_index()
     {
-      Log::debug('TwitterController : accounts_index : アカウント一覧取得');
-      // 引数に指定がなかった場合、全ての日誌一覧を取得する
-      if($page == null) {
-        Log::debug('アカウント一覧取得 : 引数オプショナルの場合(全部取得)');
-        // withメソッドでリレーションを事前ロード
-        $accounts = TwitterAccount::all()->orderBy(TwitterAccount::ID, 'desc')->paginate();
+      Log::debug('TwitterController : accounts_index : アカウント一覧全部取得');
       
-        return $accounts;
-      }
-      
+      $accounts = TwitterAccount::orderBy('account_created_at', 'desc')->paginate();
+  
       return $accounts;
     }
 
