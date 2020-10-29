@@ -142,27 +142,46 @@ class TwitterController extends Controller
         $twitterRequest = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
         
         
-        Log::debug('現在ここで詰まっています');
+        // Log::debug('現在ここで詰まっています');
         // $twitter_account->fill($value)->save();にした場合
         // must be of the type array, object given.
         // 配列型である必要があり、オブジェクトが指定されています。
         // つまりオブジェクト型な$valueを配列に戻してあげれば...?
         
         // 取得したアカウントをDBに登録する
+        // アカウント検索APIではリツイート・リプライも含めた最新ツイートが取得されてしまう
+        // そのためこれより後に改めて該当ユーザーのツイートを取得する
         foreach($twitterRequest as $req => $value){
-          Log::debug('aaaaid:' . $value->id);
-          Log::debug(var_dump((array)$value));
-          $twitter_account->fill($value)->save();
+          // Log::debug('============================');
+          // Log::debug('id:' . $value->id);
+          Log::debug('name:' . $value->name);
+          // Log::debug('screen_name:' . $value->screen_name);
+          // Log::debug('description:' . $value->description);
+          // Log::debug('protected:' . $value->protected);
+          // Log::debug('friends_count:' . $value->friends_count);
+          // Log::debug('followers_count:' . $value->followers_count);
+          // Log::debug('profile_image_url_https:' . $value->profile_image_url_https);
+          
+// account_id
+// name
+// screen_name
+// description
+// protected
+// friends_count
+// followers_count
+// profile_image_url_https
+//           $twitter_account->fill($value)->save();
         }
   
         // 2:取得したアカウントの件数を確認する
         //   件数が最大取得件数(20件)より下回っていた場合、$pageを0にしてループを脱出する
-        if(count($twitterRequest) < $count) {
-          $page = 0;
-        // 最大取得件数だけ取得していた場合、pageを1増やしてループのはじめに戻る
-        } else {
-          $page++;
-        }
+        // if(count($twitterRequest) < $count) {
+        //   $page = 0;
+        // // 最大取得件数だけ取得していた場合、pageを1増やしてループのはじめに戻る
+        // } else {
+        //   Log::debug($page);
+        //   $page++;
+        // }
       }
   
       Log::debug('it is gonenu');

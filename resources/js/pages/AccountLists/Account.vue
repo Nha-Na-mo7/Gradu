@@ -115,8 +115,11 @@
 
       </div>
 
-      <!-- 新着ツイート1件表示エリア -->
-      <div class="item-3 p-accounts__tweet--area">
+      <!-- 新着ツイート1件表示エリア (鍵アカウントの場合は非表示)-->
+      <div
+          class="item-3 p-accounts__tweet--area"
+          v-if="!twitter_protected"
+      >
         <!-- 取得したツイートと日付 -->
         <div class="item-4 p-accounts__tweet--data">
           <p>{{ this.account_text }}</p>
@@ -170,6 +173,9 @@ export default {
     },
     twitter_tweet_url() {
       return this.twitter_account_url + '/status/' + this.account.status.id_str;
+    },
+    twitter_protected() {
+      return this.account.protected;
     },
 
   },

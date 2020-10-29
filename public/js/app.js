@@ -2394,6 +2394,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2424,6 +2427,9 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
     },
     twitter_tweet_url: function twitter_tweet_url() {
       return this.twitter_account_url + '/status/' + this.account.status.id_str;
+    },
+    twitter_protected: function twitter_protected() {
+      return this.account["protected"];
     }
   },
   filters: {
@@ -2653,16 +2659,14 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                alert('oh'); // APIにアクセス
-
-                _context2.next = 3;
+                _context2.next = 2;
                 return axios.get("/api/twitter/index2");
 
-              case 3:
+              case 2:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_7__["OK"])) {
-                  _context2.next = 7;
+                  _context2.next = 6;
                   break;
                 }
 
@@ -2670,14 +2674,12 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context2.abrupt("return", false);
 
-              case 7:
-                // 検索終了、isSearchingをfalseに戻す
-                _this2.isSearching = false;
-                alert('yes!'); // ステータス番号を返す
+              case 6:
+                alert('yes!' + response.status); // ステータス番号を返す
 
                 return _context2.abrupt("return", response.status);
 
-              case 10:
+              case 8:
               case "end":
                 return _context2.stop();
             }
@@ -2692,14 +2694,18 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   },
   watch: {
     $route: {
-      handler: function handler() {// ページの読み込み直後、Twitterアカウント一覧を取得
-        // await this.fetch_TwitterAccounts();
+      handler: function handler() {
+        var _this3 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
             while (1) {
               switch (_context3.prev = _context3.next) {
                 case 0:
+                  _context3.next = 2;
+                  return _this3.fetch_TwitterAccounts();
+
+                case 2:
                 case "end":
                   return _context3.stop();
               }
@@ -45649,29 +45655,33 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
-        _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-          _c("p", [_vm._v(_vm._s(this.account_text))]),
-          _vm._v(" "),
-          _c("span", [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: _vm.twitter_tweet_url,
-                  target: "_blank",
-                  rel: "noopener noreferrer"
-                }
-              },
-              [
-                _vm._v(
-                  _vm._s(_vm._f("new_tweet_date")(this.account_text_created_at))
+      !_vm.twitter_protected
+        ? _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
+            _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
+              _c("p", [_vm._v(_vm._s(this.account_text))]),
+              _vm._v(" "),
+              _c("span", [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: _vm.twitter_tweet_url,
+                      target: "_blank",
+                      rel: "noopener noreferrer"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm._f("new_tweet_date")(this.account_text_created_at)
+                      )
+                    )
+                  ]
                 )
-              ]
-            )
+              ])
+            ])
           ])
-        ])
-      ])
+        : _vm._e()
     ])
   ])
 }

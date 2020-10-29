@@ -155,8 +155,6 @@ export default {
     },
     async accountfooo() {
 
-      alert('oh');
-
       // APIにアクセス
       const response = await axios.get(`/api/twitter/index2`);
 
@@ -166,10 +164,7 @@ export default {
         return false;
       }
 
-      // 検索終了、isSearchingをfalseに戻す
-      this.isSearching = false;
-
-      alert('yes!');
+      alert('yes!' + response.status);
 
       // ステータス番号を返す
       return response.status;
@@ -183,7 +178,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、Twitterアカウント一覧を取得
-        // await this.fetch_TwitterAccounts();
+        await this.fetch_TwitterAccounts();
       },
       immediate: true
     }
