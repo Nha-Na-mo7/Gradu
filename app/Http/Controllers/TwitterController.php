@@ -98,6 +98,19 @@ class TwitterController extends Controller
       return response()->json(['result'=>$twitterRequest], 200);
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     // バッチ処理ver Twitterアカウント検索 ①
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
     public function twitter_index2(Request $request)
@@ -126,11 +139,7 @@ class TwitterController extends Controller
       // $pageで検索
       while ($page) {
         // TwitterAPIにリクエストを投げ、情報を取得する
-        // q:必須/検索キーワード
-        // page:取得する結果のページを指定
-        // count:ページごとに取得するユーザー結果の数。（最大値は20）
-        // include_entities:entitiesの取得を省略(画像など)
-        $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => $count));
+        $twitterRequest = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
         
         
         Log::debug('現在ここで詰まっています');
@@ -142,6 +151,7 @@ class TwitterController extends Controller
         // 取得したアカウントをDBに登録する
         foreach($twitterRequest as $req => $value){
           Log::debug('aaaaid:' . $value->id);
+          Log::debug(var_dump((array)$value));
           $twitter_account->fill($value)->save();
         }
   
@@ -166,7 +176,7 @@ class TwitterController extends Controller
       //   $twitterRes[] = $res;
       // }
       
-      // Vueファイルにデータを返すのでJSON形式
+      // レスポンスの成功を返すが、バッチ処理なので必要なのかは不明
       return response(200);
     }
 
