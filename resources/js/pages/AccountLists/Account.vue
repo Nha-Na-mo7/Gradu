@@ -171,7 +171,7 @@ export default {
       return this.new_tweet.tweet_text;
     },
     account_text_created_at() {
-      return this.new_tweet.created_at;
+      return this.new_tweet.tweet_created_at;
     },
     twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account.screen_name;
