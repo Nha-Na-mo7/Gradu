@@ -120,18 +120,20 @@
           class="item-3 p-accounts__tweet--area"
           v-if="!twitter_protected"
       >
-        <h1>あぼーん</h1>
         <!-- 取得したツイートと日付 -->
-<!--        <div class="item-4 p-accounts__tweet&#45;&#45;data">-->
-<!--          <p>{{ this.account_text }}</p>-->
-<!--          <span>-->
-<!--            <a-->
-<!--              :href="twitter_tweet_url"-->
-<!--              target="_blank"-->
-<!--              rel="noopener noreferrer"-->
-<!--            >{{ this.account_text_created_at | new_tweet_date }}</a>-->
-<!--          </span>-->
-<!--        </div>-->
+        <div
+            class="item-4 p-accounts__tweet--data"
+            v-if="isExistTweet"
+        >
+          <p>{{ this.account_text }}</p>
+          <span>
+            <a
+              :href="twitter_tweet_url"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ this.account_text_created_at | new_tweet_date }}</a>
+          </span>
+        </div>
 
       </div>
 
@@ -153,16 +155,24 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      'new_tweet': this.account.new_tweet
+    }
+  },
   computed: {
     isFollowing() {
       return this.account.following;
     },
-    // account_text() {
-    //   return this.account.status.text;
-    // },
-    // account_text_created_at() {
-    //   return this.account.status.created_at;
-    // },
+    isExistTweet() {
+      return Object.keys(this.new_tweet).length;
+    },
+    account_text() {
+      return this.new_tweet.tweet_text;
+    },
+    account_text_created_at() {
+      return this.new_tweet.created_at;
+    },
     twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account.screen_name;
     },
@@ -173,7 +183,7 @@ export default {
       return this.twitter_account_url + '/followers';
     },
     twitter_tweet_url() {
-      return this.twitter_account_url + '/status/' + this.account.status.id_str;
+      return this.twitter_account_url + '/status/' + this.new_tweet.tweet_id_str;
     },
     twitter_protected() {
       return this.account.protected;

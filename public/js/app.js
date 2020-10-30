@@ -2406,6 +2406,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2415,16 +2417,24 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
       required: true
     }
   },
+  data: function data() {
+    return {
+      'new_tweet': this.account.new_tweet
+    };
+  },
   computed: {
     isFollowing: function isFollowing() {
       return this.account.following;
     },
-    // account_text() {
-    //   return this.account.status.text;
-    // },
-    // account_text_created_at() {
-    //   return this.account.status.created_at;
-    // },
+    isExistTweet: function isExistTweet() {
+      return Object.keys(this.new_tweet).length;
+    },
+    account_text: function account_text() {
+      return this.new_tweet.tweet_text;
+    },
+    account_text_created_at: function account_text_created_at() {
+      return this.new_tweet.created_at;
+    },
     twitter_account_url: function twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account.screen_name;
     },
@@ -2435,7 +2445,7 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
       return this.twitter_account_url + '/followers';
     },
     twitter_tweet_url: function twitter_tweet_url() {
-      return this.twitter_account_url + '/status/' + this.account.status.id_str;
+      return this.twitter_account_url + '/status/' + this.new_tweet.tweet_id_str;
     },
     twitter_protected: function twitter_protected() {
       return this.account["protected"];
@@ -45624,9 +45634,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                  " +
+                      "\n                " +
                         _vm._s(_vm.account.name) +
-                        "\n                "
+                        "\n              "
                     )
                   ]
                 )
@@ -45646,13 +45656,13 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                  " +
+                      "\n                " +
                         _vm._s(
                           _vm._f("add_AtSign_to_screen_name")(
                             _vm.account.screen_name
                           )
                         ) +
-                        "\n                "
+                        "\n              "
                     )
                   ]
                 )
@@ -45689,9 +45699,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                  " +
                           _vm._s(_vm.account.friends_count) +
-                          "\n                  "
+                          "\n                "
                       )
                     ]
                   )
@@ -45715,9 +45725,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                    " +
+                        "\n                  " +
                           _vm._s(_vm.account.followers_count) +
-                          "\n                  "
+                          "\n                "
                       )
                     ]
                   )
@@ -45732,7 +45742,33 @@ var render = function() {
       _vm._v(" "),
       !_vm.twitter_protected
         ? _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
-            _c("h1", [_vm._v("あぼーん")])
+            _vm.isExistTweet
+              ? _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
+                  _c("p", [_vm._v(_vm._s(this.account_text))]),
+                  _vm._v(" "),
+                  _c("span", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.twitter_tweet_url,
+                          target: "_blank",
+                          rel: "noopener noreferrer"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(
+                            _vm._f("new_tweet_date")(
+                              this.account_text_created_at
+                            )
+                          )
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              : _vm._e()
           ])
         : _vm._e()
     ])
