@@ -236,9 +236,21 @@ class TwitterController extends Controller
     public function accounts_index()
     {
       Log::debug('TwitterController : accounts_index : アカウント一覧全部取得');
-      $accounts = TwitterAccount::orderBy('account_created_at', 'desc')->paginate();
-  
+      $accounts = TwitterAccount::with(['new_tweet'])->orderBy('account_created_at', 'desc')->paginate();
+      
+      Log::debug(print_r($accounts, true));
+      
       return $accounts;
     }
+    // // =========================================
+    // // アカウントコンポーネント/DBから新着ツイートの取得
+    // // =========================================
+    // public function accounts_tweet(int $tweet_id)
+    // {
+    //   Log::debug('TwitterController : accounts_tweet : アカウントのツイートを取得');
+    //   $tweet = TwitterAccountNewTweet::where('account_id', $tweet_id)->first();
+    //
+    //   return $tweet;
+    // }
 
 }

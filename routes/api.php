@@ -58,6 +58,8 @@ Route::get('/twitter/index', 'TwitterController@twitter_index')->name('twitter.t
 
 // アカウント一覧画面/テーブルからアカウント情報を取得
 Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');
+// アカウントコンポーネント/指定したユーザーの新着ツイートを取得
+Route::get('/accounts/tweet/{tweet_id}', 'TwitterController@accounts_tweet')->name('accounts.tweet');
 
 
 // 指定したTwitterアカウントをフォローする

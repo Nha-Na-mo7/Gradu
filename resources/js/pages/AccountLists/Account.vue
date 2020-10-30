@@ -180,6 +180,13 @@ export default {
     },
 
   },
+  methods: {
+    async fetchNewTweet() {
+      const response = await axios.get(`/api/accounts/new_tweet`, );
+
+
+    }
+  },
   filters: {
     new_tweet_date: function (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')

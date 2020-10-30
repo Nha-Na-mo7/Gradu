@@ -22,7 +22,7 @@ class TwitterAccount extends Model
       'protected',
       'friends_count',
       'followers_count',
-      'profile_image_url_https'
+      'profile_image_url_https',
   ];
   
   // fillable
