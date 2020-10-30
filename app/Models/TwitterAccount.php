@@ -23,6 +23,7 @@ class TwitterAccount extends Model
       'friends_count',
       'followers_count',
       'profile_image_url_https',
+      'new_tweet'
   ];
   
   // fillable
