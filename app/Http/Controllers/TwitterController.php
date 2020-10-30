@@ -139,7 +139,7 @@ class TwitterController extends Controller
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 50; // 検索ページ。これを終わるまで繰り返す。
+      $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -167,8 +167,6 @@ class TwitterController extends Controller
         foreach($twitterRequest as $req){
           
           $account_id = $req->id;
-          Log::debug('~~~~~~~~~~~~~~~~~~~~~~~');
-          Log::debug('最初にここで定義したアカウントIDはこちら'.$account_id);
           
           // プロフィール画像のURLから _normalの文字列を省く
           // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
@@ -192,9 +190,7 @@ class TwitterController extends Controller
           $twitter_account = new TwitterAccount();
           // テーブル登録
           $twitter_account->fill($requestlist)->save();
-          Log::debug('第一のテーブル');
-  
-  
+          
           // accountsテーブルに登録後、
           // TwitterAPIに投げて、リプライ・リツイートでは無い最新のツイート1件を探す
           // GET statuses/user_timelineを使う
@@ -210,7 +206,6 @@ class TwitterController extends Controller
           // 鍵垢では無い場合、最新ツイート検索をする
           if(!$req->protected) {
   
-            Log::debug('鍵垢ではありません');
             $tweetRequest = $connection->get('statuses/user_timeline',
                 array(
                     "user_id" => $account_id,
@@ -219,43 +214,31 @@ class TwitterController extends Controller
                     "include_rts" => false
                 ));
             
-            Log::debug('アクセス完了しました');
             // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
             foreach ($tweetRequest as $tweetreq) {
-              Log::debug('検証シリーズ・アカウントIDを探ろう:'. $account_id);
               // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
               if(isset($tweetreq)) {
-                Log::debug('アカウントID:' .  $account_id);
-                Log::debug('created_at:' .  $tweetreq->created_at);
-                Log::debug('ID_str:' .  $tweetreq->id_str);
                 $addlist = array(
                     'account_id' => $account_id,
                     'tweet_id_str' => $tweetreq->id_str,
                     'tweet_text' => $tweetreq->text,
                     'tweet_created_at' => date('Y-m-d H:i:s', strtotime($tweetreq->created_at))
                 );
-                Log::debug('一番最初は:'.$addlist['account_id']);
                 $tweetlist = $addlist;
+              // まだツイートしていないアカウントは、アカウントのIDだけテーブルに入れる
               } else {
                 $tweetlist = array('account_id' => $account_id);
               }
             }
+          // 鍵垢の場合は、アカウントのIDだけをテーブルにいれる
           } else {
-            Log::debug('鍵垢でした！ロック！');
             $tweetlist = array('account_id' => $account_id);
           }
           // モデルを作成
           $new_tweet = new TwitterAccountNewTweet();
           // テーブル登録
           $new_tweet->fill($tweetlist)->save();
-          Log::debug('第二のテーブル');
-          Log::debug('^^^^^^^^^^^^^^^^^^^^^^^^^');
-  
-  
-  
-  
-  
-  
+
         }
         // ページカウントを1増やす
         $page++;
@@ -270,10 +253,7 @@ class TwitterController extends Controller
     // =======================================
     public function accounts_index()
     {
-      Log::debug('TwitterController : accounts_index : アカウント一覧全部取得');
       $accounts = TwitterAccount::with(['new_tweet'])->orderBy('account_created_at', 'desc')->paginate();
-      
-      Log::debug(print_r($accounts, true));
       
       return $accounts;
     }
