@@ -23,11 +23,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/BrandTweetCount.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_10_30_170944_create_brand_tweet_counts_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TwitterAccount.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccountNewTweet.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TwitterAccountNewTweet.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -323,7 +319,7 @@
       <workItem from="1604013189755" duration="1598000" />
       <workItem from="1604014825398" duration="283000" />
       <workItem from="1604015526167" duration="2438000" />
-      <workItem from="1604018077834" duration="18271000" />
+      <workItem from="1604018077834" duration="18893000" />
     </task>
     <servers />
   </component>

@@ -17,6 +17,7 @@ class TwitterAccountNewTweet extends Model
       'tweet_id_str',
       'tweet_text',
       'tweet_created_at',
+      'owner'
   ];
   
   // fillable
