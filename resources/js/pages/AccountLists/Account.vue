@@ -134,6 +134,12 @@
             >{{ this.account_text_created_at | new_tweet_date }}</a>
           </span>
         </div>
+        <div
+            class="item-4 p-accounts__tweet--data"
+            v-else
+        >
+          <span> ~  このユーザーはまだツイートをしていません ~ </span>
+        </div>
 
       </div>
 
@@ -157,7 +163,7 @@ export default {
   },
   data() {
     return {
-      'new_tweet': this.account.new_tweet
+      new_tweet: this.account.new_tweet
     }
   },
   computed: {
@@ -165,7 +171,7 @@ export default {
       return this.account.following;
     },
     isExistTweet() {
-      return Object.keys(this.new_tweet).length;
+      return this.new_tweet !== null;
     },
     account_text() {
       return this.new_tweet.tweet_text;

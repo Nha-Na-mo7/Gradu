@@ -2408,6 +2408,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2419,7 +2425,7 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
   },
   data: function data() {
     return {
-      'new_tweet': this.account.new_tweet
+      new_tweet: this.account.new_tweet
     };
   },
   computed: {
@@ -2427,7 +2433,7 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
       return this.account.following;
     },
     isExistTweet: function isExistTweet() {
-      return Object.keys(this.new_tweet).length;
+      return this.new_tweet !== null;
     },
     account_text: function account_text() {
       return this.new_tweet.tweet_text;
@@ -45768,7 +45774,11 @@ var render = function() {
                     )
                   ])
                 ])
-              : _vm._e()
+              : _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
+                  _c("span", [
+                    _vm._v(" ~  このユーザーはまだツイートをしていません ~ ")
+                  ])
+                ])
           ])
         : _vm._e()
     ])
