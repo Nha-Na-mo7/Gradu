@@ -45749,35 +45749,60 @@ var render = function() {
       !_vm.twitter_protected
         ? _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
             _vm.isExistTweet
-              ? _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-                  _c("p", [_vm._v(_vm._s(this.account_text))]),
-                  _vm._v(" "),
-                  _c("span", [
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "item-4 p-accounts__tweet p-accounts__tweet--data"
+                  },
+                  [
+                    _c("p", { staticClass: "p-accounts__tweet" }, [
+                      _vm._v(_vm._s(this.account_text))
+                    ]),
+                    _vm._v(" "),
                     _c(
-                      "a",
+                      "span",
                       {
-                        attrs: {
-                          href: _vm.twitter_tweet_url,
-                          target: "_blank",
-                          rel: "noopener noreferrer"
-                        }
+                        staticClass:
+                          "p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--date"
                       },
                       [
-                        _vm._v(
-                          _vm._s(
-                            _vm._f("new_tweet_date")(
-                              this.account_text_created_at
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: _vm.twitter_tweet_url,
+                              target: "_blank",
+                              rel: "noopener noreferrer"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm._f("new_tweet_date")(
+                                  this.account_text_created_at
+                                )
+                              )
                             )
-                          )
+                          ]
                         )
                       ]
                     )
-                  ])
-                ])
+                  ]
+                )
               : _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-                  _c("span", [
-                    _vm._v(" ~  このユーザーはまだツイートをしていません ~ ")
-                  ])
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--nothing"
+                    },
+                    [
+                      _vm._v(
+                        " ~  このユーザーからのツイートはまだありません ~ "
+                      )
+                    ]
+                  )
                 ])
           ])
         : _vm._e()

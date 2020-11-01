@@ -122,11 +122,11 @@
       >
         <!-- 取得したツイートと日付 -->
         <div
-            class="item-4 p-accounts__tweet--data"
+            class="item-4 p-accounts__tweet p-accounts__tweet--data"
             v-if="isExistTweet"
         >
-          <p>{{ this.account_text }}</p>
-          <span>
+          <p class="p-accounts__tweet">{{ this.account_text }}</p>
+          <span class="p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--date">
             <a
               :href="twitter_tweet_url"
               target="_blank"
@@ -138,7 +138,7 @@
             class="item-4 p-accounts__tweet--data"
             v-else
         >
-          <span> ~  このユーザーはまだツイートをしていません ~ </span>
+          <span class="p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--nothing"> ~  このユーザーからのツイートはまだありません ~ </span>
         </div>
 
       </div>
