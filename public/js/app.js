@@ -2416,6 +2416,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 var DEFAULT_TWITTER_URL = 'https://twitter.com/';
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2436,6 +2439,9 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
     },
     account_protected: function account_protected() {
       return this.account["protected"];
+    },
+    isExistProfileDescription: function isExistProfileDescription() {
+      return this.account.description !== '';
     },
     isExistTweet: function isExistTweet() {
       return this.new_tweet !== null;
@@ -45680,11 +45686,13 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "item-5 p-accounts__profile--description" },
-            [_c("p", [_vm._v(_vm._s(_vm.account.description))])]
-          )
+          _vm.isExistProfileDescription
+            ? _c(
+                "div",
+                { staticClass: "item-5 p-accounts__profile--description" },
+                [_c("p", [_vm._v(_vm._s(_vm.account.description))])]
+              )
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "item-4 p-accounts__follow--area" }, [

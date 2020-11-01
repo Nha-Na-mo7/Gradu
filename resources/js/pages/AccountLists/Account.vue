@@ -64,7 +64,10 @@
           </div>
 
           <!-- Twitterプロフィール -->
-          <div class="item-5 p-accounts__profile--description">
+          <div
+              class="item-5 p-accounts__profile--description"
+              v-if="isExistProfileDescription"
+          >
             <p>{{ account.description }}</p>
           </div>
         </div>
@@ -174,6 +177,9 @@ export default {
     },
     account_protected() {
       return this.account.protected;
+    },
+    isExistProfileDescription() {
+      return this.account.description !== '';
     },
     isExistTweet() {
       return this.new_tweet !== null;
