@@ -113,11 +113,8 @@
               </div>
               <div class="item-7 p-accounts__ff--title"><p>フォロワー</p></div>
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       <!-- 新着ツイート1件表示エリア (鍵アカウントの場合は非表示)-->
@@ -202,15 +199,6 @@ export default {
     twitter_tweet_url() {
       return this.twitter_account_url + '/status/' + this.new_tweet.tweet_id_str;
     },
-
-
-  },
-  methods: {
-    async fetchNewTweet() {
-      const response = await axios.get(`/api/accounts/new_tweet`, );
-
-
-    }
   },
   filters: {
     new_tweet_date: function (date) {
