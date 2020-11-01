@@ -986,6 +986,14 @@ main {
   display: flex;
 }
 
+.p-accounts__item:nth-child(2n) {
+  background: #fbf7fd;
+}
+
+.p-accounts__item:nth-child(2n+1) {
+  background: #ffffff;
+}
+
 .p-accounts__headline {
   margin-bottom: 20px;
   display: flex;

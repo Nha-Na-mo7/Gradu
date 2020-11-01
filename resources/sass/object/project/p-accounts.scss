@@ -28,6 +28,13 @@
     padding: 20px 15px;
     border-radius: 4px;
     display: flex;
+
+    &:nth-child(2n){
+      background: #fbf7fd;
+    }
+    &:nth-child(2n+1){
+      background: #ffffff;
+    }
   }
 
   &__headline {
