@@ -45,6 +45,8 @@
                 >
                   {{ account.name }}
                 </a>
+                <!-- 鍵アイコン / fontawesomeを使う -->
+                <span v-if="account_protected"> 🔒 </span>
               </p>
             </div>
             <!-- Twitterユーザー名 -->
@@ -118,7 +120,7 @@
       <!-- 新着ツイート1件表示エリア (鍵アカウントの場合は非表示)-->
       <div
           class="item-3 p-accounts__tweet--area"
-          v-if="!twitter_protected"
+          v-if="!account_protected"
       >
         <!-- 取得したツイートと日付 -->
         <div
@@ -170,6 +172,9 @@ export default {
     isFollowing() {
       return this.account.following;
     },
+    account_protected() {
+      return this.account.protected;
+    },
     isExistTweet() {
       return this.new_tweet !== null;
     },
@@ -191,9 +196,7 @@ export default {
     twitter_tweet_url() {
       return this.twitter_account_url + '/status/' + this.new_tweet.tweet_id_str;
     },
-    twitter_protected() {
-      return this.account.protected;
-    },
+
 
   },
   methods: {
