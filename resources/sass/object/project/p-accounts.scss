@@ -84,7 +84,7 @@
   &__profile{
     // アカウント名とユーザー名のエリア
     margin-bottom: 5px;
-    line-height: 120%;
+    line-height: 100%;
 
     // アカウント名・ユーザー名・デスクリプションのエリア
     &--area {
@@ -218,7 +218,6 @@
       line-height: 20px;
     }
     &--span {
-      font-size: 12px;
       color: #a4a4a4;
       &:hover {
         cursor: pointer;
@@ -226,6 +225,7 @@
       }
     }
     &--date {
+      font-size: 12px;
       text-align: right;
     }
     &--nothing {
