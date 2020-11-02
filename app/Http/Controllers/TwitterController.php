@@ -218,14 +218,12 @@ class TwitterController extends Controller
             foreach ($tweetRequest as $tweetreq) {
               // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
               if(isset($tweetreq)) {
-                Log::debug('this is :'. $tweetreq->id_str);
                 $addlist = array(
                     'account_id' => $account_id,
                     'tweet_id_str' => $tweetreq->id_str,
                     'tweet_text' => $tweetreq->text,
                     'tweet_created_at' => date('Y-m-d H:i:s', strtotime($tweetreq->created_at))
                 );
-  
                 $tweetlist = $addlist;
               // まだツイートしていないアカウントは、アカウントのIDだけテーブルに入れる
               } else {

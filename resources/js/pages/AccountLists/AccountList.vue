@@ -28,6 +28,7 @@
               @click="auto_following"
           >自動フォロー</button>
         </div>
+        <!-- TODO バッチ処理用のボタン・削除すること -->
         <button class="c-btn" @click="twitter_index">バッチ処理・ニュースをDBに格納</button>
       </div>
 
@@ -160,8 +161,6 @@ export default {
     },
     // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     async twitter_index() {
-
-      alert('開始します');
 
       // APIにアクセス
       const response = await axios.get(`/api/twitter/index`);

@@ -2533,6 +2533,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 
 
 
@@ -2662,16 +2663,14 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                alert('開始します'); // APIにアクセス
-
-                _context2.next = 3;
+                _context2.next = 2;
                 return axios.get("/api/twitter/index");
 
-              case 3:
+              case 2:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
-                  _context2.next = 7;
+                  _context2.next = 6;
                   break;
                 }
 
@@ -2679,12 +2678,12 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context2.abrupt("return", false);
 
-              case 7:
+              case 6:
                 alert('yes!' + response.status); // ステータス番号を返す
 
                 return _context2.abrupt("return", response.status);
 
-              case 9:
+              case 8:
               case "end":
                 return _context2.stop();
             }
