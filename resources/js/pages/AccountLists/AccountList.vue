@@ -151,6 +151,8 @@ export default {
     // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     async twitter_index() {
 
+      alert('開始します');
+
       // APIにアクセス
       const response = await axios.get(`/api/twitter/index`);
 

@@ -2651,14 +2651,16 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
+                alert('開始します'); // APIにアクセス
+
+                _context2.next = 3;
                 return axios.get("/api/twitter/index");
 
-              case 2:
+              case 3:
                 response = _context2.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_7__["OK"])) {
-                  _context2.next = 6;
+                  _context2.next = 7;
                   break;
                 }
 
@@ -2666,12 +2668,12 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context2.abrupt("return", false);
 
-              case 6:
+              case 7:
                 alert('yes!' + response.status); // ステータス番号を返す
 
                 return _context2.abrupt("return", response.status);
 
-              case 8:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -3437,6 +3439,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //

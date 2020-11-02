@@ -139,7 +139,7 @@ class TwitterController extends Controller
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 50; // 検索ページ。これを終わるまで繰り返す。
+      $page = 51; // 検索ページ。これを終わるまで繰り返す。
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -218,12 +218,14 @@ class TwitterController extends Controller
             foreach ($tweetRequest as $tweetreq) {
               // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
               if(isset($tweetreq)) {
+                Log::debug('this is :'. $tweetreq->id_str);
                 $addlist = array(
                     'account_id' => $account_id,
                     'tweet_id_str' => $tweetreq->id_str,
                     'tweet_text' => $tweetreq->text,
                     'tweet_created_at' => date('Y-m-d H:i:s', strtotime($tweetreq->created_at))
                 );
+  
                 $tweetlist = $addlist;
               // まだツイートしていないアカウントは、アカウントのIDだけテーブルに入れる
               } else {
