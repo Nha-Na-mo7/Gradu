@@ -2,7 +2,7 @@
 <!--アカウント一覧・見つからなかった時のコンポーネント-->
 <!--=========================================-->
 <template>
-  <div class="p-accounts__item p-accounts__item--nothing">
+  <div class="p-accounts__item c-nothing">
     <h2 class="">{{ title }}</h2>
     <p>{{ description }}</p>
   </div>

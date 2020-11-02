@@ -1,0 +1,19 @@
+// ==============
+//  c-nothingitem
+//  =============
+//記事やアカウントが、検索の結果見つからなかった場合のコンポーネント
+
+.c-nothing {
+  padding: 15px 25px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  & h2 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  & p {
+    font-size: 15px;
+  }
+}

@@ -46051,15 +46051,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "p-accounts__item p-accounts__item--nothing" },
-    [
-      _c("h2", {}, [_vm._v(_vm._s(_vm.title))]),
-      _vm._v(" "),
-      _c("p", [_vm._v(_vm._s(_vm.description))])
-    ]
-  )
+  return _c("div", { staticClass: "p-accounts__item c-nothing" }, [
+    _c("h2", {}, [_vm._v(_vm._s(_vm.title))]),
+    _vm._v(" "),
+    _c("p", [_vm._v(_vm._s(_vm.description))])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -47291,7 +47287,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "p-news__item p-news__item--nothing" }, [
+    _c("div", { staticClass: "p-news__item c-nothing" }, [
       _c("h2", {}, [_vm._v(_vm._s(_vm.title))]),
       _vm._v(" "),
       _c("p", [_vm._v(_vm._s(_vm.description))])

@@ -1528,6 +1528,23 @@ main {
   font-weight: bold;
 }
 
+.c-nothing {
+  padding: 15px 25px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.c-nothing h2 {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.c-nothing p {
+  font-size: 15px;
+}
+
 .title {
   font-weight: bold;
   margin: 2rem 0;

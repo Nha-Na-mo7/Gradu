@@ -3,7 +3,7 @@
 <!--============================================-->
 <template>
   <div>
-    <div class="p-news__item p-news__item--nothing">
+    <div class="p-news__item c-nothing">
       <!-- 記事のタイトル -->
       <h2 class="">{{ title }}</h2>
       <p>{{ description }}</p>
