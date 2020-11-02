@@ -9,7 +9,13 @@
     <div class="p-news__item--picture"></div>
     <!-- 記事のタイトル -->
     <div class="p-news__item--title">
-      <h2 class=""><a :href="this.entry.url">{{ getTitle }}</a></h2>
+      <h2 class="">
+        <a
+            :href="this.entry.url"
+            target="_blank"
+            rel="noopener noreferrer"
+        >{{ getTitle }}</a>
+      </h2>
     </div>
     <!-- 時刻とメディア -->
     <div class="p-news__item--data">

@@ -3663,6 +3663,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -47058,9 +47064,17 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "p-news__item--title" }, [
       _c("h2", {}, [
-        _c("a", { attrs: { href: this.entry.url } }, [
-          _vm._v(_vm._s(_vm.getTitle))
-        ])
+        _c(
+          "a",
+          {
+            attrs: {
+              href: this.entry.url,
+              target: "_blank",
+              rel: "noopener noreferrer"
+            }
+          },
+          [_vm._v(_vm._s(_vm.getTitle))]
+        )
       ])
     ]),
     _vm._v(" "),
