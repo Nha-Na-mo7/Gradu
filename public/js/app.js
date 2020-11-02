@@ -46828,11 +46828,11 @@ var render = function() {
           _vm._v("マイページ\n    ")
         ]),
         _vm._v(" "),
-        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/account" } }, [
+        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/accounts" } }, [
           _vm._v("Twitterアカウント一覧\n    ")
         ]),
         _vm._v(" "),
-        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/" } }, [
+        _c("RouterLink", { staticClass: "c-btn", attrs: { to: "/trends" } }, [
           _vm._v("終値分析\n    ")
         ]),
         _vm._v(" "),

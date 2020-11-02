@@ -12,12 +12,12 @@
       >マイページ
       </RouterLink>
       <RouterLink
-          to="/account"
+          to="/accounts"
           class="c-btn"
       >Twitterアカウント一覧
       </RouterLink>
       <RouterLink
-          to="/"
+          to="/trends"
           class="c-btn"
       >終値分析
       </RouterLink>
