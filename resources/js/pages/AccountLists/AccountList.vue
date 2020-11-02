@@ -33,11 +33,17 @@
 
       <!-- アカウントリスト -->
       <div class="p-accounts__list">
-        <!-- 検索中 -->
-        <div v-if="isSearching" class="">
+        <!-- 読み込み中 -->
+        <div v-if="isLoading" class="">
           <Loading />
         </div>
-        <!-- アカウント -->
+
+        <!-- アカウントが見つからなかった場合 -->
+        <div v-else-if="isNothing">
+          <NothingAccount />
+        </div>
+
+        <!-- アカウントコンポーネント -->
         <Account
             v-else
             v-for="Accounts in accounts"
@@ -46,9 +52,9 @@
         />
       </div>
 
-
     </div>
 
+    <!-- ページネーション -->
     <Pagination
         :current-page="currentPage"
         :last-page="lastPage"
@@ -60,6 +66,7 @@
 
 <script>
 import Account from './Account.vue';
+import NothingAccount from './NothingAccount.vue';
 import Loading from '../../components/Loading.vue';
 import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
@@ -80,7 +87,7 @@ export default {
   },
   data() {
     return {
-      isSearching: false, // 検索中か
+      isLoading: false, // 読み込み中か
       isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
       accounts: [],
       currentPage: 0,
@@ -98,6 +105,9 @@ export default {
     // TODO リボンタグ用・最終更新日を1日1回更新していれる、このcomputed自体は削除予定
     today() {
       return new Date();
+    },
+    isNothing() {
+      return this.isNothingAccounts;
     }
   },
   methods: {
@@ -105,12 +115,12 @@ export default {
     async fetch_TwitterAccountsOld() {
 
       // 検索中には呼び出せないようにする
-      if(this.isSearching) {
+      if(this.isLoading) {
         return false;
       }
 
-      // 検索開始時点で、isSearchingをtrueに、isNothingAccountsをfalseにする
-      this.isSearching = true;
+      // 検索開始時点で、isLoadingをtrueに、isNothingAccountsをfalseにする
+      this.isLoading = true;
       this.isNothingAccounts = false;
 
       // APIにアクセス
@@ -137,8 +147,8 @@ export default {
       if(!this.fetchedAccounts.length) {
         this.isNothingNews = true;
       }
-      // 検索終了、isSearchingをfalseに戻す
-      this.isSearching = false;
+      // 検索終了、isLoadingをfalseに戻す
+      this.isLoading = false;
 
       console.log(response.data)
 
@@ -171,6 +181,13 @@ export default {
 
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
     async fetchAccounts() {
+      // 読み込み中ならこのメソッドは発火しない
+      if(this.isLoading) {
+        return false;
+      }
+      // 読み込みをtrueに
+      this.isLoading = true;
+
       const response = await axios.get(`/api/accounts/index/?page=${this.p}`);
 
       // エラー時
@@ -184,6 +201,14 @@ export default {
       this.accounts = response.data.data
       this.currentPage = response.data.current_page
       this.lastPage = response.data.last_page
+
+      // そのページにアカウントがないor通信が思いなどで読み込めないとき
+      if(response.data.data.length === 0) {
+        this.isNothingAccounts = true;
+      }
+
+      // 読み込みをfalseに、isNothingAccountsをtrueに
+      this.isLoading = false;
     },
     // オートフォローをオンにする
     auto_following() {
@@ -192,6 +217,7 @@ export default {
   },
   components: {
     Account,
+    NothingAccount,
     Loading,
     SiteLinknav,
     PageTitle,
