@@ -78,8 +78,8 @@
           <!-- フォローボタンエリア、そのユーザーがTwitterアカウントを連携していない場合非表示 -->
           <div class="item-5 p-accounts__follow-btn--area">
             <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
-            <button class="c-btn" v-if="isFollowing">フォロー中</button>
-            <button class="c-btn" v-else>フォロー</button>
+            <button class="c-btn" v-if="isFollowing" @click="un_follow">フォロー中</button>
+            <button class="c-btn" v-else @click="follow">フォロー</button>
           </div>
 
           <!-- FF数 -->
@@ -170,6 +170,14 @@ export default {
     },
     twitter_followers_url() {
       return this.twitter_account_url + '/followers';
+    },
+  },
+  methods: {
+    follow() {
+      alert('this is follow btn!!! to ' + this.account.account_id)
+    },
+    un_follow() {
+      alert('this is un_follow btn...')
     },
   },
   components: {

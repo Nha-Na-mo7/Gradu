@@ -2430,6 +2430,14 @@ __webpack_require__.r(__webpack_exports__);
       return this.twitter_account_url + '/followers';
     }
   },
+  methods: {
+    follow: function follow() {
+      alert('this is follow btn!!! to ' + this.account.account_id);
+    },
+    un_follow: function un_follow() {
+      alert('this is un_follow btn...');
+    }
+  },
   components: {
     AccountTweet: _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
@@ -45794,8 +45802,16 @@ var render = function() {
         _c("div", { staticClass: "item-4 p-accounts__follow--area" }, [
           _c("div", { staticClass: "item-5 p-accounts__follow-btn--area" }, [
             _vm.isFollowing
-              ? _c("button", { staticClass: "c-btn" }, [_vm._v("フォロー中")])
-              : _c("button", { staticClass: "c-btn" }, [_vm._v("フォロー")])
+              ? _c(
+                  "button",
+                  { staticClass: "c-btn", on: { click: _vm.un_follow } },
+                  [_vm._v("フォロー中")]
+                )
+              : _c(
+                  "button",
+                  { staticClass: "c-btn", on: { click: _vm.follow } },
+                  [_vm._v("フォロー")]
+                )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "item-5 p-accounts__ff--area" }, [
