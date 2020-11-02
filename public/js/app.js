@@ -2549,6 +2549,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -46724,7 +46727,7 @@ var render = function() {
             "RouterLink",
             {
               staticClass: "c-btn",
-              attrs: { to: "/?p=" + (_vm.currentPage - 1) }
+              attrs: { to: "?p=" + (_vm.currentPage - 1) }
             },
             [_vm._v("« prev")]
           )
@@ -46735,7 +46738,7 @@ var render = function() {
             "RouterLink",
             {
               staticClass: "c-btn",
-              attrs: { to: "/?p=" + (_vm.currentPage + 1) }
+              attrs: { to: "?p=" + (_vm.currentPage + 1) }
             },
             [_vm._v("next »")]
           )
