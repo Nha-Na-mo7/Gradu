@@ -15,7 +15,7 @@ class CreateTwitterAccountsTable extends Migration
     {
         Schema::create('twitter_accounts', function (Blueprint $table) {
             $table->bigIncrements('id'); // プライマリーキー
-            $table->bigInteger('account_id')->unsigned()->unique(); // 取得したTwitterアカウントのID
+            $table->string('account_id')->unique(); // 取得したTwitterアカウントのID
             $table->string('name'); // アカウント名
             $table->string('screen_name')->unique(); // @から始まるユーザーネーム
             $table->text('description')->nullable(); // プロフィール
