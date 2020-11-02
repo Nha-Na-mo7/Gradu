@@ -50,6 +50,7 @@ export default {
           this.$router.push('/500');
         // 認証エラー
         } else if (val === UNAUTHORIZED) {
+          console.log('認証切れです')
           // トークンリフレッシュ
           await axios.get('/api/refresh-token');
           // ストアのuserをクリアする

@@ -195,7 +195,7 @@ export default {
         return false
       }
 
-      console.log(response)
+      console.log(response.data)
 
       this.accounts = response.data.data
       this.currentPage = response.data.current_page

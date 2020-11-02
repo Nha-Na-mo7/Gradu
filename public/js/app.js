@@ -1992,19 +1992,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$router.push('/500'); // 認証エラー
 
 
-                  _context.next = 12;
+                  _context.next = 13;
                   break;
 
                 case 4:
                   if (!(val === _util_js__WEBPACK_IMPORTED_MODULE_1__["UNAUTHORIZED"])) {
-                    _context.next = 11;
+                    _context.next = 12;
                     break;
                   }
 
-                  _context.next = 7;
+                  console.log('認証切れです'); // トークンリフレッシュ
+
+                  _context.next = 8;
                   return axios.get('/api/refresh-token');
 
-                case 7:
+                case 8:
                   // ストアのuserをクリアする
                   _this.$store.commit('auth/setUser', null); // ログイン画面へ遷移
 
@@ -2012,15 +2014,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.$router.push('/login'); // 404エラー
 
 
-                  _context.next = 12;
+                  _context.next = 13;
                   break;
 
-                case 11:
+                case 12:
                   if (val === _util_js__WEBPACK_IMPORTED_MODULE_1__["NOT_FOUND"]) {
                     _this.$router.push('/404');
                   }
 
-                case 12:
+                case 13:
                 case "end":
                   return _context.stop();
               }
@@ -2727,7 +2729,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
                 return _context3.abrupt("return", false);
 
               case 9:
-                console.log(response);
+                console.log(response.data);
                 _this3.accounts = response.data.data;
                 _this3.currentPage = response.data.current_page;
                 _this3.lastPage = response.data.last_page; // そのページにアカウントがないor通信が思いなどで読み込めないとき

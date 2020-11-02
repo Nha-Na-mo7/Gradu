@@ -139,7 +139,7 @@ class TwitterController extends Controller
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 51; // 検索ページ。これを終わるまで繰り返す。
+      $page = 50; // 検索ページ。これを終わるまで繰り返す。
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -154,6 +154,7 @@ class TwitterController extends Controller
 
       // $pageで検索
       while ($page) {
+        Log::debug($page.'ページ目をチェックします');
         // TwitterAPIにリクエストを投げ、情報を取得する
         $twitterRequest = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
         
@@ -217,6 +218,10 @@ class TwitterController extends Controller
             // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
             foreach ($tweetRequest as $tweetreq) {
               // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
+              
+              // TODO page52に差し掛かった段階で、id_strを参照しようとしてエラーを履いてしまう。要検証。
+              // TODO タイムアウトの変更ができていないためエラーが吐かれてしまう。
+              
               if(isset($tweetreq)) {
                 $addlist = array(
                     'account_id' => $account_id,
