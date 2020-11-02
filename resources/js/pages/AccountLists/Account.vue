@@ -122,27 +122,10 @@
           class="item-3 p-accounts__tweet--area"
           v-if="!account_protected"
       >
-        <!-- 取得したツイートと日付 -->
-        <div
-            class="item-4 p-accounts__tweet p-accounts__tweet--data"
-            v-if="isExistTweet"
-        >
-          <p class="p-accounts__tweet">{{ this.account_text }}</p>
-          <span class="p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--date">
-            <a
-              :href="twitter_tweet_url"
-              target="_blank"
-              rel="noopener noreferrer"
-            >{{ this.account_text_created_at | new_tweet_date }}</a>
-          </span>
-        </div>
-        <div
-            class="item-4 p-accounts__tweet--data"
-            v-else
-        >
-          <span class="p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--nothing"> ~  このユーザーからのツイートはまだありません ~ </span>
-        </div>
-
+        <AccountTweet
+          :account_url="twitter_account_url"
+          :tweet="this.account.new_tweet"
+        />
       </div>
 
     </div>
@@ -154,7 +137,8 @@
 <script>
 
 import moment from "moment";
-const DEFAULT_TWITTER_URL = 'https://twitter.com/';
+import { DEFAULT_TWITTER_URL } from "../../util";
+import AccountTweet from './AccountTweet.vue';
 
 export default {
   props: {
@@ -178,15 +162,6 @@ export default {
     isExistProfileDescription() {
       return this.account.description !== '';
     },
-    isExistTweet() {
-      return this.new_tweet !== null;
-    },
-    account_text() {
-      return this.new_tweet.tweet_text;
-    },
-    account_text_created_at() {
-      return this.new_tweet.tweet_created_at;
-    },
     twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account.screen_name;
     },
@@ -196,14 +171,11 @@ export default {
     twitter_followers_url() {
       return this.twitter_account_url + '/followers';
     },
-    twitter_tweet_url() {
-      return this.twitter_account_url + '/status/' + this.new_tweet.tweet_id_str;
-    },
+  },
+  components: {
+    AccountTweet
   },
   filters: {
-    new_tweet_date: function (date) {
-      return moment(date).format('YYYY-MM-DD HH:mm:ss')
-    },
     // ユーザー名にはレスポンスに"@"が付いていないので、付与する
     add_AtSign_to_screen_name: function (screen_name)  {
       return '@' + screen_name

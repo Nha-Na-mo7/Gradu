@@ -226,14 +226,14 @@
     }
     &--span {
       color: #a4a4a4;
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
     }
     &--date {
       font-size: 12px;
       text-align: right;
+      &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
     &--nothing {
       padding: 10px 0;

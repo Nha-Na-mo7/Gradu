@@ -2255,23 +2255,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AccountTweet.vue */ "./resources/js/pages/AccountLists/AccountTweet.vue");
 //
 //
 //
@@ -2409,7 +2394,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-var DEFAULT_TWITTER_URL = 'https://twitter.com/';
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     account: {
@@ -2432,32 +2418,20 @@ var DEFAULT_TWITTER_URL = 'https://twitter.com/';
     isExistProfileDescription: function isExistProfileDescription() {
       return this.account.description !== '';
     },
-    isExistTweet: function isExistTweet() {
-      return this.new_tweet !== null;
-    },
-    account_text: function account_text() {
-      return this.new_tweet.tweet_text;
-    },
-    account_text_created_at: function account_text_created_at() {
-      return this.new_tweet.tweet_created_at;
-    },
     twitter_account_url: function twitter_account_url() {
-      return DEFAULT_TWITTER_URL + this.account.screen_name;
+      return _util__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_TWITTER_URL"] + this.account.screen_name;
     },
     twitter_following_url: function twitter_following_url() {
       return this.twitter_account_url + '/following';
     },
     twitter_followers_url: function twitter_followers_url() {
       return this.twitter_account_url + '/followers';
-    },
-    twitter_tweet_url: function twitter_tweet_url() {
-      return this.twitter_account_url + '/status/' + this.new_tweet.tweet_id_str;
     }
   },
+  components: {
+    AccountTweet: _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   filters: {
-    new_tweet_date: function new_tweet_date(date) {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY-MM-DD HH:mm:ss');
-    },
     // ユーザー名にはレスポンスに"@"が付いていないので、付与する
     add_AtSign_to_screen_name: function add_AtSign_to_screen_name(screen_name) {
       return '@' + screen_name;
@@ -2779,6 +2753,85 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }))();
       },
       immediate: true
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    tweet: {
+      type: Object,
+      required: false
+    },
+    account_url: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    isExistTweet: function isExistTweet() {
+      return this.tweet !== null;
+    },
+    twitter_tweet_url: function twitter_tweet_url() {
+      return this.account_url + '/status/' + this.tweet.tweet_id_str;
+    },
+    text: function text() {
+      return this.tweet.tweet_text;
+    },
+    text_created_at: function text_created_at() {
+      return this.tweet.tweet_created_at;
+    }
+  },
+  filters: {
+    new_tweet_date: function new_tweet_date(date) {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(date).format('YYYY-MM-DD HH:mm:ss');
     }
   }
 });
@@ -45728,64 +45781,19 @@ var render = function() {
       ]),
       _vm._v(" "),
       !_vm.account_protected
-        ? _c("div", { staticClass: "item-3 p-accounts__tweet--area" }, [
-            _vm.isExistTweet
-              ? _c(
-                  "div",
-                  {
-                    staticClass:
-                      "item-4 p-accounts__tweet p-accounts__tweet--data"
-                  },
-                  [
-                    _c("p", { staticClass: "p-accounts__tweet" }, [
-                      _vm._v(_vm._s(this.account_text))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--date"
-                      },
-                      [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: _vm.twitter_tweet_url,
-                              target: "_blank",
-                              rel: "noopener noreferrer"
-                            }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                _vm._f("new_tweet_date")(
-                                  this.account_text_created_at
-                                )
-                              )
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              : _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--nothing"
-                    },
-                    [
-                      _vm._v(
-                        " ~  このユーザーからのツイートはまだありません ~ "
-                      )
-                    ]
-                  )
-                ])
-          ])
+        ? _c(
+            "div",
+            { staticClass: "item-3 p-accounts__tweet--area" },
+            [
+              _c("AccountTweet", {
+                attrs: {
+                  account_url: _vm.twitter_account_url,
+                  tweet: this.account.new_tweet
+                }
+              })
+            ],
+            1
+          )
         : _vm._e()
     ])
   ])
@@ -45887,6 +45895,70 @@ var render = function() {
     ],
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.isExistTweet
+    ? _c(
+        "div",
+        { staticClass: "item-4 p-accounts__tweet p-accounts__tweet--data" },
+        [
+          _c("p", { staticClass: "p-accounts__tweet" }, [
+            _vm._v(_vm._s(this.text))
+          ]),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass:
+                "p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--date"
+            },
+            [
+              _c(
+                "a",
+                {
+                  attrs: {
+                    href: _vm.twitter_tweet_url,
+                    target: "_blank",
+                    rel: "noopener noreferrer"
+                  }
+                },
+                [_vm._v(_vm._s(_vm._f("new_tweet_date")(this.text_created_at)))]
+              )
+            ]
+          )
+        ]
+      )
+    : _c("div", { staticClass: "item-4 p-accounts__tweet--data" }, [
+        _c(
+          "span",
+          {
+            staticClass:
+              "p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--nothing"
+          },
+          [_vm._v(" ~  このユーザーからのツイートはまだありません ~ ")]
+        )
+      ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -64601,6 +64673,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/AccountLists/AccountTweet.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/pages/AccountLists/AccountTweet.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AccountTweet_vue_vue_type_template_id_359ebef2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true& */ "./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true&");
+/* harmony import */ var _AccountTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AccountTweet.vue?vue&type=script&lang=js& */ "./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AccountTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AccountTweet_vue_vue_type_template_id_359ebef2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AccountTweet_vue_vue_type_template_id_359ebef2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "359ebef2",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/AccountLists/AccountTweet.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AccountTweet.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountTweet_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true&":
+/*!*****************************************************************************************************!*\
+  !*** ./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true& ***!
+  \*****************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountTweet_vue_vue_type_template_id_359ebef2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/AccountLists/AccountTweet.vue?vue&type=template&id=359ebef2&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountTweet_vue_vue_type_template_id_359ebef2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountTweet_vue_vue_type_template_id_359ebef2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/Auths/Login.vue":
 /*!********************************************!*\
   !*** ./resources/js/pages/Auths/Login.vue ***!
@@ -66634,7 +66775,7 @@ var actions = {}; // ================
 /*!******************************!*\
   !*** ./resources/js/util.js ***!
   \******************************/
-/*! exports provided: getCookieValue, isArrayExists, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, DEFAULT_SEARCHWORD, CURRENCY_ICON_PATH */
+/*! exports provided: getCookieValue, isArrayExists, OK, CREATED, NOT_FOUND, UNAUTHORIZED, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR, DEFAULT_SEARCHWORD, DEFAULT_TWITTER_URL, CURRENCY_ICON_PATH */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66648,6 +66789,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UNPROCESSABLE_ENTITY", function() { return UNPROCESSABLE_ENTITY; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INTERNAL_SERVER_ERROR", function() { return INTERNAL_SERVER_ERROR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_SEARCHWORD", function() { return DEFAULT_SEARCHWORD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEFAULT_TWITTER_URL", function() { return DEFAULT_TWITTER_URL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CURRENCY_ICON_PATH", function() { return CURRENCY_ICON_PATH; });
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -66711,7 +66853,8 @@ var UNAUTHORIZED = 419; //認証切れ(Laravel独自のコード)
 var UNPROCESSABLE_ENTITY = 422; //バリデーションエラー
 
 var INTERNAL_SERVER_ERROR = 500;
-var DEFAULT_SEARCHWORD = '仮想通貨'; // 通貨アイコンのパス。storage/images/currency_svg/xxxxxx.svg
+var DEFAULT_SEARCHWORD = '仮想通貨';
+var DEFAULT_TWITTER_URL = 'https://twitter.com/'; // 通貨アイコンのパス。storage/images/currency_svg/xxxxxx.svg
 
 var CURRENCY_ICON_PATH = 'storage/images/currency_svg/';
 

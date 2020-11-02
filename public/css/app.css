@@ -1147,14 +1147,14 @@ main {
   color: #a4a4a4;
 }
 
-.p-accounts__tweet--span:hover {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
 .p-accounts__tweet--date {
   font-size: 12px;
   text-align: right;
+}
+
+.p-accounts__tweet--date:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .p-accounts__tweet--nothing {
