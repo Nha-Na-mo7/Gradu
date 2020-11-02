@@ -14,7 +14,6 @@ class TwitterAccountNewTweet extends Model
   // JSONに含める属性
   // account_idはtwitter_accountsテーブルのものを参照するのでこちらでは不要
   protected $visible = [
-      'account_id',
       'tweet_id_str',
       'tweet_text',
       'tweet_created_at',
