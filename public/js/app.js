@@ -66026,6 +66026,12 @@ var routes = [{
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
+  scrollBehavior: function scrollBehavior() {
+    return {
+      x: 0,
+      y: 0
+    };
+  },
   routes: routes
 }); // VueRouterインスタンスのエクスポート(app.jsでインポートする)
 
