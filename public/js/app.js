@@ -2479,23 +2479,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 5:
                 response = _context.sent;
 
-                if (!(response.status === 403)) {
-                  _context.next = 10;
-                  break;
-                }
-
-                _this.$store.commit('error/setErrorCode', response.status); // フラッシュメッセージ
-
-
-                _this.$store.commit('message/setContent', {
-                  content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
-                });
-
-                return _context.abrupt("return", false);
-
-              case 10:
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                  _context.next = 13;
+                  _context.next = 9;
                   break;
                 }
 
@@ -2503,11 +2488,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 13:
-                console.log(response);
+              case 9:
+                if (!(response.data.result.errors === undefined)) {
+                  _context.next = 12;
+                  break;
+                }
+
+                // フラッシュメッセージ
+                _this.$store.commit('message/setContent', {
+                  content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
+                });
+
+                return _context.abrupt("return", false);
+
+              case 12:
                 alert('終了！');
 
-              case 15:
+              case 13:
               case "end":
                 return _context.stop();
             }
