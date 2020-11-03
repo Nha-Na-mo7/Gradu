@@ -70,12 +70,10 @@ class LoginController extends Controller
       // twitterアプリ側から返ってきた情報を取得する
       try {
         $twitter_user = Socialite::with("twitter")->user();
+        
         // アクセストークンの取得
         $token = $twitter_user->token;
         $token_secret = $twitter_user->tokenSecret;
-        
-        
-        
       }
       catch (\Exception $e) {
         // エラーならログイン画面へ戻す
@@ -87,10 +85,14 @@ class LoginController extends Controller
       // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
       // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
       $myinfo = User::firstOrCreate(
-          ['token' => $twitter_user->token ],
+          [
+              'token' => $token,
+              'token_secret' => $token_secret
+          ],
           [
               'name' => $twitter_user->nickname,
-              'email' => $twitter_user->getEmail()
+              'email' => $twitter_user->getEmail(),
+              'token_secret' => $token_secret
           ]);
       Auth::login($myinfo);
   
