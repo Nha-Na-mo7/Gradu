@@ -29,7 +29,6 @@
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -327,7 +326,7 @@
       <workItem from="1604015526167" duration="2438000" />
       <workItem from="1604018077834" duration="48483000" />
       <workItem from="1604377731550" duration="310000" />
-      <workItem from="1604378076521" duration="15989000" />
+      <workItem from="1604378076521" duration="18368000" />
     </task>
     <servers />
   </component>

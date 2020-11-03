@@ -274,7 +274,8 @@ class TwitterController extends Controller
        * user_id:必須 / フォロー先のアカウントID
        * follow: false (ちなみにtrueにするとお気に入り通知もONにしてくれるらしい)
        */
-      $user_id = $request->user_id; // フォロー対象のアカウントのID。
+      // $user_id = $request->user_id; // フォロー対象のアカウントのID。
+      $user_id = 1044456766241558529; // 削除されているID・テスト用
       $token = $request->token; // 連携ユーザーのアクセストークン
       $token_secret = $request->token_secret; // アクセストークンシークレット
       //
@@ -291,7 +292,7 @@ class TwitterController extends Controller
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $user_id));
       
-      return response(200);
+      return response()->json(['result' => $twitterRequest]);
     }
     // // =========================================
     // // アカウントコンポーネント/DBから新着ツイートの取得

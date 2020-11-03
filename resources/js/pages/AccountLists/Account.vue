@@ -199,6 +199,16 @@ export default {
 
       const response = await axios.post('../api/accounts/follow', follow_param);
 
+      // 403エラーの時
+      // 一覧表示したユーザーがアカウントを削除していた場合
+      if (response.status === 403) {
+        this.$store.commit('error/setErrorCode', response.status)
+        // フラッシュメッセージ
+        this.$store.commit('message/setContent', {
+          content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
+        });
+        return false
+      }
       // エラー時
       if (response.status !== OK) {
         this.$store.commit('error/setErrorCode', response.status)
