@@ -24,8 +24,11 @@
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/error.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/error.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/news.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/news.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/store_template.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/store_template.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +42,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -323,7 +326,7 @@
       <workItem from="1604015526167" duration="2438000" />
       <workItem from="1604018077834" duration="48483000" />
       <workItem from="1604377731550" duration="310000" />
-      <workItem from="1604378076521" duration="7569000" />
+      <workItem from="1604378076521" duration="9490000" />
     </task>
     <servers />
   </component>

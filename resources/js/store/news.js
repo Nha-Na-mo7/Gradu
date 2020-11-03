@@ -7,12 +7,12 @@ import { isArrayExists } from '../util';
 // ===============
 // state
 // ===============
-const state = {
+const state = () => ({
   // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
   requireSearchWords: '',
   // チェックボックスでチェックされたワードの配列
   checkedCurrencies: [],
-}
+})
 
 // ===============
 // getter

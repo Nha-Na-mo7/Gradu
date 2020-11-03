@@ -14875,10 +14875,10 @@ if(_store__WEBPACK_IMPORTED_MODULE_13__["default"].getters['auth/loginCheck']){n
 // ===============
 // state
 // ===============
-var state={//ログイン済みユーザーの保持
+var state=function state(){return{//ログイン済みユーザーの保持
 user:null,//APIの呼び出しにエラーが起きていないか
 apiStatus:null,//エラーメッセージ
-loginErrorMessages:null,registerErrorMessages:null,resetMailErrorMessage:null,resetPasswordErrorMessages:null,resetToken:null};// ===============
+loginErrorMessages:null,registerErrorMessages:null,resetMailErrorMessage:null,resetPasswordErrorMessages:null,resetToken:null};};// ===============
 // getter
 // ===============
 var getters={// ユーザーがログイン済みか否か
@@ -14959,7 +14959,7 @@ context.commit('setApiStatus',false);context.commit('error/setErrorCode',respons
 // ===============
 // state
 // ===============
-var state={errorCode:null};// ===============
+var state=function state(){return{errorCode:null};};// ===============
 // mutations
 // ===============
 var mutations={// errorCodeに、受け取ったエラー時のステータスコード番号を格納する
@@ -14979,7 +14979,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 // ===============
 // state
 // ===============
-var state={content:''};// ===============
+var state=function state(){return{content:''};};// ===============
 // mutations
 // ===============
 var mutations={// フラッシュメッセージをセットする。
@@ -14996,9 +14996,9 @@ setContent:function setContent(state,_ref){var content=_ref.content,_ref$timeout
 // ===============
 // state
 // ===============
-var state={// デフォルトの検索ワード(仮想通貨とかアルトコインとか)
+var state=function state(){return{// デフォルトの検索ワード(仮想通貨とかアルトコインとか)
 requireSearchWords:'',// チェックボックスでチェックされたワードの配列
-checkedCurrencies:[]};// ===============
+checkedCurrencies:[]};};// ===============
 // getter
 // ===============
 var getter={checkedCurrencies:function checkedCurrencies(state){return state.checkedCurrencies;}};// ===============

@@ -66446,20 +66446,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 // state
 // ===============
 
-var state = {
-  //ログイン済みユーザーの保持
-  user: null,
-  //APIの呼び出しにエラーが起きていないか
-  apiStatus: null,
-  //エラーメッセージ
-  loginErrorMessages: null,
-  registerErrorMessages: null,
-  resetMailErrorMessage: null,
-  resetPasswordErrorMessages: null,
-  resetToken: null
+var state = function state() {
+  return {
+    //ログイン済みユーザーの保持
+    user: null,
+    //APIの呼び出しにエラーが起きていないか
+    apiStatus: null,
+    //エラーメッセージ
+    loginErrorMessages: null,
+    registerErrorMessages: null,
+    resetMailErrorMessage: null,
+    resetPasswordErrorMessages: null,
+    resetToken: null
+  };
 }; // ===============
 // getter
 // ===============
+
 
 var getters = {
   // ユーザーがログイン済みか否か
@@ -66837,11 +66840,14 @@ __webpack_require__.r(__webpack_exports__);
 // ===============
 // state
 // ===============
-var state = {
-  errorCode: null
+var state = function state() {
+  return {
+    errorCode: null
+  };
 }; // ===============
 // mutations
 // ===============
+
 
 var mutations = {
   // errorCodeに、受け取ったエラー時のステータスコード番号を格納する
@@ -66913,11 +66919,14 @@ __webpack_require__.r(__webpack_exports__);
 // ===============
 // state
 // ===============
-var state = {
-  content: ''
+var state = function state() {
+  return {
+    content: ''
+  };
 }; // ===============
 // mutations
 // ===============
+
 
 var mutations = {
   // フラッシュメッセージをセットする。
@@ -66961,14 +66970,17 @@ __webpack_require__.r(__webpack_exports__);
 // state
 // ===============
 
-var state = {
-  // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
-  requireSearchWords: '',
-  // チェックボックスでチェックされたワードの配列
-  checkedCurrencies: []
+var state = function state() {
+  return {
+    // デフォルトの検索ワード(仮想通貨とかアルトコインとか)
+    requireSearchWords: '',
+    // チェックボックスでチェックされたワードの配列
+    checkedCurrencies: []
+  };
 }; // ===============
 // getter
 // ===============
+
 
 var getter = {
   checkedCurrencies: function checkedCurrencies(state) {

@@ -9,7 +9,7 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util';
 // ===============
 // state
 // ===============
-const state = {
+const state = () => ({
   //ログイン済みユーザーの保持
   user: null,
   //APIの呼び出しにエラーが起きていないか
@@ -20,7 +20,7 @@ const state = {
   resetMailErrorMessage: null,
   resetPasswordErrorMessages: null,
   resetToken: null
-}
+})
 
 
 
