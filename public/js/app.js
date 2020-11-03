@@ -2257,10 +2257,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
-/* harmony import */ var _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AccountTweet.vue */ "./resources/js/pages/AccountLists/AccountTweet.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AccountTweet.vue */ "./resources/js/pages/AccountLists/AccountTweet.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2405,7 +2403,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     account: {
@@ -2415,10 +2412,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      new_tweet: this.account.new_tweet,
-      follow_param: {
-        'user_id': this.account.account_id
-      }
+      new_tweet: this.account.new_tweet
     };
   },
   computed: {
@@ -2428,17 +2422,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     account_protected: function account_protected() {
       return this.account["protected"];
     },
+    account_id: function account_id() {
+      return this.account.account_id;
+    },
+    account_screen_name: function account_screen_name() {
+      return this.account.screen_name;
+    },
     isExistProfileDescription: function isExistProfileDescription() {
       return this.account.description !== '';
     },
     twitter_account_url: function twitter_account_url() {
-      return _util__WEBPACK_IMPORTED_MODULE_2__["DEFAULT_TWITTER_URL"] + this.account_id;
+      return _util__WEBPACK_IMPORTED_MODULE_1__["DEFAULT_TWITTER_URL"] + this.account_screen_name;
     },
     twitter_following_url: function twitter_following_url() {
       return this.twitter_account_url + '/following';
     },
     twitter_followers_url: function twitter_followers_url() {
       return this.twitter_account_url + '/followers';
+    },
+    access_token: function access_token() {
+      return this.$store.getters['auth/token'];
+    },
+    access_token_secret: function access_token_secret() {
+      return this.$store.getters['auth/token_secret'];
     }
   },
   methods: {
@@ -2446,19 +2452,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
+        var follow_param, response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios.post('../api/accounts/follow', _this.follow_param);
+                // フォロー用パラメータオブジェクトを作成
+                follow_param = {
+                  'user_id': _this.account_id,
+                  'token': _this.access_token,
+                  'token_secret': _this.access_token_secret
+                }; // アクセストークンが空(=Twitter認証未完了)なら、false
+                // (そもそも押せないようにしてあるが念のため)
 
-              case 2:
+                if (!(follow_param['token'] === '' || follow_param['token_secret'] === '')) {
+                  _context.next = 3;
+                  break;
+                }
+
+                return _context.abrupt("return", false);
+
+              case 3:
+                _context.next = 5;
+                return axios.post('../api/accounts/follow', follow_param);
+
+              case 5:
                 response = _context.sent;
 
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_2__["OK"])) {
-                  _context.next = 6;
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                  _context.next = 9;
                   break;
                 }
 
@@ -2466,11 +2488,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 9:
                 console.log(response);
                 alert('終了！');
 
-              case 8:
+              case 11:
               case "end":
                 return _context.stop();
             }
@@ -2483,7 +2505,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   components: {
-    AccountTweet: _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    AccountTweet: _AccountTweet_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   filters: {
     // ユーザー名にはレスポンスに"@"が付いていないので、付与する
@@ -45823,7 +45845,7 @@ var render = function() {
                       "\n                " +
                         _vm._s(
                           _vm._f("add_AtSign_to_screen_name")(
-                            _vm.account.screen_name
+                            _vm.account_screen_name
                           )
                         ) +
                         "\n              "
@@ -66472,6 +66494,13 @@ var getters = {
   // ログインしているユーザーのID
   user_id: function user_id(state) {
     return state.user ? state.user.id : '';
+  },
+  // ユーザーtwitterトークン
+  token: function token(state) {
+    return state.user ? state.user.token : '';
+  },
+  token_secret: function token_secret(state) {
+    return state.user ? state.user.token_secret : '';
   }
 }; // ===============
 // mutations

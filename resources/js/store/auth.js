@@ -33,6 +33,9 @@ const getters = {
   loginCheck: state => !! state.user,
   // ログインしているユーザーのID
   user_id: state => state.user ? state.user.id : '',
+  // ユーザーtwitterトークン
+  token: state => state.user ? state.user.token : '',
+  token_secret: state => state.user ? state.user.token_secret : '',
 }
 
 

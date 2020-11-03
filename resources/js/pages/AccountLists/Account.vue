@@ -57,7 +57,7 @@
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                  {{ account.screen_name |  add_AtSign_to_screen_name }}
+                  {{ account_screen_name |  add_AtSign_to_screen_name }}
                 </a>
               </span>
             </div>
@@ -135,8 +135,6 @@
 </template>
 
 <script>
-
-import moment from "moment";
 import {DEFAULT_TWITTER_URL, OK} from "../../util";
 import AccountTweet from './AccountTweet.vue';
 
@@ -150,9 +148,6 @@ export default {
   data() {
     return {
       new_tweet: this.account.new_tweet,
-      follow_param: {
-        'user_id': this.account.account_id
-      }
     }
   },
   computed: {
@@ -162,11 +157,17 @@ export default {
     account_protected() {
       return this.account.protected;
     },
+    account_id() {
+      return this.account.account_id
+    },
+    account_screen_name() {
+      return this.account.screen_name
+    },
     isExistProfileDescription() {
       return this.account.description !== '';
     },
     twitter_account_url() {
-      return DEFAULT_TWITTER_URL + this.account_id;
+      return DEFAULT_TWITTER_URL + this.account_screen_name;
     },
     twitter_following_url() {
       return this.twitter_account_url + '/following';
@@ -174,16 +175,29 @@ export default {
     twitter_followers_url() {
       return this.twitter_account_url + '/followers';
     },
+    access_token() {
+      return this.$store.getters['auth/token'];
+    },
+    access_token_secret() {
+      return this.$store.getters['auth/token_secret'];
+    },
   },
   methods: {
     async follow() {
-      const response = await axios.post('../api/accounts/follow', this.follow_param);
+      // フォロー用パラメータオブジェクトを作成
+      const follow_param = {
+        'user_id': this.account_id,
+        'token': this.access_token,
+        'token_secret': this.access_token_secret
+      }
 
-      // // バリデーションエラー
-      // if (response.status === UNPROCESSABLE_ENTITY) {
-      //   this.errors = response.data.errors;
-      //   return false
-      // }
+      // アクセストークンが空(=Twitter認証未完了)なら、false
+      // (そもそも押せないようにしてあるが念のため)
+      if(follow_param['token'] === '' || follow_param['token_secret'] === '') {
+        return false
+      }
+
+      const response = await axios.post('../api/accounts/follow', follow_param);
 
       // エラー時
       if (response.status !== OK) {

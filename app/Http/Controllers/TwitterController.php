@@ -137,7 +137,7 @@ class TwitterController extends Controller
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
     public function twitter_index()
     {
-      $query = '仮想通貨'; // 検索キーワード
+      $query = 'ウェブカツ'; // 検索キーワード
       $count = 20; // 1回の取得件数
       $page = 50; // 検索ページ。これを終わるまで繰り返す。
       
@@ -275,12 +275,18 @@ class TwitterController extends Controller
        * follow: false (ちなみにtrueにするとお気に入り通知もONにしてくれるらしい)
        */
       $user_id = $request->user_id; // フォロー対象のアカウントのID。
+      $token = $request->token; // 連携ユーザーのアクセストークン
+      $token_secret = $request->token_secret; // アクセストークンシークレット
+      //
+      // Log::debug('user_id' . $user_id);
+      // Log::debug('token' . $token);
+      // Log::debug('token_secret' . $token_secret);
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
-      $access_token = config('services.twitter')['access_token'];
-      $access_token_secret = config('services.twitter')['access_token_secret'];
+      $access_token = $token;
+      $access_token_secret = $token_secret;
       
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $user_id));
