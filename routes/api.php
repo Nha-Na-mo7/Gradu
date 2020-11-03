@@ -63,7 +63,7 @@ Route::get('/accounts/tweet/{tweet_id}', 'TwitterController@accounts_tweet')->na
 
 
 // 指定したTwitterアカウントをフォローする
-// Route::get('/accounts/get', 'TwitterController@')->name('');
+Route::post('/accounts/follow', 'TwitterController@accounts_follow')->name('accounts.follow');
 // 指定したTwitterアカウントのフォローを外す
 // Route::get('/accounts/get', 'TwitterController@')->name('');
 // Twitterアカウントの自動フォローを開始する

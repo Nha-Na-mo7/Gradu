@@ -262,6 +262,31 @@ class TwitterController extends Controller
       
       return $accounts;
     }
+    
+    // =======================================
+    // 指定したアカウントをフォローする
+    // =======================================
+    public function accounts_follow(Request $request)
+    {
+      /* POST friendships/create - フォローする
+       *
+       * screen_nameでもフォローが出来るが、ユーザーに変更される可能性があるため不変のuser_idを指定する。
+       * user_id:必須 / フォロー先のアカウントID
+       * follow: false (ちなみにtrueにするとお気に入り通知もONにしてくれるらしい)
+       */
+      $user_id = $request->user_id; // フォロー対象のアカウントのID。
+      
+      // API keyなどを定義・エイリアスにするか検討
+      $consumer_key = config('services.twitter')['client_id'];
+      $consumer_secret = config('services.twitter')['client_secret'];
+      $access_token = config('services.twitter')['access_token'];
+      $access_token_secret = config('services.twitter')['access_token_secret'];
+      
+      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      $twitterRequest = $connection->post('friendships/create', array("user_id" => $user_id));
+      
+      return response(200);
+    }
     // // =========================================
     // // アカウントコンポーネント/DBから新着ツイートの取得
     // // =========================================

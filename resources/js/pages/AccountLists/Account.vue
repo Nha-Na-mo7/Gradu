@@ -137,7 +137,7 @@
 <script>
 
 import moment from "moment";
-import { DEFAULT_TWITTER_URL } from "../../util";
+import {DEFAULT_TWITTER_URL, OK} from "../../util";
 import AccountTweet from './AccountTweet.vue';
 
 export default {
@@ -149,7 +149,10 @@ export default {
   },
   data() {
     return {
-      new_tweet: this.account.new_tweet
+      new_tweet: this.account.new_tweet,
+      follow_param: {
+        'user_id': this.account.account_id
+      }
     }
   },
   computed: {
@@ -163,7 +166,7 @@ export default {
       return this.account.description !== '';
     },
     twitter_account_url() {
-      return DEFAULT_TWITTER_URL + this.account.screen_name;
+      return DEFAULT_TWITTER_URL + this.account_id;
     },
     twitter_following_url() {
       return this.twitter_account_url + '/following';
@@ -173,8 +176,24 @@ export default {
     },
   },
   methods: {
-    follow() {
-      alert('this is follow btn!!! to ' + this.account.account_id)
+    async follow() {
+      const response = await axios.post('../api/accounts/follow', this.follow_param);
+
+      // // バリデーションエラー
+      // if (response.status === UNPROCESSABLE_ENTITY) {
+      //   this.errors = response.data.errors;
+      //   return false
+      // }
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status)
+        return false
+      }
+
+      console.log(response)
+
+      alert('終了！');
     },
     un_follow() {
       alert('this is un_follow btn...')
