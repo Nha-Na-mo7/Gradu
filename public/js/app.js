@@ -2489,8 +2489,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 9:
-                if (!(response.data.result.errors === undefined)) {
-                  _context.next = 12;
+                console.log(response); // 対象アカウントが削除/凍結されフォローできなかった場合
+                // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
+
+                if (!(response.data.result.errors !== undefined)) {
+                  _context.next = 13;
                   break;
                 }
 
@@ -2501,10 +2504,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 12:
+              case 13:
                 alert('終了！');
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }

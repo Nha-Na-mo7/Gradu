@@ -205,9 +205,11 @@ export default {
         return false
       }
 
+      console.log(response)
+
       // 対象アカウントが削除/凍結されフォローできなかった場合
       // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
-      if (response.data.result.errors === undefined) {
+      if (response.data.result.errors !== undefined) {
         // フラッシュメッセージ
         this.$store.commit('message/setContent', {
           content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
