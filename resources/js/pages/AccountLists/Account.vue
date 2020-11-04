@@ -206,7 +206,7 @@ export default {
       }
 
       // 対象アカウントが削除/凍結されフォローできなかった場合
-      // 自動フォロー中でない場合はフラッシュメッセージを表示させる
+      // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
       if (response.data.result.errors === undefined) {
         // フラッシュメッセージ
         this.$store.commit('message/setContent', {

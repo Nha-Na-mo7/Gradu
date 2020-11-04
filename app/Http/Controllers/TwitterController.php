@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use mysql_xdevapi\Exception;
 use function Psy\debug;
 
 /*
@@ -36,8 +37,6 @@ use function Psy\debug;
 // TODO 2、ログインユーザーがTwitterアカウントを連携している場合、既にフォロー済みのアカウントは表示させない
 class TwitterController extends Controller
 {
-
-  
     /*
      * バッチ処理の流れ1 - Twitterユーザー編 -
      * 1, 1日1回、指定時刻になったら、Laravelスケジューラを起動しバッチ処理を開始する
@@ -91,7 +90,7 @@ class TwitterController extends Controller
      * つまり、2 ~ 4までの処理をバッチとしてまとめ、それを1日ごとに実行するのが1での役割である
      */
   
-    // 廃止予定メソッド、ページの生合成を保つため、下記にあるtwitter_index2メソッドが完成したら削除
+    // 廃止予定メソッド、ページの生合成を保つため、下記にあるtwitter_indexメソッドが完成したら削除
     public function twitter_index_old(Request $request)
     {
       // 実行時間。90秒。
@@ -139,7 +138,7 @@ class TwitterController extends Controller
     {
       $query = 'ウェブカツ'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 50; // 検索ページ。これを終わるまで繰り返す。
+      $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
       // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
@@ -152,8 +151,8 @@ class TwitterController extends Controller
       // twitter_accountsテーブルの全レコードを削除
       TwitterAccount::query()->delete();
 
-      // $pageで検索
-      while ($page) {
+      // $pageで検索、52ページは仕様上超えることはない
+      while ($page < 52) {
         Log::debug($page.'ページ目をチェックします');
         // TwitterAPIにリクエストを投げ、情報を取得する
         $twitterRequest = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
@@ -165,6 +164,7 @@ class TwitterController extends Controller
         
         // 取得したアカウント情報をDBに登録する
         // アカウント検索API(users/search)ではリツイート・リプライも含めた最新ツイートが取得されてしまうため、後に改めて該当ユーザーの最新ツイートを取得する
+        // このAPIは重複した結果を返すこともあるため、同じユーザーが出現した場合登録せずツイート検索も行わない(APIリクエストの節約にもなる)
         foreach($twitterRequest as $req){
           
           $account_id = $req->id;
@@ -189,8 +189,16 @@ class TwitterController extends Controller
   
           // TwitterAccountモデルを作成
           $twitter_account = new TwitterAccount();
+          
           // テーブル登録
-          $twitter_account->fill($requestlist)->save();
+          try {
+            $twitter_account->fill($requestlist)->save();
+          // 重複エラー(23000)の場合、後続に続けずcontinueする
+          } catch (\PDOException $exception) {
+            if($exception->getCode() == 23000){
+              continue;
+            }
+          }
           
           // accountsテーブルに登録後、
           // TwitterAPIに投げて、リプライ・リツイートでは無い最新のツイート1件を探す
@@ -206,7 +214,7 @@ class TwitterController extends Controller
           
           // 鍵垢では無い場合、最新ツイート検索をする
           if(!$req->protected) {
-  
+          
             $tweetRequest = $connection->get('statuses/user_timeline',
                 array(
                     "user_id" => $account_id,
@@ -214,15 +222,20 @@ class TwitterController extends Controller
                     "exclude_replies" => true,
                     "include_rts" => false
                 ));
-            
+          
             // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
             foreach ($tweetRequest as $tweetreq) {
               // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
-              
-              // TODO page52に差し掛かった段階で、id_strを参照しようとしてエラーを履いてしまう。要検証。
-              // TODO タイムアウトの変更ができていないためエラーが吐かれてしまう。
-              
-              if(isset($tweetreq)) {
+          
+              // TODO API制限について要検証
+              // Log::debug(json_encode($tweetreq, JSON_UNESCAPED_UNICODE));
+              // json_encodeした結果、オブジェクトの形で帰ってこない場合、それはAPI制限エラーなので抜ける
+              if(is_array(json_encode($tweetreq))) {
+                Log::debug('API制限');
+                break;
+              }
+          
+              if(property_exists($tweetreq, 'id_str')) {
                 $addlist = array(
                     'account_id' => $account_id,
                     'tweet_id_str' => $tweetreq->id_str,
@@ -243,7 +256,6 @@ class TwitterController extends Controller
           $new_tweet = new TwitterAccountNewTweet();
           // テーブル登録
           $new_tweet->fill($tweetlist)->save();
-
         }
         // ページカウントを1増やす
         $page++;
@@ -270,20 +282,14 @@ class TwitterController extends Controller
     {
       /* POST friendships/create - フォローする
        *
-       * screen_nameでもフォローが出来るが、ユーザーに変更される可能性があるため不変のuser_idを指定する。
-       * user_id:必須 / フォロー先のアカウントID
-       * follow: false (ちなみにtrueにするとお気に入り通知もONにしてくれるらしい)
+       * ユーザーに変更されることがない"user_id"を指定してフォローする。
+       * user_id:必須・フォロー先のアカウントID
        */
-      // $user_id = $request->user_id; // フォロー対象のアカウントのID。
-      $user_id = 1044456766241558529; // 削除されているID・テスト用
+      $user_id = $request->user_id; // フォロー対象のアカウントのID。
+      // $user_id = 1044456766241558529; // 削除されているID・テスト用
       $token = $request->token; // 連携ユーザーのアクセストークン
       $token_secret = $request->token_secret; // アクセストークンシークレット
-      //
-      // Log::debug('user_id' . $user_id);
-      // Log::debug('token' . $token);
-      // Log::debug('token_secret' . $token_secret);
       
-      // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
       $access_token = $token;
@@ -294,15 +300,6 @@ class TwitterController extends Controller
       
       return response()->json(['result' => $twitterRequest]);
     }
-    // // =========================================
-    // // アカウントコンポーネント/DBから新着ツイートの取得
-    // // =========================================
-    // public function accounts_tweet(int $tweet_id)
-    // {
-    //   Log::debug('TwitterController : accounts_tweet : アカウントのツイートを取得');
-    //   $tweet = TwitterAccountNewTweet::where('account_id', $tweet_id)->first();
-    //
-    //   return $tweet;
-    // }
+
 
 }
