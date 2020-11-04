@@ -136,7 +136,7 @@ class TwitterController extends Controller
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
     public function twitter_index()
     {
-      $query = 'ウェブカツ'; // 検索キーワード
+      $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
       $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
@@ -222,31 +222,26 @@ class TwitterController extends Controller
                     "exclude_replies" => true,
                     "include_rts" => false
                 ));
+  
+            // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
+            // if(property_exists(json_encode($tweetRequest), 'errors') ) {
+            //   Log::debug('API制限');
+            //   break 2;
+            // }
           
             // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
             foreach ($tweetRequest as $tweetreq) {
-              // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
-          
-              // TODO API制限について要検証
-              // Log::debug(json_encode($tweetreq, JSON_UNESCAPED_UNICODE));
-              // json_encodeした結果、オブジェクトの形で帰ってこない場合、それはAPI制限エラーなので抜ける
-              if(is_array(json_encode($tweetreq))) {
-                Log::debug('API制限');
-                break;
+              $addlist = array(
+                  'account_id' => $account_id,
+                  'tweet_id_str' => $tweetreq->id_str ?? '',
+                  'tweet_text' => $tweetreq->text ?? '',
+              );
+              $created_at = $tweetreq->created_at ?? '';
+              if($created_at !== '') {
+                $addlist['tweet_created_at'] = date('Y-m-d H:i:s', strtotime($created_at));
               }
-          
-              if(property_exists($tweetreq, 'id_str')) {
-                $addlist = array(
-                    'account_id' => $account_id,
-                    'tweet_id_str' => $tweetreq->id_str,
-                    'tweet_text' => $tweetreq->text,
-                    'tweet_created_at' => date('Y-m-d H:i:s', strtotime($tweetreq->created_at))
-                );
-                $tweetlist = $addlist;
-              // まだツイートしていないアカウントは、アカウントのIDだけテーブルに入れる
-              } else {
-                $tweetlist = array('account_id' => $account_id);
-              }
+              $tweetlist = $addlist;
+              
             }
           // 鍵垢の場合は、アカウントのIDだけをテーブルにいれる
           } else {

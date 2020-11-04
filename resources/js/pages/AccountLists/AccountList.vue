@@ -163,7 +163,7 @@ export default {
     async twitter_index() {
 
       // APIにアクセス
-      const response = await axios.get(`/api/twitter/index`);
+      const response = await axios.get(`/api/twitter/index`, { timeout: 1000 * 60 * 10 });
 
       // エラー時
       if (response.status !== OK) {
@@ -212,7 +212,7 @@ export default {
     // オートフォローをオンにする
     auto_following() {
       alert('AUTO-FOLLOWING!');
-    }
+    },
   },
   components: {
     Account,

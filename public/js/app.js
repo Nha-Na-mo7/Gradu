@@ -2755,7 +2755,9 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get("/api/twitter/index");
+                return axios.get("/api/twitter/index", {
+                  timeout: 1000 * 60 * 10
+                });
 
               case 2:
                 response = _context2.sent;
