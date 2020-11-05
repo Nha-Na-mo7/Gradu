@@ -37,7 +37,9 @@ use function Psy\debug;
 // TODO 2、ログインユーザーがTwitterアカウントを連携している場合、既にフォロー済みのアカウントは表示させない
 class TwitterController extends Controller
 {
-    const DAILYLIMIT_FOLLOW = 400; // twitterAPIが1日にフォローできる最大数
+    const DAILY_LIMIT_FOLLOW = 400; // twitterAPIが1日にフォローできる最大数
+    const DAILY_LIMIT_APP_FOLLOW = 1000; // 1000/1dayを超えると制限にかかる
+    const MIN_LIMIT_APP_FOLLOW = 15; // 15/15minを超えると制限にかかる
     const ACCOUNTLIMIT_FOLLOW = 0; // 5000人以上フォローしている人によるフォローの最大数
   
     /*
@@ -292,7 +294,7 @@ class TwitterController extends Controller
       return response()->json(['result' => $twitterRequest]);
     }
     
-    // twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
+    // TODO twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
     // ユーザーによって時刻がバラバラであるため、そこに対応させなければならない
   
   
