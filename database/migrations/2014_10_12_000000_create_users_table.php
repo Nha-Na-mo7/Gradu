@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('twitter_id')->nullable(); //連携したTwitterのID
             $table->string('token')->nullable(); //TwitterToken
             $table->string('token_secret')->nullable(); //TwitterTokenSecret
-            $table->boolean('delete_flg')->default(false); //TwitterTokenSecret
+            $table->boolean('auto_follow_flg')->default(false); //自動フォローがONであるか
+            $table->boolean('delete_flg')->default(false); //削除済みフラグ
             $table->rememberToken();
             $table->timestamps();
         });
