@@ -28,7 +28,8 @@
       <change beforePath="$PROJECT_DIR$/public/js/all.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/all.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/mix-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/mix-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Footer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -326,7 +327,7 @@
       <workItem from="1604015526167" duration="2438000" />
       <workItem from="1604018077834" duration="48483000" />
       <workItem from="1604377731550" duration="310000" />
-      <workItem from="1604378076521" duration="47655000" />
+      <workItem from="1604378076521" duration="55378000" />
     </task>
     <servers />
   </component>

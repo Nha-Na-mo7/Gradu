@@ -295,6 +295,35 @@ class TwitterController extends Controller
       
       return response()->json(['result' => $twitterRequest]);
     }
-
-
+    
+    // twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
+    // ユーザーによって時刻がバラバラであるため、そこに対応させなければならない
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    // =======================================
+    // TODO アプリの制限回数確認(本番では使用しません)
+    // =======================================
+    public function check_limit_status()
+    {
+      // API keyなどを定義・エイリアスにするか検討
+      $consumer_key = config('services.twitter')['client_id'];
+      $consumer_secret = config('services.twitter')['client_secret'];
+      $access_token = config('services.twitter')['access_token'];
+      $access_token_secret = config('services.twitter')['access_token_secret'];
+  
+      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      
+      $twitterRequest = $connection->get('application/rate_limit_status');
+      
+      return response()->json(['result' => $twitterRequest]);
+    }
 }

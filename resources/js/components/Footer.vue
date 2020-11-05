@@ -24,6 +24,7 @@
           <li><RouterLink class="" to="">プライバシーポリシー</RouterLink></li>
           <li><RouterLink class="" to="">お問い合わせ</RouterLink></li>
         </ul>
+        <button class="c-btn" @click="check_limit_status">[開発用]<br>check_limit_status</button>
       </div>
     </div>
     <!-- Copyright -->
@@ -34,8 +35,22 @@
 </template>
 
 <script>
+import {OK} from "../util";
+
 export default {
-name: "Footer.vue"
+  methods: {
+    async check_limit_status() {
+      const response = await axios.get('../api/twitter/check_limit_status');
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status)
+        return false
+      }
+
+      console.log(response.data.result.resources)
+    }
+  }
 }
 </script>
 
