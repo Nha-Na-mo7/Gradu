@@ -71,9 +71,12 @@ class LoginController extends Controller
       try {
         $twitter_user = Socialite::with("twitter")->user();
         
-        // アクセストークンの取得
+        Log::debug('a:' . print_r($twitter_user, true));
+        
+        // アクセストークンとTwitterIDの取得
         $token = $twitter_user->token;
         $token_secret = $twitter_user->tokenSecret;
+        $twitter_id = $twitter_user->id;
       }
       catch (\Exception $e) {
         // エラーならログイン画面へ戻す
@@ -87,7 +90,8 @@ class LoginController extends Controller
       $myinfo = User::firstOrCreate(
           [
               'token' => $token,
-              'token_secret' => $token_secret
+              'token_secret' => $token_secret,
+              'twitter_id' => $twitter_id
           ],
           [
               'name' => $twitter_user->nickname,
