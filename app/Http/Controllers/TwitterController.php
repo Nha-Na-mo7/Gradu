@@ -287,7 +287,7 @@ class TwitterController extends Controller
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
       // APIを叩くためのインスタンスを作成
-      $connection = $this->make_users_connection_instanse($request);
+      $connection = $this->make_users_connection_instanse($request->token, $request->token_secret);
       
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
       Log::debug('accounts_follow: フォローします。');
@@ -310,13 +310,13 @@ class TwitterController extends Controller
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
-    private function make_users_connection_instanse(Request $request)
+    private function make_users_connection_instanse($token, $token_secret)
     {
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
       // ユーザーのアクセストークン
-      $access_token = $request->token;
-      $access_token_secret = $request->token_secret;
+      $access_token = $token;
+      $access_token_secret = $token_secret;
       
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
       
