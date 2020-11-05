@@ -37,6 +37,9 @@ use function Psy\debug;
 // TODO 2、ログインユーザーがTwitterアカウントを連携している場合、既にフォロー済みのアカウントは表示させない
 class TwitterController extends Controller
 {
+    const DAILYLIMIT_FOLLOW = 400; // twitterAPIが1日にフォローできる最大数
+    const ACCOUNTLIMIT_FOLLOW = 0; // 5000人以上フォローしている人によるフォローの最大数
+  
     /*
      * バッチ処理の流れ1 - Twitterユーザー編 -
      * 1, 1日1回、指定時刻になったら、Laravelスケジューラを起動しバッチ処理を開始する
@@ -54,8 +57,6 @@ class TwitterController extends Controller
      *
      * つまり、2 ~ 4までの処理をバッチとしてまとめ、それを1日ごとに実行するのが1での役割である
      */
-  
-  
     /*
      * バッチ処理の流れ2 - 仮想通貨人気ツイート編 -
      * 1, 指定時刻になったら、Laravelスケジューラを起動しバッチ処理を開始する。
@@ -280,35 +281,46 @@ class TwitterController extends Controller
        * ユーザーに変更されることがない"user_id"を指定してフォローする。
        * user_id:必須・フォロー先のアカウントID
        */
-      $user_id = $request->user_id; // フォロー対象のアカウントのID。
-      // $user_id = 1044456766241558529; // 削除されているID・テスト用
-      $token = $request->token; // 連携ユーザーのアクセストークン
-      $token_secret = $request->token_secret; // アクセストークンシークレット
+      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
+      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
-      $consumer_key = config('services.twitter')['client_id'];
-      $consumer_secret = config('services.twitter')['client_secret'];
-      $access_token = $token;
-      $access_token_secret = $token_secret;
+      // APIを叩くためのインスタンスを作成
+      $connection = $this->make_users_connection_instanse($request);
       
-      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
-      $twitterRequest = $connection->post('friendships/create', array("user_id" => $user_id));
-      
+      $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
+      Log::debug('accounts_follow: フォローします。');
       return response()->json(['result' => $twitterRequest]);
     }
     
     // twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
     // ユーザーによって時刻がバラバラであるため、そこに対応させなければならない
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    // =======================================
+    // 認証ユーザーによるコネクションインスタンスの作成
+    // =======================================
+    private function make_users_connection_instanse(Request $request)
+    {
+      $consumer_key = config('services.twitter')['client_id'];
+      $consumer_secret = config('services.twitter')['client_secret'];
+      // ユーザーのアクセストークン
+      $access_token = $request->token;
+      $access_token_secret = $request->token_secret;
+      
+      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      
+      return $connection;
+    }
+    
     // =======================================
     // TODO アプリの制限回数確認(本番では使用しません)
     // =======================================
