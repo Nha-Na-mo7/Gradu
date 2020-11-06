@@ -40,7 +40,6 @@ class TwitterController extends Controller
     const DAILY_LIMIT_FOLLOW = 400; // twitterAPIが1日にフォローできる最大数
     const DAILY_LIMIT_APP_FOLLOW = 1000; // 1000/1dayを超えると制限にかかる
     const MIN_LIMIT_APP_FOLLOW = 15; // 15/15minを超えると制限にかかる
-    const ACCOUNTLIMIT_FOLLOW = 0; // 5000人以上フォローしている人によるフォローの最大数
   
     /*
      * バッチ処理の流れ1 - Twitterユーザー編 -
@@ -105,13 +104,8 @@ class TwitterController extends Controller
       // TwitterAPIは1ページごとに最大20件までしか取得できないがページネーションに対応している
       $page = $request->page;
       
-      // API keyなどを定義・エイリアスにするか検討
-      $consumer_key = config('services.twitter')['client_id'];
-      $consumer_secret = config('services.twitter')['client_secret'];
-      $access_token = config('services.twitter')['access_token'];
-      $access_token_secret = config('services.twitter')['access_token_secret'];
-      
-      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      // コネクションインスタンス作成
+      $connection = $this->connection_instanse_app();
       
       // TwitterAPIにリクエストを投げ、情報を取得する
       // q:必須/検索キーワード
@@ -144,7 +138,7 @@ class TwitterController extends Controller
       $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
       // API使用のためのインスタンスの作成
-      $connection = $this->make_master_connection_instanse();
+      $connection = $this->connection_instanse_app();
       
       // twitter_accountsテーブルの全レコードを削除
       TwitterAccount::query()->delete();
@@ -282,7 +276,7 @@ class TwitterController extends Controller
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
       // APIを叩くためのインスタンスを作成
-      $connection = $this->make_users_connection_instanse($request->token, $request->token_secret);
+      $connection = $this->connection_instanse_users($request->token, $request->token_secret);
       
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
       Log::debug('accounts_follow: フォローします。');
@@ -306,7 +300,7 @@ class TwitterController extends Controller
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
     // 引数は、ユーザーのアクセストークン と アクセストークンシークレットの2つ
-    public function make_users_connection_instanse($token, $token_secret)
+    public function connection_instanse_users($token, $token_secret)
     {
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
@@ -321,8 +315,9 @@ class TwitterController extends Controller
     // =======================================
     // アプリケーションによるコネクションインスタンスの作成
     // =======================================
-    public function make_master_connection_instanse()
+    public function connection_instanse_app()
     {
+      // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
       $access_token = config('services.twitter')['access_token'];

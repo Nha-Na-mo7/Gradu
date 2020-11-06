@@ -40,6 +40,6 @@ class BatchTest extends Command
     public function handle()
     {
         // ここに処理を記述します
-        echo '光の浄化を受けよ！';
+        echo 'testtesttesthogehoge！';
     }
 }
