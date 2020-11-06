@@ -23,7 +23,8 @@ class TwitterAccount extends Model
       'friends_count',
       'followers_count',
       'profile_image_url_https',
-      'new_tweet'
+      'new_tweet',
+      'follow'
   ];
   
   // fillable
@@ -47,6 +48,16 @@ class TwitterAccount extends Model
   // モデル名と関係ない名前(new_tweet)のため、hasOneメソッドの引数は省略せずに記載
   {
     return $this->hasOne('App\Models\TwitterAccountNewTweet', 'account_id', 'account_id');
+  }
+  
+  /**
+   * リレーション - twitter_account_followテーブル
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function follow()
+  // モデル名と関係ない名前(new_tweet)のため、hasManyメソッドの引数は省略せずに記載
+  {
+    return $this->hasMany('App\Models\TwitterAccountFollow', 'account_id', 'account_id');
   }
   
 }
