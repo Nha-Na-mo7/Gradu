@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class AutoFollow extends Command
 {
@@ -49,6 +51,31 @@ class AutoFollow extends Command
      */
     public function handle()
     {
-        //
+      Log::debug('====================');
+      Log::debug('自動フォローを開始します');
+      Log::debug('====================');
+      // 自動フォローをONにしているユーザーを取得する
+      // ① auto_follow_flgがtrueであること
+      // ② delete_flgがfalseであること
+      
+      Log::debug('自動フォローをtrueにしているユーザー取得中');
+      $users = User::where('auto_follow_flg', true)->where('delete_flg', false)->get();
+      
+      // 該当ユーザーがいないなら処理終了
+      if($users->isEmpty()) {
+        Log::debug('自動フォローをONにしているユーザーはいません');
+        // TODO exit()であっているかは検証
+        exit();
+      } else {
+        Log::debug('ONにしているユーザーの人数: '. count($users));
+      }
+      
+      
+      
+      
+      
+      
+      
+      
     }
 }
