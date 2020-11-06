@@ -143,13 +143,8 @@ class TwitterController extends Controller
       $count = 20; // 1回の取得件数
       $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
-      // API keyなどを定義・エイリアスにするか検討
-      $consumer_key = config('services.twitter')['client_id'];
-      $consumer_secret = config('services.twitter')['client_secret'];
-      $access_token = config('services.twitter')['access_token'];
-      $access_token_secret = config('services.twitter')['access_token_secret'];
-      
-      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      // API使用のためのインスタンスの作成
+      $connection = $this->make_master_connection_instanse();
       
       // twitter_accountsテーブルの全レコードを削除
       TwitterAccount::query()->delete();
@@ -310,7 +305,8 @@ class TwitterController extends Controller
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
-    private function make_users_connection_instanse($token, $token_secret)
+    // 引数は、ユーザーのアクセストークン と アクセストークンシークレットの2つ
+    public function make_users_connection_instanse($token, $token_secret)
     {
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
@@ -322,7 +318,20 @@ class TwitterController extends Controller
       
       return $connection;
     }
-    
+    // =======================================
+    // アプリケーションによるコネクションインスタンスの作成
+    // =======================================
+    public function make_master_connection_instanse()
+    {
+      $consumer_key = config('services.twitter')['client_id'];
+      $consumer_secret = config('services.twitter')['client_secret'];
+      $access_token = config('services.twitter')['access_token'];
+      $access_token_secret = config('services.twitter')['access_token_secret'];
+      
+      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      
+      return $connection;
+    }
     // =======================================
     // TODO アプリの制限回数確認
     // =======================================
