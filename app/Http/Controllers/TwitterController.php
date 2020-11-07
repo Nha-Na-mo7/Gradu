@@ -280,6 +280,68 @@ class TwitterController extends Controller
       
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
       Log::debug('accounts_follow: フォローします。');
+      
+      return response()->json(['result' => $twitterRequest]);
+    }
+    
+    // TODO twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
+    // ユーザーによって時刻がバラバラであるため、そこに対応させなければならない
+  
+  
+    // =======================================
+    // 指定したアカウントのフォローを解除する
+    // =======================================
+    public function accounts_unfollow(Request $request)
+    {
+      /* POST friendships/destroy - フォロー解除する
+       *
+       * ユーザーに変更されることがない"user_id"を指定してフォローする。
+       * user_id:必須・フォロー先のアカウントID
+       */
+      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
+      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
+      
+      // APIを叩くためのインスタンスを作成
+      $connection = $this->connection_instanse_users($request->token, $request->token_secret);
+      
+      $twitterRequest = $connection->post('friendships/destroy', array("user_id" => $target_user_id));
+      Log::debug('accounts_unfollow: フォロー解除します。');
+      
+      return response()->json(['result' => $twitterRequest]);
+    }
+    
+    // TODO twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
+    // ユーザーによって時刻がバラバラであるため、そこに対応させなければならない
+  
+  
+    // =======================================
+    // アカウントと対象アカウントとのフォロー関係を取得
+    // =======================================
+    public function lookup_follow(Request $request)
+    {
+      /* GET friendships/lookup - フォロー関係の確認
+       *
+       * ユーザーに変更されることがない"user_id"を指定。
+       * user_id:必須・フォロー先のアカウントID
+       */
+      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
+      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
+      
+      // APIを叩くためのインスタンスを作成
+      $connection = $this->connection_instanse_users($request->token, $request->token_secret);
+      
+      $twitterRequest = $connection->get('friendships/lookup', array("user_id" => $target_user_id));
+      Log::debug('accounts_follow: フォロー関係を取得します。');
+      
+      // エラーチェック
+      if(isset($twitterRequest['errors'])) {
+        Log::debug('result: '. print_r($twitterRequest['errors'], true));
+        return '';
+      } else if(empty($twitterRequest)) {
+        Log::debug('result: null');
+        return '';
+      }
+      
       return response()->json(['result' => $twitterRequest]);
     }
     
