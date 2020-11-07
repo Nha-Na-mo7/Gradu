@@ -135,7 +135,7 @@ class TwitterController extends Controller
     {
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 1; // 検索ページ。これを終わるまで繰り返す。
+      $page = 50; // 検索ページ。これを終わるまで繰り返す。
       
       // API使用のためのインスタンスの作成
       $connection = $this->connection_instanse_app();
@@ -149,36 +149,40 @@ class TwitterController extends Controller
         // TwitterAPIにリクエストを投げ、情報を取得する
         $twitterRequest = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
         
-        // 取得件数が0(配列になっていない)ならループを抜ける
-        if(!is_array($twitterRequest)) {
-          break;
-        }
-        
         // 取得したアカウント情報をDBに登録する
         // アカウント検索API(users/search)ではリツイート・リプライも含めた最新ツイートが取得されてしまうため、後に改めて該当ユーザーの最新ツイートを取得する
         // このAPIは重複した結果を返すこともあるため、同じユーザーが出現した場合登録せずツイート検索も行わない(APIリクエストの節約にもなる)
         foreach($twitterRequest as $req){
           
-          $account_id = $req->id;
+          $request = json_decode(json_encode($req), true);
+          Log::debug('解体: '. print_r($request, true));
+          
+          // エラーコードが存在する場合
+          if (isset($request['code'])) {
+            break;
+          }
+          
+          // 複数回使うので変数に格納
+          $account_id = $request['id'];
           
           // プロフィール画像のURLから _normalの文字列を省く
           // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
-          $image = $req->profile_image_url_https;
+          $image = $request['profile_image_url_https'];
           $replaced_fullImg = str_replace('_normal', '', $image);
-
+          
           // 配列に格納
           $requestlist = array(
               'account_id' => $account_id,
-              'name' => $req->name,
-              'screen_name' => $req->screen_name,
-              'description' => $req->description,
-              'protected' => $req->protected,
-              'friends_count' => $req->friends_count,
-              'followers_count' => $req->followers_count,
-              'account_created_at' => date('Y-m-d H:i:s', strtotime($req->created_at)),
+              'name' => $request['name'],
+              'screen_name' => $request['screen_name'],
+              'description' => $request['description'],
+              'protected' => $request['protected'],
+              'friends_count' => $request['friends_count'],
+              'followers_count' => $request['followers_count'],
+              'account_created_at' => date('Y-m-d H:i:s', strtotime($request['created_at'])),
               'profile_image_url_https' => $replaced_fullImg
           );
-  
+          
           // TwitterAccountモデルを作成
           $twitter_account = new TwitterAccount();
           
@@ -205,7 +209,7 @@ class TwitterController extends Controller
           // ややこしい
           
           // 鍵垢では無い場合、最新ツイート検索をする
-          if(!$req->protected) {
+          if(!$request['protected']) {
           
             $tweetRequest = $connection->get('statuses/user_timeline',
                 array(
@@ -214,7 +218,7 @@ class TwitterController extends Controller
                     "exclude_replies" => true,
                     "include_rts" => false
                 ));
-  
+          
             // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
             // if(property_exists(json_encode($tweetRequest), 'errors') ) {
             //   Log::debug('API制限');
@@ -233,7 +237,7 @@ class TwitterController extends Controller
                 $addlist['tweet_created_at'] = date('Y-m-d H:i:s', strtotime($created_at));
               }
               $tweetlist = $addlist;
-              
+          
             }
           // 鍵垢の場合は、アカウントのIDだけをテーブルにいれる
           } else {
@@ -355,6 +359,38 @@ class TwitterController extends Controller
   
   
   
+  
+  
+  
+
+  
+    // =======================================
+    // アカウントがフォローしているユーザーを取得する
+    // =======================================
+    public function get_account_follow_ids(Request $request) {
+  
+      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
+      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
+      
+      // インスタンスを作成
+      $connection = $this->connection_instanse_users($request->token, $request->token_secret);
+  
+      // APIを使用し、フォローしているユーザーのID一覧を取得
+      $twitterRequest = $connection->post('friendships/ids', array("user_id" => $target_user_id));
+      Log::debug('get_account_follow_ids: フォローしているユーザーのID一覧です');
+      Log::debug('一覧: '. print_r($twitterRequest, true));
+  
+      return response()->json(['result' => $twitterRequest]);
+      
+    }
+  
+    // =======================================
+    // DBにフォローしているユーザーを要録する
+    // =======================================
+    public function add_table_follows() {
+    
+    }
+    
   
   
   
