@@ -131,8 +131,12 @@ class TwitterController extends Controller
     // バッチ処理ver Twitterアカウント検索 ①
     // ==================================
     // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
-    public function twitter_index()
+    public function search_accounts()
     {
+      Log::debug('==============================================');
+      Log::debug('TwitterController.search_accounts アカウント検索');
+      Log::debug('==============================================');
+      
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
       $page = 50; // 検索ページ。これを終わるまで繰り返す。
@@ -147,19 +151,20 @@ class TwitterController extends Controller
       while ($page < 52) {
         Log::debug($page.'ページ目をチェックします');
         // TwitterAPIにリクエストを投げ、情報を取得する
-        $twitterRequest = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
+        $searched_users = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
         
         // 取得したアカウント情報をDBに登録する
         // アカウント検索API(users/search)ではリツイート・リプライも含めた最新ツイートが取得されてしまうため、後に改めて該当ユーザーの最新ツイートを取得する
         // このAPIは重複した結果を返すこともあるため、同じユーザーが出現した場合登録せずツイート検索も行わない(APIリクエストの節約にもなる)
-        foreach($twitterRequest as $req){
+        foreach($searched_users as $user){
           
-          $request = json_decode(json_encode($req), true);
+          $request = json_decode(json_encode($user), true);
           Log::debug('解体: '. print_r($request, true));
           
           // エラーコードが存在する場合
-          if (isset($request['code'])) {
-            break;
+          if (isset($request[0]['code'])) {
+            Log::debug('エラー code:' .$request[0]['code']);
+            break 2;
           }
           
           // 複数回使うので変数に格納
@@ -183,10 +188,11 @@ class TwitterController extends Controller
               'profile_image_url_https' => $replaced_fullImg
           );
           
+          
           // TwitterAccountモデルを作成
           $twitter_account = new TwitterAccount();
           
-          // テーブル登録
+          // テーブルに登録
           try {
             $twitter_account->fill($requestlist)->save();
           // 重複エラー(23000)の場合、後続に続けずcontinueする
@@ -348,22 +354,27 @@ class TwitterController extends Controller
       
       return response()->json(['result' => $twitterRequest]);
     }
+  
+  
+  
     
-    // TODO twitterにはフォロー制限やアプリケーションによるAPIの事項制限がある。
-    // ユーザーによって時刻がバラバラであるため、そこに対応させなければならない
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    // =======================================
+    // 該当ユーザーの自動フォローのON/OFFを切り替え
+    // =======================================
+    // TODO このコントローラーで正しいか検討
+    public function toggle_auto_follow_flg() {
+    
+      $user = Auth::user();
+      
+      
+      
+      
+    }
 
-  
+    
+    
+    
+    
     // =======================================
     // アカウントがフォローしているユーザーを取得する
     // =======================================

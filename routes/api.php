@@ -56,7 +56,7 @@ Route::get('/twitter/check_limit_status', 'TwitterController@check_limit_status'
 // 廃止予定・Twitterアカウント一覧取得
 Route::get('/twitter/index_old', 'TwitterController@twitter_index_old')->name('twitter.twitter_index_old');
 // バッチ用・Twitterアカウント一覧取得
-Route::get('/twitter/index', 'TwitterController@twitter_index')->name('twitter.twitter_index');
+Route::get('/twitter/index', 'TwitterController@search_accounts')->name('twitter.search_accounts');
 
 // アカウント一覧画面/テーブルからアカウント情報を取得
 Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');
