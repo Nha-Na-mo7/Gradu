@@ -178,6 +178,8 @@ export default {
       const params = this.searchData;
       const response = await axios.get(`/api/news/get`, { params });
 
+      console.log(response)
+
       // エラー時
       if (response.status !== OK) {
         this.$store.commit('error/setErrorCode', response.status)

@@ -11,7 +11,7 @@
     <div class="p-news__item--title">
       <h2 class="">
         <a
-            :href="this.entry.url"
+            :href="getUrl"
             target="_blank"
             rel="noopener noreferrer"
         >{{ getTitle }}</a>
@@ -19,8 +19,8 @@
     </div>
     <!-- 時刻とメディア -->
     <div class="p-news__item--data">
-      <div class="p-news__item--time"><p>{{ entry.updated | newsUpdate }}</p></div>
-      <div class="p-news__item--media"><p>{{ getMedia }}</p></div>
+      <div class="p-news__item--time"><p>{{ getPubDate | newsUpdate }}</p></div>
+      <div class="p-news__item--media"><p>{{ getSource }}</p></div>
     </div>
 
 
@@ -58,15 +58,20 @@ export default {
       }
       return title;
     },
-    getMedia() {
-      const arr = this.splitTitle;
-      return arr[arr.length - 1];
+    getUrl() {
+      return this.entry.url;
     },
-
+    getSource() {
+      return this.entry.source;
+    },
+    getPubDate() {
+      // JSのUNIXタイムスタンプは13桁なので*1000する
+      return this.entry.pubDate * 1000;
+    },
     // 投稿された記事が、現在時刻から見て24時間以内の投稿記事かを判定する
     is24hour() {
       const now = Date.now(); //現在時刻
-      const updatedTimeStamp = Date.parse(this.entry.updated); //記事の投稿時刻
+      const updatedTimeStamp = this.getPubDate; //記事の投稿時刻
 
       // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
       return (now - updatedTimeStamp) / 1000 < 60 * 60 * 24;

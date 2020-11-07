@@ -3840,15 +3840,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return title;
     },
-    getMedia: function getMedia() {
-      var arr = this.splitTitle;
-      return arr[arr.length - 1];
+    getUrl: function getUrl() {
+      return this.entry.url;
+    },
+    getSource: function getSource() {
+      return this.entry.source;
+    },
+    getPubDate: function getPubDate() {
+      // JSのUNIXタイムスタンプは13桁なので*1000する
+      return this.entry.pubDate * 1000;
     },
     // 投稿された記事が、現在時刻から見て24時間以内の投稿記事かを判定する
     is24hour: function is24hour() {
       var now = Date.now(); //現在時刻
 
-      var updatedTimeStamp = Date.parse(this.entry.updated); //記事の投稿時刻
+      var updatedTimeStamp = this.getPubDate; //記事の投稿時刻
       // JSのUNIXタイムスタンプはミリ秒計算13桁なので1000で割って計算。
 
       return (now - updatedTimeStamp) / 1000 < 60 * 60 * 24;
@@ -4107,9 +4113,10 @@ var PAGE_TITLE = 'NEWS';
 
               case 9:
                 response = _context.sent;
+                console.log(response); // エラー時
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_7__["OK"])) {
-                  _context.next = 13;
+                  _context.next = 14;
                   break;
                 }
 
@@ -4117,7 +4124,7 @@ var PAGE_TITLE = 'NEWS';
 
                 return _context.abrupt("return", false);
 
-              case 13:
+              case 14:
                 _this.fetchedNews = response.data; // 記事数が0の時、isNothingNewsをtrueにする
 
                 if (!_this.fetchedNews.length) {
@@ -4128,7 +4135,7 @@ var PAGE_TITLE = 'NEWS';
                 _this.isSearching = false;
                 return _context.abrupt("return", response.status);
 
-              case 17:
+              case 18:
               case "end":
                 return _context.stop();
             }
@@ -47222,7 +47229,7 @@ var render = function() {
           "a",
           {
             attrs: {
-              href: this.entry.url,
+              href: _vm.getUrl,
               target: "_blank",
               rel: "noopener noreferrer"
             }
@@ -47234,11 +47241,11 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "p-news__item--data" }, [
       _c("div", { staticClass: "p-news__item--time" }, [
-        _c("p", [_vm._v(_vm._s(_vm._f("newsUpdate")(_vm.entry.updated)))])
+        _c("p", [_vm._v(_vm._s(_vm._f("newsUpdate")(_vm.getPubDate)))])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-news__item--media" }, [
-        _c("p", [_vm._v(_vm._s(_vm.getMedia))])
+        _c("p", [_vm._v(_vm._s(_vm.getSource))])
       ])
     ])
   ])

@@ -8,89 +8,100 @@ use Illuminate\Support\Facades\Log;
 class GoogleNewsController extends Controller
 {
   
-  /*
-   * Googleニュース検索・データ取得関数 atom
+  /* ====================================================
+   * Googleニュース 検索
+   * ====================================================
    * $keyword: ニュース検索のキーワード
    * $max_num: 取得記事数の上限。APIの仕様上最大100件
    */
   public function get_news(){
     
-    // TODO getキーワードにスクリプト攻撃が混ざる可能性を考察すること
-    // GETパラメータの値を元に、ニュースを取得する
-    $keywords = !empty($_GET['keywords']) ? $_GET['keywords'] : '仮想通貨';
-    $max_num = 100;
+    Log::debug('============================================');
+    Log::debug('GoogleNewsController/get_news Newsを取得します');
+    Log::debug('============================================');
+    // ------------------
+    // APIアクセス前準備
+    // ------------------
     
-    // 実行時間。90秒。
+    // GETパラメータの値を元に、ニュースを取得する
+    $keywords = filter_input(INPUT_GET, 'keywords') ? filter_input(INPUT_GET, 'keywords') : '仮想通貨';
+    $max_num = 100;
+    Log::debug('検索ワード: '.$keywords);
+    
+    // 最大実行時間・90秒。
     set_time_limit(90);
     
-    // キーワード検索時のベースURL、末尾の"q="に続くように検索キーワードを付与する
-    // TODO 必要ない$API_BASE_URLはコメントごと削除すること
-    // $API_BASE_URL = "https://news.google.com/news?hl=ja&ned=us&ie=UTF-8&oe=UTF-8&output=atom&q=";
-    // $API_BASE_URL = "https://news.google.com/news?hl=ja&gl=JP&ceid=JP&ie=UTF-8&oe=UTF-8&output=atom&q=";
-      $API_BASE_URL = "https://news.google.com/atom/news?hl=ja&gl=JP&ceid=JP&ie=UTF-8&oe=UTF-8&q=";
+    // キーワード検索時のベースとなるURL
+    // 文字化け防止のためにUTF-8を指定
+    $API_BASE_URL = 'https://news.google.com/rss/search?ie=UTF-8&oe=UTF-8&hl=ja&gl=JP&q=';
+    // 日本語のニュースに限定する
+    $API_PARAM_URL = '&ceid=JP:ja';
     
-    // 検索キーワードの文字コードを変更する
+    // 検索キーワードの文字コードを変更
     $query = urlencode(mb_convert_encoding($keywords, "UTF-8", "auto"));
     
-    // APIへのリクエストURLを作成(検索キーワードを付与)
-    $api_url = $API_BASE_URL.$query;
+    // APIへのリクエストURLを作成
+    $api_url = $API_BASE_URL . $query . $API_PARAM_URL;
     
+    
+    
+    // -----------------
+    // APIへのアクセス
+    // -----------------
     // APIにアクセスする。その結果はsimplexmlに格納する。
     $content = file_get_contents($api_url);
     $xml = simplexml_load_string($content);
     
     // $xml確認用
-    // print_r($xml);
+    // Log::debug(print_r($xml, true));
     
-    // 記事エントリを取り出す。entry1つに記事情報が詰まっている。
-    $data = $xml->entry;
+    
+    
+    // ----------------------------------------
+    // アクセス後、必要な情報をレスポンスするまでの工程
+    // ----------------------------------------
+    // 記事エントリを取り出す。
+    $data = $xml->channel->item;
     
     // 記事数が0だった場合、空のままレスポンスを返す
     if(!count($data)) {
+      Log::debug('記事0件でした。');
       return $data;
     }
     
-    // entry1つ1つから"title"、"updated"とURLを取り出して、配列に格納する
+    // entry1つ1つから"title"、"pubDate"、"source"、URLを取り出して、配列に格納する
     for ($i = 0; $i < count($data); $i++) {
-    
       // エントリーのタイトル
-      $list[$i]['title'] = mb_convert_encoding($data[$i]->title, "UTF-8", "auto");
+      $entry_list[$i]['title'] = mb_convert_encoding($data[$i]->title, "UTF-8", "auto");
+
+      // エントリーの更新日(UNIXタイムスタンプで取得)
+      $entry_list[$i]['pubDate'] = strtotime($data[$i]->pubDate);
       
-      // デスクリプション
-      // $description = mb_convert_encoding($data[$i]->description , "UTF-8", "auto");
-      //
-      // $description=strip_tags($description);
-      //
-      // $list[$i]['description'] = $description;
+      // 記事の発行元
+      $entry_list[$i]['source'] = mb_convert_encoding($data[$i]->source, "UTF-8", "auto");
       
-      // エントリーの更新日
-      $list[$i]['updated'] = mb_convert_encoding($data[$i]->updated, "UTF-8", "auto");
-      
-      // URL、(string)でキャストすることで、SimpleXMLElement Objectの形から普通の配列として表示できる
-      $list[$i]['url'] = (string)$data[$i]->link->attributes()->href;
+      // URL
+      $entry_list[$i]['url'] = mb_convert_encoding($data[$i]->link, "UTF-8", "auto");
+    }
   
-    }
-    
     // 記事を新着順に並べ替える。
-    // GoogleニュースAPIが取得する順番は必ずしも新着順ではなく、またこのサービスはトレンドを見る為のものなので新着順に並べるのが効果的と判断。
-    foreach ($list as $key => $value) {
-      $updated[$key] = $value['updated'];
+    // GoogleニュースAPIが取得する順番は必ずしも新着順ではない
+    // また、サービスの特性上トレンドを追うことが目的である為、新着ニュースを知ることが最適。
+    foreach ($entry_list as $key => $value) {
+      $pubDate[$key] = $value['pubDate'];
     }
-    array_multisort($updated, SORT_DESC, $list);
-    
-    
-    
+    array_multisort($pubDate, SORT_DESC, $entry_list);
+  
     // $max_numの数値以上の記事がある場合、オーバーした分の記事を削る
-    if(count($list) > $max_num){
+    if(count($entry_list) > $max_num){
       for ($i = 0; $i < $max_num; $i++) {
-        $list_gn[$i] = $list{$i};
+        $scraped_entry_list[$i] = $entry_list{$i};
       }
     }else{
-      $list_gn = $list;
+      $scraped_entry_list = $entry_list;
     }
+    
     // 取得したニュースの配列を返却
-    return $list_gn;
+    return $scraped_entry_list;
   }
-  
-  
 }
