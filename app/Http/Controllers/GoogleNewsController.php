@@ -26,6 +26,7 @@ class GoogleNewsController extends Controller
     // GETパラメータの値を元に、ニュースを取得する
     $keywords = filter_input(INPUT_GET, 'keywords') ? filter_input(INPUT_GET, 'keywords') : '仮想通貨';
     $max_num = 100;
+    
     Log::debug('検索ワード: '.$keywords);
     
     // 最大実行時間・90秒。
@@ -42,13 +43,14 @@ class GoogleNewsController extends Controller
     
     // APIへのリクエストURLを作成
     $api_url = $API_BASE_URL . $query . $API_PARAM_URL;
+    Log::debug('APIリクエストURL :'.$api_url);
     
     
     
-    // -----------------
-    // APIへのアクセス
-    // -----------------
-    // APIにアクセスする。その結果はsimplexmlに格納する。
+    // --------------------
+    // APIへリクエストを飛ばす
+    // --------------------
+    // APIにリクエスト。その結果はsimplexmlに格納する。
     $content = file_get_contents($api_url);
     $xml = simplexml_load_string($content);
     
@@ -63,13 +65,15 @@ class GoogleNewsController extends Controller
     // 記事エントリを取り出す。
     $data = $xml->channel->item;
     
-    // 記事数が0だった場合、空のままレスポンスを返す
-    if(!count($data)) {
-      Log::debug('記事0件でした。');
+    // 記事数をカウントして、0だった場合は空のままレスポンスを返す
+    if(count($data)) {
+      Log::debug('見つけた記事数: '. count($data));
+    } else {
+      Log::debug('記事は0件でした。');
       return $data;
     }
     
-    // entry1つ1つから"title"、"pubDate"、"source"、URLを取り出して、配列に格納する
+    // "title"、"pubDate"、"source"、URLを取り出して、配列に格納する
     for ($i = 0; $i < count($data); $i++) {
       // エントリーのタイトル
       $entry_list[$i]['title'] = mb_convert_encoding($data[$i]->title, "UTF-8", "auto");
@@ -100,6 +104,9 @@ class GoogleNewsController extends Controller
     }else{
       $scraped_entry_list = $entry_list;
     }
+    
+    // レスポンスする記事の配列
+    // Log::debug('レスポンスする記事の配列: '. print_r($scraped_entry_list, true));
     
     // 取得したニュースの配列を返却
     return $scraped_entry_list;
