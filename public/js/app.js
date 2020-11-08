@@ -3807,8 +3807,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -47220,8 +47218,6 @@ var render = function() {
     _vm.is24hour
       ? _c("span", { staticClass: "c-icon" }, [_vm._v("NEW!!")])
       : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-news__item--picture" }),
     _vm._v(" "),
     _c("div", { staticClass: "p-news__item--title" }, [
       _c("h2", {}, [

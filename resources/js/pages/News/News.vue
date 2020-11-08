@@ -5,8 +5,6 @@
   <div class="p-news__item p-news__item--entry">
     <!-- 24H以内の記事に付与されるアイコン -->
     <span v-if="is24hour" class="c-icon">NEW!!</span>
-    <!-- 写真 -->
-    <div class="p-news__item--picture"></div>
     <!-- 記事のタイトル -->
     <div class="p-news__item--title">
       <h2 class="">

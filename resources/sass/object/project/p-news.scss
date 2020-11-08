@@ -42,7 +42,7 @@
     border-radius: 4px;
     min-height: 150px; //TODO
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     padding: 15px;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0);
@@ -66,16 +66,8 @@
         box-shadow: 0 0 3px #f66d9b;
       }
     }
-    &--picture {
-      height: 120px;
-      width: 120px; //TODO
-      margin-right: 15px;
-      background: #FFF;
-      border-radius: 10px;
-      border: 1px solid #cdcdcd;
-    }
     &--title {
-      width: 65%;
+      width: 80%;
       font-size: 20px;
       border-right: 0.5px solid #000;
       line-height: 1.2;
@@ -93,9 +85,10 @@
         height: 50%;
         width: 100%;
         padding: 0 10px;
-        font-size: 15px;
+        font-size: 12px;
       }
       .p-news__item--time {
+        font-size: 15px;
         height: 50%;
         width: 100%;
         padding: 0 10px;
