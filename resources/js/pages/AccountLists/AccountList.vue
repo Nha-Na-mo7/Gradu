@@ -163,18 +163,17 @@ export default {
     async twitter_index() {
 
       // APIにアクセス
-      const response = await axios.get(`/api/twitter/index`, { timeout: 1000 * 60 * 10 });
-
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status);
-        return false;
-      }
-
-      alert('yes!' + response.status);
-
-      // ステータス番号を返す
-      return response.status;
+      const response = await axios.get(`/api/twitter/index`);
+      // // エラー時
+      // if (response.status !== OK) {
+      //   this.$store.commit('error/setErrorCode', response.status);
+      //   return false;
+      // }
+      //
+      // alert('yes!' + response.status);
+      //
+      // // ステータス番号を返す
+      // return response.status;
     },
 
 

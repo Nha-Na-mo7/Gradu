@@ -2793,8 +2793,6 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     },
     // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     twitter_index: function twitter_index() {
-      var _this2 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
@@ -2802,28 +2800,12 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get("/api/twitter/index", {
-                  timeout: 1000 * 60 * 10
-                });
+                return axios.get("/api/twitter/index");
 
               case 2:
                 response = _context2.sent;
 
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
-                  _context2.next = 6;
-                  break;
-                }
-
-                _this2.$store.commit('error/setErrorCode', response.status);
-
-                return _context2.abrupt("return", false);
-
-              case 6:
-                alert('yes!' + response.status); // ステータス番号を返す
-
-                return _context2.abrupt("return", response.status);
-
-              case 8:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -2833,7 +2815,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     },
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
     fetchAccounts: function fetchAccounts() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var response;
@@ -2841,7 +2823,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (!_this3.isLoading) {
+                if (!_this2.isLoading) {
                   _context3.next = 2;
                   break;
                 }
@@ -2850,9 +2832,9 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
               case 2:
                 // 読み込みをtrueに
-                _this3.isLoading = true;
+                _this2.isLoading = true;
                 _context3.next = 5;
-                return axios.get("/api/accounts/index/?page=".concat(_this3.p));
+                return axios.get("/api/accounts/index/?page=".concat(_this2.p));
 
               case 5:
                 response = _context3.sent;
@@ -2862,22 +2844,22 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
                   break;
                 }
 
-                _this3.$store.commit('error/setErrorCode', response.status);
+                _this2.$store.commit('error/setErrorCode', response.status);
 
                 return _context3.abrupt("return", false);
 
               case 9:
                 console.log(response.data);
-                _this3.accounts = response.data.data;
-                _this3.currentPage = response.data.current_page;
-                _this3.lastPage = response.data.last_page; // そのページにアカウントがないor通信が思いなどで読み込めないとき
+                _this2.accounts = response.data.data;
+                _this2.currentPage = response.data.current_page;
+                _this2.lastPage = response.data.last_page; // そのページにアカウントがないor通信が思いなどで読み込めないとき
 
                 if (response.data.data.length === 0) {
-                  _this3.isNothingAccounts = true;
+                  _this2.isNothingAccounts = true;
                 } // 読み込みをfalseに、isNothingAccountsをtrueに
 
 
-                _this3.isLoading = false;
+                _this2.isLoading = false;
 
               case 15:
               case "end":
@@ -2904,7 +2886,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   watch: {
     $route: {
       handler: function handler() {
-        var _this4 = this;
+        var _this3 = this;
 
         return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
           return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
@@ -2912,7 +2894,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
               switch (_context4.prev = _context4.next) {
                 case 0:
                   _context4.next = 2;
-                  return _this4.fetchAccounts();
+                  return _this3.fetchAccounts();
 
                 case 2:
                 case "end":
@@ -2987,7 +2969,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     isExistTweet: function isExistTweet() {
-      return this.tweet !== null;
+      return this.tweet.tweet_id_str !== null;
     },
     twitter_tweet_url: function twitter_tweet_url() {
       return this.account_url + '/status/' + this.tweet.tweet_id_str;

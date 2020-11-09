@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     isExistTweet() {
-      return this.tweet !== null;
+      return this.tweet.tweet_id_str !== null;
     },
     twitter_tweet_url() {
       return this.account_url + '/status/' + this.tweet.tweet_id_str;

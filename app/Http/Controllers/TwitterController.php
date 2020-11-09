@@ -137,29 +137,44 @@ class TwitterController extends Controller
       Log::debug('TwitterController.search_accounts アカウント検索');
       Log::debug('==============================================');
       
+      // --------------------------
+      // APIリクエストの前準備
+      // --------------------------
+  
       $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 50; // 検索ページ。これを終わるまで繰り返す。
+      $page = 1; // 検索ページ。これを終わるまで繰り返す。
+      
+      // ループ内で一度更新処理を行ったアカウントのIDを格納する
+      $updateded_accounts = [];
       
       // API使用のためのインスタンスの作成
       $connection = $this->connection_instanse_app();
-      
-      // twitter_accountsテーブルの全レコードを削除
-      TwitterAccount::query()->delete();
 
-      // $pageで検索、52ページは仕様上超えることはない
+      
+      // $pageで検索する。APIの仕様上51ページまで取得できる。
       while ($page < 52) {
-        Log::debug($page.'ページ目をチェックします');
-        // TwitterAPIにリクエストを投げ、情報を取得する
-        $searched_users = $connection->get('users/search', array("q" => $query, "page" => $page, "count" => $count));
+        Log::debug('▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼ '.$page.' ページ目をチェックします ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼');
         
+        // -------------------------
+        // アカウント検索APIにリクエスト
+        // -------------------------
+        // 仮想通貨ユーザーを取得する
+        $result_users = $connection->get('users/search', array(
+            "q" => $query,
+            "page" => $page,
+            "count" => $count
+        ));
+        
+        // ------------------------------
         // 取得したアカウント情報をDBに登録する
-        // アカウント検索API(users/search)ではリツイート・リプライも含めた最新ツイートが取得されてしまうため、後に改めて該当ユーザーの最新ツイートを取得する
-        // このAPIは重複した結果を返すこともあるため、同じユーザーが出現した場合登録せずツイート検索も行わない(APIリクエストの節約にもなる)
-        foreach($searched_users as $user){
+        // ------------------------------
+        // アカウント検索APIではRT・リプライも含めた最新ツイートが取得されてしまうため、改めて該当ユーザーの最新ツイートを取得する
+        // このAPIは重複した結果を返すこともあるため、同じユーザーが出現した場合登録せずツイート検索も行わない
+        foreach($result_users as $user){
           
           $request = json_decode(json_encode($user), true);
-          Log::debug('解体: '. print_r($request, true));
+          // Log::debug('解体: '. print_r($request, true));
           
           // エラーコードが存在する場合
           if (isset($request[0]['code'])) {
@@ -167,14 +182,41 @@ class TwitterController extends Controller
             break 2;
           }
           
-          // 複数回使うので変数に格納
+          // idは複数回使うので変数に格納
           $account_id = $request['id'];
+          
+          // --------------------------
+          // 取得したユーザーの重複チェック
+          // --------------------------
+          // 取得したIDが既にテーブルにあるか探す
+          $result_by_db = TwitterAccount::where('account_id', $account_id)->get();
+          
+          // 新規登録かを判定するフラグ(falseであればアップデートになる)
+          $insert_flg = false;
+          
+          // 重複がない(IDがない)場合
+          if($result_by_db->isEmpty()) {
+            $insert_flg = true;
+            Log::debug('テーブルに存在しないアカウントでした。新規登録に入ります。');
+          // 既にテーブル登録済みの場合
+          } else {
+            // 既に登録済みのアカウントは、update処理を行う。
+            Log::debug('このアカウント(ID:'.$account_id.')は既にDBに登録済みでした。更新処理に入ります。');
+            // 一度ループ内でアップデート処理を行っているアカウントかを確認する
+            // 配列内に、今回のIDが存在するかを確認
+            $isUpdated_id = in_array($account_id, $updateded_accounts);
+            
+            if($isUpdated_id) {
+              Log::debug('ID:'.$account_id.' は既にアップデート済みなのでcontinueします。');
+              continue;
+            }
+          }
           
           // プロフィール画像のURLから _normalの文字列を省く
           // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
           $image = $request['profile_image_url_https'];
           $replaced_fullImg = str_replace('_normal', '', $image);
-          
+  
           // 配列に格納
           $requestlist = array(
               'account_id' => $account_id,
@@ -188,35 +230,20 @@ class TwitterController extends Controller
               'profile_image_url_https' => $replaced_fullImg
           );
           
-          
-          // TwitterAccountモデルを作成
-          $twitter_account = new TwitterAccount();
-          
-          // テーブルに登録
-          try {
-            $twitter_account->fill($requestlist)->save();
-          // 重複エラー(23000)の場合、後続に続けずcontinueする
-          } catch (\PDOException $exception) {
-            if($exception->getCode() == 23000){
-              continue;
-            }
-          }
-          
-          // accountsテーブルに登録後、
-          // TwitterAPIに投げて、リプライ・リツイートでは無い最新のツイート1件を探す
+          // --------------------------
+          // 最新のツイート1件検索
+          // --------------------------
           // GET statuses/user_timelineを使う
-          // user_idまたはscreen_idが検索には必須だが、screen_idは変更される場合があるのでuser_idで検索をかける
+          // screen_idは変更される場合があるので、user_idで検索をかける
+  
+          // ツイートをしていない場合: []で帰ってくる
+          // 鍵垢: Not authorized
           
-          // ツイートをしていない場合→ []で帰ってくる
-          // 鍵垢→ Not authorized
-          
-          // リプライを含めない exclude_replies→true
-          // RTを含め無い include_rts→false
-          // ややこしい
-          
-          // 鍵垢では無い場合、最新ツイート検索をする
+          // 鍵垢では無い場合に最新ツイート検索をする
           if(!$request['protected']) {
-          
+    
+            Log::debug('公開アカウントでしたので、ツイート検索APIにリクエストします。');
+            // APIにリクエストする
             $tweetRequest = $connection->get('statuses/user_timeline',
                 array(
                     "user_id" => $account_id,
@@ -224,43 +251,90 @@ class TwitterController extends Controller
                     "exclude_replies" => true,
                     "include_rts" => false
                 ));
-          
-            // ツイートが一つも無い場合、空配列で帰ってくるため中身があるかを確認
-            // if(property_exists(json_encode($tweetRequest), 'errors') ) {
-            //   Log::debug('API制限');
-            //   break 2;
-            // }
-          
+    
             // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
             foreach ($tweetRequest as $tweetreq) {
               $addlist = array(
                   'account_id' => $account_id,
-                  'tweet_id_str' => $tweetreq->id_str ?? '',
-                  'tweet_text' => $tweetreq->text ?? '',
+                  'tweet_id_str' => $tweetreq->id_str ?? null,
+                  'tweet_text' => $tweetreq->text ?? null,
               );
-              $created_at = $tweetreq->created_at ?? '';
-              if($created_at !== '') {
+              $created_at = $tweetreq->created_at ?? null;
+              if($created_at !== null) {
                 $addlist['tweet_created_at'] = date('Y-m-d H:i:s', strtotime($created_at));
               }
               $tweetlist = $addlist;
-          
             }
-          // 鍵垢の場合は、アカウントのIDだけをテーブルにいれる
+            // 鍵垢の場合は、アカウントのID以外nullとしてテーブルにいれる
+            // これは更新処理の時、公開→鍵垢へ変わっていたユーザーのツイートをnullとして更新するため
           } else {
-            $tweetlist = array('account_id' => $account_id);
+            Log::debug('ID:'.$account_id.' は非公開アカウントでした。アカウントID以外はnullとして登録します。');
+            $tweetlist = array(
+                'account_id' => $account_id,
+                'tweet_id_str' => null,
+                'tweet_text' => null,
+                'tweet_created_at' => null,
+                );
           }
-          // モデルを作成
-          $new_tweet = new TwitterAccountNewTweet();
-          // テーブル登録
-          $new_tweet->fill($tweetlist)->save();
+          
+          // ----------------------
+          // DB登録or更新
+          // ----------------------
+          // 新規登録
+          if($insert_flg) {
+            Log::debug('これよりデータベースへ新規登録を行います。');
+            // TwitterAccountモデルを作成
+            $twitter_account = new TwitterAccount();
+            // TwitterAccountNewTweetモデルを作成
+            $new_tweet = new TwitterAccountNewTweet();
+  
+            // テーブルに登録
+            try {
+              // twitter_accountsテーブルへの登録
+              $twitter_account->fill($requestlist)->save();
+              Log::debug('twitter_accountsテーブルに新規登録しました。');
+  
+              // twitter_account_new_tweetsテーブルへの登録
+              $new_tweet->fill($tweetlist)->save();
+              Log::debug('twitter_account_new_tweetsテーブルに新規登録しました。');
+              
+            } catch (\Exception $exception) {
+              Log::debug('DBへの新規登録時に例外処理に入りました。エラーメッセージ: '. $exception->getMessage());
+              continue;
+            }
+            // テーブル登録
+            $new_tweet->fill($tweetlist)->save();
+          // 更新処理(=新規登録ではないため)
+          } else {
+            Log::debug('ID: '.$account_id.'のテーブル情報を更新します');
+  
+            try {
+              // twitter_accountsテーブルの更新
+              TwitterAccount::where('account_id', $account_id)->update($requestlist);
+              Log::debug('twitter_accountsテーブルを更新しました。');
+              
+              // twitter_account_new_tweetsテーブルの更新
+              TwitterAccountNewTweet::where('account_id', $account_id)->update($tweetlist);
+              Log::debug('twitter_account_new_tweetsテーブルを更新しました。');
+  
+              // アプデしたaccount_idを"アプデ済み配列"へ追加する
+              $updateded_accounts[] = $account_id;
+              Log::debug('アップデートしたアカウントのID配列: '.print_r($updateded_accounts, true));
+              
+            } catch (\Exception $exception) {
+              Log::debug('DBデータの更新時に例外処理に入りました。エラーメッセージ: '. $exception->getMessage());
+              continue;
+            }
+          }
         }
+        Log::debug('ページカウントを1増やします。');
         // ページカウントを1増やす
         $page++;
       }
-      // TODO レスポンスの成功を返すが、バッチ処理なので必要なのかは不明
-      return response(200);
+      Log::debug('======================');
+      Log::debug('アカウント検索を終了します');
+      Log::debug('======================');
     }
-  
     
     // =======================================
     // アカウント一覧ページ/DBからアカウント一覧の取得
