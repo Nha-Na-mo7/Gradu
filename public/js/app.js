@@ -2701,6 +2701,7 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
       isNothingAccounts: false,
       // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
+      auto_follow_flg: this.$store.getters['auth/auto_follow_flg'],
       updated_at: '',
       accounts: [],
       currentPage: 0,
@@ -2720,9 +2721,6 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     },
     isNothing: function isNothing() {
       return this.isNothingAccounts;
-    },
-    auto_follow_flg: function auto_follow_flg() {
-      return this.$store.getters['auth/auto_follow_flg'];
     }
   },
   methods: {
@@ -2881,15 +2879,14 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
               case 8:
                 response = _context4.sent;
-                console.log(response);
-                _context4.next = 14;
+                _this3.auto_follow_flg = !flg;
+                _context4.next = 13;
                 break;
 
               case 12:
-                console.log('よろしくなかった');
                 return _context4.abrupt("return", false);
 
-              case 14:
+              case 13:
               case "end":
                 return _context4.stop();
             }
@@ -46106,7 +46103,7 @@ var render = function() {
                       staticClass: "c-btn c-btn__main c-btn--primary",
                       on: { click: _vm.auto_following }
                     },
-                    [_vm._v("自動フォロー中")]
+                    [_vm._v("自動フォロー中...")]
                   )
                 : _c(
                     "button",
@@ -46114,7 +46111,7 @@ var render = function() {
                       staticClass: "c-btn c-btn__main c-btn--primary",
                       on: { click: _vm.auto_following }
                     },
-                    [_vm._v("自動フォローをONにする")]
+                    [_vm._v("START AUTO-FOLLOW")]
                   )
             ]),
             _vm._v(" "),

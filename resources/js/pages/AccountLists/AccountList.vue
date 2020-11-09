@@ -27,12 +27,12 @@
               class="c-btn c-btn__main c-btn--primary"
               @click="auto_following"
               v-if="auto_follow_flg"
-          >自動フォロー中</button>
+          >自動フォロー中...</button>
           <button
               class="c-btn c-btn__main c-btn--primary"
               @click="auto_following"
               v-else
-          >自動フォローをONにする</button>
+          >START AUTO-FOLLOW</button>
         </div>
         <!-- TODO バッチ処理用のボタン・削除すること -->
         <button class="c-btn" @click="twitter_index">バッチ処理・ニュースをDBに格納</button>
@@ -96,6 +96,7 @@ export default {
       isLoading: false, // 読み込み中か
       isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
+      auto_follow_flg: this.$store.getters['auth/auto_follow_flg'],
       updated_at: '',
       accounts: [],
       currentPage: 0,
@@ -116,9 +117,6 @@ export default {
     isNothing() {
       return this.isNothingAccounts;
     },
-    auto_follow_flg() {
-      return this.$store.getters['auth/auto_follow_flg'];
-    }
   },
   methods: {
     // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
@@ -189,9 +187,8 @@ export default {
       }
       if(result) {
         const response = await axios.post(`/api/accounts/autofollowflg`, {'follow_flg': flg});
-        console.log(response)
+        this.auto_follow_flg = !flg;
       }else {
-        console.log('よろしくなかった')
         return false
       }
     },
