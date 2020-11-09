@@ -2671,6 +2671,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2714,6 +2720,9 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     },
     isNothing: function isNothing() {
       return this.isNothingAccounts;
+    },
+    auto_follow_flg: function auto_follow_flg() {
+      return this.$store.getters['auth/auto_follow_flg'];
     }
   },
   methods: {
@@ -2832,9 +2841,61 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee3);
       }))();
     },
-    // オートフォローをオンにする
+    // オートフォローを切り替える
     auto_following: function auto_following() {
-      alert('AUTO-FOLLOWING!');
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var flg, result, response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                flg = _this3.auto_follow_flg; // getterに何も入っていない場合-1が帰ってくるため、その時は処理を行わない
+
+                if (!(flg === -1)) {
+                  _context4.next = 3;
+                  break;
+                }
+
+                return _context4.abrupt("return", false);
+
+              case 3:
+                result = false;
+
+                if (flg) {
+                  result = confirm('自動フォローをOFFにします。よろしいですか？');
+                } else {
+                  result = confirm('自動フォローをONにします。よろしいですか？');
+                }
+
+                if (!result) {
+                  _context4.next = 12;
+                  break;
+                }
+
+                _context4.next = 8;
+                return axios.post("/api/accounts/autofollowflg", {
+                  'follow_flg': flg
+                });
+
+              case 8:
+                response = _context4.sent;
+                console.log(response);
+                _context4.next = 14;
+                break;
+
+              case 12:
+                console.log('よろしくなかった');
+                return _context4.abrupt("return", false);
+
+              case 14:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   components: {
@@ -2849,26 +2910,26 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this4 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
-                  _context4.next = 2;
-                  return _this3.fetchAccounts();
+                  _context5.next = 2;
+                  return _this4.fetchAccounts();
 
                 case 2:
-                  _context4.next = 4;
-                  return _this3.fetchUpdatedAt();
+                  _context5.next = 4;
+                  return _this4.fetchUpdatedAt();
 
                 case 4:
                 case "end":
-                  return _context4.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee4);
+          }, _callee5);
         }))();
       },
       immediate: true
@@ -46038,14 +46099,23 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "p-accounts__headline" }, [
             _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "c-btn c-btn__main c-btn--primary",
-                  on: { click: _vm.auto_following }
-                },
-                [_vm._v("自動フォロー")]
-              )
+              _vm.auto_follow_flg
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "c-btn c-btn__main c-btn--primary",
+                      on: { click: _vm.auto_following }
+                    },
+                    [_vm._v("自動フォロー中")]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass: "c-btn c-btn__main c-btn--primary",
+                      on: { click: _vm.auto_following }
+                    },
+                    [_vm._v("自動フォローをONにする")]
+                  )
             ]),
             _vm._v(" "),
             _c(
@@ -66528,6 +66598,10 @@ var getters = {
   },
   token_secret: function token_secret(state) {
     return state.user ? state.user.token_secret : '';
+  },
+  // 自動フォローフラグ
+  auto_follow_flg: function auto_follow_flg(state) {
+    return state.user ? state.user.auto_follow_flg : -1;
   }
 }; // ===============
 // mutations

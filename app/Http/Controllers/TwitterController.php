@@ -328,6 +328,9 @@ class TwitterController extends Controller
        * ユーザーに変更されることがない"user_id"を指定してフォローする。
        * user_id:必須・フォロー先のアカウントID
        */
+      Log::debug('=========================================');
+      Log::debug('TwitterController.accounts_follow フォロー');
+      Log::debug('=========================================');
       $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
@@ -335,7 +338,7 @@ class TwitterController extends Controller
       $connection = $this->connection_instanse_users($request->token, $request->token_secret);
       
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
-      Log::debug('accounts_follow: フォローします。');
+      Log::debug('ID:'.$target_user_id.' にフォローを飛ばしました。');
       
       return response()->json(['result' => $twitterRequest]);
     }
@@ -354,6 +357,9 @@ class TwitterController extends Controller
        * ユーザーに変更されることがない"user_id"を指定してフォローする。
        * user_id:必須・フォロー先のアカウントID
        */
+      Log::debug('==============================================');
+      Log::debug('TwitterController.accounts_unfollow フォロー解除');
+      Log::debug('==============================================');
       $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
@@ -361,7 +367,7 @@ class TwitterController extends Controller
       $connection = $this->connection_instanse_users($request->token, $request->token_secret);
       
       $twitterRequest = $connection->post('friendships/destroy', array("user_id" => $target_user_id));
-      Log::debug('accounts_unfollow: フォロー解除します。');
+      Log::debug('ID:'.$target_user_id.' のフォローを解除しました。');
       
       return response()->json(['result' => $twitterRequest]);
     }
@@ -380,6 +386,9 @@ class TwitterController extends Controller
        * ユーザーに変更されることがない"user_id"を指定。
        * user_id:必須・フォロー先のアカウントID
        */
+      Log::debug('==============================================');
+      Log::debug('TwitterController.lookup_follow フォロー関係取得');
+      Log::debug('==============================================');
       $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
@@ -387,7 +396,7 @@ class TwitterController extends Controller
       $connection = $this->connection_instanse_users($request->token, $request->token_secret);
       
       $twitterRequest = $connection->get('friendships/lookup', array("user_id" => $target_user_id));
-      Log::debug('accounts_follow: フォロー関係を取得します。');
+      Log::debug('ID'.$target_user_id.' とのフォロー関係を取得します。');
       
       // エラーチェック
       if(isset($twitterRequest['errors'])) {
@@ -404,17 +413,34 @@ class TwitterController extends Controller
   
   
     
-    // =======================================
-    // 該当ユーザーの自動フォローのON/OFFを切り替え
-    // =======================================
-    // TODO このコントローラーで正しいか検討
-    public function toggle_auto_follow_flg() {
-    
+    // ================================
+    // 自動フォローのON/OFF切り替え
+    // ================================
+    // わかりやすくtoggleというメソッド名だが本質的にはステータスの上書きにあたる
+    // 実装ではON/OFFの切り替えしか起こらないようにはしてある
+    public function toggle_auto_follow_flg(Request $request) {
+      Log::debug('=========================================================');
+      Log::debug('TwitterController.toggle_auto_follow_flg 自動フォローON/OFF');
+      Log::debug('=========================================================');
+      
+      // 認証ユーザーを取得
       $user = Auth::user();
       
+      Log::debug($request);
+      // 「現在の」自動フォローフラグを1or0で取得
+      $auto_follow_flg = $request->follow_flg;
       
-      
-      
+      // 現時点でON(follow_flg === 1)の時
+      if($auto_follow_flg) {
+        Log::debug('ID:'.$user->id.'、'.$user->name.'さんの自動フォローをOFFにします');
+        $user->auto_follow_flg = false;
+        $user->update();
+      }else{
+        Log::debug('ID:'.$user->id.'、'.$user->name.'さんの自動フォローをONにします');
+        $user->auto_follow_flg = true;
+        $user->update();
+      }
+      return response(200);
     }
 
     
@@ -426,6 +452,9 @@ class TwitterController extends Controller
     // =======================================
     public function get_account_follow_ids(Request $request) {
   
+      Log::debug('============================================================');
+      Log::debug('TwitterController.get_account_follow_ids フォロー中ユーザーの取得');
+      Log::debug('============================================================');
       $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
@@ -434,18 +463,21 @@ class TwitterController extends Controller
   
       // APIを使用し、フォローしているユーザーのID一覧を取得
       $twitterRequest = $connection->post('friendships/ids', array("user_id" => $target_user_id));
-      Log::debug('get_account_follow_ids: フォローしているユーザーのID一覧です');
+      Log::debug('ID'.$target_user_id.' とのフォロー関係を取得します。');
       Log::debug('一覧: '. print_r($twitterRequest, true));
   
       return response()->json(['result' => $twitterRequest]);
       
     }
   
-    // =======================================
-    // DBにフォローしているユーザーを要録する
-    // =======================================
-    public function add_table_follows() {
-    
+    // =========================================
+    // フォローしているユーザーの情報を取得し、DB登録する
+    // =========================================
+    public function add_table_follows(Request $request) {
+      // 上記get_account_follow_idsを発火
+      $follow_states = self::get_account_follow_ids($request);
+      
+      
     }
     
   

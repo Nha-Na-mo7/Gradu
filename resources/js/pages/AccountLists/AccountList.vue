@@ -26,7 +26,13 @@
           <button
               class="c-btn c-btn__main c-btn--primary"
               @click="auto_following"
-          >自動フォロー</button>
+              v-if="auto_follow_flg"
+          >自動フォロー中</button>
+          <button
+              class="c-btn c-btn__main c-btn--primary"
+              @click="auto_following"
+              v-else
+          >自動フォローをONにする</button>
         </div>
         <!-- TODO バッチ処理用のボタン・削除すること -->
         <button class="c-btn" @click="twitter_index">バッチ処理・ニュースをDBに格納</button>
@@ -109,6 +115,9 @@ export default {
     },
     isNothing() {
       return this.isNothingAccounts;
+    },
+    auto_follow_flg() {
+      return this.$store.getters['auth/auto_follow_flg'];
     }
   },
   methods: {
@@ -163,9 +172,28 @@ export default {
       // console.log(response)
       this.updated_at = response.data.updated_at;
     },
-    // オートフォローをオンにする
-    auto_following() {
-      alert('AUTO-FOLLOWING!');
+    // オートフォローを切り替える
+    async auto_following() {
+
+      const flg = this.auto_follow_flg;
+      // getterに何も入っていない場合-1が帰ってくるため、その時は処理を行わない
+      if(flg === -1) {
+        return false
+      }
+
+      var result = false;
+      if( flg ) {
+        result = confirm('自動フォローをOFFにします。よろしいですか？')
+      } else {
+        result = confirm('自動フォローをONにします。よろしいですか？')
+      }
+      if(result) {
+        const response = await axios.post(`/api/accounts/autofollowflg`, {'follow_flg': flg});
+        console.log(response)
+      }else {
+        console.log('よろしくなかった')
+        return false
+      }
     },
   },
   components: {

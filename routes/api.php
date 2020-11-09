@@ -62,6 +62,8 @@ Route::get('/accounts/index', 'TwitterController@accounts_index')->name('account
 Route::get('/accounts/tweet/{tweet_id}', 'TwitterController@accounts_tweet')->name('accounts.tweet');
 
 
+// 認証ユーザーの自動フォローフラグを切り替える
+Route::post('/accounts/autofollowflg', 'TwitterController@toggle_auto_follow_flg')->name('accounts.follow');
 // 指定したTwitterアカウントをフォローする
 Route::post('/accounts/follow', 'TwitterController@accounts_follow')->name('accounts.follow');
 // 指定したTwitterアカウントのフォローを外す
