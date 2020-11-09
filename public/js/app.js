@@ -3011,7 +3011,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     isExistTweet: function isExistTweet() {
-      return this.tweet.tweet_id_str !== null;
+      return this.tweet !== null && this.tweet.tweet_id_str !== null;
     },
     twitter_tweet_url: function twitter_tweet_url() {
       return this.account_url + '/status/' + this.tweet.tweet_id_str;
