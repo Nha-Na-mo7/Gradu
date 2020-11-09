@@ -40,14 +40,14 @@
   // ニュースの一覧表示画面で出てくる用のコンポーネント
   &__item {
     border-radius: 4px;
-    min-height: 150px; //TODO
+    min-height: 120px; //TODO
     width: 100%;
     margin-bottom: 5px;
     padding: 15px;
     position: relative;
     border: 1px solid rgba(255, 255, 255, 0);
     color: #0b2e13;
-    font-size: 20px;
+    font-size: 15px;
     box-shadow: 0 0 2px #cdcdcd;
     transition: .5s all;
     display: flex;
@@ -68,7 +68,6 @@
     }
     &--title {
       width: 80%;
-      font-size: 20px;
       border-right: 0.5px solid #000;
       line-height: 1.2;
       &:hover {
