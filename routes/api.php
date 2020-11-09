@@ -82,6 +82,11 @@ Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 // ===============
 // その他
 // ===============
+// 指定のIDの最終更新日時を取得する
+Route::get('/updated/at/table', 'SystemController@get_updated_at');
+
+
+
 // トークンリフレッシュAPI
 Route::get('/reflesh-token', function (Request $request) {
   $request->session()->regenerateToken();

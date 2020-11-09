@@ -2696,6 +2696,8 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
       // 読み込み中か
       isNothingAccounts: false,
       // 検索した結果アカウントが見つからなかったか
+      UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
+      updated_at: '',
       accounts: [],
       currentPage: 0,
       lastPage: 0,
@@ -2709,9 +2711,8 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     pageTitle: function pageTitle() {
       return PAGE_TITLE;
     },
-    // TODO リボンタグ用・最終更新日を1日1回更新していれる、このcomputed自体は削除予定
-    today: function today() {
-      return new Date();
+    twitter_accounts_table_updated_at: function twitter_accounts_table_updated_at() {
+      return this.updated_at;
     },
     isNothing: function isNothing() {
       return this.isNothingAccounts;
@@ -2869,6 +2870,43 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee3);
       }))();
     },
+    // DBからアカウント一覧のテーブル更新終了時刻を取得
+    fetchUpdatedAt: function fetchUpdatedAt() {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _context4.next = 2;
+                return axios.get("/api/updated/at/table?id=".concat(_this3.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID));
+
+              case 2:
+                response = _context4.sent;
+
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
+                  _context4.next = 6;
+                  break;
+                }
+
+                _this3.$store.commit('error/setErrorCode', response.status);
+
+                return _context4.abrupt("return", false);
+
+              case 6:
+                // console.log(response)
+                _this3.updated_at = response.data.updated_at;
+
+              case 7:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
+    },
     // オートフォローをオンにする
     auto_following: function auto_following() {
       alert('AUTO-FOLLOWING!');
@@ -2886,22 +2924,26 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   watch: {
     $route: {
       handler: function handler() {
-        var _this3 = this;
+        var _this4 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
             while (1) {
-              switch (_context4.prev = _context4.next) {
+              switch (_context5.prev = _context5.next) {
                 case 0:
-                  _context4.next = 2;
-                  return _this3.fetchAccounts();
+                  _context5.next = 2;
+                  return _this4.fetchAccounts();
 
                 case 2:
+                  _context5.next = 4;
+                  return _this4.fetchUpdatedAt();
+
+                case 4:
                 case "end":
-                  return _context4.stop();
+                  return _context5.stop();
               }
             }
-          }, _callee4);
+          }, _callee5);
         }))();
       },
       immediate: true
@@ -3694,7 +3736,7 @@ __webpack_require__.r(__webpack_exports__);
       required: false
     },
     date: {
-      type: Date,
+      type: [Date, String],
       required: false
     }
   },
@@ -46062,7 +46104,12 @@ var render = function() {
         "div",
         { staticClass: "p-accounts__container" },
         [
-          _c("Ribbonnav", { attrs: { title: _vm.pageTitle, date: _vm.today } }),
+          _c("Ribbonnav", {
+            attrs: {
+              title: _vm.pageTitle,
+              date: _vm.twitter_accounts_table_updated_at
+            }
+          }),
           _vm._v(" "),
           _c("div", { staticClass: "p-accounts__headline" }, [
             _c("div", { staticClass: "p-news__modal p-news__modal-show" }, [

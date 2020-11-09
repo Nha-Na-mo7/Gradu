@@ -12,4 +12,7 @@ class UpdatedAtTable extends Model
   
     protected $fillable = [];
   
+    protected $visible = [
+        'updated_at'
+    ];
 }

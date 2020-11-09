@@ -16,7 +16,7 @@
       <!-- リボンタグ -->
       <Ribbonnav
           :title='pageTitle'
-          :date='today'
+          :date='twitter_accounts_table_updated_at'
       />
 
       <!-- ヘッドライン -->
@@ -90,6 +90,8 @@ export default {
     return {
       isLoading: false, // 読み込み中か
       isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
+      UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
+      updated_at: '',
       accounts: [],
       currentPage: 0,
       lastPage: 0,
@@ -103,9 +105,8 @@ export default {
     pageTitle(){
       return PAGE_TITLE;
     },
-    // TODO リボンタグ用・最終更新日を1日1回更新していれる、このcomputed自体は削除予定
-    today() {
-      return new Date();
+    twitter_accounts_table_updated_at() {
+      return this.updated_at;
     },
     isNothing() {
       return this.isNothingAccounts;
@@ -208,6 +209,19 @@ export default {
       // 読み込みをfalseに、isNothingAccountsをtrueに
       this.isLoading = false;
     },
+    // DBからアカウント一覧のテーブル更新終了時刻を取得
+    async fetchUpdatedAt() {
+      const response = await axios.get(`/api/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`);
+
+      // エラー時
+      if (response.status !== OK) {
+        this.$store.commit('error/setErrorCode', response.status)
+        return false
+      }
+
+      // console.log(response)
+      this.updated_at = response.data.updated_at;
+    },
     // オートフォローをオンにする
     auto_following() {
       alert('AUTO-FOLLOWING!');
@@ -227,6 +241,7 @@ export default {
       async handler() {
         // ページの読み込み直後、DBからTwitterアカウント一覧を取得
         await this.fetchAccounts();
+        await this.fetchUpdatedAt();
         // await this.fetch_TwitterAccountsOld();
       },
       immediate: true
