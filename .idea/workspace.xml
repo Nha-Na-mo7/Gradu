@@ -23,10 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/Models/UpdatedAtTable.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2020_10_27_232955_create_updated_at_tables_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,7 +322,7 @@
       <workItem from="1604015526167" duration="2438000" />
       <workItem from="1604018077834" duration="48483000" />
       <workItem from="1604377731550" duration="310000" />
-      <workItem from="1604378076521" duration="106712000" />
+      <workItem from="1604378076521" duration="107809000" />
     </task>
     <servers />
   </component>
