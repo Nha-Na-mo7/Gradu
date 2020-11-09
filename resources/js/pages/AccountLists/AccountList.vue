@@ -73,8 +73,7 @@ import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Ribbonnav from '../Components/Ribbonnav.vue';
 import Pagination from '../Components/Pagination.vue';
-import {OK, DEFAULT_SEARCHWORD} from "../../util";
-import { mapState } from 'vuex';
+import { OK } from "../../util";
 
 const PAGE_TITLE = '仮想通貨アカウント一覧';
 
@@ -113,68 +112,10 @@ export default {
     }
   },
   methods: {
-    // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
-    async fetch_TwitterAccountsOld() {
-
-      // 検索中には呼び出せないようにする
-      if(this.isLoading) {
-        return false;
-      }
-
-      // 検索開始時点で、isLoadingをtrueに、isNothingAccountsをfalseにする
-      this.isLoading = true;
-      this.isNothingAccounts = false;
-
-      // APIにアクセス
-      const params = this.searchData;
-      const response = await axios.get(`/api/twitter/index_old`, { params });
-
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status);
-        return false;
-      }
-
-      // レスポンスの結果を変数に格納
-      // TwitterAPIは配列で返してくるので、オブジェクト形式に変更
-      const res = {};
-      for(let i = 0, l = response.data.result.length; i < l; i += 1) {
-        const data = response.data.result[i];
-        res[data.id] = data;
-      }
-      this.fetchedAccounts = res;
-      console.log(this.fetchedAccounts)
-
-      // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
-      if(!this.fetchedAccounts.length) {
-        this.isNothingNews = true;
-      }
-      // 検索終了、isLoadingをfalseに戻す
-      this.isLoading = false;
-
-      console.log(response.data)
-
-      this.currentPage = response.data.current_page
-      this.lastPage = response.data.last_page
-
-      // ステータス番号を返す
-      return response.status;
-    },
-    // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
+    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     async twitter_index() {
-
       // APIにアクセス
       const response = await axios.get(`/api/twitter/index`);
-      // // エラー時
-      // if (response.status !== OK) {
-      //   this.$store.commit('error/setErrorCode', response.status);
-      //   return false;
-      // }
-      //
-      // alert('yes!' + response.status);
-      //
-      // // ステータス番号を返す
-      // return response.status;
     },
 
 
@@ -242,7 +183,6 @@ export default {
         // ページの読み込み直後、DBからTwitterアカウント一覧を取得
         await this.fetchAccounts();
         await this.fetchUpdatedAt();
-        // await this.fetch_TwitterAccountsOld();
       },
       immediate: true
     }

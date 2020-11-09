@@ -53,8 +53,6 @@ Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.
 // ===============
 // TODO 開発用 レートリミットの使用状況取得
 Route::get('/twitter/check_limit_status', 'TwitterController@check_limit_status')->name('twitter.check_limit_status');
-// 廃止予定・Twitterアカウント一覧取得
-Route::get('/twitter/index_old', 'TwitterController@twitter_index_old')->name('twitter.twitter_index_old');
 // バッチ用・Twitterアカウント一覧取得
 Route::get('/twitter/index', 'TwitterController@search_accounts')->name('twitter.search_accounts');
 

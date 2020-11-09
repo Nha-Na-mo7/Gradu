@@ -94,41 +94,6 @@ class TwitterController extends Controller
      *
      * つまり、2 ~ 4までの処理をバッチとしてまとめ、それを1日ごとに実行するのが1での役割である
      */
-  
-    // 廃止予定メソッド、ページの生合成を保つため、下記にあるtwitter_indexメソッドが完成したら削除
-    public function twitter_index_old(Request $request)
-    {
-      // 実行時間。90秒。
-      set_time_limit(90);
-      
-      // 検索キーワード
-      $query = $request->keywords;
-      // ページネーション用、検索ページ
-      // TwitterAPIは1ページごとに最大20件までしか取得できないがページネーションに対応している
-      $page = $request->page;
-      
-      // コネクションインスタンス作成
-      $connection = $this->connection_instanse_app();
-      
-      // TwitterAPIにリクエストを投げ、情報を取得する
-      // q:必須/検索キーワード
-      // page:取得する結果のページを指定
-      // count:ページごとに取得するユーザー結果の数。（最大値は20）
-      // include_entities:entitiesの取得を省略(画像など)
-      $twitterRequest = $connection->get('users/search', array( "q" => $query, "page" => $page, "count" => 20));
-      
-      // TwitterAPIからのレスポンス プロフィール画像のURLから _normalの文字列を省く)
-      // _normalを取り除かない場合、48px×48pxのサイズで固定になってしまう
-      foreach($twitterRequest as $res){
-        $image = $res->profile_image_url_https;
-        $replaced_fullImg = str_replace('_normal', '', $image);
-        $res->replaced_full_img = $replaced_fullImg;
-        $twitterRes[] = $res;
-      }
-      
-      // Vueファイルにデータを返すのでJSON形式
-      return response()->json(['result'=>$twitterRequest], 200);
-    }
     
     // ==================================
     // バッチ処理ver Twitterアカウント検索 ①

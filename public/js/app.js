@@ -2598,7 +2598,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Components/Ribbonnav.vue */ "./resources/js/pages/Components/Ribbonnav.vue");
 /* harmony import */ var _Components_Pagination_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Components/Pagination.vue */ "./resources/js/pages/Components/Pagination.vue");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2680,7 +2679,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-
 var PAGE_TITLE = '仮想通貨アカウント一覧';
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2719,72 +2717,21 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
     }
   },
   methods: {
-    // TwitterControllerを呼び、APIを使って該当のアカウント一覧を取得する
-    fetch_TwitterAccountsOld: function fetch_TwitterAccountsOld() {
-      var _this = this;
-
+    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
+    twitter_index: function twitter_index() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var params, response, res, i, l, data;
+        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                if (!_this.isLoading) {
-                  _context.next = 2;
-                  break;
-                }
-
-                return _context.abrupt("return", false);
+                _context.next = 2;
+                return axios.get("/api/twitter/index");
 
               case 2:
-                // 検索開始時点で、isLoadingをtrueに、isNothingAccountsをfalseにする
-                _this.isLoading = true;
-                _this.isNothingAccounts = false; // APIにアクセス
-
-                params = _this.searchData;
-                _context.next = 7;
-                return axios.get("/api/twitter/index_old", {
-                  params: params
-                });
-
-              case 7:
                 response = _context.sent;
 
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
-                  _context.next = 11;
-                  break;
-                }
-
-                _this.$store.commit('error/setErrorCode', response.status);
-
-                return _context.abrupt("return", false);
-
-              case 11:
-                // レスポンスの結果を変数に格納
-                // TwitterAPIは配列で返してくるので、オブジェクト形式に変更
-                res = {};
-
-                for (i = 0, l = response.data.result.length; i < l; i += 1) {
-                  data = response.data.result[i];
-                  res[data.id] = data;
-                }
-
-                _this.fetchedAccounts = res;
-                console.log(_this.fetchedAccounts); // 見つけたアカウントの数が0の時、isNothingAccountsをtrueにする
-
-                if (!_this.fetchedAccounts.length) {
-                  _this.isNothingNews = true;
-                } // 検索終了、isLoadingをfalseに戻す
-
-
-                _this.isLoading = false;
-                console.log(response.data);
-                _this.currentPage = response.data.current_page;
-                _this.lastPage = response.data.last_page; // ステータス番号を返す
-
-                return _context.abrupt("return", response.status);
-
-              case 21:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2792,21 +2739,55 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee);
       }))();
     },
-    // バッチ処理用。本来はこのコンポーネントに存在するものでは無い
-    twitter_index: function twitter_index() {
+    // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
+    fetchAccounts: function fetchAccounts() {
+      var _this = this;
+
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.next = 2;
-                return axios.get("/api/twitter/index");
+                if (!_this.isLoading) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return", false);
 
               case 2:
+                // 読み込みをtrueに
+                _this.isLoading = true;
+                _context2.next = 5;
+                return axios.get("/api/accounts/index/?page=".concat(_this.p));
+
+              case 5:
                 response = _context2.sent;
 
-              case 3:
+                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
+                  _context2.next = 9;
+                  break;
+                }
+
+                _this.$store.commit('error/setErrorCode', response.status);
+
+                return _context2.abrupt("return", false);
+
+              case 9:
+                console.log(response.data);
+                _this.accounts = response.data.data;
+                _this.currentPage = response.data.current_page;
+                _this.lastPage = response.data.last_page; // そのページにアカウントがないor通信が思いなどで読み込めないとき
+
+                if (response.data.data.length === 0) {
+                  _this.isNothingAccounts = true;
+                } // 読み込みをfalseに、isNothingAccountsをtrueに
+
+
+                _this.isLoading = false;
+
+              case 15:
               case "end":
                 return _context2.stop();
             }
@@ -2814,8 +2795,8 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
         }, _callee2);
       }))();
     },
-    // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
-    fetchAccounts: function fetchAccounts() {
+    // DBからアカウント一覧のテーブル更新終了時刻を取得
+    fetchUpdatedAt: function fetchUpdatedAt() {
       var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
@@ -2824,24 +2805,14 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                if (!_this2.isLoading) {
-                  _context3.next = 2;
-                  break;
-                }
-
-                return _context3.abrupt("return", false);
+                _context3.next = 2;
+                return axios.get("/api/updated/at/table?id=".concat(_this2.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID));
 
               case 2:
-                // 読み込みをtrueに
-                _this2.isLoading = true;
-                _context3.next = 5;
-                return axios.get("/api/accounts/index/?page=".concat(_this2.p));
-
-              case 5:
                 response = _context3.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
-                  _context3.next = 9;
+                  _context3.next = 6;
                   break;
                 }
 
@@ -2849,62 +2820,16 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
 
                 return _context3.abrupt("return", false);
 
-              case 9:
-                console.log(response.data);
-                _this2.accounts = response.data.data;
-                _this2.currentPage = response.data.current_page;
-                _this2.lastPage = response.data.last_page; // そのページにアカウントがないor通信が思いなどで読み込めないとき
+              case 6:
+                // console.log(response)
+                _this2.updated_at = response.data.updated_at;
 
-                if (response.data.data.length === 0) {
-                  _this2.isNothingAccounts = true;
-                } // 読み込みをfalseに、isNothingAccountsをtrueに
-
-
-                _this2.isLoading = false;
-
-              case 15:
+              case 7:
               case "end":
                 return _context3.stop();
             }
           }
         }, _callee3);
-      }))();
-    },
-    // DBからアカウント一覧のテーブル更新終了時刻を取得
-    fetchUpdatedAt: function fetchUpdatedAt() {
-      var _this3 = this;
-
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-        var response;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
-          while (1) {
-            switch (_context4.prev = _context4.next) {
-              case 0:
-                _context4.next = 2;
-                return axios.get("/api/updated/at/table?id=".concat(_this3.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID));
-
-              case 2:
-                response = _context4.sent;
-
-                if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_8__["OK"])) {
-                  _context4.next = 6;
-                  break;
-                }
-
-                _this3.$store.commit('error/setErrorCode', response.status);
-
-                return _context4.abrupt("return", false);
-
-              case 6:
-                // console.log(response)
-                _this3.updated_at = response.data.updated_at;
-
-              case 7:
-              case "end":
-                return _context4.stop();
-            }
-          }
-        }, _callee4);
       }))();
     },
     // オートフォローをオンにする
@@ -2924,26 +2849,26 @@ var PAGE_TITLE = '仮想通貨アカウント一覧';
   watch: {
     $route: {
       handler: function handler() {
-        var _this4 = this;
+        var _this3 = this;
 
-        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+          return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
             while (1) {
-              switch (_context5.prev = _context5.next) {
+              switch (_context4.prev = _context4.next) {
                 case 0:
-                  _context5.next = 2;
-                  return _this4.fetchAccounts();
+                  _context4.next = 2;
+                  return _this3.fetchAccounts();
 
                 case 2:
-                  _context5.next = 4;
-                  return _this4.fetchUpdatedAt();
+                  _context4.next = 4;
+                  return _this3.fetchUpdatedAt();
 
                 case 4:
                 case "end":
-                  return _context5.stop();
+                  return _context4.stop();
               }
             }
-          }, _callee5);
+          }, _callee4);
         }))();
       },
       immediate: true
