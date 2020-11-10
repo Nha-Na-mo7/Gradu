@@ -544,11 +544,38 @@ class TwitterController extends Controller
           'follow_target_id' => (string)$target_id
       ];
       // テーブルに既に存在していない場合は新規登録する
-      $user = TwitterAccountFollow::firstOrCreate($data);
-      if($user->exists) {
-        Log::debug('既に登録済みのアカウントでした');
-      }else{
-        Log::debug('ID:'.$account_id.'が、ID:'.$target_id.'をフォローしているという情報をDBに保存しました。');
+      try {
+        $user = TwitterAccountFollow::firstOrCreate($data);
+        if($user->exists) {
+          Log::debug('既に登録済みでした。 ID:'.$account_id.'=> フォロー => ID:'.$target_id);
+        }else{
+          Log::debug('ID:'.$account_id.'が、ID:'.$target_id.'をフォローしているという情報をDBに保存しました。');
+        }
+        return response(200);
+      }catch (\Exception $exception) {
+        Log::debug('DBへの登録or更新時にエラー発生: '. $exception->getMessage());
+        return response(500);
+      }
+    }
+    
+    // ===========================================================
+    // 指定したtwitterアカウントIDをfollowsテーブルから削除
+    // ===========================================================
+    public function delete_table_follows($account_id, $target_id) {
+      Log::debug('==========================================================');
+      Log::debug('TwitterController.delete_table_follows アカウントをfollowsから削除');
+      Log::debug('==========================================================');
+      try {
+        TwitterAccountFollow::where('account_id', $account_id)
+            ->where('follow_target_id', $target_id)
+            ->delete();
+  
+        Log::debug('ID'.$account_id.'のフォローリストからID:'.$target_id.'を削除しました。');
+        return response(200);
+        
+      }catch (\Exception $exception) {
+        Log::debug('レコードの削除時にエラー発生: '. $exception->getMessage());
+        return response(500);
       }
     }
     
