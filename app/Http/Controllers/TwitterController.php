@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Models\TwitterAccount;
+use App\Models\TwitterAccountFollow;
 use App\Models\TwitterAccountNewTweet;
 use App\Models\UpdatedAtTable;
 use App\Models\User;
@@ -505,8 +506,11 @@ class TwitterController extends Controller
     // =======================================
     // アカウントがフォローしているユーザーを取得する
     // =======================================
-    public function get_account_follow_ids($user_id, $token, $token_secret) {
-  
+    private function get_account_follow_ids($user_id, $token, $token_secret) {
+      /*
+       * friends/ids
+       * フォローしているゆーざーの一覧をIDで取得する
+       */
       Log::debug('============================================================');
       Log::debug('TwitterController.get_account_follow_ids フォロー中ユーザーの取得');
       Log::debug('============================================================');
@@ -521,23 +525,33 @@ class TwitterController extends Controller
       Log::debug('ID'.$target_user_id.' がフォローしているユーザーを取得します。');
       Log::debug('一覧: '. print_r($twitterRequest, true));
   
-      return response()->json(['result' => $twitterRequest]);
-      
-    }
-  
-    // =========================================
-    // フォローしているユーザーの情報を取得し、DB登録する
-    // =========================================
-    public function add_table_follows(Request $request) {
-      // 上記get_account_follow_idsを発火
-      $follow_states = self::get_account_follow_ids($request->id, $request->token, $request->token_secret);
-      
-      
+      return $twitterRequest;
     }
     
-  
-  
-  
+    
+    
+    // ===========================================================
+    // 指定したtwitterアカウントIDをfollowsテーブルに登録
+    // ===========================================================
+    public function add_table_follows(int $account_id, int $target_id) {
+      Log::debug('==========================================================');
+      Log::debug('TwitterController.add_table_follows アカウントをfollowsに登録');
+      Log::debug('==========================================================');
+      // 数値以外の値が入らないよう、引数はintを指定する。
+      // カラムは丸め込み対策でvarchar(255)で作成しているため、配列作成時にキャストする
+      $data = [
+          'account_id' => (string)$account_id,
+          'follow_target_id' => (string)$target_id
+      ];
+      // テーブルに既に存在していない場合は新規登録する
+      $user = TwitterAccountFollow::firstOrCreate($data);
+      if($user->exists) {
+        Log::debug('既に登録済みのアカウントでした');
+      }else{
+        Log::debug('ID:'.$account_id.'が、ID:'.$target_id.'をフォローしているという情報をDBに保存しました。');
+      }
+    }
+    
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
