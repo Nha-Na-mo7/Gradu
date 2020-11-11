@@ -340,38 +340,45 @@ class TwitterController extends Controller
       Log::debug('=========================================');
       Log::debug('TwitterController.accounts_follow フォロー');
       Log::debug('=========================================');
-      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
-      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
+      // ログイン中のユーザー情報を取得
+      $user = Auth::user();
+      // 処理をするユーザーのTwitterID
+      $account_id = $user->account_id;
+      // トークン・シークレット
+      $token = $user->token;
+      $token_secret = $user->token_secret;
+      // フォロー対象のアカウントのID。
+      $target_user_id = $request->user_id;
+      // 削除されているID・テスト用
+      // $target_user_id = 1044456766241558529;
   
-      // // API制限チェック
-      // $check_limit15 = $this->api_limit_check_15min();
-      // $check_limit_day = $this->api_limit_check_day();
-      //
-      // // 制限チェックのどちらかに引っかかった場合、フォロー処理はせずに終了する
-      // if($check_limit15 && $check_limit_day) {
-      //   Log::debug('accounts_follow: API制限チェックOKでした。');
-      // }else{
-      //   Log::debug('accounts_follow: システム上のAPI制限に引っかかったため、フォローはせずに終了します。');
-      //   return response()->json(['error' => 'フォロー制限がかかっています。しばらくお待ちください'], 403);
-      // }
-      //
-  
-
-
-      // APIを叩くためのインスタンスを作成
-      $connection = $this->connection_instanse_users($request->token, $request->token_secret);
+      // API制限チェック
+      Log::debug('API制限のチェックを行います。');
+      $check_limit15 = $this->api_limit_check_15min($account_id);
+      $check_limit_day = $this->api_limit_check_day($account_id);
+      
+      // 制限チェックのどちらかに引っかかった場合、フォロー処理はせずに終了する
+      if($check_limit15 && $check_limit_day) {
+        Log::debug('accounts_follow: API制限チェックOKでした。');
+      }else{
+        Log::debug('accounts_follow: システム上のAPI制限に引っかかったため、フォローはせずに終了します。');
+        return response()->json(['error' => 'フォロー制限がかかっています。しばらくお待ちください'], 403);
+      }
+      
+      // APIリクエスト用のインスタンスを作成
+      $connection = $this->connection_instanse_users($token, $token_secret);
       
       // フォローリクエストを飛ばす
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
       Log::debug('ID:'.$target_user_id.' にフォローを飛ばしました。');
   
-      // TODO フォローの成功失敗を問わず、APIにリクエストを飛ばしたのでカウントは更新する
-      // TODO $this->increment_follow_count($XXXXXXXXXXXXXXXXXXXX);
+      // フォローの成功失敗を問わず、APIにリクエストを飛ばしたのでカウントは更新する
+      $this->increment_follow_count($account_id);
       
       // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
       if ($connection->getLastHttpCode() === 200) {
         Log::debug('followsテーブルにフォローしたIDを登録します。');
-        // TODO $this->add_table_follows($XXXXXXXXXXXXXXXXX, $target_user_id);
+        $this->add_table_follows($account_id, $target_user_id);
       } else {
         // 何らかのリクエストエラーが起きた時
         Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
