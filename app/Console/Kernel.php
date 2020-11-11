@@ -42,10 +42,10 @@ class Kernel extends ConsoleKernel
       // =====================
       // 自動フォロー
       // =====================
-      // APIのフォロー制限にかからないようにフォローインターバルを調整する(1000/1day)
-      // TODO 暫定で10分ごとに設定
+      // APIのフォロー制限にかからないようにフォローインターバルを調整(15分に4人までとすることで調整済み)
+      // 15分ごとに起動する。
       $schedule->command('command:YYYYYYYY')
-          ->everyTenMinutes()
+          ->everyFifteenMinutes()
           ->withoutOverlapping();
       
       

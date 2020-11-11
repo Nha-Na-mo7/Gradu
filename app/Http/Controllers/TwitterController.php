@@ -531,6 +531,7 @@ class TwitterController extends Controller
               $follow_list[] = $id->follow_target_id;
             }
           }
+          // TODO 最新のフォロー済みアカウントリストはどのタイミングでfollowテーブルに格納する？
           
           // ----------------------------------------------------
           // ⑤ フォロー済みのアカウントを除外した未フォローリストを作成する
@@ -554,13 +555,18 @@ class TwitterController extends Controller
           
           // TODO この辺りで、API制限や15/15min制限などの処理を追記する
           
-          // 配列の最後のループの時は待機処理を行わないので、カウント用の変数を用意する
-          $target_accounts_length = count($target_accounts);
+          // 処理した回数のカウント
           $roop_count = 0;
           
           foreach ($target_accounts as $target_account) {
+            // 1度の処理で4人までのフォローをするので、5回目の処理が始まっていたらbreakする
+            // ここに判定を書く理由は、後続でフォロー時にAPIリクエストエラーが起きた時でも対応できるようにするため。
             $roop_count++;
             Log::debug($user->name.'さんの'.$roop_count.'回目のループフォローリクエスト処理です。');
+            if ($roop_count > 4) {
+              Log::debug($roop_count.'回目の処理はAPI制限対策で行いません。breakします。');
+              break;
+            }
             
             // アカウントのIDを取得
             // TODO ここでの取得は->account_idであっているか？
@@ -577,24 +583,10 @@ class TwitterController extends Controller
               $this->add_table_follows($user_twitter_account_id, $target_account_id);
               
             } else {
-              // APIのエラー。大抵は15分制限に引っかかっていると思われるので、15分の待機時間を設ける
-              // TODO 400人制限になった場合は？
+              // 何らかのリクエストエラーが起きた時は、次のユーザーの処理に移行する
               Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
-              Log::debug('15分間待機');
-              sleep(60 * 15);
-            }
-            
-            // 最後の要素以外はAPI制限にかからないように待機時間を設ける。
-            // 15/15minなこと、処理の直前でユーザーが手動でフォロー連打している可能性も考慮し、60秒待機して余裕を持たせる。
-            if($target_accounts_length !== $roop_count){
-              Log::debug('60秒待機し、次の処理を待ちます');
-              sleep(60);
-            }
-            
-            // 1度の処理で4人までのフォローをするので、4回目の処理が終了した段階でbreakする
-            if ($roop_count >= 4) {
-              Log::debug($roop_count.'回目の処理が完了したため、API制限対策でbreakします。');
-              break;
+              Log::debug('次の未フォローアカウントのフォロー処理に戻ります。');
+              continue;
             }
           }
           Log::debug($user->name.'さんの今回のフォロー処理が終了しました。次のユーザーの処理に移行します。');
