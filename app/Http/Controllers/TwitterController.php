@@ -11,8 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use mysql_xdevapi\Exception;
-use function Psy\debug;
+// use mysql_xdevapi\Exception;
 
 /*
  * TwitterControllerでのメソッドには大きく2種類
@@ -39,6 +38,7 @@ use function Psy\debug;
 // TODO 2、ログインユーザーがTwitterアカウントを連携している場合、既にフォロー済みのアカウントは表示させない
 class TwitterController extends Controller
 {
+    // APIの使用が変更された場合はこちらの数値を変更してください
     const DAILY_LIMIT_FOLLOW = 400; // twitterAPIが1日にフォローできる最大数
     const MIN_LIMIT_APP_FOLLOW = 15; // 15/15minを超えると制限にかかる
   
@@ -47,7 +47,6 @@ class TwitterController extends Controller
     /*
      * バッチ処理の流れ1 - Twitterユーザー編 -
      * 1, 1日1回、指定時刻になったら、Laravelスケジューラを起動しバッチ処理を開始する
-     * ＞指定時刻は朝9時ごろが理想？
      *
      * 2, twitter_indexメソッドを起動し、検索結果を取得する
      * 3, 取得した情報は、twitter_accountsテーブルに格納する
@@ -454,9 +453,14 @@ class TwitterController extends Controller
      * ③ foreachを使って、①で取得したaccountsを回す
      * ④ 処理中のアカウントのフォローリストを取得する
      * ⑤ ②と④を比較し、既にフォロー済みのアカウントを除外した未フォローリストを作成する
-     * ⑥ ⑤で作成した未フォローリストをforeachで回し、1人ずつフォローを飛ばす
+     * ⑥ ⑤で作成した未フォローリストをforeachで回し、1人ずつフォローを飛ばす。1度の処理で最大4人まで。
      *
-     * ⑦ ③~⑥を繰り返し、全てのユーザーの未フォローリストが空になったら終了。
+     * ⑦ ③~⑥を繰り返す。全てのユーザーの未フォローリストが空になる or その回のリクエスト制限回数を超えたら終了。
+     *
+     * API制限について
+     * 現行のTwitterAPIは 400/1day、15/15minの制限がある。
+     * 15分ごとに実行するバッチなので一度に15人フォローさせてもいいが、ユーザー側も手動フォローなどしてAPI規制にかかりやすくなっても困るため、1日の最大人数に応じた処理で行う。
+     * 15分に4人ペース → 384人/1dayペースでフォロー可能
      */
     public function auto_follow() {
       Log::debug('====================================');
@@ -542,20 +546,21 @@ class TwitterController extends Controller
             continue;
           }
           
-          // --------------------------------------------------
-          // ⑥ 未フォローリストをforeachで回し、1人ずつフォローを飛ばす
-          // --------------------------------------------------
+          // ---------------------------------------------------------------------
+          // ⑥ 未フォローリストをforeachで回し、1人ずつフォローを飛ばす。1度の処理で最大4人まで。
+          // ---------------------------------------------------------------------
           // TwitterAPI用のインスタンス作成
           $connection = $this->connection_instanse_users($token, $token_secret);
           
           // TODO この辺りで、API制限や15/15min制限などの処理を追記する
-  
+          
           // 配列の最後のループの時は待機処理を行わないので、カウント用の変数を用意する
           $target_accounts_length = count($target_accounts);
           $roop_count = 0;
           
           foreach ($target_accounts as $target_account) {
             $roop_count++;
+            Log::debug($user->name.'さんの'.$roop_count.'回目のループフォローリクエスト処理です。');
             
             // アカウントのIDを取得
             // TODO ここでの取得は->account_idであっているか？
@@ -573,19 +578,30 @@ class TwitterController extends Controller
               
             } else {
               // APIのエラー。大抵は15分制限に引っかかっていると思われるので、15分の待機時間を設ける
+              // TODO 400人制限になった場合は？
               Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
               Log::debug('15分間待機');
               sleep(60 * 15);
             }
             
-            // 最後の要素以外はAPI制限にかからないように待機時間を設ける。15/15minなので60秒。
+            // 最後の要素以外はAPI制限にかからないように待機時間を設ける。
+            // 15/15minなこと、処理の直前でユーザーが手動でフォロー連打している可能性も考慮し、60秒待機して余裕を持たせる。
             if($target_accounts_length !== $roop_count){
               Log::debug('60秒待機し、次の処理を待ちます');
               sleep(60);
             }
+            
+            // 1度の処理で4人までのフォローをするので、4回目の処理が終了した段階でbreakする
+            if ($roop_count >= 4) {
+              Log::debug($roop_count.'回目の処理が完了したため、API制限対策でbreakします。');
+              break;
+            }
           }
-          Log::debug($user->name.'さんの未フォローリスト全員のフォロー処理が終了しました。次のユーザーの処理に移行します。');
+          Log::debug($user->name.'さんの今回のフォロー処理が終了しました。次のユーザーの処理に移行します。');
         }
+        Log::debug('[!]全てのユーザーの自動フォロー処理が完了しました。');
+        
+        
       // 自動フォローをONにしているユーザーがいなかった時。
       } else {
         Log::debug('自動フォローをONにしているユーザーはいませんでした。処理を終了します。');
