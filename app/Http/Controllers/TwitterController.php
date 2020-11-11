@@ -355,14 +355,27 @@ class TwitterController extends Controller
       //   return response()->json(['error' => 'フォロー制限がかかっています。しばらくお待ちください'], 403);
       // }
       //
+  
+
+
       // APIを叩くためのインスタンスを作成
       $connection = $this->connection_instanse_users($request->token, $request->token_secret);
       
+      // フォローリクエストを飛ばす
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
       Log::debug('ID:'.$target_user_id.' にフォローを飛ばしました。');
+  
+      // TODO フォローの成功失敗を問わず、APIにリクエストを飛ばしたのでカウントは更新する
+      // TODO $this->increment_follow_count($XXXXXXXXXXXXXXXXXXXX);
       
-      // TODO フォローカウントを増やす処理を記述
-      
+      // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
+      if ($connection->getLastHttpCode() === 200) {
+        Log::debug('followsテーブルにフォローしたIDを登録します。');
+        // TODO $this->add_table_follows($XXXXXXXXXXXXXXXXX, $target_user_id);
+      } else {
+        // 何らかのリクエストエラーが起きた時
+        Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
+      }
       return response()->json(['result' => $twitterRequest]);
     }
     
@@ -601,18 +614,20 @@ class TwitterController extends Controller
               break;
             }
             
-            // アカウントのIDを取得
+            // フォロー対象のアカウントIDを取得
             // TODO ここでの取得は->account_idであっているか？
             $target_account_id = $target_account->account_id;
   
+            // フォローリクエストを飛ばす
             $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_account_id));
             Log::debug('ID:'.$target_account_id.' にフォローを飛ばしました。');
             
+            // フォローの成功失敗を問わず、APIにリクエストを飛ばしたのでカウントは更新する
+            $this->increment_follow_count($user_twitter_account_id);
             
             // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
             if ($connection->getLastHttpCode() === 200) {
-              
-              // TODO 1日以内のフォロー数・15/15制限のDB更新処理もここに書く
+              Log::debug('followsテーブルにフォローしたIDを登録します。');
               $this->add_table_follows($user_twitter_account_id, $target_account_id);
               
             } else {
@@ -677,7 +692,7 @@ class TwitterController extends Controller
           'account_id' => (string)$account_id,
           'follow_target_id' => (string)$target_id
       ];
-      // テーブルに既に存在していない場合は新規登録する
+      // テーブルに存在していない場合は新規登録する
       try {
         $user = TwitterAccountFollow::firstOrCreate($data);
         if($user->exists) {
@@ -717,8 +732,6 @@ class TwitterController extends Controller
     // Twitterユーザーが15/15min制限にかかっていないかの判定
     // ==============================================
     // フォロー処理の前に呼び出し、API制限がかかっていた場合などはfalseを返して処理に入らないようにする。
-    //
-    // フォローカウントを増やす処理
     public function api_limit_check_15min($account_id) {
       Log::debug('==========================================================');
       Log::debug('TwitterController.api_limit_check_15min 15/15minのフォロー制限確認');
@@ -776,8 +789,6 @@ class TwitterController extends Controller
     // ただし1日400件のフォローカウントを24時間に1度しかリセットしなかった場合、偏りが出る可能性がある。
     // (例:00:00にフォローカウントリセットしても、21:00に400件、03:00に400件フォローのリクエストを送った場合に6時間で800リクエストがあるように見えてしまう)
     // こうしたリスクを少しでも分散するために12時間ごとにフォローリクエスト200件までとして処理を行う。
-  
-    // フォローカウントを増やす処理
     public function api_limit_check_day($account_id) {
       Log::debug('==========================================================');
       Log::debug('TwitterController.api_limit_check_day 400/1dayのフォロー制限確認');
@@ -825,9 +836,32 @@ class TwitterController extends Controller
         return true;
       }
     }
-  
     
-   // =======================================
+    
+    // =======================================
+    // API制限テーブルのフォローカウントを増やす
+    // =======================================
+    public function increment_follow_count($account_id) {
+      Log::debug('==========================================================');
+      Log::debug('TwitterController.increment_follow_count フォローカウントを増やす');
+      Log::debug('==========================================================');
+      $account_limit_data = TwitterAccountApiLimit::where('account_id', $account_id)->first();
+      Log::debug('TwitterAccountApiLimitモデルを取得します');
+      
+      // カウントを1増やす
+      $account_limit_data->day_follow_count += 1;
+      $account_limit_data->fifteen_min_follow_count += 1;
+      Log::debug('dayカウントを増やしました。day_follow_count:'.$account_limit_data->day_follow_count);
+      Log::debug('15minカウントを増やしました。15_min_follow_count:'.$account_limit_data->fifteen_min_follow_count);
+      
+      // 最後に保存
+      // TODO save()はupdate()でもいい？問題なければ削除してください
+      $account_limit_data->save();
+      Log::debug('DBへのセーブが完了しました');
+    }
+    
+    
+    // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
     // 引数は、ユーザーのアクセストークン と アクセストークンシークレットの2つ
