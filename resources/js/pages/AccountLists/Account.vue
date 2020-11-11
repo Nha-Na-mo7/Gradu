@@ -175,26 +175,12 @@ export default {
     twitter_followers_url() {
       return this.twitter_account_url + '/followers';
     },
-    access_token() {
-      return this.$store.getters['auth/token'];
-    },
-    access_token_secret() {
-      return this.$store.getters['auth/token_secret'];
-    },
   },
   methods: {
     async follow() {
       // フォロー用パラメータオブジェクトを作成
       const follow_param = {
         'user_id': this.account_id,
-        'token': this.access_token,
-        'token_secret': this.access_token_secret
-      }
-
-      // アクセストークンが空(=Twitter認証未完了)なら、false
-      // (そもそも押せないようにしてあるが念のため)
-      if(follow_param['token'] === '' || follow_param['token_secret'] === '') {
-        return false
       }
 
       const response = await axios.post('../api/accounts/follow', follow_param);

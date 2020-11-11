@@ -2486,12 +2486,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     twitter_followers_url: function twitter_followers_url() {
       return this.twitter_account_url + '/followers';
-    },
-    access_token: function access_token() {
-      return this.$store.getters['auth/token'];
-    },
-    access_token_secret: function access_token_secret() {
-      return this.$store.getters['auth/token_secret'];
     }
   },
   methods: {
@@ -2506,28 +2500,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 // フォロー用パラメータオブジェクトを作成
                 follow_param = {
-                  'user_id': _this.account_id,
-                  'token': _this.access_token,
-                  'token_secret': _this.access_token_secret
-                }; // アクセストークンが空(=Twitter認証未完了)なら、false
-                // (そもそも押せないようにしてあるが念のため)
-
-                if (!(follow_param['token'] === '' || follow_param['token_secret'] === '')) {
-                  _context.next = 3;
-                  break;
-                }
-
-                return _context.abrupt("return", false);
-
-              case 3:
-                _context.next = 5;
+                  'user_id': _this.account_id
+                };
+                _context.next = 3;
                 return axios.post('../api/accounts/follow', follow_param);
 
-              case 5:
+              case 3:
                 response = _context.sent;
 
                 if (!(response.status !== _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                  _context.next = 9;
+                  _context.next = 7;
                   break;
                 }
 
@@ -2535,12 +2517,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 9:
+              case 7:
                 console.log(response); // 対象アカウントが削除/凍結されフォローできなかった場合
                 // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
 
                 if (!(response.data.result.errors !== undefined)) {
-                  _context.next = 13;
+                  _context.next = 11;
                   break;
                 }
 
@@ -2551,10 +2533,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 13:
+              case 11:
                 alert('終了！');
 
-              case 14:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -66588,13 +66570,6 @@ var getters = {
   // ログインしているユーザーのID
   user_id: function user_id(state) {
     return state.user ? state.user.id : '';
-  },
-  // ユーザーtwitterトークン
-  token: function token(state) {
-    return state.user ? state.user.token : '';
-  },
-  token_secret: function token_secret(state) {
-    return state.user ? state.user.token_secret : '';
   },
   // 自動フォローフラグ
   auto_follow_flg: function auto_follow_flg(state) {

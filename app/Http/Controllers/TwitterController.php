@@ -343,7 +343,7 @@ class TwitterController extends Controller
       // ログイン中のユーザー情報を取得
       $user = Auth::user();
       // 処理をするユーザーのTwitterID
-      $account_id = $user->account_id;
+      $account_id = $user->twitter_id;
       // トークン・シークレット
       $token = $user->token;
       $token_secret = $user->token_secret;
@@ -551,7 +551,7 @@ class TwitterController extends Controller
           Log::debug($user->name.' さんのフォロー処理中');
   
           // 各ユーザーのtwitterIDを取得
-          $user_twitter_account_id = $user->account_id;
+          $user_twitter_account_id = $user->twitter_id;
           
           // API制限チェック
           $check_limit15 = $this->api_limit_check_15min($user_twitter_account_id);
@@ -753,7 +753,7 @@ class TwitterController extends Controller
       // ただし新規作成されるなどした場合は、現在時刻+15分、12時間後で値をセットする
       Log::debug($account_id.'のAPILimitを取得します。');
       $account_limit_data = TwitterAccountApiLimit::firstOrCreate([
-          'account_id', $account_id
+          'account_id' => $account_id
       ], [
           'day_follow_limit_time' => $plus12hours,
           'fifteen_min_follow_limit_time' => $plus15min
@@ -810,7 +810,7 @@ class TwitterController extends Controller
       // ただし新規作成されるなどした場合は、現在時刻+15分、12時間後で値をセットする
       Log::debug($account_id.'のAPILimitを取得します。');
       $account_limit_data = TwitterAccountApiLimit::firstOrCreate([
-          'account_id', $account_id
+          'account_id' => $account_id
       ], [
           'day_follow_limit_time' => $plus12hours,
           'fifteen_min_follow_limit_time' => $plus15min

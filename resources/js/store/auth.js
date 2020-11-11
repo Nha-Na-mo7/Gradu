@@ -33,9 +33,6 @@ const getters = {
   loginCheck: state => !! state.user,
   // ログインしているユーザーのID
   user_id: state => state.user ? state.user.id : '',
-  // ユーザーtwitterトークン
-  token: state => state.user ? state.user.token : '',
-  token_secret: state => state.user ? state.user.token_secret : '',
   // 自動フォローフラグ
   auto_follow_flg: state => state.user ? state.user.auto_follow_flg : -1,
 }
