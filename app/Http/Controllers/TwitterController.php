@@ -319,7 +319,7 @@ class TwitterController extends Controller
     }
     
     // =======================================
-    // 指定したアカウントをフォローする
+    // 指定したアカウントをフォローする(ボタンから)
     // =======================================
     public function accounts_follow(Request $request)
     {
@@ -379,7 +379,7 @@ class TwitterController extends Controller
     // =======================================
     // アカウントと対象アカウントとのフォロー関係を取得
     // =======================================
-    public function lookup_follow(Request $request)
+    public function lookup_follow($account_id, $token, $token_secret)
     {
       /* GET friendships/lookup - フォロー関係の確認
        *
@@ -389,11 +389,11 @@ class TwitterController extends Controller
       Log::debug('==============================================');
       Log::debug('TwitterController.lookup_follow フォロー関係取得');
       Log::debug('==============================================');
-      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
+      $target_user_id = $account_id; // フォロー対象のアカウントのID。
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
       // APIを叩くためのインスタンスを作成
-      $connection = $this->connection_instanse_users($request->token, $request->token_secret);
+      $connection = $this->connection_instanse_users($token, $token_secret);
       
       $twitterRequest = $connection->get('friendships/lookup', array("user_id" => $target_user_id));
       Log::debug('ID'.$target_user_id.' とのフォロー関係を取得します。');
@@ -445,57 +445,154 @@ class TwitterController extends Controller
     
     
     // ===========================
-    // 自動フォローを行う
+    // 自動フォロー(AUTO FOLLOW)
     // ===========================
-    /* 流れ
-     * ① DBからauto_follow_flgがtrueのUserを取得する
-     * ② twitter_accountsテーブルに格納されているIDを取得する
+    /* 処理の流れ
+     * ① Userテーブルからauto_follow_flgがtrueのUserを取得する。誰もいなければ終了。
+     * ② twitter_accountsテーブルに格納されているIDを全て取得し、フォロー候補として配列に格納。
+     *
+     * ③ foreachを使って、①で取得したaccountsを回す
+     * ④ 処理中のアカウントのフォローリストを取得する
+     * ⑤ ②と④を比較し、既にフォロー済みのアカウントを除外した未フォローリストを作成する
+     * ⑥ ⑤で作成した未フォローリストをforeachで回し、1人ずつフォローを飛ばす
+     *
+     * ⑦ ③~⑥を繰り返し、全てのユーザーの未フォローリストが空になったら終了。
      */
-    public function auto_follow(Request $request) {
-      Log::debug('=============================');
+    public function auto_follow() {
+      Log::debug('====================================');
       Log::debug('auto_follow 自動フォロー');
-      Log::debug('=============================');
+      Log::debug('====================================');
       
       // -------------------------------------------
       // ① DBからauto_follow_flgがtrueのUserを取得する
       // -------------------------------------------
       // 自動フォローON、削除フラグfalseのUserを全て取得する
+      Log::debug('auto_follow_flg:true、delete_flg:falseのUserを全て取得します。');
       $auto_follow_users = User::where('auto_follow_flg', true)->where('delete_flg', false)->get();
       
       // 1人でもONにしているユーザーがいたら処理を実行
-      if($auto_follow_users->isNotEmpty()) {
-        Log::debug('自動フォロー処理を開始します');
-  
+      if ($auto_follow_users->isNotEmpty()) {
+        Log::debug('該当ユーザーがいたので自動フォロー処理を開始します');
+        
         // ----------------------------------------
         // ② twitter_accountsテーブルの格納IDを取得する
         // ----------------------------------------
-        // foreachで1人1人ごとに、twitter_accountsの各登録IDにフォローをかける。
+        // twitter_accountsテーブルのaccount_idカラムを全件取得
+        $accounts = TwitterAccount::select('account_id')->get();
+        
+        // 自動フォロー対象候補のaccount_idを格納する配列
+        $candidate_accounts = [];
+        
+        // 何らかの理由でaccount_idが0件取得になってしまった場合、自動フォロー以前にフォロー先がないので処理終了。
+        if ($accounts->isNotEmpty()) {
+          // 取得したaccount_idを1つずつ、自動フォローの候補配列に詰める
+          Log::debug('候補となるaccount_idが$accountsに存在します。1つずつ$candidate_accountsに詰めます。');
+          foreach ($accounts as $account) {
+            $candidate_accounts[] = $account->account_id;
+          }
+          // Log::debug('今回フォローする対象となるIDは $candidate_accounts: '.print_r($candidate_accounts, true));
+        } else {
+          Log::debug('候補アカウントがなくフォロー先もいないので処理を終了します。');
+          exit();
+        }
+  
+        // ---------------------------------
+        // ③ foreachで1人ずつフォロー処理
+        // ---------------------------------
         foreach ($auto_follow_users as $user) {
-          Log::debug($user->name.' のフォロー処理を開始...');
- 
-          
-          // 各ユーザーのトークン・シークレットを取得
+          Log::debug($user->name.' さんのフォロー処理中');
+  
+          // 各ユーザーのID・トークン・シークレットを取得
+          $user_twitter_account_id = $user->account_id;
           $token = $user->token;
           $token_secret = $user->token_secret;
-          // インスタンス作成
+          
+          // TODO この辺りで、400/1dayを上回らないようにuserのその日のフォロー数を確認しておく。
+          // TODO 15/15minも超えないようにする
+          
+          // ----------------------------------------
+          // ④ アカウントのフォローリストを取得する
+          // ----------------------------------------
+          // このユーザーがフォローしているアカウントIDを格納する配列
+          $follow_list = [];
+          
+          // 自動フォロー開始時までにフォローが行われている場合、テーブルデータとズレが生じるため直接フォローリストを確認。
+          Log::debug('$userのフォローリストを取得します。');
+          $follow_ids = $this->get_account_follow_ids($user_twitter_account_id, $token, $token_secret);
+          
+          // 1つずつ配列に格納する
+          if ($follow_ids->isNotEmpty()){
+            Log::debug('$userがフォローしているアカウント一覧を$follow_listに格納しています');
+            foreach ($follow_ids as $id) {
+              $follow_list[] = $id->follow_target_id;
+            }
+          }
+          
+          // ----------------------------------------------------
+          // ⑤ フォロー済みのアカウントを除外した未フォローリストを作成する
+          // ----------------------------------------------------
+          // 既にフォロー済みのアカウントを除外することで、APIリクエストの回数節約にもなる
+          
+          // ②の配列から、④の配列に存在するaccount_idを除外した、未フォローリストを配列として作成
+          $target_accounts = array_diff($candidate_accounts, $follow_list);
+          
+          // 未フォローリストが空なら全員フォロー済みなので、次のユーザーの処理に移行。
+          if (empty($target_accounts)) {
+            Log::debug('$target_accountsが空です。全員フォロー済みなので'.$user->name.'さんの処理は終了します。');
+            continue;
+          }
+          
+          // --------------------------------------------------
+          // ⑥ 未フォローリストをforeachで回し、1人ずつフォローを飛ばす
+          // --------------------------------------------------
+          // TwitterAPI用のインスタンス作成
           $connection = $this->connection_instanse_users($token, $token_secret);
           
+          // TODO この辺りで、API制限や15/15min制限などの処理を追記する
+  
+          // 配列の最後のループの時は待機処理を行わないので、カウント用の変数を用意する
+          $target_accounts_length = count($target_accounts);
+          $roop_count = 0;
           
-          // 各ユーザーのフォロー済みIDとtwitter_accountsテーブルを比較し、既にフォロー済みのものはスルーする
-          // APIリクエストの回数節約にもなる
-          $this->get_account_follow_ids()
-          
-          
-          
+          foreach ($target_accounts as $target_account) {
+            $roop_count++;
+            
+            // アカウントのIDを取得
+            // TODO ここでの取得は->account_idであっているか？
+            $target_account_id = $target_account->account_id;
+  
+            $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_account_id));
+            Log::debug('ID:'.$target_account_id.' にフォローを飛ばしました。');
+            
+            
+            // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
+            if ($connection->getLastHttpCode() === 200) {
+              
+              // TODO 1日以内のフォロー数・15/15制限のDB更新処理もここに書く
+              $this->add_table_follows($user_twitter_account_id, $target_account_id);
+              
+            } else {
+              // APIのエラー。大抵は15分制限に引っかかっていると思われるので、15分の待機時間を設ける
+              Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
+              Log::debug('15分間待機');
+              sleep(60 * 15);
+            }
+            
+            // 最後の要素以外はAPI制限にかからないように待機時間を設ける。15/15minなので60秒。
+            if($target_accounts_length !== $roop_count){
+              Log::debug('60秒待機し、次の処理を待ちます');
+              sleep(60);
+            }
+          }
+          Log::debug($user->name.'さんの未フォローリスト全員のフォロー処理が終了しました。次のユーザーの処理に移行します。');
         }
-        
-        
-        
-        
+      // 自動フォローをONにしているユーザーがいなかった時。
       } else {
-        Log::debug('自動フォローをONにしているユーザーはいませんでした。');
+        Log::debug('自動フォローをONにしているユーザーはいませんでした。処理を終了します。');
       }
-      
+      Log::debug('====================================');
+      Log::debug('自動フォローを終了します。 bye');
+      Log::debug('====================================');
     }
   
   
@@ -506,23 +603,23 @@ class TwitterController extends Controller
     // =======================================
     // アカウントがフォローしているユーザーを取得する
     // =======================================
-    private function get_account_follow_ids($user_id, $token, $token_secret) {
+    private function get_account_follow_ids($account_id, $token, $token_secret) {
       /*
        * friends/ids
-       * フォローしているゆーざーの一覧をIDで取得する
+       * フォローしているアカウント一覧をIDで取得する
        */
       Log::debug('============================================================');
       Log::debug('TwitterController.get_account_follow_ids フォロー中ユーザーの取得');
       Log::debug('============================================================');
-      $target_user_id = $user_id; // フォロー対象のアカウントのID。
+      $target_account_id = $account_id; // 確認したいアカウントのID。
       // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
       
       // インスタンスを作成
       $connection = $this->connection_instanse_users($token, $token_secret);
   
       // APIを使用し、フォローしているユーザーのID一覧を取得
-      $twitterRequest = $connection->post('friendships/ids', array("user_id" => $target_user_id));
-      Log::debug('ID'.$target_user_id.' がフォローしているユーザーを取得します。');
+      $twitterRequest = $connection->post('friendships/ids', array("user_id" => $target_account_id));
+      Log::debug('ID'.$target_account_id.' がフォローしているユーザーを取得します。');
       Log::debug('一覧: '. print_r($twitterRequest, true));
   
       return $twitterRequest;
