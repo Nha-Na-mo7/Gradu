@@ -15,6 +15,15 @@ class TwitterAccountApiLimit extends Model
   // タイムスタンプ未使用
   public $timestamps = false;
   
+  // fillable
+  protected $fillable = [
+      'account_id',
+      'day_follow_count',
+      'day_follow_limit_time',
+      'fifteen_min_follow_count',
+      'fifteen_min_follow_limit_time',
+  ];
+  
   /**
    * リレーション - twitter_accountsテーブル
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
