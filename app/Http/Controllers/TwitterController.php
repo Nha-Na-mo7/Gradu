@@ -472,7 +472,10 @@ class TwitterController extends Controller
       // -------------------------------------------
       // 自動フォローON、削除フラグfalseのUserを全て取得する
       Log::debug('auto_follow_flg:true、delete_flg:falseのUserを全て取得します。');
-      $auto_follow_users = User::where('auto_follow_flg', true)->where('delete_flg', false)->get();
+      $auto_follow_users =
+          User::where('auto_follow_flg', true)
+          ->where('delete_flg', false)
+          ->get();
       
       // 1人でもONにしているユーザーがいたら処理を実行
       if ($auto_follow_users->isNotEmpty()) {
