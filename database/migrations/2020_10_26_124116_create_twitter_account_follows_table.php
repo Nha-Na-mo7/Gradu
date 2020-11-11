@@ -15,8 +15,8 @@ class CreateTwitterAccountFollowsTable extends Migration
     {
         Schema::create('twitter_account_follows', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('account_id'); // 紐付けるアカウントID
-            $table->string('follow_target_id'); // フォロー先のアカウントのID
+            $table->string('account_id')->comment('紐付いているアカウントID');
+            $table->string('follow_target_id')->comment('フォロー先のアカウントID');
           
             //外部キーでtwitter_accountsのaccount_idと紐付け。
             //主テーブルのレコードが削除されたら、このテーブルのデータも一緒に消える。

@@ -13,12 +13,15 @@ class CreateBrandTweetCountsTable extends Migration
      */
     public function up()
     {
+      
+      // TODO 削除するかもしれません
+      
         Schema::create('brand_tweet_counts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('brand_id')->unsigned(); // 通貨ID
-            $table->integer('tweet_count')->unsigned(); // 取得時点でのツイート数
-            $table->integer('tweet_count_before')->unsigned(); // 直前のツイート数
-            $table->integer('interval_hour')->unsigned(); // ツイート取得間隔、1時間単位
+            $table->bigInteger('brand_id')->unsigned()->comment('通貨ID');
+            $table->integer('tweet_count')->unsigned()->comment('取得時点でのツイート数');
+            $table->integer('tweet_count_before')->unsigned()->comment('直前のツイート数');
+            $table->integer('interval_hour')->unsigned()->comment('ツイート取得間隔・1時間単位');
             $table->timestamps();
     
             //外部キーでtwitter_accountsのaccount_idと紐付け。

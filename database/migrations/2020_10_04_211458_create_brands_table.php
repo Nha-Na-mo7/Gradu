@@ -16,8 +16,8 @@ class CreateBrandsTable extends Migration
         Schema::create('brands', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->string('icon')->nullable(); // アイコンのパス。提供されていないものがあるためnullable
-            $table->boolean('handling'); //取扱中の銘柄か
+            $table->string('icon')->nullable()->comment('svgアイコンのパス');
+            $table->boolean('handling')->comment('CoinCheckで現在取扱中の銘柄であるか');
             $table->timestamps();
         });
     }

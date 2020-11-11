@@ -15,10 +15,10 @@ class CreateTwitterAccountNewTweetsTable extends Migration
     {
         Schema::create('twitter_account_new_tweets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('account_id'); // ツイート主のアカウントID
-            $table->string('tweet_id_str')->nullable(); // ツイートのID
-            $table->text('tweet_text')->nullable(); // ツイート内容
-            $table->dateTime('tweet_created_at')->nullable(); //ツイート日時
+            $table->string('account_id')->comment('ツイート主のアカウントID');
+            $table->string('tweet_id_str')->nullable()->comment('ツイートそのもののID');
+            $table->text('tweet_text')->nullable()->comment('ツイートの本文');
+            $table->dateTime('tweet_created_at')->nullable()->comment('ツイート日時');
   
             //外部キーでtwitter_accountsのaccount_idと紐付け。
             //主テーブルのレコードが削除されたら、このテーブルのデータも一緒に消える。
