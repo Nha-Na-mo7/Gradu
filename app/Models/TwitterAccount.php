@@ -59,15 +59,5 @@ class TwitterAccount extends Model
   {
     return $this->hasMany('App\Models\TwitterAccountFollow', 'account_id', 'account_id');
   }
-  
-  /**
-   * リレーション - twitter_account_api_limitsテーブル
-   * @return \Illuminate\Database\Eloquent\Relations\HasOne
-   */
-  public function api_limit()
-  // モデル名と関係ない名前(api_limit)のため、hasOneメソッドの引数は省略せずに記載
-  {
-    return $this->hasOne('App\Models\TwitterAccountApiLimit', 'account_id', 'account_id');
-  }
-  
+
 }

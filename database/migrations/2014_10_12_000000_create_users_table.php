@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            $table->string('twitter_id')->nullable()->comment('連携したTwitterのID');
+            $table->string('twitter_id')->nullable()->unique()->comment('連携したTwitterのID');
             $table->string('token')->nullable()->comment('連携アカウントのTwitterToken');
             $table->string('token_secret')->nullable()->comment('連携アカウントのTwitterTokenシークレット');
             $table->boolean('auto_follow_flg')->default(false)->comment('自動フォローがONであるか');

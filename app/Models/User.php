@@ -48,4 +48,16 @@ class User extends Authenticatable
     {
       $this->notify(new CustomPasswordReset($token));
     }
+  
+  
+    /**
+     * リレーション - follow_api_limitsテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function api_limit()
+      // モデル名と関係ない名前(api_limit)のため、hasOneメソッドの引数は省略せずに記載
+    {
+      return $this->hasOne('App\Models\FollowApiLimit', 'twitter_id', 'account_id');
+    }
+  
 }
