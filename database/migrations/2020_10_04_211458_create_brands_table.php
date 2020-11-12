@@ -18,7 +18,6 @@ class CreateBrandsTable extends Migration
             $table->string('name')->unique();
             $table->string('icon')->nullable()->comment('svgアイコンのパス');
             $table->boolean('handling')->comment('CoinCheckで現在取扱中の銘柄であるか');
-            $table->timestamps();
         });
     }
 
