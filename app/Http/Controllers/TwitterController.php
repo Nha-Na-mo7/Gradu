@@ -705,10 +705,10 @@ class TwitterController extends Controller
       // テーブルに存在していない場合は新規登録する
       try {
         $user = FollowTarget::firstOrCreate($data);
-        if($user->exists) {
-          Log::debug('既に登録済みでした。 ID:'.$account_id.'=> フォロー => ID:'.$target_id);
-        }else{
+        if($user->wasRecentlyCreated) {
           Log::debug('ID:'.$account_id.'が、ID:'.$target_id.'をフォローしているという情報をDBに保存しました。');
+        }else{
+          Log::debug('既に登録済みでした。 ID:'.$account_id.'=> フォロー => ID:'.$target_id);
         }
         return response(200);
       }catch (\Exception $exception) {
