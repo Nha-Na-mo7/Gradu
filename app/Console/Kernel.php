@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
       // 1日に1回取得する。
       // Twitterユーザーは深夜帯に活動するイメージ → 明け方の取得が一番新規ユーザーの取得が期待できるか
       $schedule->command('command:searchaccounts')
-          ->dailyAt('1:00')
+          ->dailyAt('5:20')
           ->withoutOverlapping();
       
       
