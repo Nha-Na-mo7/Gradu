@@ -2501,7 +2501,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // フォロー用パラメータオブジェクトを作成
                 follow_param = {
                   'user_id': _this.account_id
-                };
+                }; // TODO フォロー制限の処理がいい加減なので修正すること
+
                 _context.next = 3;
                 return axios.post('../api/accounts/follow', follow_param);
 
@@ -2518,23 +2519,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 7:
-                console.log(response); // 対象アカウントが削除/凍結されフォローできなかった場合
-                // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
+                console.log('フォローボタンを押しました'); // フォロー失敗時(API制限か削除・凍結のどちらか)(errorに項目が入れられて帰ってくる)
 
-                if (!(response.data.result.errors !== undefined)) {
+                if (!(response.data.error !== null)) {
                   _context.next = 11;
                   break;
                 }
 
-                // フラッシュメッセージ
                 _this.$store.commit('message/setContent', {
-                  content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
+                  content: response.data.error
                 });
 
                 return _context.abrupt("return", false);
 
               case 11:
-                alert('終了！');
+                //
+                // // 対象アカウントが削除/凍結されフォローできなかった場合
+                // // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
+                // if (response.data.result.errors !== undefined) {
+                //   console.log('flash')
+                //   // フラッシュメッセージ
+                //   this.$store.commit('message/setContent', {
+                //     content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
+                //   });
+                //   return false
+                // }
+                console.log('フォローしました');
 
               case 12:
               case "end":

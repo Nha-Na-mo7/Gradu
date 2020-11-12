@@ -183,6 +183,7 @@ export default {
         'user_id': this.account_id,
       }
 
+      // TODO フォロー制限の処理がいい加減なので修正すること
       const response = await axios.post('../api/accounts/follow', follow_param);
 
       // エラー時
@@ -191,18 +192,27 @@ export default {
         return false
       }
 
-      console.log(response)
+      console.log('フォローボタンを押しました')
 
-      // 対象アカウントが削除/凍結されフォローできなかった場合
-      // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
-      if (response.data.result.errors !== undefined) {
-        // フラッシュメッセージ
+      // フォロー失敗時(API制限か削除・凍結のどちらか)(errorに項目が入れられて帰ってくる)
+      if (response.data.error !== null) {
         this.$store.commit('message/setContent', {
-          content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
+          content: response.data.error
         });
         return false
       }
-      alert('終了！');
+      //
+      // // 対象アカウントが削除/凍結されフォローできなかった場合
+      // // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
+      // if (response.data.result.errors !== undefined) {
+      //   console.log('flash')
+      //   // フラッシュメッセージ
+      //   this.$store.commit('message/setContent', {
+      //     content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
+      //   });
+      //   return false
+      // }
+      console.log('フォローしました')
     },
     un_follow() {
       alert('this is un_follow btn...')

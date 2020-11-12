@@ -118,9 +118,9 @@ class TwitterController extends Controller
       // APIリクエストの前準備
       // --------------------------
   
-      $query = '仮想通貨'; // 検索キーワード
+      $query = 'ウェブカツ'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 51; // 検索ページ。これを終わるまで繰り返す。
+      $page = 50; // 検索ページ。これを終わるまで繰り返す。
       
       // ループ内で一度更新処理を行ったアカウントのIDを格納する
       $updateded_accounts = [];
@@ -362,7 +362,7 @@ class TwitterController extends Controller
         Log::debug('accounts_follow: API制限チェックOKでした。');
       }else{
         Log::debug('accounts_follow: システム上のAPI制限に引っかかったため、フォローはせずに終了します。');
-        return response()->json(['error' => 'フォロー制限がかかっています。しばらくお待ちください'], 403);
+        return response()->json(['error' => 'フォロー制限がかかっています。しばらくお待ちください'], 200);
       }
       
       // APIリクエスト用のインスタンスを作成
@@ -383,7 +383,10 @@ class TwitterController extends Controller
         // 何らかのリクエストエラーが起きた時
         Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
       }
-      return response()->json(['result' => $twitterRequest]);
+      Log::debug('=======================================================');
+      Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 手動フォローを終了します。 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
+      Log::debug('=======================================================');
+      return response()->json(['result' => $twitterRequest], 200);
     }
     
   
@@ -653,9 +656,9 @@ class TwitterController extends Controller
       } else {
         Log::debug('自動フォローをONにしているユーザーはいませんでした。処理を終了します。');
       }
-      Log::debug('====================================');
-      Log::debug('自動フォローを終了します。 bye');
-      Log::debug('====================================');
+      Log::debug('===========================================================');
+      Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 自動フォローを終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
+      Log::debug('===========================================================');
     }
   
     
@@ -767,7 +770,7 @@ class TwitterController extends Controller
         // 15分以内でのフォロー回数を確認して、制限MAXに到達していた場合はfalseを返却する
         if($account_limit_data->fifteen_min_follow_count < self::MIN_LIMIT_FOLLOW) {
           Log::debug('フォロー回数: '.$account_limit_data->fifteen_min_follow_count.'/'.self::MIN_LIMIT_FOLLOW.'回');
-          Log::debug('制限回数以内です。フォローリクエストOKです。時間のセットはありません。');
+          Log::debug('15/15minの制限回数以内です。フォローリクエストOKです。時間のセットはありません。');
          return true;
         }else{
           Log::debug('フォロー回数: '.$account_limit_data->fifteen_min_follow_count.'/'.self::MIN_LIMIT_FOLLOW.'回');
@@ -821,10 +824,10 @@ class TwitterController extends Controller
       if($account_limit_data->day_follow_limit_time > $now) {
         Log::debug('400/1dayの制限時間内でした。フォロー回数を確認します。');
         
-        // 15分以内でのフォロー回数を確認して、制限MAXに到達していた場合はfalseを返却する
+        // 12時間以内でのフォロー回数を確認して、制限MAXに到達していた場合はfalseを返却する
         if($account_limit_data->day_follow_count < (self::DAILY_LIMIT_FOLLOW / 2) ) {
           Log::debug('フォロー回数: '.$account_limit_data->day_follow_count.'/'.(self::DAILY_LIMIT_FOLLOW / 2).'回');
-          Log::debug('制限回数以内です。フォローリクエストOKです。時間のセットはありません。');
+          Log::debug('400/1day制限回数以内です。フォローリクエストOKです。時間のセットはありません。');
           return true;
         }else{
           Log::debug('フォロー回数: '.$account_limit_data->day_follow_count.'/'.(self::DAILY_LIMIT_FOLLOW / 2).'回');
