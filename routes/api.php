@@ -35,8 +35,7 @@ Route::post('/password/reset/{token}', 'Auth\ResetPasswordController@reset')->na
 // パスワードリセット
 // Route::post('"/password/reset/{token?}"', 'Auth\ResetPasswordController@showResetForm')->name('api.password.showResetForm');
 
-//ログインしているユーザー情報を取得するAPI
-Route::get('/user', fn() => Auth::user())->name('user');
+
 
 
 // ===============
@@ -86,7 +85,9 @@ Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 // ===============
 // 指定のIDの最終更新日時を取得する
 Route::get('/updated/at/table', 'SystemController@get_updated_at');
-
+//ログインしているユーザー情報を取得する
+// Route::get('/user', fn() => Auth::user())->name('user');
+Route::get('/user', 'UserController@auth_user');
 
 
 // トークンリフレッシュAPI

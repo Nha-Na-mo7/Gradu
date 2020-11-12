@@ -34,5 +34,5 @@ Route::get('/login/twitter/callback', 'Auth\LoginController@handleTwitterProvide
 // ================
 // APIのURL以外のあらゆるリクエストに対してはindex.bladeテンプレートを返す
 // 画面遷移はフロントエンドのVueRouterが制御する
-Route::get('/{any?}', fn() => view('index'))->where('any', '.+');
+Route::get('/{any?}', 'HomeController@index')->where('any', '.+');
 
