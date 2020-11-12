@@ -556,18 +556,6 @@ class TwitterController extends Controller
           // 各ユーザーのtwitterIDを取得
           $user_twitter_account_id = $user->twitter_id;
           
-          // API制限チェック
-          $check_limit15 = $this->api_limit_check_15min($user_twitter_account_id);
-          $check_limit_day = $this->api_limit_check_day($user_twitter_account_id);
-          
-          // 制限チェックのどちらかに引っかかった場合、そのユーザーの処理はスキップされる
-          if($check_limit15 && $check_limit_day) {
-            Log::debug('API制限チェックOKでした。');
-          }else{
-            Log::debug('システム上のAPI制限に引っかかったため、このユーザーの処理はスキップします。');
-            continue;
-          }
-          
           // twitterトークンを取得
           $token = $user->token;
           $token_secret = $user->token_secret;
@@ -583,10 +571,10 @@ class TwitterController extends Controller
           $follow_ids = $this->get_account_follow_ids($user_twitter_account_id, $token, $token_secret);
           
           // 1つずつ配列に格納する
-          if ($follow_ids->isNotEmpty()){
+          if (!empty($follow_ids->ids)){
             Log::debug('$userがフォローしているアカウント一覧を$follow_listに格納しています');
-            foreach ($follow_ids as $id) {
-              $follow_list[] = $id->follow_target_id;
+            foreach ($follow_ids->ids as $id) {
+              $follow_list[] = $id;
             }
           }
           // TODO 最新のフォロー済みアカウントリストはどのタイミングでfollowテーブルに格納する？
@@ -597,11 +585,12 @@ class TwitterController extends Controller
           // 既にフォロー済みのアカウントを除外することで、APIリクエストの回数節約にもなる
           
           // ②の配列から、④の配列に存在するaccount_idを除外した、未フォローリストを配列として作成
-          $target_accounts = array_diff($candidate_accounts, $follow_list);
+          $target_account_ids = array_diff($candidate_accounts, $follow_list);
+          Log::debug('未フォローリストを作成しました。');
           
           // 未フォローリストが空なら全員フォロー済みなので、次のユーザーの処理に移行。
-          if (empty($target_accounts)) {
-            Log::debug('$target_accountsが空です。全員フォロー済みなので'.$user->name.'さんの処理は終了します。');
+          if (empty($target_account_ids)) {
+            Log::debug('$target_account_idsが空です。全員フォロー済みなので'.$user->name.'さんの処理は終了します。');
             continue;
           }
           
@@ -614,37 +603,53 @@ class TwitterController extends Controller
           // 処理した回数のカウント
           $roop_count = 0;
           
-          foreach ($target_accounts as $target_account) {
+          Log::debug('ここから未フォローリストから最大4人をフォローする処理に入ります。');
+          foreach ($target_account_ids as $target_account_id) {
             // 1度の処理で4人までのフォローをするので、5回目の処理が始まっていたらbreakする
             // ここに判定を書く理由は、後続でフォロー時にAPIリクエストエラーが起きた時でも対応できるようにするため。
             $roop_count++;
-            Log::debug($user->name.'さんの'.$roop_count.'回目のループフォローリクエスト処理です。');
+            Log::debug('▼▼▼▼▼'.$user->name.'さんの'.$roop_count.'回目のループフォローリクエスト処理です。');
+            
+            // ループカウントチェック
             if ($roop_count > 4) {
               Log::debug($roop_count.'回目の処理はAPI制限対策で行いません。breakします。');
               break;
             }
             
-            // フォロー対象のアカウントIDを取得
-            // TODO ここでの取得は->account_idであっているか？
-            $target_account_id = $target_account->account_id;
-  
+            // API制限チェック
+            $check_limit15 = $this->api_limit_check_15min($user_twitter_account_id);
+            $check_limit_day = $this->api_limit_check_day($user_twitter_account_id);
+            // 制限チェックのどちらかに引っかかった場合、そのユーザーの処理はスキップされる
+            if($check_limit15 && $check_limit_day) {
+              Log::debug('API制限チェックOKでした。');
+            }else{
+              Log::debug('システム上のAPI制限に引っかかったため、このユーザーの処理を終了します。');
+              break;
+            }
+            
             // フォローリクエストを飛ばす
-            $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_account_id));
+            $twitterRequest = $connection->post('friendships/create', array(
+                "user_id" => $target_account_id
+            ));
             Log::debug('ID:'.$target_account_id.' にフォローを飛ばしました。');
+            
             
             // フォローの成功失敗を問わず、APIにリクエストを飛ばしたのでカウントは更新する
             $this->increment_follow_count($user_twitter_account_id);
+            
             
             // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
             if ($connection->getLastHttpCode() === 200) {
               Log::debug('followsテーブルにフォローしたIDを登録します。');
               $this->add_table_follows($user_twitter_account_id, $target_account_id);
-              
+              // スパム対策で15/15minも兼ねて60秒待機させる
+              sleep(60);
+              Log::debug($roop_count.'回目のループ処理が完了しました。続投します。▲▲▲▲▲');
             } else {
-              // 何らかのリクエストエラーが起きた時は、次のユーザーの処理に移行する
+              // 何らかのリクエストエラーが起きた時は、処理中のユーザーの処理を中断する
               Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
-              Log::debug('次の未フォローアカウントのフォロー処理に戻ります。');
-              continue;
+              Log::debug($user->name.'さんの処理を終了し、次の人の処理に移行します。');
+              break;
             }
           }
           Log::debug($user->name.'さんの今回のフォロー処理が終了しました。次のユーザーの処理に移行します。');
@@ -652,7 +657,7 @@ class TwitterController extends Controller
         Log::debug('[!]全てのユーザーの自動フォロー処理が完了しました。');
         
         
-      // 自動フォローをONにしているユーザーがいなかった時。
+      // 自動フォローをONにしているユーザーがいなかった時
       } else {
         Log::debug('自動フォローをONにしているユーザーはいませんでした。処理を終了します。');
       }
@@ -684,7 +689,7 @@ class TwitterController extends Controller
       // APIを使用し、フォローしているユーザーのID一覧を取得
       $twitterRequest = $connection->get('friends/ids', array("user_id" => $target_account_id));
       Log::debug('ID'.$target_account_id.' がフォローしているユーザーを取得します。');
-      Log::debug('一覧: '. print_r($twitterRequest, true));
+      // Log::debug('一覧: '. print_r($twitterRequest, true));
   
       return $twitterRequest;
     }
