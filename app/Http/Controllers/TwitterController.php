@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Models\TwitterAccount;
-use App\Models\TwitterAccountApiLimit;
+use App\Models\FollowApiLimit;
 use App\Models\TwitterAccountFollow;
 use App\Models\TwitterAccountNewTweet;
 use App\Models\UpdatedAtTable;
@@ -752,7 +752,7 @@ class TwitterController extends Controller
       // ユーザーのアカウントIDでAPI制限テーブルからレコードを取得する
       // ただし新規作成されるなどした場合は、現在時刻+15分、12時間後で値をセットする
       Log::debug($account_id.'のAPILimitを取得します。');
-      $account_limit_data = TwitterAccountApiLimit::firstOrCreate([
+      $account_limit_data = FollowApiLimit::firstOrCreate([
           'account_id' => $account_id
       ], [
           'day_follow_limit_time' => $plus12hours,
@@ -809,7 +809,7 @@ class TwitterController extends Controller
       // ユーザーのアカウントIDでAPI制限テーブルからレコードを取得する
       // ただし新規作成されるなどした場合は、現在時刻+15分、12時間後で値をセットする
       Log::debug($account_id.'のAPILimitを取得します。');
-      $account_limit_data = TwitterAccountApiLimit::firstOrCreate([
+      $account_limit_data = FollowApiLimit::firstOrCreate([
           'account_id' => $account_id
       ], [
           'day_follow_limit_time' => $plus12hours,
@@ -852,8 +852,8 @@ class TwitterController extends Controller
       Log::debug('==========================================================');
       Log::debug('TwitterController.increment_follow_count フォローカウントを増やす');
       Log::debug('==========================================================');
-      $account_limit_data = TwitterAccountApiLimit::where('account_id', $account_id)->first();
-      Log::debug('TwitterAccountApiLimitモデルを取得します');
+      $account_limit_data = FollowApiLimit::where('account_id', $account_id)->first();
+      Log::debug('FollowApiLimitモデルを取得します');
       
       // カウントを1増やす
       $account_limit_data->day_follow_count += 1;
