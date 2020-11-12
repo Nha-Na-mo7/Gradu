@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Models\TwitterAccount;
 use App\Models\FollowApiLimit;
-use App\Models\TwitterAccountFollow;
+use App\Models\FollowTarget;
 use App\Models\TwitterAccountNewTweet;
 use App\Models\UpdatedAtTable;
 use App\Models\User;
@@ -701,7 +701,7 @@ class TwitterController extends Controller
       ];
       // テーブルに存在していない場合は新規登録する
       try {
-        $user = TwitterAccountFollow::firstOrCreate($data);
+        $user = FollowTarget::firstOrCreate($data);
         if($user->exists) {
           Log::debug('既に登録済みでした。 ID:'.$account_id.'=> フォロー => ID:'.$target_id);
         }else{
@@ -722,7 +722,7 @@ class TwitterController extends Controller
       Log::debug('TwitterController.delete_table_follows アカウントをfollowsから削除');
       Log::debug('==========================================================');
       try {
-        TwitterAccountFollow::where('account_id', $account_id)
+        FollowTarget::where('account_id', $account_id)
             ->where('follow_target_id', $target_id)
             ->delete();
   

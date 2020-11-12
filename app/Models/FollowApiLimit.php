@@ -30,6 +30,6 @@ class FollowApiLimit extends Model
    */
   public function owner()
   {
-    return $this->belongsTo('App\Models\TwitterAccount', 'account_id', 'twitter_id', 'users');
+    return $this->belongsTo('App\Models\User', 'account_id', 'twitter_id', 'users');
   }
 }

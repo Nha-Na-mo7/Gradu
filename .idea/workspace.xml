@@ -24,11 +24,9 @@
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TwitterAccount.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccountApiLimit.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_221249_create_twitter_account_api_limits_table.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/FollowApiLimit.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/FollowApiLimit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TwitterAccountFollow.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,7 +327,7 @@
       <workItem from="1604378076521" duration="115428000" />
       <workItem from="1604939740058" duration="22000" />
       <workItem from="1604939769459" duration="493000" />
-      <workItem from="1604940289326" duration="51808000" />
+      <workItem from="1604940289326" duration="52615000" />
     </task>
     <servers />
   </component>
@@ -360,10 +358,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="1136" y="23" width="470" height="1177" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1604907804811" />
-    <state x="636" y="354" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605142428262">
+    <state x="636" y="354" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1605145478431">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="636" y="354" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1605142428262" />
+    <state x="636" y="354" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1605145478431" />
     <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604910629422">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
