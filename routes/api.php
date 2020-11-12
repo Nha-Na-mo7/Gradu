@@ -53,8 +53,10 @@ Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.
 // ===============
 // TODO 開発用 レートリミットの使用状況取得
 Route::get('/twitter/check_limit_status', 'TwitterController@check_limit_status')->name('twitter.check_limit_status');
-// バッチ用・Twitterアカウント一覧取得
+// TODO バッチ用・Twitterアカウント一覧取得
 Route::get('/twitter/index', 'TwitterController@search_accounts')->name('twitter.search_accounts');
+// TODO バッチ用・Twitterオートフォローの動きを確認
+Route::get('/twitter/autofollow/start', 'TwitterController@auto_follow');
 
 // アカウント一覧画面/テーブルからアカウント情報を取得
 Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');

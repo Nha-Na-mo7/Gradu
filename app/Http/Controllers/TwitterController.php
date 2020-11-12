@@ -508,7 +508,7 @@ class TwitterController extends Controller
      */
     public function auto_follow() {
       Log::debug('====================================');
-      Log::debug('auto_follow 自動フォロー');
+      Log::debug('TwitterController auto_follow 自動フォロー');
       Log::debug('====================================');
       
       // -------------------------------------------
@@ -579,7 +579,7 @@ class TwitterController extends Controller
           $follow_list = [];
           
           // 自動フォロー開始時までにフォローが行われている場合、テーブルデータとズレが生じるため直接フォローリストを確認。
-          Log::debug('$userのフォローリストを取得します。');
+          Log::debug($user->name.'さんのフォローリストを取得します。');
           $follow_ids = $this->get_account_follow_ids($user_twitter_account_id, $token, $token_secret);
           
           // 1つずつ配列に格納する
@@ -667,8 +667,10 @@ class TwitterController extends Controller
     // =======================================
     private function get_account_follow_ids($account_id, $token, $token_secret) {
       /*
-       * friends/ids
+       * GET friends/ids
        * フォローしているアカウント一覧をIDで取得する
+       * 15/15min制限あり
+       * アプリケーション認証では対象のアカウントが非公開になっていた場合フォローリストを取得できないため、ユーザー認証させる
        */
       Log::debug('============================================================');
       Log::debug('TwitterController.get_account_follow_ids フォロー中ユーザーの取得');
@@ -680,7 +682,7 @@ class TwitterController extends Controller
       $connection = $this->connection_instanse_users($token, $token_secret);
   
       // APIを使用し、フォローしているユーザーのID一覧を取得
-      $twitterRequest = $connection->post('friendships/ids', array("user_id" => $target_account_id));
+      $twitterRequest = $connection->get('friends/ids', array("user_id" => $target_account_id));
       Log::debug('ID'.$target_account_id.' がフォローしているユーザーを取得します。');
       Log::debug('一覧: '. print_r($twitterRequest, true));
   
@@ -696,6 +698,8 @@ class TwitterController extends Controller
       Log::debug('==========================================================');
       Log::debug('TwitterController.add_table_follows アカウントをfollowsに登録');
       Log::debug('==========================================================');
+      // TODO 使用目的 登録するアカウントIDはtwitter_accountsに記述のあるものだけで良い、全部載せると膨大な量になる。
+      
       // 数値以外の値が入らないよう、引数はintを指定する。
       // カラムは丸め込み対策でvarchar(255)で作成しているため、配列作成時にキャストする
       $data = [

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\TwitterController;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -51,31 +52,18 @@ class AutoFollow extends Command
      */
     public function handle()
     {
-      Log::debug('====================');
-      Log::debug('自動フォローを開始します');
-      Log::debug('====================');
-      // 自動フォローをONにしているユーザーを取得する
-      // ① auto_follow_flgがtrueであること
-      // ② delete_flgがfalseであること
+      Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+      Log::debug('Console/Commands AutoFollow 定刻なので自動フォロー開始');
+      Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+      // TwitterControllerのインスタンスを取得し、自動フォローメソッドを起動する
+      $twitterController = new TwitterController();
       
-      Log::debug('自動フォローをtrueにしているユーザー取得中');
-      $users = User::where('auto_follow_flg', true)->where('delete_flg', false)->get();
-      
-      // 該当ユーザーがいないなら処理終了
-      if($users->isEmpty()) {
-        Log::debug('自動フォローをONにしているユーザーはいません');
-        // TODO exit()であっているかは検証
-        exit();
-      } else {
-        Log::debug('ONにしているユーザーの人数: '. count($users));
-      }
-      
-      
-      
-      
-      
-      
-      
+      // 自動フォロー
+      $twitterController->auto_follow();
+  
+      Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
+      Log::debug('定刻の自動フォロー処理を終了します。');
+      Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       
     }
 }
