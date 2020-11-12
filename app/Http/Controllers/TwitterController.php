@@ -120,7 +120,7 @@ class TwitterController extends Controller
   
       $query = 'ウェブカツ'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 50; // 検索ページ。これを終わるまで繰り返す。
+      $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
       // ループ内で一度更新処理を行ったアカウントのIDを格納する
       $updateded_accounts = [];

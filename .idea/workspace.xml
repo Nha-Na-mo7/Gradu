@@ -23,7 +23,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Console/Commands/SearchAccountsCommand.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/AutoFollow.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/AutoFollow.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -325,7 +328,7 @@
       <workItem from="1604378076521" duration="115428000" />
       <workItem from="1604939740058" duration="22000" />
       <workItem from="1604939769459" duration="493000" />
-      <workItem from="1604940289326" duration="68689000" />
+      <workItem from="1604940289326" duration="71718000" />
     </task>
     <servers />
   </component>
@@ -360,10 +363,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="636" y="354" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1605145478431" />
-    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1604910629422">
+    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1605194466474">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1604910629422" />
+    <state x="1105" y="357" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1605194466474" />
     <state x="959" y="386" key="#ウェブブラウザー" timestamp="1603152581889">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>

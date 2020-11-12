@@ -6,21 +6,21 @@ use App\Http\Controllers\TwitterController;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class AutoFollow extends Command
+class SearchAccountsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:autofollow';
+    protected $signature = 'command:searchaccounts';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'アカウント一覧ページ/自動フォロー用のバッチファイルです。';
+    protected $description = '定期的に仮想通貨関連アカウントを取得するファイルです';
 
     /**
      * Create a new command instance.
@@ -40,15 +40,15 @@ class AutoFollow extends Command
     public function handle()
     {
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      Log::debug('Console/Commands AutoFollow 定刻なので自動フォロー開始');
+      Log::debug('Console/Commands SearchAccounts 仮想通貨アカウント取得');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      // TwitterControllerのインスタンスを取得し、自動フォローメソッドを起動する
+      // TwitterControllerのインスタンスを取得し、アカウント取得メソッドを起動する
       $twitterController = new TwitterController();
-      
-      // 自動フォロー
-      $twitterController->auto_follow();
+  
+      // 仮想通貨アカウント取得
+      $twitterController->search_accounts();
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      Log::debug('定刻の自動フォロー処理を終了します。');
+      Log::debug('定刻の仮想通貨アカウント取得を終了します。');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
     }
 }
