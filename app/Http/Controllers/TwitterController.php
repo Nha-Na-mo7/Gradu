@@ -48,7 +48,9 @@ class TwitterController extends Controller
     const DAILY_LIMIT_FOLLOW = 400;
     // twitterAPIが15分の間にフォローできる最大数。
     const MIN_LIMIT_FOLLOW = 15;
-  
+    
+    // search/tweetsAPIが15分間の間に検索できる最大数
+    const SEARCH_TWEETS_LIMIT = 450;
     
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
@@ -879,10 +881,6 @@ class TwitterController extends Controller
     }
     
     
-    
-    
-    
-    
     // ==============================================
     // 仮想通貨や通貨ごとのツイート数を集計する
     // ==============================================
@@ -905,12 +903,29 @@ class TwitterController extends Controller
       $request_count = 0;
       
       // APIにリクエストを送り、配列形式で結果を受け取る
-      $result_tweets = $this->search_tweets('仮想通貨', '2018-12-31_23:59:59');
+      Log::debug('====== ツイート検索し配列で返す ======');
+  
+      // アプリケーション認証インスタンス作成
+      $connection = $this->connection_instanse_OAuth2();
+  
+      // アプリ認証でキーワード検索を実行 450 / 15min
+      $params = array(
+          'lang' => 'ja', // 地域・日本に限定する
+          'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
+          'result_type' => 'recent', // 最新のツイート
+          'since' => '2018-12-31_11:45:14', // 指定の日時以降のツイートを取得する
+          'q' => 'BTC OR ビットコイン', // 検索ワード
+      );
+  
+      // APIにリクエストを飛ばす
+      Log::debug('検索ワード:'.$params['q'].'日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
+      $search_tweets = $connection->get("search/tweets", $params);
+  
+      // 配列に変換
+      $result_tweets = json_decode(json_encode($search_tweets));
       // リクエストの結果に関わらず、カウントを1進める
       $request_count++;
       
-      // TODO 結果の配列にエラーが存在する場合、APIリクエスト制限なので対策する
-      // TODO 処理の流れを確認して、ここであっているかは要チェックすること
       if(isset($result_tweets['errors'])) {
         Log::debug('返却された配列内にerrors項目が存在します。API制限の可能性があります。');
         // API制限は15分で解除されるので、15分待機する。
@@ -925,11 +940,10 @@ class TwitterController extends Controller
       if (empty($result_tweets['search_metadata']['next_results'])) {
         Log::debug('次の検索結果はありません。');
       }
-  
       
       // next_resultsの先頭の"?"を取り除く
       $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
-      // パラメータに変換する
+      // パラメータに追加した上でもう一度検索する
       parse_str($next_results, $params);
       
       // ===このあたりまでループ処理が走っている
@@ -940,36 +954,7 @@ class TwitterController extends Controller
       
       
     }
-    
-    
-    
-    // ==============================================
-    // 指定したワードでツイートを検索し、配列にして返却する(ツイート数の集計に使う)
-    // ==============================================
-    public function search_tweets(string $searchword, $date_time) {
-      Log::debug('====== TwitterController.search_tweets ツイート検索し配列で返す ======');
-      
-      $connection = $this->connection_instanse_OAuth2();
-      
-      // アプリ認証でキーワード検索を実行 450 / 15min
-      $params = array(
-          'lang' => 'ja', // 地域・日本に限定する
-          'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
-          'result_type' => 'recent', // 最新のツイート
-          'since' => $date_time, // 指定の日時以降のツイートを取得する
-          'q' => $searchword, // 検索ワード
-      );
 
-      // APIにリクエストを飛ばす
-      Log::debug('検索ワード:'.$params['q'].'日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
-      $search_tweets = $connection->get("search/tweets", $params);
-      Log::debug('結果を配列に変換してreturnします(エラーの有無はここでは判断しません)');
-      
-      // 配列に変換してレスポンスする
-      return json_decode(json_encode($search_tweets));
-    }
-    
-    
     
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
