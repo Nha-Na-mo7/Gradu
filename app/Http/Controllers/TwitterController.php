@@ -886,21 +886,52 @@ class TwitterController extends Controller
     // ==============================================
     // 仮想通貨や通貨ごとのツイート数を集計する
     // ==============================================
+    /* 処理の流れ
+     * ① brandsテーブルをforeachで回す
+     * ② 取得した各レコードの「銘柄名(アルファベット)」「カタカナ名」の2つを組み合わせた検索ワードを作成
+     * ＞(例:'"BTC" OR "ビットコイン"')
+     * ③ ②で作成した検索ワードを1つずつ配列に格納する
+     *
+     * ④ ③の配列をforeachで回し、1つずつsearch/tweetsで検索をかける
+     * 「"BTC OR ビットコイン" since:」
+     *
+     *
+     *
+     * アプリケーション認証を行うため、15分間の間に450回のツイート検索ができる。
+     */
     public function get_currency_tweet() {
+      
+      
+      $this->search_tweets('仮想通貨', '2018-12-31_23:59:59');
+      
+    }
+    
+    
+    
+    // ==============================================
+    // 指定したワードでツイートを検索し、配列にして返却する(ツイート数の集計に使う)
+    // ==============================================
+    public function search_tweets(string $searchword, $date_time) {
+      Log::debug('====== TwitterController.search_tweets ツイート検索し配列で返す ======');
+      
       $connection = $this->connection_instanse_OAuth2();
-  
-  
+      
       // アプリ認証でキーワード検索を実行 450 / 15min
       $params = array(
-          'count' => '100',
-          'include_entities' => true,
-          'result_type' => 'recent',
-          'tweet_mode' => 'extended', // フルテキスト取得
-          'q' => 'ホモデウス' // 検索ワード
+          'lang' => 'ja', // 地域・日本に限定する
+          'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
+          'result_type' => 'recent', // 最新のツイート
+          'since' => $date_time, // 指定の日時以降のツイートを取得する
+          'q' => $searchword, // 検索ワード
       );
+
+      // APIにリクエストを飛ばす
+      Log::debug('検索ワード:'.$params['q'].'日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
+      $search_tweets = $connection->get("search/tweets", $params);
+      Log::debug('結果を配列に変換してreturnします(エラーの有無はここでは判断しません)');
       
-      $connection->get("search/tweets", $params);
-      
+      // 配列に変換してレスポンスする
+      return json_decode(json_encode($search_tweets));
     }
     
     
