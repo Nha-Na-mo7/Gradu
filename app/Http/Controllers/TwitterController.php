@@ -893,16 +893,51 @@ class TwitterController extends Controller
      * ③ ②で作成した検索ワードを1つずつ配列に格納する
      *
      * ④ ③の配列をforeachで回し、1つずつsearch/tweetsで検索をかける
-     * 「"BTC OR ビットコイン" since:」
      *
      *
      *
-     * アプリケーション認証を行うため、15分間の間に450回のツイート検索ができる。
+     *
+     * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
      */
     public function get_currency_tweet() {
       
+      // リクエスト回数カウンター
+      $request_count = 0;
       
-      $this->search_tweets('仮想通貨', '2018-12-31_23:59:59');
+      // APIにリクエストを送り、配列形式で結果を受け取る
+      $result_tweets = $this->search_tweets('仮想通貨', '2018-12-31_23:59:59');
+      // リクエストの結果に関わらず、カウントを1進める
+      $request_count++;
+      
+      // TODO 結果の配列にエラーが存在する場合、APIリクエスト制限なので対策する
+      // TODO 処理の流れを確認して、ここであっているかは要チェックすること
+      if(isset($result_tweets['errors'])) {
+        Log::debug('返却された配列内にerrors項目が存在します。API制限の可能性があります。');
+        // API制限は15分で解除されるので、15分待機する。
+        sleep(60 * 15);
+      }
+      
+      
+      // 取得されたツイートを1つずつ展開し、時刻を確認していく
+  
+      // 100件以上の検索結果がある場合、next_resultにURLが指定される
+      // next_resultsがなければ処理を終了
+      if (empty($result_tweets['search_metadata']['next_results'])) {
+        Log::debug('次の検索結果はありません。');
+      }
+  
+      
+      // next_resultsの先頭の"?"を取り除く
+      $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
+      // パラメータに変換する
+      parse_str($next_results, $params);
+      
+      // ===このあたりまでループ処理が走っている
+      
+      // ----------------
+      // DB登録処理
+      // ----------------
+      
       
     }
     
