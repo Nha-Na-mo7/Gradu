@@ -885,14 +885,16 @@ class TwitterController extends Controller
     // 仮想通貨や通貨ごとのツイート数を集計する
     // ==============================================
     /* 処理の流れ
-     * ① brandsテーブルをforeachで回す
-     * ② 取得した各レコードの「銘柄名(アルファベット)」「カタカナ名」の2つを組み合わせた検索ワードを作成
+     * ① brandsテーブルのレコードを全て取得する
+     * ② 取得した各レコードの「銘柄名(アルファベット)」「カタカナ名」の2つを組み合わせた検索ワードを作成し、配列に1つずつ格納する
      * ＞(例:'"BTC" OR "ビットコイン"')
-     * ③ ②で作成した検索ワードを1つずつ配列に格納する
      *
-     * ④ ③の配列をforeachで回し、1つずつsearch/tweetsで検索をかける
+     * ③ ②の配列を回し、1つずつsearch/tweetsで検索をかける
+     * ④ その検索ワードを全件検索し終える、またはAPI制限上限に到達するまでループしながら検索をかける
+     * ⑤ 取得できたツイートの総数をカウントする
+     * ⑥ 100件以上のツイート情報がある場合、next_resultsにURLが指定されるので、これを使って再度検索を行う
      *
-     *
+     * ⑦ ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
      *
      *
      * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
@@ -901,60 +903,134 @@ class TwitterController extends Controller
       
       // リクエスト回数カウンター
       $request_count = 0;
+      // 検索ワード用の配列
+      $search_words = [];
       
-      // APIにリクエストを送り、配列形式で結果を受け取る
-      Log::debug('====== ツイート検索し配列で返す ======');
+      // --------------------------------------------------
+      // ① brandsテーブル(取り扱う通貨名情報)のレコードを全て取得する
+      // --------------------------------------------------
+      Log::debug('brandsテーブルから全ての通貨レコードを取得します。');
+      $brandsController = new BrandController();
+      $all_brands = $brandsController->get_brands();
   
+      // 万が一brandsテーブルが空だったとき(普通この処理に辿り着く事は無い)
+      if ($all_brands->isNotEmpty()) {
+        Log::debug('検索すべき通貨名が取得数0でした。seederを打ったか確認してください。');
+        exit();
+      }
+      
+      // ----------------------------------------------------------------------
+      // ② 取得したレコードから、銘柄名とカタカナ名を組み合わせた検索ワードを作り、配列に格納
+      // ----------------------------------------------------------------------
+      foreach ($all_brands as $brand) {
+        // レコードから銘柄名、カタカナ名を取り出す
+        $name = $brand->name; // 銘柄名(例: BTC)
+        $realname = $brand->realname; // カタカナ名(例: ビットコイン)
+        
+        // 2つを組み合わせた検索ワードを作る
+        $search_word = $name.' OR '.$realname;
+        Log::debug('作成した検索ワード「 '.$search_word.' 」');
+        
+        // 検索ワード配列に格納する
+        $search_words[] = $search_word;
+      }
+      Log::debug('検索ワード配列・これを回して1つずつ検索をかけます。'.print_r($search_words, true));
+      
+      
       // アプリケーション認証インスタンス作成
       $connection = $this->connection_instanse_OAuth2();
-  
-      // アプリ認証でキーワード検索を実行 450 / 15min
-      $params = array(
-          'lang' => 'ja', // 地域・日本に限定する
-          'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
-          'result_type' => 'recent', // 最新のツイート
-          'since' => '2018-12-31_11:45:14', // 指定の日時以降のツイートを取得する
-          'q' => 'BTC OR ビットコイン', // 検索ワード
-      );
-  
-      // APIにリクエストを飛ばす
-      Log::debug('検索ワード:'.$params['q'].'日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
-      $search_tweets = $connection->get("search/tweets", $params);
-  
-      // 配列に変換
-      $result_tweets = json_decode(json_encode($search_tweets));
-      // リクエストの結果に関わらず、カウントを1進める
-      $request_count++;
       
-      if(isset($result_tweets['errors'])) {
-        Log::debug('返却された配列内にerrors項目が存在します。API制限の可能性があります。');
-        // API制限は15分で解除されるので、15分待機する。
-        sleep(60 * 15);
+      // ---------------------------------------------
+      // ③ 検索ワード配列を回し、パラメータを設定する
+      // ---------------------------------------------
+      foreach ($search_words as $search_word) {
+        
+        // 取得できたツイートの総数
+        $tweet_count = 0;
+        
+        // API用のパラメータを設定
+        $params = array(
+            'lang' => 'ja', // 地域・日本に限定する
+            'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
+            'result_type' => 'recent', // 最新のツイート
+            'since' => '2018-12-31_11:45:14', // 指定の日時以降のツイートを取得する
+            'q' => $search_word, // 検索ワード
+        );
+        Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
+  
+        
+        // ---------------------------------------------------
+        // ④ その検索ワードの全件検索し終える、
+        //    またはAPI制限上限に到達するまでループしながら検索をかける
+        // ---------------------------------------------------
+        for ($i = 0; $i < self::SEARCH_TWEETS_LIMIT; $i++) {
+          // APIにリクエストを飛ばす
+          Log::debug('検索ワード:'.$params['q'].'日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
+          $search_tweets = $connection->get("search/tweets", $params);
+    
+          // 配列に変換
+          $result_tweets = json_decode(json_encode($search_tweets));
+          // リクエストの結果に関わらず、カウントを1進める
+          $request_count++;
+          Log::debug('現在のsearch/tweetsへのリクエスト回数: '.$request_count.' / '.self::SEARCH_TWEETS_LIMIT);
+    
+          // エラーが帰ってきた場合の処理
+          if(isset($result_tweets['errors'])) {
+            Log::debug('返却された配列内にerrors項目が存在します。API制限の可能性があります。');
+            // API制限は15分で解除されるので、15分待機する。
+            sleep(60 * 15);
+            // 15分待機したので、リクエストカウントを0に戻して再開する
+            $request_count = 0;
+  
+            // TODO ここの処理要検討
+          }
+    
+          // TODO 検索の途中でAPI制限になってしまった場合は？
+          // ---------------------------------------------
+          // ⑤ 取得ツイートの総数をカウントする
+          // ---------------------------------------------
+          // statusesにツイートのデータが格納されている = この要素数が取得できたツイート数
+          Log::debug(count($result_tweets['statuses']).'件のツイートが取得できました。');
+          $tweet_count += count($result_tweets['statuses']);
+  
+          
+          // -------------------------------------------------------------
+          // ⑥ 100件以上の検索結果がある場合、
+          // search_metadataのnext_resultにURLが指定されるのでこれをparamsに加えもう一度検索する
+          // -------------------------------------------------------------
+          // next_resultsがなければ処理を終了
+          if (empty($result_tweets['search_metadata']['next_results'])) {
+            Log::debug('検索結果に次のページはありません。'.$params['q'].'の検索は終了です。');
+            break;
+          }
+    
+          // next_resultsの先頭の"?"を取り除く
+          $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
+  
+          // ?を取り除いたnext_resultsをパラメータに追加した上でループの頭に戻り、もう一度検索する
+          // ⑦ 指定期間内の取得ツイートが無くなったら、for文ループを抜ける
+          parse_str($next_results, $params);
+        }
+  
+        // ----------------
+        // ⑧ DB登録処理
+        // ----------------
+        Log::debug('for文ループが終了しました。取得した'.$params['q'].'のツイート総数をDBに登録します。');
+        Log::debug($search_word.'の取得ツイート総数は'.$tweet_count.'件でした。');
+  
+        // DBに登録する
+        // $this->データベースに登録するメソッド($ツイート総数)
+        
+        Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
-      
-      
-      // 取得されたツイートを1つずつ展開し、時刻を確認していく
-  
-      // 100件以上の検索結果がある場合、next_resultにURLが指定される
-      // next_resultsがなければ処理を終了
-      if (empty($result_tweets['search_metadata']['next_results'])) {
-        Log::debug('次の検索結果はありません。');
-      }
-      
-      // next_resultsの先頭の"?"を取り除く
-      $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
-      // パラメータに追加した上でもう一度検索する
-      parse_str($next_results, $params);
-      
-      // ===このあたりまでループ処理が走っている
-      
-      // ----------------
-      // DB登録処理
-      // ----------------
-      
-      
+      Log::debug('===========================================================');
+      Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
+      Log::debug('===========================================================');
     }
 
+    
+    
+    
     
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
