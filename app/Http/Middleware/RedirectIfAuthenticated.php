@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RedirectIfAuthenticated
 {
@@ -21,6 +22,7 @@ class RedirectIfAuthenticated
         // ログイン中に、ログインしていない場合にしかアクセスできないリクエストを送信した時、
         // 代わりにユーザー情報を返すAPIにアクセスさせる。
         if (Auth::guard($guard)->check()) {
+            Log::debug('RedirectifAuthenticated.php');
             return redirect()->route('user');
         }
 

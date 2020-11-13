@@ -87,7 +87,7 @@ Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 Route::get('/updated/at/table', 'SystemController@get_updated_at');
 //ログインしているユーザー情報を取得する
 // Route::get('/user', fn() => Auth::user())->name('user');
-Route::get('/user', 'UserController@auth_user');
+Route::get('/user', 'UserController@auth_user')->name('user');
 
 
 // トークンリフレッシュAPI
