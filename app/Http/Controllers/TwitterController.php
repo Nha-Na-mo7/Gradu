@@ -879,6 +879,32 @@ class TwitterController extends Controller
     }
     
     
+    
+    
+    
+    
+    // ==============================================
+    // 仮想通貨や通貨ごとのツイート数を集計する
+    // ==============================================
+    public function get_currency_tweet() {
+      $connection = $this->connection_instanse_OAuth2();
+  
+  
+      // アプリ認証でキーワード検索を実行 450 / 15min
+      $params = array(
+          'count' => '100',
+          'include_entities' => true,
+          'result_type' => 'recent',
+          'tweet_mode' => 'extended', // フルテキスト取得
+          'q' => 'ホモデウス' // 検索ワード
+      );
+      
+      $connection->get("search/tweets", $params);
+      
+    }
+    
+    
+    
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
