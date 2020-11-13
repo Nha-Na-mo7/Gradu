@@ -105,9 +105,8 @@ class TwitterController extends Controller
      */
     
     // ==================================
-    // バッチ処理ver Twitterアカウント検索 ①
+    // Twitterアカウント検索 ※バッチ処理
     // ==================================
-    // これはバッチ処理で行う。フォローしている、していないの区別をつけることができないようだ。
     public function search_accounts()
     {
       Log::debug('==============================================');
@@ -487,9 +486,9 @@ class TwitterController extends Controller
     }
     
     
-    // ===========================
-    // 自動フォロー(AUTO FOLLOW)
-    // ===========================
+    // =================================
+    // 自動フォロー(AUTO FOLLOW) ※バッチ処理
+    // =================================
     /* 処理の流れ
      * ① Userテーブルからauto_follow_flgがtrueのUserを取得する。誰もいなければ終了。
      * ② twitter_accountsテーブルに格納されているIDを全て取得し、フォロー候補として配列に格納。
@@ -804,7 +803,7 @@ class TwitterController extends Controller
     // ==============================================
     // 上記の15/15minの400/dayバージョン。
     // フォロー処理の前に呼び出し、API制限がかかっていた場合などはfalseを返して処理に入らないようにする。
-  
+    //
     // ただし1日400件のフォローカウントを24時間に1度しかリセットしなかった場合、偏りが出る可能性がある。
     // (例:00:00にフォローカウントリセットしても、21:00に400件、03:00に400件フォローのリクエストを送った場合に6時間で800リクエストがあるように見えてしまう)
     // こうしたリスクを少しでも分散するために12時間ごとにフォローリクエスト200件までとして処理を行う。
@@ -896,18 +895,36 @@ class TwitterController extends Controller
       
       return $connection;
     }
+    
     // =======================================
     // アプリケーションによるコネクションインスタンスの作成
     // =======================================
     public function connection_instanse_app()
     {
-      // API keyなどを定義・エイリアスにするか検討
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
       $access_token = config('services.twitter')['access_token'];
       $access_token_secret = config('services.twitter')['access_token_secret'];
       
       $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
+      
+      return $connection;
+    }
+    
+    // ========================================================
+    // ベアラートークンを取得してアプリケーション認証用のインスタンスを作成
+    // ========================================================
+    public function connection_instanse_OAuth2()
+    {
+      $connection = $this->connection_instanse_app();
+      
+      // アプリ認証用のベラトークンを取得
+      $_bearer_token = $connection->oauth2("oauth2/token", array("grant_type" => "client_credentials"));
+  
+      // ベラトークンをセット
+      if(isset($_bearer_token->access_token)){
+        $connection->setBearer($_bearer_token->access_token);
+      }
       
       return $connection;
     }
