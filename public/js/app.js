@@ -4509,13 +4509,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Loading_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/Loading.vue */ "./resources/js/components/Loading.vue");
-/* harmony import */ var _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Components/SiteLinknav.vue */ "./resources/js/pages/Components/SiteLinknav.vue");
-/* harmony import */ var _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Components/PageTitle.vue */ "./resources/js/pages/Components/PageTitle.vue");
-/* harmony import */ var _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/Ribbonnav.vue */ "./resources/js/pages/Components/Ribbonnav.vue");
-/* harmony import */ var _Ranking_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Ranking.vue */ "./resources/js/pages/Trends/Ranking.vue");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Loading_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Loading.vue */ "./resources/js/components/Loading.vue");
+/* harmony import */ var _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Components/SiteLinknav.vue */ "./resources/js/pages/Components/SiteLinknav.vue");
+/* harmony import */ var _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Components/PageTitle.vue */ "./resources/js/pages/Components/PageTitle.vue");
+/* harmony import */ var _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Components/Ribbonnav.vue */ "./resources/js/pages/Components/Ribbonnav.vue");
+/* harmony import */ var _Ranking_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Ranking.vue */ "./resources/js/pages/Trends/Ranking.vue");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../util */ "./resources/js/util.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -4586,11 +4595,37 @@ var PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
     }
   },
   components: {
-    Loading: _components_Loading_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    SiteLinknav: _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    PageTitle: _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Ribbonnav: _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Ranking: _Ranking_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    Loading: _components_Loading_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    SiteLinknav: _Components_SiteLinknav_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PageTitle: _Components_PageTitle_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Ribbonnav: _Components_Ribbonnav_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Ranking: _Ranking_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
+  methods: {
+    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
+    twitter_count_tweets: function twitter_count_tweets() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var response;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                console.log('ツイート数集計体験'); // APIにアクセス
+
+                _context.next = 3;
+                return axios.get("/api/twitter/count/tweets");
+
+              case 3:
+                response = _context.sent;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    }
   } // watch: {
   //   $route: {
   //     async handler() {
@@ -47745,6 +47780,15 @@ var render = function() {
             { staticClass: "p-trends__list" },
             [
               _vm.isSearching ? _c("div", {}, [_c("Loading")], 1) : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "c-btn",
+                  on: { click: _vm.twitter_count_tweets }
+                },
+                [_vm._v("ツイート数集計体験")]
+              ),
               _vm._v(" "),
               _c("Ranking"),
               _vm._v(" "),
