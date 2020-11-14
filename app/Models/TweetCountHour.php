@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class TweetCountHour extends Model
 {
-    //
+    // fillable
+    protected $fillable = [
+        'brand_id',
+        'tweet_count',
+        'updated_at',
+    ];
     
     /**
      * リレーション - brandsテーブル
