@@ -972,6 +972,8 @@ class TwitterController extends Controller
         for ($i = 0; $i < self::SEARCH_TWEETS_LIMIT; $i++) {
           // APIにリクエストを飛ばす
           Log::debug('検索ワード:'.$params['q'].'日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
+          // ラベル
+          search_start:
           $search_tweets = $connection->get("search/tweets", $params);
     
           // 配列に変換
@@ -982,16 +984,23 @@ class TwitterController extends Controller
     
           // エラーが帰ってきた場合の処理
           if(isset($result_tweets['errors'])) {
-            Log::debug('返却された配列内にerrors項目が存在します。API制限の可能性があります。');
-            // API制限は15分で解除されるので、15分待機する。
-            sleep(60 * 15);
-            // 15分待機したので、リクエストカウントを0に戻して再開する
-            $request_count = 0;
-  
-            // TODO ここの処理要検討
+            Log::debug('返却された配列内にerrors項目が存在します。');
+            
+            // API制限の場合(エラーコード88)
+            if($result_tweets['errors'][0]['code'] === 88) {
+              Log::debug('API制限です。'.self::SEARCH_TWEETS_LIMIT.'分待機したのち、同じ条件で再検索を行います。');
+              // API制限は15分で解除されるので、15分待機する。
+              sleep(60 * self::SEARCH_TWEETS_LIMIT);
+              // 待機後、リクエストカウントを0に戻す
+              $request_count = 0;
+              // ラベルへ戻り同じ条件で検索を再開する
+              goto search_start;
+            }
+            
+            // TODO API制限ではない時の処理を考察すること
+            Log::debug('API制限ではありませんでした。処理を中断します');
+            break;
           }
-    
-          // TODO 検索の途中でAPI制限になってしまった場合は？
           // ---------------------------------------------
           // ⑤ 取得ツイートの総数をカウントする
           // ---------------------------------------------
@@ -1037,7 +1046,23 @@ class TwitterController extends Controller
 
     
     
-    
+    // =======================================
+    // ツイート数をDBに登録する
+    // =======================================
+    public function save_to_tweet_count_table($table_type) {
+      switch ($table_type){
+        case 'hour':
+      }
+
+      
+    }
+  
+  
+  
+  
+  
+  
+  
     
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
