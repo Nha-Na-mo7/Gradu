@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Models\TweetCountDay;
+use App\Models\TweetCountHour;
+use App\Models\TweetCountWeek;
 use App\Models\TwitterAccount;
 use App\Models\FollowApiLimit;
 use App\Models\FollowTarget;
@@ -905,11 +908,29 @@ class TwitterController extends Controller
       $request_count = 0;
       // 検索ワード用の配列
       $search_words = [];
+      // 通貨ID
+      $brand_id = 0;
       // 現在時刻(API制限時に待機して再度検索した場合、取得ツイートにズレが生じる場合があるため)
-      // TODO new Carbonでの取得であっているのか検証
-      $now = new Carbon();
+      $now = new Carbon('now');
+      // since(この時間以降のツイートに絞って検索をかける)
+      $since_date = '';
+      
       // 引数の検索条件によって、sinceを分ける(1: -1hour、2: -1day、3: -7day)
-      $since_date = new Carbon('-7 days');
+      Log::debug('遡って取得する時間を決めます。');
+      switch ($search_type){
+        case 0:
+          Log::debug('hourなので、1時間前の時刻を取得します。');
+          $since_date = new Carbon('-1 hours');
+          break;
+        case 1:
+          Log::debug('dayなので、1日前の時刻を取得します。');
+          $since_date = new Carbon('-1 days');
+          break;
+        case 2:
+          Log::debug('weekなので、7日前の時刻を取得します。');
+          $since_date = new Carbon('-7 days');
+          break;
+      }
       
       // --------------------------------------------------
       // ① brandsテーブル(取り扱う通貨名情報)のレコードを全て取得する
@@ -928,6 +949,8 @@ class TwitterController extends Controller
       // ② 取得したレコードから、銘柄名とカタカナ名を組み合わせた検索ワードを作り、配列に格納
       // ----------------------------------------------------------------------
       foreach ($all_brands as $brand) {
+        // Brandテーブルのidを取得
+        $brand_id = $brand->id;
         // レコードから銘柄名、カタカナ名を取り出す
         $name = $brand->name; // 銘柄名(例: BTC)
         $realname = $brand->realname; // カタカナ名(例: ビットコイン)
@@ -997,8 +1020,8 @@ class TwitterController extends Controller
               goto search_start;
             }
             
-            // TODO API制限ではない時の処理を考察すること
-            Log::debug('API制限ではありませんでした。処理を中断します');
+            // TODO 処理集団で良いか検討
+            Log::debug('API制限以外のエラーが発生しましたので処理を中断します: '.print_r($result_tweets, true));
             break;
           }
           // ---------------------------------------------
@@ -1035,7 +1058,7 @@ class TwitterController extends Controller
   
         // DBに登録する
         // 引数の検索条件によって、登録するテーブルが変わる
-        // $this->データベースに登録するメソッド($ツイート総数)
+        $this->insert_tweet_count_table($search_type, $brand_id, $tweet_count, $now);
         
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
@@ -1043,23 +1066,46 @@ class TwitterController extends Controller
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('===========================================================');
     }
-
-    
     
     // =======================================
-    // ツイート数をDBに登録する
+    // ツイート数をDBに新規登録する
     // =======================================
-    public function save_to_tweet_count_table($table_type) {
-      switch ($table_type){
-        case 'hour':
-      }
-
+    public function insert_tweet_count_table($table_type, $brand_id, $tweet_count, $updated) {
+      Log::debug('=================================================================');
+      Log::debug('TwitterController.insert_tweet_count_table 指定のDBにツイート数を登録');
+      Log::debug('=================================================================');
+      // 拡張を考え、過去の集計データも残しておく
       
+      // モデルインスタンス用の変数初期化
+      $model = '';
+  
+      // $table_typeに応じたtweet_countsテーブルを取得する
+      // $table_type... 0:hour 1:day 2:week
+      Log::debug($table_type.'のtweet_countテーブルのモデルを取得します。');
+      switch ($table_type){
+        case 0:
+          Log::debug('hourなので、tweet_count_hoursテーブルを取得します。');
+          $model = new TweetCountHour();
+          break;
+        case 1:
+          Log::debug('dayなので、tweet_count_daysテーブルを取得します。');
+          $model = new TweetCountDay();
+          break;
+        case 2:
+          Log::debug('weekなので、tweet_count_weeksテーブルを取得します。');
+          $model = new TweetCountWeek();
+          break;
+      }
+      
+      // 新しくデータを挿入する
+      Log::debug('取得したモデルに新しくレコードを追加します。');
+      $model->fill([
+          'brand_id' => $brand_id,
+          'tweet_count' => $tweet_count,
+          'updated_at' => $updated,
+      ])->save();
     }
-  
-  
-  
-  
+    
   
   
   
