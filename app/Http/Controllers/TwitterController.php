@@ -896,15 +896,20 @@ class TwitterController extends Controller
      *
      * ⑦ ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
      *
-     *
+     * 途中でAPI制限にかかった場合、15分の待機をした上で同条件でもう一度検索を開始する。
      * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
      */
-    public function count_tweets() {
+    public function count_tweets($search_type) {
       
       // リクエスト回数カウンター
       $request_count = 0;
       // 検索ワード用の配列
       $search_words = [];
+      // 現在時刻(API制限時に待機して再度検索した場合、取得ツイートにズレが生じる場合があるため)
+      // TODO new Carbonでの取得であっているのか検証
+      $now = new Carbon();
+      // 引数の検索条件によって、sinceを分ける(1: -1hour、2: -1day、3: -7day)
+      $since_date = new Carbon('-7 days');
       
       // --------------------------------------------------
       // ① brandsテーブル(取り扱う通貨名情報)のレコードを全て取得する
@@ -953,7 +958,8 @@ class TwitterController extends Controller
             'lang' => 'ja', // 地域・日本に限定する
             'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
             'result_type' => 'recent', // 最新のツイート
-            'since' => '2018-12-31_11:45:14', // 指定の日時以降のツイートを取得する
+            'since' => $since_date, // 指定の日時以降のツイートを取得する
+            'until' => $now, // 指定の日時以前のツイートを取得する(現在時刻の変数を入れる)
             'q' => $search_word, // 検索ワード
         );
         Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
@@ -1019,6 +1025,7 @@ class TwitterController extends Controller
         Log::debug($search_word.'の取得ツイート総数は'.$tweet_count.'件でした。');
   
         // DBに登録する
+        // 引数の検索条件によって、登録するテーブルが変わる
         // $this->データベースに登録するメソッド($ツイート総数)
         
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
