@@ -96,7 +96,7 @@ class BrandsTableSeeder extends Seeder
             ],
             [
                 'name' => 'IOST',
-                'realname' => 'IOST',
+                'realname' => 'アイオーエスティー',
                 'icon' => 'iost.svg',
                 'handling' => true,
             ],
