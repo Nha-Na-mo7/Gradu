@@ -1056,13 +1056,19 @@ class TwitterController extends Controller
           // ⑥ 100件以上の検索結果がある場合、
           // search_metadataのnext_resultにURLが指定されるのでこれをparamsに加えもう一度検索する
           // -------------------------------------------------------------
-          // next_resultsがなければ処理を終了
-          if (empty($result_tweets['search_metadata']['next_results'])) {
-            Log::debug('検索結果に次のページはありません。'.$params['q'].'の検索は終了です。');
+          // next_resultsがない場合
+          if (empty($result_tweets['search_metadata']['next_results']) ){
+            Log::debug('検索結果に次のページはありません。'.$search_word.'の検索は終了です。');
+            break;
+          }
+          
+          // next_resultsはあるのに取得件数が100件未満である場合(APIの仕様で、取得できてしまうことがあるので対策している)
+          if (count($result_tweets['statuses']) < 100) {
+            Log::debug('取得件数が100件未満でした。'.$search_word.'の検索は終了です。');
             break;
           }
     
-          // next_resultsの先頭の"?"を取り除く
+          // next_resultsがある場合、先頭の"?"を取り除く
           $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
           Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
           // ?を取り除いたnext_resultsをパラメータに追加した上でループの頭に戻り、もう一度検索する
@@ -1074,7 +1080,7 @@ class TwitterController extends Controller
         // ----------------
         // ⑧ DB登録処理
         // ----------------
-        Log::debug('for文ループが終了しました。取得した'.$params['q'].'のツイート総数をDBに登録します。');
+        Log::debug('for文ループが終了しました。取得した'.$search_word.'のツイート総数をDBに登録します。');
         Log::debug($search_word.'の取得ツイート総数は'.$tweet_count.'件でした。');
   
         // DBに登録する
