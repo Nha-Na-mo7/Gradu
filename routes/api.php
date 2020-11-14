@@ -56,6 +56,8 @@ Route::get('/twitter/check_limit_status', 'TwitterController@check_limit_status'
 Route::get('/twitter/index', 'TwitterController@search_accounts')->name('twitter.search_accounts');
 // TODO バッチ用・Twitterオートフォローの動きを確認
 Route::get('/twitter/autofollow/start', 'TwitterController@auto_follow');
+// TODO バッチ用・通貨ツイート数の動きを確認
+Route::get('/twitter/count/tweets', 'TwitterController@count_tweets');
 
 // アカウント一覧画面/テーブルからアカウント情報を取得
 Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');

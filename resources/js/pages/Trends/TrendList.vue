@@ -32,6 +32,7 @@
 <!--            :key="News.id"-->
 <!--            :entry="News"-->
 <!--        />-->
+        <button class="c-btn" @click="twitter_count_tweets">ツイート数集計体験</button>
         <Ranking />
         <Ranking />
         <Ranking />
@@ -77,6 +78,14 @@ export default {
     Ribbonnav,
     Ranking
   },
+  methods: {
+    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
+    async twitter_count_tweets() {
+      console.log('ツイート数集計体験')
+      // APIにアクセス
+      const response = await axios.get(`/api/twitter/count/tweets`);
+    },
+  }
   // watch: {
   //   $route: {
   //     async handler() {

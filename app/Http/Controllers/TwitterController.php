@@ -899,7 +899,7 @@ class TwitterController extends Controller
      *
      * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
      */
-    public function get_currency_tweet() {
+    public function count_tweets() {
       
       // リクエスト回数カウンター
       $request_count = 0;
