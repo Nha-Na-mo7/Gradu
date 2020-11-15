@@ -45,10 +45,10 @@ class Kernel extends ConsoleKernel
       // =====================
       // 自動フォロー
       // =====================
-      // APIのフォロー制限にかからないようにフォローインターバルを調整(15分に4人までとすることで調整済み)
-      // 15分ごとに起動する。
+      // APIのフォロー制限にかからないようにフォローインターバルを調整(30分にフォローは5人まで)
+      // 30分ごとに起動する。
       $schedule->command('command:autofollow')
-          ->everyFifteenMinutes()
+          ->everyThirtyMinutes()
           ->withoutOverlapping();
       
       

@@ -508,8 +508,9 @@ class TwitterController extends Controller
      *
      * API制限について
      * 現行のTwitterAPIは 400/1day、15/15minの制限がある。
-     * 15分ごとに実行するバッチなので一度に15人フォローさせてもいいが、ユーザー側も手動フォローなどしてAPI規制にかかりやすくなっても困るため、1日の最大人数に応じた処理で行う。
-     * 15分に4人ペース → 384人/1dayペースでフォロー可能
+     * 30分ごとに実行するバッチなので一度にフォローさせてもいいが、ユーザー側も手動フォローなどしてAPI規制にかかりやすくなっても困るため、1日の最大人数に応じた処理で行う。
+     * ユーザーが手動でフォローすることを考えると、ギリギリラインでフォローさせるとユーザーにAPI制限がかかり利便性に難が出る場合がある。
+     * 30分に5人ペース → 240人/1dayペースでフォロー可能
      */
     public function auto_follow() {
       Log::debug('====================================');
@@ -600,7 +601,7 @@ class TwitterController extends Controller
           }
           
           // ---------------------------------------------------------------------
-          // ⑥ 未フォローリストをforeachで回し、1人ずつフォローを飛ばす。1度の処理で最大4人まで。
+          // ⑥ 未フォローリストをforeachで回し、1人ずつフォローを飛ばす。1度の処理で最大5人まで。
           // ---------------------------------------------------------------------
           // TwitterAPI用のインスタンス作成
           $connection = $this->connection_instanse_users($token, $token_secret);
@@ -610,13 +611,13 @@ class TwitterController extends Controller
           
           Log::debug('ここから未フォローリストから最大4人をフォローする処理に入ります。');
           foreach ($target_account_ids as $target_account_id) {
-            // 1度の処理で4人までのフォローをするので、5回目の処理が始まっていたらbreakする
+            // 1度の処理で5人までのフォローをするので、6回目の処理が始まっていたらbreakする
             // ここに判定を書く理由は、後続でフォロー時にAPIリクエストエラーが起きた時でも対応できるようにするため。
             $roop_count++;
             Log::debug('▼▼▼▼▼'.$user->name.'さんの'.$roop_count.'回目のループフォローリクエスト処理です。');
             
             // ループカウントチェック
-            if ($roop_count > 4) {
+            if ($roop_count > 5) {
               Log::debug($roop_count.'回目の処理はAPI制限対策で行いません。breakします。');
               break;
             }
@@ -647,8 +648,6 @@ class TwitterController extends Controller
             if ($connection->getLastHttpCode() === 200) {
               Log::debug('followsテーブルにフォローしたIDを登録します。');
               $this->add_table_follows($user_twitter_account_id, $target_account_id);
-              // スパム対策で15/15minも兼ねて60秒待機させる
-              sleep(60);
               Log::debug($roop_count.'回目のループ処理が完了しました。続投します。▲▲▲▲▲');
             } else {
               // 何らかのリクエストエラーが起きた時は、処理中のユーザーの処理を中断する
@@ -905,8 +904,12 @@ class TwitterController extends Controller
      */
     // public function count_tweets($search_type) {
     public function count_tweets() {
+      Log::debug('==============================================');
+      Log::debug('TwitterController.count_tweets 銘柄別ツイート数取得');
+      Log::debug('==============================================');
+      
       // TODO テスト用。
-      $search_type = 0;
+      $search_type = 2;
       
       // リクエスト回数カウンター
       $request_count = 0;
@@ -923,15 +926,15 @@ class TwitterController extends Controller
       Log::debug('遡って取得する時間を決めます。');
       switch ($search_type){
         case 0:
-          Log::debug('hourなので、1時間前の時刻を取得します。');
+          Log::debug('$search_type :'.$search_type.'(= hour)です。1時間前の時刻を取得します。');
           $since_date = $now->subHour();
           break;
         case 1:
-          Log::debug('dayなので、1日前の時刻を取得します。');
+          Log::debug('$search_type :'.$search_type.'(= day)です。1日前の時刻を取得します。');
           $since_date = $now->subDay();
           break;
         case 2:
-          Log::debug('weekなので、7日前の時刻を取得します。');
+          Log::debug('$search_type :'.$search_type.'(= week)です。7日前の時刻を取得します。');
           $since_date = $now->subWeek();
           break;
       }
@@ -995,8 +998,12 @@ class TwitterController extends Controller
         );
         
         if($request_count > self::SEARCH_TWEETS_LIMIT) {
-          Log::debug('API制限を超えています。');
+          Log::debug('API制限を超えています。待機');
           // TODO breakでは途中中断の恐れがあるので、頃合いを見て再開を。
+  
+          // API制限は15分で解除されるので、15分待機する。
+          sleep(60 * 15);
+          Log::debug('待機が完了しました、再開します');
           break;
         }
         
@@ -1032,7 +1039,8 @@ class TwitterController extends Controller
             if($result_tweets['errors'][0]['code'] === 88) {
               Log::debug('API制限です。15分待機したのち、同じ条件で再検索を行います。');
               // API制限は15分で解除されるので、15分待機する。
-              sleep(60 * self::SEARCH_TWEETS_LIMIT);
+              sleep(60 * 15);
+              Log::debug('待機が完了しました、再開します');
               // 待機後、リクエストカウントを0に戻す
               $request_count = 0;
               // ラベルへ戻り同じ条件で検索を再開する
