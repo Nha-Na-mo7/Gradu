@@ -17,6 +17,7 @@ class CreateTweetCountDaysTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('brand_id')->unsigned()->comment('通貨ID');
             $table->integer('tweet_count')->unsigned()->comment('取得時点でのツイート数');
+            $table->boolean('complete_flg')->default(false)->comment('集計が完了したか(途中中断されていないか)');
             $table->timestamps();
         
             //外部キーでtwitter_accountsのaccount_idと紐付け。
@@ -25,7 +26,7 @@ class CreateTweetCountDaysTable extends Migration
                 ->references('id')
                 ->on('brands')
                 ->onDelete('cascade');
-      });
+        });
     }
 
     /**

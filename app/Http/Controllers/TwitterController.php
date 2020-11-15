@@ -1149,7 +1149,7 @@ class TwitterController extends Controller
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
     // 引数は、ユーザーのアクセストークン と アクセストークンシークレットの2つ
-    public function connection_instanse_users($token, $token_secret)
+    private function connection_instanse_users($token, $token_secret)
     {
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
@@ -1165,7 +1165,7 @@ class TwitterController extends Controller
     // =======================================
     // アプリケーションによるコネクションインスタンスの作成
     // =======================================
-    public function connection_instanse_app()
+    private function connection_instanse_app()
     {
       $consumer_key = config('services.twitter')['client_id'];
       $consumer_secret = config('services.twitter')['client_secret'];
@@ -1180,7 +1180,7 @@ class TwitterController extends Controller
     // ========================================================
     // ベアラートークンを取得してアプリケーション認証用のインスタンスを作成
     // ========================================================
-    public function connection_instanse_OAuth2()
+    private function connection_instanse_OAuth2()
     {
       $connection = $this->connection_instanse_app();
       
