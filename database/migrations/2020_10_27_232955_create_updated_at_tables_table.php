@@ -16,6 +16,7 @@ class CreateUpdatedAtTablesTable extends Migration
         Schema::create('updated_at_tables', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('table_name')->unique()->comment('参照するテーブル名');;
+            $table->boolean('complete_flg');
             $table->timestamps();
         });
     }

@@ -21,24 +21,28 @@ class UpdatedAtTableSeeder extends Seeder
             [
               // Twitterアカウント検索
                 'table_name' => 'twitter_accounts',
+                'complete_flg' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
               // 仮想通貨ツイート数(1時間)
-                'table_name' => 'trend_currency_1h',
+                'table_name' => 'tweet_count_hours',
+                'complete_flg' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
               // 仮想通貨ツイート数(24時間)
-                'table_name' => 'trend_currency_24h',
+                'table_name' => 'tweet_count_days',
+                'complete_flg' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
             [
               // 仮想通貨ツイート数(7日間)
-                'table_name' => 'trend_currency_7d',
+                'table_name' => 'tweet_count_weeks',
+                'complete_flg' => false,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
