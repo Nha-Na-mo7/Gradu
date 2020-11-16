@@ -1241,20 +1241,23 @@ class TwitterController extends Controller
         if($search_type === 0) {
           // API制限で中断された場合
           if($limit_flg) {
-            Log::debug('この通貨は中断されました。next_resultsを記録しておきます。');
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date, false, $next_results);
+            Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+            break;
           }else{
             Log::debug('コンプリートしていますので完了時刻を挿入します。');
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date);
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format);
           }
         // 時間・日・週全てのテーブルを更新
         }else{
           if($limit_flg) {
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date, false, $next_results);
+            Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+            break;
           }
-          $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date);
-          $this->insert_tweet_count_table('day', $brand_id, $tweet_count, $until_date);
-          $this->insert_tweet_count_table('week', $brand_id, $tweet_count, $until_date);
+          $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format);
+          $this->insert_tweet_count_table('day', $brand_id, $tweet_count, $until_date_insert_db_format);
+          $this->insert_tweet_count_table('week', $brand_id, $tweet_count, $until_date_insert_db_format);
         }
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
@@ -1282,7 +1285,7 @@ class TwitterController extends Controller
       Log::debug('全件検索完了・complete_flgがtrueのテーブルも存在しません。updated_at_tablesを更新します。');
       $Updated_tweet_count->fill([
           'complete_flg' => true,
-          'updated_at' => $now
+          'updated_at' => $until_date_insert_db_format
       ])->save();
       
       Log::debug('===========================================================');
