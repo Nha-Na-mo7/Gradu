@@ -53,8 +53,8 @@ class TwitterController extends Controller
     // twitterAPIが15分の間にフォローできる最大数。
     const MIN_LIMIT_FOLLOW = 15;
     
-    // search/tweetsAPIが15分間の間に検索できる最大数
-    const SEARCH_TWEETS_LIMIT = 450;
+    // search/tweetsAPIが15分間の間に検索できる最大数。誤差でAPI制限に
+    const SEARCH_TWEETS_LIMIT = 440;
     
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
@@ -911,7 +911,7 @@ class TwitterController extends Controller
       
       // searchType 0:1時間以内のみ 1:過去7日間全てに検索をかける
       // TODO テスト用。
-      $search_type = 0;
+      $search_type = 1;
       
       // 検索再開フラグ
       $resume_flg = false;
@@ -1038,17 +1038,21 @@ class TwitterController extends Controller
   
           // 続きからの場合
           if($resume_flg) {
-            $tweetCountModel = TweetCountWeek::where('complete_flg', false)->first();
+            $tweetCountModel_week = TweetCountWeek::where('complete_flg', false)->first();
+            $tweetCountModel_day = TweetCountDay::where('complete_flg', false)->first();
+            $tweetCountModel = TweetCountHour::where('complete_flg', false)->first();
             // 更新途中の銘柄IDを取得する
-            $restarting_brand_id = $tweetCountModel->brand_id;
+            $restarting_brand_id = $tweetCountModel_week->brand_id;
             // 途中までのカウントを取得する
-            $tweet_count = $tweetCountModel->tweet_count;
+            $tweet_count = $tweetCountModel_week->tweet_count;
+            $tweet_count_day = $tweetCountModel_day->tweet_count;
+            $tweet_count_week = $tweetCountModel->tweet_count;
             // type:1なので7日前の時刻を取得する
             $since_date = $final_updated->subWeek();
             // 次のパラメータを取得する
-            $next_results = $tweetCountModel->next_results;
-            $next_results = preg_replace('/^\?/', '', $next_results);
-            Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
+            $next_results = $tweetCountModel_week->next_results;
+            // $next_results = preg_replace('/^\?/', '', $next_results);
+            // Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
           }
           break;
       }
@@ -1106,6 +1110,8 @@ class TwitterController extends Controller
         $brand_id++;
         // 取得できたツイートの総数変数の初期化
         $tweet_count = 0;
+        $tweet_count_day = 0;
+        $tweet_count_week = 0;
         
         
         // 現在の検索中の通貨IDと、途中まで実施済みの通貨IDを比較
@@ -1137,7 +1143,7 @@ class TwitterController extends Controller
         // ④ その検索ワードの全件検索し終える、
         //    またはAPI制限上限に到達するまでループしながら検索をかける
         // ---------------------------------------------------
-        for ($i = 0; $i < self::SEARCH_TWEETS_LIMIT; $i++) {
+        for (;$request_count < self::SEARCH_TWEETS_LIMIT;) {
 
           Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
 
@@ -1159,12 +1165,19 @@ class TwitterController extends Controller
             Log::debug('返却された配列内にerrors項目が存在します。内容:'.print_r($result_tweets, true));
             
             // API制限の場合(エラーコード88)
+            // 想定外のトラブルでAPI制限をオーバーした時も考慮する
             if($result_tweets['errors'][0]['code'] === 88) {
               Log::debug('code = 88、API制限です。');
             }
             
             $limit_flg = true;
             break;
+          }
+  
+  
+          // エラーが出ていなくても制限回数MAXに到達したら、$limit_flgをtrueにしておく
+          if($request_count == self::SEARCH_TWEETS_LIMIT) {
+            $limit_flg = true;
           }
           // ---------------------------------------------
           // ⑤ 取得ツイートの総数をカウントする
@@ -1178,17 +1191,19 @@ class TwitterController extends Controller
               // TODO strtotimeをCarbonに
               // ツイートの投稿時刻
               $at = strtotime($status['created_at']);
+              // Log::debug('$at:'.$at);
+              // Log::debug('$subWeek:'.strtotime($subWeek));
               
               // 各時間ごとのツイート回数をカウントしていく
-              if($at >= $subWeek) {
+              if($at >= strtotime($subWeek)) {
                 $tweet_count_week++;
               }
               
-              if ($at >= $subDay) {
+              if ($at >= strtotime($subDay)) {
                 $tweet_count_day++;
               }
               
-              if ($at >= $subHour) {
+              if ($at >= strtotime($subHour)) {
                 $tweet_count++;
               }
               
@@ -1224,15 +1239,15 @@ class TwitterController extends Controller
         }
         
         
-        
-        
-        
-        
         // ----------------
         // ⑧ DB登録処理
         // ----------------
         Log::debug('for文ループが終了しました。取得した'.$search_word.'のツイート総数をDBに登録します。');
-        Log::debug($search_word.'の取得ツイート総数は'.$tweet_count.'件でした。');
+        if($search_type === 0){
+          Log::debug($search_word.'の取得ツイート総数は'.$tweet_count.'件でした。');
+        }else{
+          Log::debug($search_word.'の取得ツイート総数は、1時間:'.$tweet_count.' 1日:'.$tweet_count_day.' 1週間:'.$tweet_count_week);
+        }
   
         // DBに登録する
         // 引数の検索条件によって、登録するテーブルが変わる
@@ -1242,7 +1257,8 @@ class TwitterController extends Controller
           // API制限で中断された場合
           if($limit_flg) {
             Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+            Log::debug($params['next_results']);
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $params['next_results']);
             break;
           }else{
             Log::debug('コンプリートしていますので完了時刻を挿入します。');
@@ -1252,12 +1268,14 @@ class TwitterController extends Controller
         }else{
           if($limit_flg) {
             Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $params['next_results']);
+            $this->insert_tweet_count_table('day', $brand_id, $tweet_count_day, $until_date_insert_db_format, false, $params['next_results']);
+            $this->insert_tweet_count_table('week', $brand_id, $tweet_count_week, $until_date_insert_db_format, false, $params['next_results']);
             break;
           }
           $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format);
-          $this->insert_tweet_count_table('day', $brand_id, $tweet_count, $until_date_insert_db_format);
-          $this->insert_tweet_count_table('week', $brand_id, $tweet_count, $until_date_insert_db_format);
+          $this->insert_tweet_count_table('day', $brand_id, $tweet_count_day, $until_date_insert_db_format);
+          $this->insert_tweet_count_table('week', $brand_id, $tweet_count_week, $until_date_insert_db_format);
         }
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
