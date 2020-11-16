@@ -929,6 +929,8 @@ class TwitterController extends Controller
       $since_date = '';
       // until(検索を開始した時点での現在時刻。)
       $until_date = '';
+      // 次ページ用のパラメータ
+      $next_results = '';
       
       // --------------------------------------------------
       // ❶ 現在の日付時刻でレコードがあるかを呼び出す
@@ -1022,8 +1024,8 @@ class TwitterController extends Controller
             $since_date = $final_updated->subHour();
             // 検索再開地点のnext_resultsパラメータを取得する
             $next_results = $tweetCountModel->next_results;
-            $next_results = preg_replace('/^\?/', '', $next_results);
-            Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
+            // $next_results = preg_replace('/^\?/', '', $next_results);
+            // Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
           }
           
           break;
@@ -1177,6 +1179,7 @@ class TwitterController extends Controller
   
           // エラーが出ていなくても制限回数MAXに到達したら、$limit_flgをtrueにしておく
           if($request_count == self::SEARCH_TWEETS_LIMIT) {
+            Log::debug('制限回数MAXに到達したので$limit_flgをtrueにします。この後の処理が完了し次第本時間のスケジューラは終了です');
             $limit_flg = true;
           }
           // ---------------------------------------------
@@ -1258,7 +1261,7 @@ class TwitterController extends Controller
           if($limit_flg) {
             Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
             Log::debug($params['next_results']);
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $params['next_results']);
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
             break;
           }else{
             Log::debug('コンプリートしていますので完了時刻を挿入します。');
@@ -1268,9 +1271,9 @@ class TwitterController extends Controller
         }else{
           if($limit_flg) {
             Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $params['next_results']);
-            $this->insert_tweet_count_table('day', $brand_id, $tweet_count_day, $until_date_insert_db_format, false, $params['next_results']);
-            $this->insert_tweet_count_table('week', $brand_id, $tweet_count_week, $until_date_insert_db_format, false, $params['next_results']);
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+            $this->insert_tweet_count_table('day', $brand_id, $tweet_count_day, $until_date_insert_db_format, false, $next_results);
+            $this->insert_tweet_count_table('week', $brand_id, $tweet_count_week, $until_date_insert_db_format, false, $next_results);
             break;
           }
           $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format);
@@ -1295,17 +1298,16 @@ class TwitterController extends Controller
         Log::debug('中断時brand_id:'.$complete_check->brand_id);
         Log::debug('complete_flg:'.$complete_check->complete_flg);
         Log::debug('next_results:'.$complete_check->next_results);
-        exit();
+      }else{
+        // 全ての検索が完了している場合、complete_flgをtrueにする。
+        Log::debug('全件検索完了・complete_flgがtrueのテーブルも存在しません。updated_at_tablesを更新します。');
+        $Updated_tweet_count->fill([
+            'complete_flg' => true,
+            'updated_at' => $until_date_insert_db_format
+        ])->save();
       }
-      
-      // 全ての検索が完了している場合、complete_flgをtrueにする。
-      //
-      Log::debug('全件検索完了・complete_flgがtrueのテーブルも存在しません。updated_at_tablesを更新します。');
-      $Updated_tweet_count->fill([
-          'complete_flg' => true,
-          'updated_at' => $until_date_insert_db_format
-      ])->save();
-      
+  
+  
       Log::debug('===========================================================');
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('===========================================================');
