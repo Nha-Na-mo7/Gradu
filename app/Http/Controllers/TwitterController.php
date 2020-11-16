@@ -319,6 +319,7 @@ class TwitterController extends Controller
         Log::debug('======================');
         Log::debug('アカウント検索を終了します');
         Log::debug('======================');
+        exit();
       }
     }
     
@@ -903,8 +904,8 @@ class TwitterController extends Controller
      * 途中でAPI制限にかかった場合、15分の待機をした上で同条件でもう一度検索を開始する。
      * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
      */
-    // public function count_tweets($search_type) {
-    public function count_tweets() {
+    // public function count_tweets($search_type, $sub_days = 1) {
+    public function count_tweets($sub_days = 7) {
       Log::debug('==============================================');
       Log::debug('TwitterController.count_tweets 銘柄別ツイート数取得');
       Log::debug('==============================================');
@@ -963,7 +964,8 @@ class TwitterController extends Controller
           break;
         case 1:
           // テーブル検索用、その日の集計が完了しているかの判定なので検索は日付だけでOK
-          $search_time = $now->format('Y-m-d');
+          $sub_now = $now->subDays($sub_days - 1);
+          $search_time = $sub_now->format('Y-m-d');
           Log::debug('$search_time:'.$search_time);
           // 日テーブルを確認する。%を付与してLIKE検索をする。
           $Updated_tweet_count = UpdatedAtTable::where('table_name', 'tweet_count_days')
@@ -1045,9 +1047,10 @@ class TwitterController extends Controller
           break;
         case 1:
           Log::debug('$search_type :'.$search_type.'(= day)です。前日の00:00~00:00までの時刻を取得します。');
-          // 1日前の時刻も取得する
-          $until_date = CarbonImmutable::today(); //2020-10-02 00:00:00
-          $since_date = CarbonImmutable::yesterday(); // 2020-10-01 00:00:00
+          // n日前の時刻を取得する 例えば$sub_daysが2なら...
+          $today = CarbonImmutable::today(); // 2020-10-03 00:00:00
+          $until_date = $today->subDays($sub_days - 1);//2020-10-02 00:00:00
+          $since_date = $today->subDays($sub_days); // 2020-10-01 00:00:00
   
           // 検索用・DB用にフォーマットを修正
           $until_date_insert_db_format = $until_date->format('Y-m-d H:i:s'); //2020-10-02 00:00:00

@@ -83,7 +83,7 @@ export default {
     async twitter_count_tweets() {
       console.log('ツイート数集計体験')
       // APIにアクセス
-      const response = await axios.get(`/api/twitter/count/tweets`);
+      await axios.get(`/api/twitter/count/tweets`);
     },
   }
   // watch: {

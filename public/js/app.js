@@ -4605,7 +4605,6 @@ var PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
     // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
     twitter_count_tweets: function twitter_count_tweets() {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var response;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -4616,9 +4615,6 @@ var PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
                 return axios.get("/api/twitter/count/tweets");
 
               case 3:
-                response = _context.sent;
-
-              case 4:
               case "end":
                 return _context.stop();
             }
