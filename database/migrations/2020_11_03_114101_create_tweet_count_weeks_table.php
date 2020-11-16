@@ -18,6 +18,7 @@ class CreateTweetCountWeeksTable extends Migration
             $table->bigInteger('brand_id')->unsigned()->comment('通貨ID');
             $table->integer('tweet_count')->unsigned()->comment('取得時点でのツイート数');
             $table->boolean('complete_flg')->default(false)->comment('集計が完了したか(途中中断されていないか)');
+            $table->string('next_results')->nullable()->comment('アカウント検索再開時における設定パラメータ');
             $table->timestamps();
       
             //外部キーでtwitter_accountsのaccount_idと紐付け。

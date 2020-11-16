@@ -11,6 +11,8 @@ class TweetCountDay extends Model
         'brand_id',
         'tweet_count',
         'updated_at',
+        'complete_flg',
+        'next_results',
     ];
     
     /**

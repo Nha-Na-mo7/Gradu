@@ -10,7 +10,10 @@ class UpdatedAtTable extends Model
     // アカウント検索や人気通貨ツイート検索などの自動処理におけるテーブルごとの最終更新日時を記録します。
     // このテーブルはユーザー側から触れることはできません。
   
-    protected $fillable = [];
+    protected $fillable = [
+        'complete_flg',
+        'updated_at',
+    ];
   
     protected $visible = [
         'updated_at'

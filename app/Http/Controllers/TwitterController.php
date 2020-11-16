@@ -896,7 +896,7 @@ class TwitterController extends Controller
      * ③ ②の配列を回し、1つずつsearch/tweetsで検索をかける
      * ④ その検索ワードを全件検索し終える、またはAPI制限上限に到達するまでループしながら検索をかける
      * ⑤ 取得できたツイートの総数をカウントする
-     * ⑥ 100件以上のツイート情報がある場合、next_resultsにURLが指定されるので、これを使って再度検索を行う
+     * ⑥ 1度の検索で全件取得しきれなかった場合、レスポンスに付与されたnext_resultsのURLを使って再度検索を行う
      *
      * ⑦ ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
      *
@@ -911,53 +911,158 @@ class TwitterController extends Controller
       
       // searchType 0:1時間以内のみ 1:過去7日間全てに検索をかける
       // TODO テスト用。
-      $search_type = 1;
+      $search_type = 0;
+      
+      // 検索再開フラグ
+      $resume_flg = false;
+      
+      // API制限などで検索が続行できなくなった場合のフラグ
+      $limit_flg = false;
       
       // リクエスト回数カウンター
       $request_count = 0;
       // 検索ワード用の配列
       $search_words = [];
-  
-  
-      // --------------------------------------------------
-      // ❶ 現在の日付時刻でレコードがあるかを呼び出す
-      // --------------------------------------------------
-      // 現在時刻(API制限時に待機して再度検索した場合、取得ツイートにズレが生じる場合があるため)
-      $now = CarbonImmutable::now();
-      // テーブル検索用
-      $search_time = $now->format('Y-m-d H:/%');
-  
-  
-  
-  
-  
-  
-  
       // 通貨ID
       $brand_id = 0;
       // since(この時間以降のツイートに絞って検索をかける)
       $since_date = '';
+      // until(検索を開始した時点での現在時刻。)
+      $until_date = '';
       
-      // 引数の検索条件によって、sinceを分ける(1: -1hour、2: -1day、3: -7day)
+      // --------------------------------------------------
+      // ❶ 現在の日付時刻でレコードがあるかを呼び出す
+      // --------------------------------------------------
+      // 現在時刻
+      $now = CarbonImmutable::now();
+
+      // 処理が完了しているかを記録するテーブルのモデルインスタンス
+      $updated_tweet_count = '';
+  
+      // 検索開始時刻に既に更新が行われているかを確認する
+      switch ($search_type) {
+        case 0:
+          // テーブル検索用。
+          $search_time = $now->format('Y-m-d H:');
+          Log::debug('$search_time:'.$search_time);
+          // 時間テーブルを確認する。%を付与してLIKE検索をする。
+          $Updated_tweet_count = UpdatedAtTable::where('table_name', 'tweet_count_hours')
+              ->where('updated_at', 'LIKE', "$search_time%")
+              ->first();
+          break;
+        case 1:
+          // テーブル検索用、週単位での検索は日付だけでOK
+          $search_time = $now->format('Y-m-d');
+          Log::debug('$search_time:'.$search_time);
+          // 週テーブルを確認する。%を付与してLIKE検索をする。
+          $Updated_tweet_count = UpdatedAtTable::where('table_name', 'tweet_count_weeks')
+              ->where('updated_at', 'LIKE', "$search_time%")
+              ->first();
+          break;
+      }
+  
+      // 既にその時間のレコードが存在する場合、complete_flgをチェックし、その時間の更新が完了しているかを確認する
+      if(isset($Updated_tweet_count)) {
+        // 完了している場合
+        if($Updated_tweet_count->complete_flg){
+          Log::debug('この時間の集計は完了しています。');
+          Log::debug('▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲');
+          Log::debug('============================================');
+          exit();
+        // 中断されていた場合
+        }else{
+          Log::debug('集計の途中で中断されているようです。IDと集計開始時刻を取得し、再開します。');
+          // 再開フラグをtrueに
+          $resume_flg = true;
+          
+          // 最終更新日時
+          $final_updated = new CarbonImmutable($Updated_tweet_count->updated_at);
+          
+          // 最終更新日時を取得しStringで格納
+          $until_date = ($final_updated)->toDateTimeString();
+          $until_date_insert_db_format = $final_updated;
+          
+          Log::debug('$final_updated:'.$final_updated);
+          Log::debug('$until_date:'.$until_date);
+          
+          //
+          // TODO 再開用のメソッド管理へ...
+        }
+      }else{
+        Log::debug('集計が未実施です。');
+        // 1時間ごとならid2、7日ならid4のテーブルを参照する
+        $table_id = $search_type == 0 ? 2 : 4;
+        $Updated_tweet_count = UpdatedAtTable::where('id', $table_id)->first();
+        // その時間のcomplete_flgをfalseに変更
+        $Updated_tweet_count->fill([
+           'complete_flg' => false,
+        ])->save();
+      }
+      
+      
+      // 引数の検索条件によって、sinceを分ける(0: -1hour、1: -7day)
+      // さらに、対応するTweetCountモデルを取得する
       Log::debug('遡って取得する時間を決めます。');
       switch ($search_type){
         case 0:
           Log::debug('$search_type :'.$search_type.'(= hour)です。1時間前の時刻を取得します。');
-          $since_date = $now->subHour();
+          $subHour = $now->subHour();
+          $since_date = $subHour;
+          
+          // 続きからの場合
+          if($resume_flg) {
+            // TODO 更新されている項目がある場合、complete_flgは必ずfalseとなっている項目が存在するため、取得できる
+            $tweetCountModel = TweetCountHour::where('complete_flg', false)->first();
+  
+            // 更新途中の銘柄IDを取得する
+            $restarting_brand_id = $tweetCountModel->brand_id;
+            // 途中までのカウントを取得する
+            $tweet_count = $tweetCountModel->tweet_count;
+            // type:0なので1時間前の時刻を取得する
+            $since_date = $final_updated->subHour();
+            // 検索再開地点のnext_resultsパラメータを取得する
+            $next_results = $tweetCountModel->next_results;
+            $next_results = preg_replace('/^\?/', '', $next_results);
+            Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
+          }
+          
           break;
         case 1:
-          Log::debug('$search_type :'.$search_type.'(= day)です。1日前の時刻を取得します。');
-          $since_date = $now->subDay();
-          break;
-        case 2:
           Log::debug('$search_type :'.$search_type.'(= week)です。7日前の時刻を取得します。');
-          $since_date = $now->subWeek();
+          $subWeek = $now->subWeek();
+          // 集計用に1時間前、1日前の時刻も取得する
+          $subHour = $now->subHour();
+          $subDay = $now->subDay();
+          
+          $since_date = $subWeek;
+  
+          // 続きからの場合
+          if($resume_flg) {
+            $tweetCountModel = TweetCountWeek::where('complete_flg', false)->first();
+            // 更新途中の銘柄IDを取得する
+            $restarting_brand_id = $tweetCountModel->brand_id;
+            // 途中までのカウントを取得する
+            $tweet_count = $tweetCountModel->tweet_count;
+            // type:1なので7日前の時刻を取得する
+            $since_date = $final_updated->subWeek();
+            // 次のパラメータを取得する
+            $next_results = $tweetCountModel->next_results;
+            $next_results = preg_replace('/^\?/', '', $next_results);
+            Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
+          }
           break;
       }
       
-      // twitter検索パラメータ用のフォーマットに直す
-      $now_format = $now->format('Y-m-d_H:i:s_\J\S\T');
-      $since_date = $since_date->format('Y-m-d\_H:i:s_\J\S\T');
+      if(!$resume_flg){
+        // twitter検索パラメータ用のフォーマットに直す
+        $until_date = $now->format('Y-m-d_H:i:s_\J\S\T');
+        $until_date_insert_db_format = $now->format('Y-m-d H:i:s');
+        $since_date = $since_date->format('Y-m-d\_H:i:s_\J\S\T');
+      }
+      
+      
+      
+      
       
       // --------------------------------------------------
       // ① brandsテーブル(取り扱う通貨名情報)のレコードを全て取得する
@@ -996,32 +1101,37 @@ class TwitterController extends Controller
       // ③ 検索ワード配列を回し、パラメータを設定する
       // ---------------------------------------------
       foreach ($search_words as $search_word) {
-  
+        
         // インクリメントしてbrandsテーブルのidと対応
         $brand_id++;
-        
         // 取得できたツイートの総数変数の初期化
         $tweet_count = 0;
         
+        
+        // 現在の検索中の通貨IDと、途中まで実施済みの通貨IDを比較
+        if($resume_flg){
+          Log::debug('再開させる通貨ID:'.$restarting_brand_id.' 現在の検索中通貨ID:'.$brand_id);
+          if($restarting_brand_id >= $brand_id) {
+            Log::debug('既に検索終了済みの通貨です。次の通貨の検索に移行します。');
+            continue;
+          }
+        }
+        
         // パラメータを記述
         // sinceなどはparams内に記述してもループ中に消失するためベタ書き。
-        // 検索ワード(リプライを含まない、RTを含まない、$since_data以降、$now_format以前のツイート検索)
+        // 検索ワード(リプライを含まない、RTを含まない、$since_data以降、$until_date以前のツイート検索)
         $params = array(
             'lang' => 'ja', // 地域・日本に限定する
             'count' => '100', // 取得件数。search/tweetsのAPIが一度に取得可能な最大件数は100。
             'result_type' => 'recent', // 最新のツイート
-            'q' => $search_word . ' -filter:replies ' . 'exclude:retweets'.' since:'.$since_date. ' until:'.$now_format, // 検索ワード
+            'q' => $search_word . ' -filter:replies ' . 'exclude:retweets'.' since:'.$since_date. ' until:'.$until_date, // 検索ワード
         );
         
-        if($request_count > self::SEARCH_TWEETS_LIMIT) {
-          Log::debug('API制限を超えています。待機');
-          // TODO breakでは途中中断の恐れがあるので、頃合いを見て再開を。
-  
-          // API制限は15分で解除されるので、15分待機する。
-          sleep(60 * 15);
-          Log::debug('待機が完了しました、再開します');
-          break;
+        //続きからの時、next_paramsを追加する
+        if($resume_flg) {
+          parse_str($next_results, $params);
         }
+
         
         // ---------------------------------------------------
         // ④ その検索ワードの全件検索し終える、
@@ -1030,16 +1140,13 @@ class TwitterController extends Controller
         for ($i = 0; $i < self::SEARCH_TWEETS_LIMIT; $i++) {
 
           Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
-          
+
           // APIにリクエストを飛ばす
           // Log::debug('検索ワード:'.$params['q'].' / 日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
-          // ラベル
-          search_start:
           $search_tweets = $connection->get("search/tweets", $params);
     
           // 配列に変換
           $result_tweets = json_decode(json_encode($search_tweets), true);
-          
           // Log::debug('展開配列:'.print_r($result_tweets['search_metadata'], true));
           
           // リクエストの結果に関わらず、カウントを1進める
@@ -1047,24 +1154,16 @@ class TwitterController extends Controller
           Log::debug('現在のsearch/tweetsへのリクエスト回数: '.$request_count.' / '.self::SEARCH_TWEETS_LIMIT);
           
           // エラーが帰ってきた場合の処理
+          // TODO API制限になった時もDBにresultを格納しcomplete_flgをfalseとしなければならない
           if(isset($result_tweets['errors'])) {
-            Log::debug('返却された配列内にerrors項目が存在します。');
+            Log::debug('返却された配列内にerrors項目が存在します。内容:'.print_r($result_tweets, true));
             
-            // TODO ここで配列展開ができない
             // API制限の場合(エラーコード88)
             if($result_tweets['errors'][0]['code'] === 88) {
-              Log::debug('API制限です。15分待機したのち、同じ条件で再検索を行います。');
-              // API制限は15分で解除されるので、15分待機する。
-              sleep(60 * 15);
-              Log::debug('待機が完了しました、再開します');
-              // 待機後、リクエストカウントを0に戻す
-              $request_count = 0;
-              // ラベルへ戻り同じ条件で検索を再開する
-              goto search_start;
+              Log::debug('code = 88、API制限です。');
             }
             
-            // TODO 処理集団で良いか検討
-            Log::debug('API制限以外のエラーが発生しましたので処理を中断します: '.print_r($result_tweets, true));
+            $limit_flg = true;
             break;
           }
           // ---------------------------------------------
@@ -1072,25 +1171,46 @@ class TwitterController extends Controller
           // ---------------------------------------------
           // statusesにツイートのデータが格納されている = この要素数が取得できたツイート数
           Log::debug(count($result_tweets['statuses']).'件のツイートが取得できました。');
-          $tweet_count += count($result_tweets['statuses']);
           
-          Log::debug($params['q'].'のツイート取得件数の合計:'.$tweet_count);
+          // 7日間分の集計の場合、全てのstatusesを展開し、日付を確認してツイート総数をカウントする
+          if($search_type == 1) {
+            foreach ($result_tweets['statuses'] as $status) {
+              // TODO strtotimeをCarbonに
+              // ツイートの投稿時刻
+              $at = strtotime($status['created_at']);
+              
+              // 各時間ごとのツイート回数をカウントしていく
+              if($at >= $subWeek) {
+                $tweet_count_week++;
+              }
+              
+              if ($at >= $subDay) {
+                $tweet_count_day++;
+              }
+              
+              if ($at >= $subHour) {
+                $tweet_count++;
+              }
+              
+            }
+          }else{
+            // 過去1時間だけの場合はstatusesの総数が取得できたツイート数になるので展開の必要はない
+            $tweet_count += count($result_tweets['statuses']);
+            Log::debug($params['q'].'のツイート取得件数の合計:'.$tweet_count);
+          }
+  
           
           // -------------------------------------------------------------
-          // ⑥ 100件以上の検索結果がある場合、
+          // ⑥ 1度の検索で全件取得しきれなかった場合、
           // search_metadataのnext_resultにURLが指定されるのでこれをparamsに加えもう一度検索する
           // -------------------------------------------------------------
           // next_resultsがない場合
           if (empty($result_tweets['search_metadata']['next_results']) ){
             Log::debug('検索結果に次のページはありません。'.$search_word.'の検索は終了です。');
+            // TODO complete_flgをオンにする？
             break;
           }
-          
-          // next_resultsはあるのに取得件数が100件未満である場合(APIの仕様で、取得できてしまうことがあるので対策している)
-          if (count($result_tweets['statuses']) < 100) {
-            Log::debug('取得件数が100件未満でした。'.$search_word.'の検索は終了です。');
-            break;
-          }
+
     
           // next_resultsがある場合、先頭の"?"を取り除く
           $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
@@ -1099,8 +1219,15 @@ class TwitterController extends Controller
           // ⑦ 指定期間内の取得ツイートが無くなったら、for文ループを抜ける
           parse_str($next_results, $params);
           Log::debug('$paramsに$next_resultsの情報を追加しました。ループの先頭に戻ります。');
+          
+          $resume_flg = false;
         }
-  
+        
+        
+        
+        
+        
+        
         // ----------------
         // ⑧ DB登録処理
         // ----------------
@@ -1109,41 +1236,90 @@ class TwitterController extends Controller
   
         // DBに登録する
         // 引数の検索条件によって、登録するテーブルが変わる
-        $this->insert_tweet_count_table($search_type, $brand_id, $tweet_count, $now);
         
+        // 時間だけの更新
+        if($search_type === 0) {
+          // API制限で中断された場合
+          if($limit_flg) {
+            Log::debug('この通貨は中断されました。next_resultsを記録しておきます。');
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date, false, $next_results);
+          }else{
+            Log::debug('コンプリートしていますので完了時刻を挿入します。');
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date);
+          }
+        // 時間・日・週全てのテーブルを更新
+        }else{
+          if($limit_flg) {
+            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date, false, $next_results);
+          }
+          $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date);
+          $this->insert_tweet_count_table('day', $brand_id, $tweet_count, $until_date);
+          $this->insert_tweet_count_table('week', $brand_id, $tweet_count, $until_date);
+        }
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
+      
+      // ------------------------------------
+      // ⑨ その時間のツイート検索が完了したかの確認
+      // ------------------------------------
+      if($search_type === 0) {
+        $complete_check = TweetCountHour::where('complete_flg', false)->first();
+      }else{
+        $complete_check = TweetCountWeek::where('complete_flg', false)->first();
+      }
+  
+      // complete_flgがtrueのレコードが存在している時(検索未完了通貨がある)
+      if(isset($complete_check)) {
+        Log::debug('ツイート検索の途中で終了しました。次回続きから再開します。');
+        Log::debug('中断時brand_id:'.$complete_check->brand_id);
+        Log::debug('complete_flg:'.$complete_check->complete_flg);
+        Log::debug('next_results:'.$complete_check->next_results);
+        exit();
+      }
+      
+      // 全ての検索が完了している場合、complete_flgをtrueにする。
+      //
+      Log::debug('全件検索完了・complete_flgがtrueのテーブルも存在しません。updated_at_tablesを更新します。');
+      $Updated_tweet_count->fill([
+          'complete_flg' => true,
+          'updated_at' => $now
+      ])->save();
+      
       Log::debug('===========================================================');
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('===========================================================');
     }
     
+    
+    
     // =======================================
-    // ツイート数をDBに新規登録する
+    // ツイート数を指定したテーブルに新規登録する
     // =======================================
-    public function insert_tweet_count_table($table_type, $brand_id, $tweet_count, $updated) {
+    public function insert_tweet_count_table(string $table_type, $brand_id, $tweet_count, $updated, $complete_flg = true, $next_results = null) {
       Log::debug('=================================================================');
       Log::debug('TwitterController.insert_tweet_count_table 指定のDBにツイート数を登録');
       Log::debug('=================================================================');
       // 拡張を考え、過去の集計データも残しておく
+      Log::debug('$updated: '.$updated);
+      
       
       // モデルインスタンス用の変数初期化
       $model = '';
   
       // $table_typeに応じたtweet_countsテーブルを取得する
-      // $table_type... 0:hour 1:day 2:week
+      // $table_type... 0:hour 1:days 2:weeks
       Log::debug($table_type.'のtweet_countテーブルのモデルを取得します。');
       switch ($table_type){
-        case 0:
-          Log::debug('hourなので、tweet_count_hoursテーブルを取得します。');
+        case 'hour':
+          Log::debug('tweet_count_hoursテーブルインスタンスを取得します。');
           $model = new TweetCountHour();
           break;
-        case 1:
-          Log::debug('dayなので、tweet_count_daysテーブルを取得します。');
+        case 'day':
+          Log::debug('tweet_count_daysテーブルインスタンスを取得します。');
           $model = new TweetCountDay();
           break;
-        case 2:
-          Log::debug('weekなので、tweet_count_weeksテーブルを取得します。');
+        case 'week':
+          Log::debug('tweet_count_weeksテーブルインスタンスを取得します。');
           $model = new TweetCountWeek();
           break;
       }
@@ -1153,6 +1329,8 @@ class TwitterController extends Controller
       $model->fill([
           'brand_id' => $brand_id,
           'tweet_count' => $tweet_count,
+          'complete_flg' => $complete_flg,
+          'next_results' => $next_results,
           'updated_at' => $updated,
       ])->save();
     }
