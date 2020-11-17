@@ -57,7 +57,8 @@ Route::get('/twitter/index', 'TwitterController@search_accounts')->name('twitter
 // TODO バッチ用・Twitterオートフォローの動きを確認
 Route::get('/twitter/autofollow/start', 'TwitterController@auto_follow');
 // TODO バッチ用・通貨ツイート数取得の動きを確認
-Route::get('/twitter/count/tweets', 'TwitterController@start_tweet_count_days');
+// Route::get('/twitter/count/tweets', 'TwitterController@start_tweet_count_days');
+Route::get('/twitter/count/tweets', 'TwitterController@make_tweet_count_week');
 
 // アカウント一覧画面/テーブルからアカウント情報を取得
 Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');

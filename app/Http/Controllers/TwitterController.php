@@ -1349,7 +1349,7 @@ class TwitterController extends Controller
     // ======================================================
     // バッチ用・7日分の集計データを合算し、1週間分のデータとして保存する
     // ======================================================
-    public function make_week_tweet_count(){
+    public function make_tweet_count_week(){
       Log::debug('=======================================');
       Log::debug('定期 TwitterController.make_week_tweet_count');
       Log::debug('=======================================');
@@ -1361,7 +1361,9 @@ class TwitterController extends Controller
       $today_search_format = $today->format('Y-m-d');
       
       // 時間テーブルを確認し、本日の処理が完了していたらそのまま終了する
-      $Updated_tweet_count = UpdatedAtTable::where('table_name', 'tweet_count_weeks')
+      $updated_at_table_model = new UpdatedAtTable();
+      $Updated_tweet_count = $updated_at_table_model
+          ->where('id', 4)
           ->where('updated_at', 'LIKE', "$today_search_format%")
           ->first();
       
@@ -1403,6 +1405,11 @@ class TwitterController extends Controller
         Log::debug('カウント総数をDB登録します');
         $this->insert_tweet_count_table('week', $i + 1, $total, $today_db_format);
       }
+      $updated = $updated_at_table_model->find(4);
+      $updated->fill([
+          'complete_flg' => true,
+          'updated_at' => $today_db_format
+      ])->save();
       Log::debug('▲▲▲▲▲▲▲ 終了します。 bye ▲▲▲▲▲▲▲');
       Log::debug('===================================');
     }
