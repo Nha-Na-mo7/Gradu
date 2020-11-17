@@ -23,9 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/database/seeds/TweetCountDaysTestSeeder.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TweetCountDay.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TweetCountDay.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TweetCountHour.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TweetCountHour.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/TweetCountWeek.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/TweetCountWeek.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/UpdatedAtTable.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/UpdatedAtTable.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -329,7 +332,7 @@
       <workItem from="1604939769459" duration="493000" />
       <workItem from="1604940289326" duration="200076000" />
       <workItem from="1605581139392" duration="2313000" />
-      <workItem from="1605585604589" duration="8182000" />
+      <workItem from="1605585604589" duration="38497000" />
     </task>
     <servers />
   </component>
@@ -444,10 +447,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="750" y="249" key="SettingsEditor/0.23.1920.1177@0.23.1920.1177" timestamp="1603695895101" />
-    <state x="736" y="124" width="1184" height="1128" key="dock-window-1" timestamp="1604471137050">
+    <state x="423" y="124" width="1497" height="1128" key="dock-window-1" timestamp="1605604813625">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="736" y="124" width="1184" height="1128" key="dock-window-1/0.23.1920.1177@0.23.1920.1177" timestamp="1604471137050" />
+    <state x="423" y="124" width="1497" height="1128" key="dock-window-1/0.23.1920.1177@0.23.1920.1177" timestamp="1605604813625" />
     <state x="264" y="23" width="1436" height="1128" key="dock-window-2" timestamp="1603956207439">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>

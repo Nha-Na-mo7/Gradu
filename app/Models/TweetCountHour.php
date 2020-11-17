@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TweetCountHour extends Model
 {
+  
+    public $timestamps = false;
+    
     // fillable
     protected $fillable = [
         'brand_id',

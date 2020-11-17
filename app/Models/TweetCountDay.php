@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TweetCountDay extends Model
 {
+    public $timestamps = false;
+    
     // fillable
     protected $fillable = [
         'brand_id',
