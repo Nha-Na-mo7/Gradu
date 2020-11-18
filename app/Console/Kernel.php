@@ -6,6 +6,9 @@ use App\Console\Commands\AutoFollow;
 use App\Console\Commands\BatchTest;
 
 use App\Console\Commands\SearchAccountsCommand;
+use App\Console\Commands\SearchTweetCountDaysCommand;
+use App\Console\Commands\SearchTweetCountHoursCommand;
+use App\Console\Commands\SearchTweetCountWeeksCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -18,7 +21,10 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
       AutoFollow::class,
-      SearchAccountsCommand::class
+      SearchAccountsCommand::class,
+      SearchTweetCountDaysCommand::class,
+      SearchTweetCountHoursCommand::class,
+      SearchTweetCountWeeksCommand::class
     ];
 
     /**
@@ -55,22 +61,22 @@ class Kernel extends ConsoleKernel
       // ======================
       // 各通貨ごとのツイート数集計
       // ======================
-      // // TODO 実行時刻は暫定のもの。
-      // // TODO また1回の取得件数で引っかからないようにするために細かいスパンで集計することも検討
-      // // 1時間以内のツイート数
-      // $schedule->command('command:1Hour')
-      //     ->hourly()
-      //     ->withoutOverlapping();
-      //
-      // // 24時間以内のツイート数
-      // $schedule->command('command:24Hour')
-      //     ->dailyAt('2:30')
-      //     ->withoutOverlapping();
-      //
-      // // 7日以内のツイート数
-      // $schedule->command('command:7days')
-      //     ->dailyAt('1:30')
-      //     ->withoutOverlapping();
+      // 1時間以内のツイート数(1時間ごとに実施)
+      $schedule->command('command:count_hour')
+          ->hourly()
+          ->withoutOverlapping();
+      
+      // 1日以内のツイート数(最初に7日分まとめてカウントするので、こちらも1時間ごとに実行する)
+      // API制限対策で、1時間ごとの集計とは15分以上ずらして実行する(毎時20分に集計開始)
+      $schedule->command('command:count_day')
+          ->hourlyAt(20)
+          ->withoutOverlapping();
+      
+      // 1週間以内のツイート数(7日分を合算するメソッド)
+      // 稼働初日は7日分を集計し終わるであろう22時に、以降は1日の集計が終わるであろうAM3時に集計する
+      $schedule->command('command:count_week')
+          ->twiceDaily(3,22)
+          ->withoutOverlapping();
     }
 
     /**

@@ -13,7 +13,7 @@ class SearchTweetCountWeeksCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:tweet_count_weeks';
+    protected $signature = 'command:count_week';
 
     /**
      * The console command description.

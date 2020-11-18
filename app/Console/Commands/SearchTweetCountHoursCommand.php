@@ -13,7 +13,7 @@ class SearchTweetCountHoursCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:tweet_count_hours';
+    protected $signature = 'command:count_hour';
 
     /**
      * The console command description.
