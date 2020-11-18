@@ -1084,7 +1084,7 @@ class TwitterController extends Controller
           parse_str($next_results, $params);
         }
   
-        Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
+        // Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
   
         
         // ---------------------------------------------------
