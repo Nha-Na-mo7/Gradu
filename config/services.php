@@ -30,13 +30,19 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     
-    // Twitter用に追加。.envから情報を拾うように.envにも設定
+    // Twitter用に追加。.envから情報を拾うように設定
     'twitter' => [
         'client_id' => env('TWITTER_CLIENT_ID'),
         'client_secret' => env('TWITTER_CLIENT_SECRET'),
         'access_token' => env('TWITTER_ACCESS_TOKEN'),
         'access_token_secret' => env('TWITTER_ACCESS_TOKEN_SECRET'),
         'redirect' => env('CALLBACK_URL')
+    ],
+  
+    // coincheck用に追加。.envから情報を拾うように設定
+    'coincheck' => [
+        'access_key' => env('COINCHECK_ACCESS_KEY'),
+        'secret_key' => env('COINCHECK_SECRET_KEY')
     ],
 
 ];
