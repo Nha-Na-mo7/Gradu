@@ -59,6 +59,9 @@ class TwitterController extends Controller
     
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
+    const UPDATED_AT_TABLES__HOURS_ID = 2;
+    const UPDATED_AT_TABLES__DAYS_ID = 3;
+    const UPDATED_AT_TABLES__WEEKS_ID = 4;
     
     
     /*
@@ -772,12 +775,13 @@ class TwitterController extends Controller
     // ==============================================
     // Twitterユーザーが400/day制限にかかっていないかの判定
     // ==============================================
-    // 上記の15/15minの400/dayバージョン。
-    // フォロー処理の前に呼び出し、API制限がかかっていた場合などはfalseを返して処理に入らないようにする。
-    //
-    // ただし1日400件のフォローカウントを24時間に1度しかリセットしなかった場合、偏りが出る可能性がある。
-    // (例:00:00にフォローカウントリセットしても、21:00に400件、03:00に400件フォローのリクエストを送った場合に6時間で800リクエストがあるように見えてしまう)
-    // こうしたリスクを少しでも分散するために12時間ごとにフォローリクエスト200件までとして処理を行う。
+    /* 上記の15/15minの400/dayバージョン。
+     * フォロー処理の前に呼び出し、API制限がかかっていた場合などはfalseを返して処理に入らないようにする。
+     *
+     * ただし1日400件のフォローカウントを24時間に1度しかリセットしなかった場合、偏りが出る可能性がある。
+     * (例:00:00にフォローカウントリセットしても、21:00に400件、03:00に400件フォローのリクエストを送った場合に6時間で800リクエストがあるように見えてしまう)
+     * こうしたリスクを少しでも分散するために12時間ごとにフォローリクエスト200件までとして処理を行う。
+     */
     public function api_limit_check_day($account_id) {
       Log::debug('==========================================================');
       Log::debug('TwitterController.api_limit_check_day 400/1dayのフォロー制限確認');
@@ -853,47 +857,46 @@ class TwitterController extends Controller
     // 仮想通貨や通貨ごとのツイート数を集計する
     // ==============================================
     /* 処理の流れ
-     * ❶ 現在の日付でレコードがあるのかを呼び出す
-     * ① brandsテーブルのレコードを全て取得する
-     * ② 取得した各レコードの「銘柄名(アルファベット)」「カタカナ名」の2つを組み合わせた検索ワードを作成し、配列に1つずつ格納する
-     * ＞(例:'"BTC" OR "ビットコイン"')
+     * ⓪ 現在の日付でレコードがあるのかを呼び出す
+     * ① brandsテーブル(取り扱う通貨名)のレコードを全て取得し、銘柄名とカタカナ名を組み合わせた検索ワードを作り、配列に格納
+     * ＞(例:'BTC OR ビットコイン')
+     * ② インスタンスを作成し、検索ワード配列を回す
      *
-     * ③ ②の配列を回し、1つずつsearch/tweetsで検索をかける
+     * ③ 検索パラメータを設定
      * ④ その検索ワードを全件検索し終える、またはAPI制限上限に到達するまでループしながら検索をかける
      * ⑤ 取得できたツイートの総数をカウントする
      * ⑥ 1度の検索で全件取得しきれなかった場合、レスポンスに付与されたnext_resultsのURLを使って再度検索を行う
      *
-     * ⑦ ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
+     * ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
+     *
+     * ⑦ 検索で取得できた通貨のツイート数をDBに登録する
+     * ⑧ その時間のツイート検索が完了したかの確認をして、updated_at_tablesに更新時刻、complete_flgを記述し終了。
      *
      * 途中でAPI制限にかかった場合、15分の待機をした上で同条件でもう一度検索を開始する。
      * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
      */
-    public function count_tweets($search_type = 0) {
-    // public function count_tweets($sub_days = 2) {
+    public function count_tweets($search_type, $sub_times = 1) {
       Log::debug('==============================================');
       Log::debug('TwitterController.count_tweets 銘柄別ツイート数取得');
       Log::debug('==============================================');
+  
+      /*
+       * 1時間以内のツイート全て・24時間以内のツイート全てを集計する。
+       * 1週間以内のツイートに関しては過去1日以内のツイート×7日分の合計値で算出する
+       * ・APIの仕様で、7日間の期間指定をしたとしても取得できなくなる場合がある
+       * ・毎時毎時7日分のツイート検索を行うのはサービスとしても負荷が大きい
+       * ・一回でも7日分のツイート数さえ取得してしまえば、後は1日以内のツイートを算出すればよくなり負荷が軽くなる。余計なAPI制限にかかってエラーを起こす危険も減少する。
+       */
       
-      // 1時間以内のツイート全て・24時間以内のツイート全てを集計する。
-      // 1週間以内のツイートに関しては過去1日以内のツイート×7日分の合計値で算出する
-      // ・APIの仕様で、7日間の期間指定をしたとしても取得できなくなる場合がある
-      // ・毎時毎時7日分のツイート検索を行うのはサービスとしても負荷が大きい
-      // ・一回でも7日分のツイート数さえ取得してしまえば、後は1日以内のツイートを算出すればよくなり負荷が軽くなる。余計なAPI制限にかかってエラーを起こす危険も減少する。
       
       // searchType 0:1時間以内のみ 1:過去1日間に検索をかける
-      // TODO テスト用。
-      // $search_type = 1;
       
       // 検索再開フラグ
       $resume_flg = false;
-      
       // API制限などで検索が続行できなくなった場合のフラグ
       $limit_flg = false;
-      
       // リクエスト回数カウンター
       $request_count = 0;
-      // 検索ワード用の配列
-      $search_words = [];
       // 通貨ID
       $brand_id = 0;
       // since(この時間以降のツイートに絞って検索をかける)
@@ -902,80 +905,73 @@ class TwitterController extends Controller
       $until_date = '';
       // 次ページ用のパラメータ
       $next_results = '';
-  
+      // 検索で取得できた通貨ごとのツイートの総数
       $tweet_count = 0;
-      $tweet_count_day = 0;
+      
+      // updated_at_tablesのモデルに渡す引数
+      $table_id = ($search_type == 0) ? self::UPDATED_AT_TABLES__HOURS_ID : self::UPDATED_AT_TABLES__DAYS_ID;
   
   
       // --------------------------------------------------
-      // ❶ 現在の日付時刻でレコードがあるかを呼び出す
+      // ⓪ 現在の日付時刻でレコードがあるかを呼び出す
       // --------------------------------------------------
       // 現在時刻
       $now = CarbonImmutable::now();
-
-      // 処理が完了しているかを記録するテーブルのモデルインスタンス
-      $updated_tweet_count = '';
-  
+      
       // 検索開始時刻に既に更新が行われているかを確認する
       switch ($search_type) {
         case 0:
           $search_time = $now->format('Y-m-d H:');
-          Log::debug('$search_time:'.$search_time);
-          // 時間テーブルを確認する。%を付与してLIKE検索をする。
-          $Updated_tweet_count = UpdatedAtTable::where('table_name', 'tweet_count_hours')
-              ->where('updated_at', 'LIKE', "$search_time%")
-              ->first();
           break;
         case 1:
           // テーブル検索用、その日の集計が完了しているかの判定なので検索は日付だけでOK
-          $sub_now = $now->subDays($sub_days - 1);
+          $sub_now = $now->subDays($sub_times - 1);
           $search_time = $sub_now->format('Y-m-d');
-          Log::debug('$search_time:'.$search_time);
-          // 日テーブルを確認する。%を付与してLIKE検索をする。
-          $Updated_tweet_count = UpdatedAtTable::where('table_name', 'tweet_count_days')
-              ->where('updated_at', 'LIKE', "$search_time%")
-              ->first();
           break;
       }
+      
+      // テーブルを確認する。%を付与してLIKE検索をする。
+      Log::debug('$search_time:'.$search_time);
+      $Updated_tweet_count = UpdatedAtTable::where('id', $table_id)
+          ->where('updated_at', 'LIKE', "$search_time%")
+          ->first();
+      
   
       // 既にその時間のレコードが存在する場合、complete_flgをチェックし、その時間の更新が完了しているかを確認する
       if(isset($Updated_tweet_count)) {
+        
         // 完了している場合
         if($Updated_tweet_count->complete_flg){
           Log::debug('この時間の集計は完了しています。');
           Log::debug('▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲');
           Log::debug('============================================');
           exit();
+          
         // 中断されていた場合
         }else{
           Log::debug('集計の途中で中断されているようです。IDと集計開始時刻を取得し、再開します。');
           // 再開フラグをtrueに
           $resume_flg = true;
           
-          
-          // 最終更新日時を取得しStringで格納
-          $until_date = new CarbonImmutable($Updated_tweet_count->updated_at);
-          $until_date_insert_db_format = $until_date;
-          
-          Log::debug('$until_date:'.$until_date);
-          Log::debug('$until_date(=until_date_insert_db_format):'.$until_date);
-
+          // 検索終了後にDBに格納する更新時刻を元々入っていたレコードから取得しておく
+          $until_date_insert_db_format = new CarbonImmutable($Updated_tweet_count->updated_at);
         }
+        
       }else{
         Log::debug('集計が未実施です。');
-        // 1時間ごとならid2、1日ならid3のテーブルを参照する
-        $table_id = $search_type == 0 ? 2 : 3;
         $Updated_tweet_count = UpdatedAtTable::where('id', $table_id)->first();
+        
         // その時間のcomplete_flgをfalseに変更
         $Updated_tweet_count->fill([
            'complete_flg' => false,
         ])->save();
+        
       }
       
       
       // 引数の検索条件によって、sinceを分ける(0: -1hour、1: -1day)
       // さらに、対応するTweetCountモデルを取得する
-      Log::debug('遡って取得する時間を決めます。');
+      Log::debug('遡って取得する時間(since)を算出します。');
       switch ($search_type){
         case 0:
           Log::debug('$search_type :'.$search_type.'(= hour)です。1時間前の時刻を取得します。');
@@ -992,26 +988,25 @@ class TwitterController extends Controller
             $tweetCountModel = TweetCountHour::where('complete_flg', false)->first();
   
             // 更新途中の銘柄IDを取得する
-            $restarting_brand_id = $tweetCountModel->brand_id;
+            $resume_brand_id = $tweetCountModel->brand_id;
             // 途中までのカウントを取得する
             $tweet_count = $tweetCountModel->tweet_count;
             // type:0なので1時間前の時刻を取得する
             $since_date = (new CarbonImmutable($Updated_tweet_count->updated_at))->subHour();
             // 検索再開地点のnext_resultsパラメータを取得する
             $next_results = $tweetCountModel->next_results;
-            // $next_results = preg_replace('/^\?/', '', $next_results);
-            // Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
+
           }else{
             $until_date_insert_db_format = $now;
           }
-          
           break;
+          
         case 1:
           Log::debug('$search_type :'.$search_type.'(= day)です。前日の00:00~00:00までの時刻を取得します。');
-          // n日前の時刻を取得する 例えば$sub_daysが2なら...
+          // n日前の時刻を取得する 例えば$sub_timesが2なら...
           $today = CarbonImmutable::today(); // 2020-10-03 00:00:00
-          $until_date = $today->subDays($sub_days - 1);//2020-10-02 00:00:00
-          $since_date = $today->subDays($sub_days); // 2020-10-01 00:00:00
+          $until_date = $today->subDays($sub_times - 1);//2020-10-02 00:00:00
+          $since_date = $today->subDays($sub_times); // 2020-10-01 00:00:00
   
           // 検索用・DB用にフォーマットを修正
           $until_date = $until_date->format('Y-m-d_H:i:s_\J\S\T'); //2020-10-02_00:00:00_JST
@@ -1022,83 +1017,55 @@ class TwitterController extends Controller
             $tweetCountModel_day = TweetCountDay::where('complete_flg', false)->first();
             
             // 更新途中の銘柄IDを取得する
-            $restarting_brand_id = $tweetCountModel_day->brand_id;
+            $resume_brand_id = $tweetCountModel_day->brand_id;
             // 途中までのカウントを取得する
-            $tweet_count_day = $tweetCountModel_day->tweet_count;
-            // // type:1なので1日前の時刻を取得する
-            // $since_date = $final_updated->subDay();
+            $tweet_count = $tweetCountModel_day->tweet_count;
             // 次のパラメータを取得する
             $next_results = $tweetCountModel_day->next_results;
-            // $next_results = preg_replace('/^\?/', '', $next_results);
-            // Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
-            Log::debug('❶--$until_date_insert_db_format:'.$until_date_insert_db_format);
+
             
           }else{
-            $until_date_insert_db_format = $today->subDays($sub_days - 1); //2020-10-02 00:00:00
-  
-            Log::debug('1-c--$until_date_insert_db_format:'.$until_date_insert_db_format);
+            $until_date_insert_db_format = $today->subDays($sub_times - 1); //2020-10-02 00:00:00
           }
           break;
       }
       
-
       
-      // --------------------------------------------------
-      // ① brandsテーブル(取り扱う通貨名情報)のレコードを全て取得する
-      // --------------------------------------------------
-      Log::debug('brandsテーブルから全ての通貨レコードを取得します。');
-      $brandsController = new BrandController();
-      $all_brands = $brandsController->get_brands();
-  
-      // 万が一brandsテーブルが空だったとき(普通この処理に辿り着く事は無い)
-      if ($all_brands->isEmpty()) {
-        Log::debug('検索すべき通貨名が取得数0でした。seederを打ったか確認してください。');
+      // ----------------------------------------------------------------------------------------------------
+      // ① brandsテーブル(取り扱う通貨名)のレコードを全て取得し、銘柄名とカタカナ名を組み合わせた検索ワードを作り、配列に格納
+      // ----------------------------------------------------------------------------------------------------
+      $search_words = $this->make_brands_searchwords_array();
+      if($search_words === false){
         exit();
       }
       
-      // ----------------------------------------------------------------------
-      // ② 取得したレコードから、銘柄名とカタカナ名を組み合わせた検索ワードを作り、配列に格納
-      // ----------------------------------------------------------------------
-      foreach ($all_brands as $brand) {
-
-        // レコードから銘柄名、カタカナ名を取り出す
-        $name = $brand->name; // 銘柄名(例: BTC)
-        $realname = $brand->realname; // カタカナ名(例: ビットコイン)
-        
-        // 2つを組み合わせた検索ワードを作る
-        $search_word = $name.' OR '.$realname;
-        
-        // 検索ワード配列に格納する
-        $search_words[] = $search_word;
-      }
-      // Log::debug('検索ワード配列・これを回して1つずつ検索をかけます。'.print_r($search_words, true));
-      
+      // ------------------------------------
+      // ② インスタンスを作成し、検索ワード配列を回す
+      // ------------------------------------
       // アプリケーション認証インスタンス作成
       $connection = $this->connection_instanse_OAuth2();
       
-      // ---------------------------------------------
-      // ③ 検索ワード配列を回し、パラメータを設定する
-      // ---------------------------------------------
+      // 検索ワード配列回し開始
       foreach ($search_words as $search_word) {
-        
+        // --------------------------------------
+        // ③ パラメータを設定する
+        // --------------------------------------
         // インクリメントしてbrandsテーブルのidと対応
         $brand_id++;
         
+        // 対応する検索ワードが続きからでない場合はツイートカウントを初期化する
         if(!$resume_flg) {
-          // 取得できたツイートの総数変数の初期化
           $tweet_count = 0;
-          $tweet_count_day = 0;
         }
         
         // 現在の検索中の通貨IDと、途中まで実施済みの通貨IDを比較
         if($resume_flg){
-          Log::debug('再開させる通貨ID:'.$restarting_brand_id.' 現在の検索中通貨ID:'.$brand_id .'3--$until_date_insert_db_format:'.$until_date_insert_db_format);;
-          if($restarting_brand_id > $brand_id) {
+          Log::debug('再開させる通貨ID:'.$resume_brand_id.' 現在の検索中通貨ID:'.$brand_id);
+          if($resume_brand_id > $brand_id) {
             Log::debug('既に検索終了済みの通貨です。次の通貨の検索に移行します。');
             continue;
           }else{
-            Log::debug('ここから再開します。$tweet_count/$tweet_count_day :'.$tweet_count.' / '.$tweet_count_day);
-            Log::debug('3b--$until_date_insert_db_format:'.$until_date_insert_db_format);
+            Log::debug('この通貨の検索を再開します。$tweet_count :'.$tweet_count);
           }
         }
         
@@ -1116,6 +1083,9 @@ class TwitterController extends Controller
         if($resume_flg) {
           parse_str($next_results, $params);
         }
+  
+        Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
+  
         
         // ---------------------------------------------------
         // ④ その検索ワードの全件検索し終える、
@@ -1123,10 +1093,7 @@ class TwitterController extends Controller
         // ---------------------------------------------------
         for (;$request_count < self::SEARCH_TWEETS_LIMIT;) {
 
-          Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
-          Log::debug('4--$until_date_insert_db_format:'.$until_date_insert_db_format);
           // APIにリクエストを飛ばす
-          // Log::debug('検索ワード:'.$params['q'].' / 日時:'.$params['since'].'以降のツイートに絞って検索を行います。');
           $search_tweets = $connection->get("search/tweets", $params);
     
           // 配列に変換
@@ -1141,12 +1108,12 @@ class TwitterController extends Controller
           if(isset($result_tweets['errors'])) {
             Log::debug('返却された配列内にerrors項目が存在します。内容:'.print_r($result_tweets, true));
             
-            // API制限の場合(エラーコード88)
-            // 想定外のトラブルでAPI制限をオーバーした時も考慮する
+            // API制限の場合(エラーコード88)は知らせる
             if($result_tweets['errors'][0]['code'] === 88) {
               Log::debug('code = 88、API制限です。');
             }
             
+            // 検索が完了しなかった場合のフラグを立てる
             $limit_flg = true;
             break;
           }
@@ -1156,27 +1123,19 @@ class TwitterController extends Controller
             Log::debug('制限回数MAXに到達したので$limit_flgをtrueにします。この後の処理が完了し次第、本時間のスケジューラは終了です');
             $limit_flg = true;
           }
+          
           // ---------------------------------------------
           // ⑤ 取得ツイートの総数をカウントする
           // ---------------------------------------------
           // statusesにツイートのデータが格納されている = この要素数が取得できたツイート数
-          Log::debug(count($result_tweets['statuses']).'件のツイートが取得できました。');
+          $tweet_count += count($result_tweets['statuses']);
+          Log::debug($params['q'].'の結果、'.count($result_tweets['statuses']).'件のツイートが取得できました。');
           
-          // ツイート総数をカウントする
-          if($search_type) {
-            // 過去1日のstatusesの総数が取得できたツイート数
-            $tweet_count_day += count($result_tweets['statuses']);
-            Log::debug($params['q'].'のツイート取得件数の合計:'.$tweet_count_day);
-          }else{
-            // 過去1時間だけの場合はstatusesの総数が取得できたツイート数になる
-            $tweet_count += count($result_tweets['statuses']);
-            Log::debug($params['q'].'のツイート取得件数の合計:'.$tweet_count);
-          }
-  
-          Log::debug('5--$until_date_insert_db_format:'.$until_date_insert_db_format);
+          
           // -------------------------------------------------------------
           // ⑥ 1度の検索で全件取得しきれなかった場合、
           // search_metadataのnext_resultにURLが指定されるのでこれをparamsに加えもう一度検索する
+          // 指定期間内の取得ツイートが無くなったら、for文ループを抜ける。
           // -------------------------------------------------------------
           // next_resultsがない場合
           if (empty($result_tweets['search_metadata']['next_results']) ){
@@ -1187,88 +1146,81 @@ class TwitterController extends Controller
           // next_resultsがある場合、先頭の"?"を取り除く
           $next_results = preg_replace('/^\?/', '', $result_tweets['search_metadata']['next_results']);
           Log::debug('next_resultsから先頭の?を取り除きました。 next_results:'.$next_results);
+          
           // ?を取り除いたnext_resultsをパラメータに追加した上でループの頭に戻り、もう一度検索する
-          // ⑦ 指定期間内の取得ツイートが無くなったら、for文ループを抜ける
           parse_str($next_results, $params);
           Log::debug('$paramsに$next_resultsの情報を追加しました。ループの先頭に戻ります。');
   
-          Log::debug('7--$until_date_insert_db_format:'.$until_date_insert_db_format);
-          
+          // 再開フラグはfalseにする
           $resume_flg = false;
         }
         
-        // ----------------
-        // ⑧ DB登録処理
-        // ----------------
+        
+        // -------------------------------------
+        // ⑦ 検索した通貨のツイート数をDB登録する
+        // -------------------------------------
         Log::debug('for文ループが終了しました。取得した'.$search_word.'のツイート総数をDBに登録します。');
-        Log::debug('8--$until_date_insert_db_format:'.$until_date_insert_db_format);
-        if($search_type){
-          Log::debug($search_word.'の取得ツイート総数は、1日:'.$tweet_count_day);
-        }else{
-          Log::debug($search_word.'の取得ツイート総数は、1時間:'.$tweet_count);
+        Log::debug($search_word.'の取得ツイート総数は'.$tweet_count);
+
+        // hourかdayかによって、登録するテーブルが変わる
+        switch ($search_type){
+          case 0:
+            $count_table_name = 'hour';
+            break;
+          case 1 :
+            $count_table_name = 'day';
+            break;
         }
   
-        // DBに登録する
-        // 引数の検索条件によって、登録するテーブルが変わる
-
-        // 日付
-        if($search_type) {
-          if($limit_flg) {
-            Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
-            $this->insert_tweet_count_table('day', $brand_id, $tweet_count_day, $until_date_insert_db_format, false, $next_results);
-            break;
-          }
-          $this->insert_tweet_count_table('day', $brand_id, $tweet_count_day, $until_date_insert_db_format);
-          
-        // 時間のみ
+        // limitフラグが立っていれば、next_resultsの登録が済み次第終了する
+        if($limit_flg) {
+          Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
+          $this->insert_tweet_count_table($count_table_name, $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+          break;
         }else{
-          // API制限で中断された場合
-          if($limit_flg) {
-            Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
-            Log::debug($params['next_results']);
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
-            break;
-          }else{
-            Log::debug('コンプリートしていますので完了時刻を挿入します。');
-            Log::debug('8--$until_date_insert_db_format:'.$until_date_insert_db_format);
-            $this->insert_tweet_count_table('hour', $brand_id, $tweet_count, $until_date_insert_db_format);
-          }
+          Log::debug('コンプリートしていますので完了時刻を挿入します。');
+          $this->insert_tweet_count_table($count_table_name, $brand_id, $tweet_count, $until_date_insert_db_format);
         }
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
       
       // ------------------------------------
-      // ⑨ その時間のツイート検索が完了したかの確認
+      // ⑧ その時間のツイート検索が完了したかの確認
       // ------------------------------------
-      if($search_type) {
-        $complete_check = TweetCountDay::where('complete_flg', false)->first();
-      }else{
-        $complete_check = TweetCountHour::where('complete_flg', false)->first();
+      switch ($search_type){
+        case 0:
+          $complete_check = TweetCountHour::where('complete_flg', false)->first();
+          break;
+        case 1 :
+          $complete_check = TweetCountDay::where('complete_flg', false)->first();
+          break;
       }
-  
+      
       // complete_flgがtrueのレコードが存在している時(検索未完了通貨がある)
       if(isset($complete_check)) {
         Log::debug('ツイート検索の途中で終了しました。次回続きから再開します。');
         Log::debug('中断時brand_id:'.$complete_check->brand_id);
         Log::debug('complete_flg:'.$complete_check->complete_flg);
         Log::debug('next_results:'.$complete_check->next_results);
+        
         $Updated_tweet_count->fill([
             'complete_flg' => false,
             'updated_at' => $until_date_insert_db_format
-        ])->save(['timestamps' => false]);
+        ])->save();
+        
       }else{
         // 全ての検索が完了している場合、complete_flgをtrueにする。
         Log::debug('全件検索完了・complete_flgがtrueのテーブルも存在しません。updated_at_tablesを更新します。');
-        $until_date_insert_db_format->format('Y-m-d H:i:s');
         $Updated_tweet_count->fill([
             'complete_flg' => true,
             'updated_at' => $until_date_insert_db_format
-        ])->save(['timestamps' => false]);
+        ])->save();
       }
       Log::debug('===========================================================');
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 通貨ツイート検索を終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('===========================================================');
     }
+    
     
     // =======================================
     // ツイート数を指定したテーブルに新規登録する
@@ -1277,35 +1229,27 @@ class TwitterController extends Controller
       Log::debug('=================================================================');
       Log::debug('TwitterController.insert_tweet_count_table 指定のDBにツイート数を登録');
       Log::debug('=================================================================');
-      // 拡張を考え、過去の集計データも残しておく
-      Log::debug('$updated: '.$updated);
-      
+
       // $table_typeに応じたtweet_countsテーブルを取得する
-      // $table_type... 0:hour 1:days
-      Log::debug($table_type.'のtweet_countテーブルのモデルを取得します。');
+      // $table_type... 0:hour 1:days 2:weeks
       switch ($table_type){
         case 'hour':
           Log::debug('tweet_count_hoursテーブルインスタンスを取得します。complete_flがfalsのものがあれば代わりにそちらを取得します。');
-          // $model = new TweetCountHour();
           $model = TweetCountHour::firstOrNew(['complete_flg' => false]);
           break;
         case 'day':
           Log::debug('tweet_count_daysテーブルインスタンスを取得します。complete_flがfalsのものがあれば代わりにそちらを取得します。');
           Log::debug('$updated:'.$updated);
-          // $model = new TweetCountDay();
           $model = TweetCountDay::firstOrNew(['complete_flg' => false]);
           break;
         case 'week':
           Log::debug('tweet_count_weeksテーブルインスタンスを取得します。complete_flgがfalseのものがあれば代わりにそちらを取得します。');
-          // $model = new TweetCountWeek();
           $model = TweetCountWeek::firstOrNew(['complete_flg' => false]);
           break;
       }
       
       // 新しくデータを挿入する
       Log::debug('取得したモデルに新しくレコードを追加or更新します。');
-      Log::debug('$updated:'.$updated);
-  
       $model->fill([
           'brand_id' => $brand_id,
           'tweet_count' => $tweet_count,
@@ -1313,9 +1257,7 @@ class TwitterController extends Controller
           'next_results' => $next_results,
           'updated_at' => $updated,
       ])->save(['timestamps' => false,]);
-      
     }
-  
     
     // =======================================
     // バッチ用・(days)n日前のツイートをカウントし取得する
@@ -1433,7 +1375,40 @@ class TwitterController extends Controller
       Log::debug('===================================');
     }
     
-  
+    
+    // =======================================
+    // brandsテーブルの全通貨名を配列にして返却する
+    // =======================================
+    public function make_brands_searchwords_array(){
+      Log::debug('=============================');
+      Log::debug('make_brands_searchwords_array');
+      Log::debug('=============================');
+      Log::debug('brandsテーブルから全ての通貨レコードを取得します。');
+      $brandsController = new BrandController();
+      $all_brands = $brandsController->get_brands();
+      
+      // 万が一brandsテーブルが空だったとき(普通この処理に辿り着く事は無い)
+      if ($all_brands->isEmpty()) {
+        Log::debug('検索すべき通貨名が取得数0でした。seederを打ったか確認してください。');
+        return false;
+      }
+      
+      foreach ($all_brands as $brand) {
+        
+        // レコードから銘柄名、カタカナ名を取り出す
+        $name = $brand->name; // 銘柄名(例: BTC)
+        $realname = $brand->realname; // カタカナ名(例: ビットコイン)
+        
+        // 2つを組み合わせた検索ワードを作る
+        $search_word = $name.' OR '.$realname;
+        
+        // 検索ワード配列に格納する
+        $search_words[] = $search_word;
+      }
+      // Log::debug('検索ワード配列・これを回して1つずつ検索をかけます。'.print_r($search_words, true));
+      return $search_words;
+    }
+    
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
