@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Commands\AutoFollow;
 use App\Console\Commands\BatchTest;
 
+use App\Console\Commands\GetTransactionPriceCommand;
 use App\Console\Commands\SearchAccountsCommand;
 use App\Console\Commands\SearchTweetCountDaysCommand;
 use App\Console\Commands\SearchTweetCountHoursCommand;
@@ -21,6 +22,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
       AutoFollow::class,
+      GetTransactionPriceCommand::class,
       SearchAccountsCommand::class,
       SearchTweetCountDaysCommand::class,
       SearchTweetCountHoursCommand::class,
@@ -45,6 +47,16 @@ class Kernel extends ConsoleKernel
       // Twitterユーザーは深夜帯に活動するイメージ → 明け方の取得が一番新規ユーザーの取得が期待できるか
       $schedule->command('command:searchaccounts')
           ->dailyAt('5:20')
+          ->withoutOverlapping();
+      
+      
+      // ===========================
+      // 24時間の最高・最低取引価格の取得
+      // ===========================
+      // 1日に1回取得する。
+      // 現状BTCしか取得できない
+      $schedule->command('command:transaction_price')
+          ->daily()
           ->withoutOverlapping();
       
       

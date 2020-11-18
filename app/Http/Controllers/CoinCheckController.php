@@ -31,9 +31,9 @@ class CoinCheckController extends Controller
       $btc = $this->get_btc_ticker();
       
       // 最低取引価格
-      $price_min = $btc->low;
+      $price_min = $btc['low'];
       // 最高取引価格
-      $price_max = $btc->high;
+      $price_max = $btc['high'];
       
       Log::debug('最低取引価格: '.$price_min.' 最高取引価格:'.$price_max);
       $this->insert_price_to_db(self::BTC_ID, $price_min, $price_max);
@@ -72,6 +72,7 @@ class CoinCheckController extends Controller
     // ==========================
     private function insert_price_to_db($brand_id, $price_min, $price_max){
       Log::debug('DBに24時間の最高or最低取引価格を保存します。');
+      Log::debug('$brand_id/$min/max'. $brand_id.' '.$price_min.' '.$price_max);
       // モデルを作成しinsertする
       $coinchech_price = new CoincheckPrice();
       

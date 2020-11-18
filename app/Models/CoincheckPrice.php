@@ -17,10 +17,9 @@ class CoincheckPrice extends Model
     
     // fillable
     protected $fillable = [
-        'account_id',
-        'tweet_id_str',
-        'tweet_text',
-        'tweet_created_at',
+        'brand_id',
+        'price_min',
+        'price_max',
     ];
   
   
