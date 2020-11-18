@@ -61,15 +61,15 @@ class Kernel extends ConsoleKernel
       // ======================
       // 各通貨ごとのツイート数集計
       // ======================
-      // 1時間以内のツイート数(1時間ごとに実施)
+      // 1時間以内のツイート数(15分ごとに実施、多くても2回で集計完了する見込み)
       $schedule->command('command:count_hour')
-          ->hourly()
+          ->everyFifteenMinutes()
           ->withoutOverlapping();
       
       // 1日以内のツイート数(最初に7日分まとめてカウントするので、こちらも1時間ごとに実行する)
-      // API制限対策で、1時間ごとの集計とは15分以上ずらして実行する(毎時20分に集計開始)
+      // API制限対策で、1時間ごとの集計が終了しているであろう毎時45分に集計開始
       $schedule->command('command:count_day')
-          ->hourlyAt(20)
+          ->hourlyAt(45)
           ->withoutOverlapping();
       
       // 1週間以内のツイート数(7日分を合算するメソッド)
