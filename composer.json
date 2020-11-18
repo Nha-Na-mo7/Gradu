@@ -14,7 +14,8 @@
         "guzzlehttp/guzzle": "^7.1",
         "laravel/framework": "^6.18.35",
         "laravel/socialite": "^5.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "coincheck/coincheck": "1.1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
