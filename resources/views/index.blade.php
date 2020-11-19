@@ -6,15 +6,15 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ mix('js/all.js') }}" defer></script>
-    <script src="http://127.0.0.1:8000/livereload.js"></script>
+
+    <script src="{{ asset('js/bundle.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather|Roboto:400">
     <link rel="stylesheet" href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/sample.css') }}">
 </head>
 
 

@@ -1,6 +1,9 @@
 // Ajax通信用のAxiosライブラリの設定が記述されている、デフォルトのjsファイル
 import './bootstrap.js';
 
+// webpackでsassをコンパイルする用
+import '../sass/app.scss';
+
 import Vue from "vue";
 // ルーティングの定義
 import router from "./router.js";
@@ -8,6 +11,7 @@ import router from "./router.js";
 import store from "./store/index.js";
 // ルートコンポーネント
 import App from "./App.vue";
+
 
 
 // Vueインスタンスを作成。

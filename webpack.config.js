@@ -6,7 +6,6 @@ const path = require('path');
 
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const LiveReloadPlugin = require("webpack-livereload-plugin"); //browseSyncのようにオートリロードする
 
 // [定数] webpack の出力オプションを指定します
 // 'production' か 'development' を指定
@@ -23,18 +22,19 @@ module.exports = {
   // エントリポイントのapp.jsに@babel/polifillを取り込ませることで、promiseが使えるようになる。
   entry: ["@babel/polyfill", path.resolve(__dirname, 'resources/js/app.js')],
   output: {
-    path: path.resolve(__dirname, '/public/js'),
-    filename: 'app.js'
+    path: path.resolve(__dirname, 'public/js'),
+    filename: 'bundle.js'
   },
   module :{
     rules: [
       {
         // 拡張子が.css系の場合
         test: /\.(css|scss)$/,
+        exclude: /node_modules/,
         use:[
           // use配列の先頭に書かれたloaderが、最後に適用されるloaderとなる
   
-          // CSSファイルをjsとしてバンドルせず、外部に書き出す
+          // CSSファイルをjsとしてバンドルせず、外部に書き出す。style-loaderの代わり
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
@@ -43,12 +43,6 @@ module.exports = {
               url: false,
               sourceMap: enabledSourceMap,
               importLoaders: 2
-            }
-          },
-          {
-            loader: "sass-loader",
-            options: {
-              sourceMap: enabledSourceMap
             }
           },
           // PostCSSの設定(ベンダプレフィックスを付与する用)
@@ -66,6 +60,13 @@ module.exports = {
               },
             },
           },
+          // SASSの設定(一番最初に読み込む)
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: enabledSourceMap
+            }
+          },
         ],
       },
       {
@@ -76,7 +77,7 @@ module.exports = {
       {
         // 拡張子が.jsの場合
         test: /\.js$/,
-        use:[{
+        use:{
           // babelを利用する
           loader: 'babel-loader',
           // babelのオプションを指定する
@@ -86,7 +87,7 @@ module.exports = {
               '@babel/preset-env',
             ],
           },
-        }],
+        },
       },
       {
         // 画像もJSファイルにバンドルする
@@ -111,13 +112,16 @@ module.exports = {
       // CSSファイルを外出しにするプラグイン
       new MiniCssExtractPlugin({
         // jsファイルの出力先を基準にし、cssディレクトリに出す
-        filename: "../css/style.css",
+        filename: "../css/sample.css",
       }),
-      // BrowseSyncのように、webpackで監視しているファイルが変更された時オートリロードしてくれる
-      new LiveReloadPlugin(),
   ],
   //ES5(IE11など)向けの設定
   target: ["web", "es5"],
+  watch: true,
+  watchOptions: {
+    ignored: /node_modules/
+  }
 };
 
-// 以上設定したら、npm run build
+// TODO 11/19時点での設定、リローダーもつけたいところ
+// 以上設定したら、npm run bundle
