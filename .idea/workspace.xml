@@ -23,8 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/index.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,7 +336,12 @@
       <workItem from="1605585604589" duration="48841000" />
       <workItem from="1605671811107" duration="649000" />
       <workItem from="1605672472440" duration="10754000" />
-      <workItem from="1605686180264" duration="1788000" />
+      <workItem from="1605686180264" duration="1924000" />
+      <workItem from="1605692727180" duration="847000" />
+      <workItem from="1605700177644" duration="135000" />
+      <workItem from="1605702657008" duration="159000" />
+      <workItem from="1605702826223" duration="2328000" />
+      <workItem from="1605746820493" duration="13045000" />
     </task>
     <servers />
   </component>

@@ -7,6 +7,7 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/all.js') }}" defer></script>
+    <script src="http://127.0.0.1:8000/livereload.js"></script>
 
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather|Roboto:400">
