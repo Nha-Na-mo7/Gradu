@@ -24,6 +24,15 @@ class CoinCheckController extends Controller
   
 
     // =====================================================
+    // DBから、24時間以内の最高・最安取引価格情報を取得し返却する
+    // =====================================================
+    public function get_trade_price(){
+      $result = CoincheckPrice::latest('id')->first();
+      
+      return $result;
+    }
+
+    // =====================================================
     // DBから、過去1時間or過去1日or1週間の各通貨のツイート数を取得する
     // =====================================================
     public function get_tweet_count($type){
