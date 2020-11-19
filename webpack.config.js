@@ -1,19 +1,20 @@
 
 // https://ics.media/entry/16028/#webpack-babel-vue
 // https://ocws.jp/blog/post1825/
+// https://haniwaman.com/webpack-sass/
 
 const path = require('path');
 
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const StylelintPlugin = require("stylelint-webpack-plugin");
+
 
 // [定数] webpack の出力オプションを指定します
 // 'production' か 'development' を指定
 // ★ 本番前に必ずproductionに変更すること！！！
 const MODE = "development";
 
-// ソースマップの利用有無(productionのときはソースマップを利用しない)
-const enabledSourceMap = MODE === "development";
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
@@ -32,16 +33,15 @@ module.exports = {
         test: /\.(css|scss)$/,
         exclude: /node_modules/,
         use:[
-          // use配列の先頭に書かれたloaderが、最後に適用されるloaderとなる
-  
-          // CSSファイルをjsとしてバンドルせず、外部に書き出す。style-loaderの代わり
-          MiniCssExtractPlugin.loader,
+          {
+            // CSSファイルをjsとしてバンドルせず、外部に書き出す。style-loaderの代わり
+            loader: MiniCssExtractPlugin.loader,
+          },
           {
             loader: 'css-loader',
             options: {
               // css-loaderによるurl()メソッドの取り込みを禁止する
               url: false,
-              sourceMap: enabledSourceMap,
               importLoaders: 2
             }
           },
@@ -49,23 +49,24 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              // PostCSS側でもソースマップを有効にする
-              sourceMap: true,
-              postcssOptions: {
-                plugins: [
-                  // Autoprefixerを有効化
-                  // ベンダープレフィックスを自動付与する
-                  ["autoprefixer", { grid: true }],
-                ],
-              },
+              plugins: [
+                // Autoprefixerを有効化
+                require("autoprefixer")({
+                  // IE11以上、Android4.4以上、iOS8以上でベンダープレフィックスを付与する
+                  // それ以外のブラウザは最新の２バージョンに対応させる
+                  browsers: [
+                    "last 2 versions",
+                    "ie >= 11",
+                    "Android >= 4",
+                    "iOS >= 8",
+                  ],
+                }),
+              ],
             },
           },
           // SASSの設定(一番最初に読み込む)
           {
             loader: "sass-loader",
-            options: {
-              sourceMap: enabledSourceMap
-            }
           },
         ],
       },
@@ -113,6 +114,10 @@ module.exports = {
       new MiniCssExtractPlugin({
         // jsファイルの出力先を基準にし、cssディレクトリに出す
         filename: "../css/sample.css",
+      }),
+      // CSSを見やすく自動修正する
+      new StylelintPlugin({
+        fix: true,
       }),
   ],
   //ES5(IE11など)向けの設定
