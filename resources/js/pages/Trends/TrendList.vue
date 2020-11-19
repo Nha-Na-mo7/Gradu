@@ -32,7 +32,6 @@
 <!--            :key="News.id"-->
 <!--            :entry="News"-->
 <!--        />-->
-        <button class="c-btn" @click="twitter_count_tweets">ツイート数集計体験</button>
         <Ranking />
         <Ranking />
         <Ranking />
@@ -55,6 +54,11 @@ import { OK } from "../../util";
 import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
+
+// 必要情報
+// ・月・日・週のツイート数(それぞれについて)
+// 最大通貨
+// 通貨情報
 
 export default {
   data() {
@@ -79,12 +83,7 @@ export default {
     Ranking
   },
   methods: {
-    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
-    async twitter_count_tweets() {
-      console.log('ツイート数集計体験')
-      // APIにアクセス
-      await axios.get(`/api/twitter/count/tweets`);
-    },
+
   }
   // watch: {
   //   $route: {

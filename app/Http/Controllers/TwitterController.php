@@ -1458,24 +1458,4 @@ class TwitterController extends Controller
       
       return $connection;
     }
-    // =======================================
-    // TODO アプリの制限回数確認
-    // =======================================
-    // 制限確認用のメソッド
-    // これで残りのAPI回数を算出し、15/15minや1000/1day制限に掛からないように処理を分ける
-  
-    public function check_limit_status()
-    {
-      // API keyなどを定義・エイリアスにするか検討
-      $consumer_key = config('services.twitter')['client_id'];
-      $consumer_secret = config('services.twitter')['client_secret'];
-      $access_token = config('services.twitter')['access_token'];
-      $access_token_secret = config('services.twitter')['access_token_secret'];
-  
-      $connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token, $access_token_secret);
-      
-      $twitterRequest = $connection->get('application/rate_limit_status');
-      
-      return response()->json(['result' => $twitterRequest]);
-    }
 }

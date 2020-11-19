@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\CoincheckPrice;
+use App\Models\TweetCountHour;
+use App\Models\UpdatedAtTable;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Coincheck\Coincheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +21,52 @@ class CoinCheckController extends Controller
   
     // brandsテーブルの通貨ID
     const BTC_ID = 1;
+  
+    
+    
+    // =========================================
+    // DBから、1時間以内の各通貨のツイート数を取得する
+    // =========================================
+    public function get_count_hour(){
+      // 現在時刻で得られる最新の時刻で検索し、コンプリートフラグが立っているかを確認する
+      $now = CarbonImmutable::now();
+      $search_time = $now->format('Y-m-d H:');
+  
+      // テーブルを確認する。%を付与してLIKE検索をする。
+      Log::debug('$search_time:'.$search_time);
+      $Updated_tweet_count = UpdatedAtTable::where('id', 2)
+          ->where('updated_at', 'LIKE', "$search_time%")
+          ->where('complete_flg', true)
+          ->first();
+      
+      // その時間に集計完了している場合、レコードが存在するので取得し返却する
+      if(isset($Updated_tweet_count)) {
+  
+        $result = TweetCountHour::where('updated_at', 'LIKE', "$search_time%")->all();
+  
+        return $result;
+      // 集計が完了していない場合、既に集計済みの最新のものを、ブランドテーブルの数だけ取得する
+      }else{
+        // Brandsモデルのレコード数
+        $brands_count = Brand::all()->count();
+        $result = TweetCountHour::where('complete_flg', true)
+            ->where('updated_at', 'NOT', "$search_time%")
+            ->orderBy('id', 'DESC')
+            ->take($brands_count)
+            ->get();
+        
+        return $result;
+      }
+    }
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
     // ============================================================
     // バッチ用・24時間に1度、24時間最高or最安取引価格を取得しDB保存する
