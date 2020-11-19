@@ -1345,7 +1345,7 @@ class TwitterController extends Controller
       for ($i = 0;$i < $brands_count;$i++){
         $count_days = TweetCountDay::where('brand_id', $i + 1)
             ->where('complete_flg', true)
-            ->orderBy('id', 'DESC')
+            ->latest('id')
             ->take(7)
             ->get();
         

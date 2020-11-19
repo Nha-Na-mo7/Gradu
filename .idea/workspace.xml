@@ -26,8 +26,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CoinCheckController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CoinCheckController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Trends/TrendList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Trends/TrendList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -345,7 +343,7 @@
       <workItem from="1605746820493" duration="13045000" />
       <workItem from="1605792349489" duration="405000" />
       <workItem from="1605792780376" duration="4634000" />
-      <workItem from="1605797506548" duration="5275000" />
+      <workItem from="1605797506548" duration="6817000" />
     </task>
     <servers />
   </component>

@@ -22,19 +22,34 @@ class CoinCheckController extends Controller
     // brandsテーブルの通貨ID
     const BTC_ID = 1;
   
-    
-    
-    // =========================================
-    // DBから、1時間以内の各通貨のツイート数を取得する
-    // =========================================
-    public function get_count_hour(){
+
+    // =====================================================
+    // DBから、過去1時間or過去1日or1週間の各通貨のツイート数を取得する
+    // =====================================================
+    public function get_tweet_count($type){
+      // 参照するテーブルが違うだけで殆ど同じ処理をするため、引数で分ける
+      // $type: 0...hour 1...day 2...week
+  
       // 現在時刻で得られる最新の時刻で検索し、コンプリートフラグが立っているかを確認する
       $now = CarbonImmutable::now();
-      $search_time = $now->format('Y-m-d H:');
   
-      // テーブルを確認する。%を付与してLIKE検索をする。
-      Log::debug('$search_time:'.$search_time);
-      $Updated_tweet_count = UpdatedAtTable::where('id', 2)
+      switch ($type){
+        case 0:
+          $table_id = 2;
+          $search_time = $now->format('Y-m-d H:');
+          break;
+        case 1:
+          $table_id = 3;
+          $search_time = $now->format('Y-m-d');
+          break;
+        case 2:
+          $table_id = 4;
+          $search_time = $now->format('Y-m-d');
+          break;
+      }
+  
+      // 現在時刻を元に集計完了しているかcomplete_flgを確認する。
+      $Updated_tweet_count = UpdatedAtTable::where('id', $table_id)
           ->where('updated_at', 'LIKE', "$search_time%")
           ->where('complete_flg', true)
           ->first();
@@ -51,18 +66,13 @@ class CoinCheckController extends Controller
         $brands_count = Brand::all()->count();
         $result = TweetCountHour::where('complete_flg', true)
             ->where('updated_at', 'NOT', "$search_time%")
-            ->orderBy('id', 'DESC')
+            ->latest('id')
             ->take($brands_count)
             ->get();
         
         return $result;
       }
     }
-  
-  
-  
-  
-  
   
   
   
