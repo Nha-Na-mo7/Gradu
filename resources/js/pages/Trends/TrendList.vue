@@ -34,15 +34,25 @@
           <div v-if="isSearching" class="">
             <Loading />
           </div>
-          <!--        <Ranking-->
-          <!--            v-else-->
-          <!--            v-for="News in fetchedNews"-->
-          <!--            :key="News.id"-->
-          <!--            :entry="News"-->
-          <!--        />-->
-          <Ranking />
-          <Ranking />
-          <Ranking />
+          <div v-else></div>
+          <Ranking
+              v-show="tab === 0"
+              v-for="trend_brand in sort_tweet_count_desc(0)"
+              :key="trend_brand.id"
+              :brand="trend_brand"
+          />
+          <Ranking
+              v-show="tab === 1"
+              v-for="trend_brand in sort_tweet_count_desc(1)"
+              :key="trend_brand.id"
+              :brand="trend_brand"
+          />
+          <Ranking
+              v-show="tab === 2"
+              v-for="trend_brand in sort_tweet_count_desc(2)"
+              :key="trend_brand.id"
+              :brand="trend_brand"
+          />
 
         </div>
 
@@ -75,7 +85,9 @@ export default {
     return {
       isSearching: false,
       tab: 0,
-      trend_data: [],
+      trend_data_hour: [],
+      trend_data_day: [],
+      trend_data_week: [],
       search_data: {
         type: 1
       },
@@ -87,9 +99,9 @@ export default {
     },
     content_bgcolor() {
       let bgcolor = ''
-      if(this.tab === 1){
+      if(this.tab === 0){
         bgcolor = ''
-      }else if(this.tab === 2){
+      }else if(this.tab === 1){
         bgcolor = 'u-bg-green'
       }else{
         bgcolor = 'u-bg-purple'
@@ -98,15 +110,42 @@ export default {
     },
     ribbon_page_title(){
       let title = '';
-      if(this.tab === 1){
+      if(this.tab === 0){
         title = '過去1時間のトレンド'
-      }else if(this.tab === 2){
+      }else if(this.tab === 1){
         title = '過去1日でのトレンド'
       }else{
         title = '過去1週間でのトレンド'
       }
       return title;
     },
+    // ツイート数が多い順に並び替えたデータを返却する
+    sort_tweet_count_desc: function(){
+      return function(type) {
+        let items;
+        switch (type) {
+          case 0:
+            items = this.trend_data_hour
+            break;
+          case 1:
+            items = this.trend_data_day
+            break;
+          case 2:
+            items = this.trend_data_week
+            break;
+        }
+        const sorted_item = items.slice().sort(function (a, b) {
+          return b.tweet_count - a.tweet_count
+        });
+        // console.log(sorted_item)
+        return sorted_item;
+      }
+    },
+    // TODO 配列の最初にある更新時刻を最終更新時刻として表示する
+    get_updated_at() {
+
+    },
+
     // TODO リボンタグ用・このcomputed自体は削除予定
     today() {
       return new Date();
@@ -120,27 +159,44 @@ export default {
     Ranking
   },
   methods: {
-    async fetch_trend() {
-      // 読み込み中ならこのメソッドは発火しない
+    async fetch_trend(type) {
+      // トレンド一覧を取得
+      const response = await axios.get(`/api/tweet/count`, { params:{type: type} });
+
+      // それぞれのトレンドデータに格納
+      switch (type) {
+        case 0:
+          this.trend_data_hour = response.data;
+          break;
+        case 1:
+          this.trend_data_day = response.data;
+          break;
+        case 2:
+          this.trend_data_week = response.data;
+          break;
+      }
+    },
+    // 上記のfetch_trendを、時間・日・週の全てで取得する
+    async all_fetch() {
       if(this.isLoading) {
         return false;
       }
       // 読み込みをtrueに
       this.isLoading = true;
 
-      // パラメータ設定
-      const type = this.search_data
-      // トレンド一覧を取得
-      const response = await axios.get(`/api/tweet/count`, { type });
+      for (let type = 0;type <= 2;type++){
+        this.fetch_trend(type);
+      }
 
-      console.log(response.data)
+      // 読み込み中を解除
+      this.isLoading = false;
     }
   },
   watch: {
     $route: {
       async handler() {
         // ページの読み込み直後、トレンド一覧を取得
-        await this.fetch_trend();
+        await this.all_fetch();
       },
       immediate: true
     }

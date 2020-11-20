@@ -8,15 +8,25 @@
     <!-- 順位パネル -->
     <div class="p-trends__item--rank">
     </div>
+
     <!-- 銘柄名 -->
     <div class="p-trends__item--brandname">
       <!-- 通貨アイコン -->
       <img
-          :src="currencyIconPath+brandiconpath"
+          :src="icon_path | icon_path_filter"
           class="c-trends__item--icon"
       >
-      <span class="">MONA</span>
+      <span class="">{{ this.brand.brand.name }}</span>
+      <span class="c-trends__item--realname">{{ this.brand.brand.realname }}</span>
     </div>
+
+
+    <!-- ツイート数 -->
+    <div class="p-trends__item--tweetcount">
+      <span class="">{{ this.brand.tweet_count }}</span>
+    </div>
+
+
     <!-- 最高取引価格 & 最低取引価格 -->
     <div class="p-trends__item--data">
       <div class="p-trends__item--time"><p>1000000円</p></div>
@@ -33,6 +43,12 @@ import {CURRENCY_ICON_PATH, isArrayExists} from "../../util";
 import {mapState} from "vuex";
 
 export default {
+  props: {
+    brand: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       //TODO 作成用の仮のもの、削除予定
@@ -40,10 +56,24 @@ export default {
     }
   },
   computed: {
-    currencyIconPath() {
-      return CURRENCY_ICON_PATH;
+    // アイコンのパス
+    icon_path() {
+      return this.brand.brand.icon;
+    },
+    // 24時間の最低取引価格・取得できない場合は「不明」
+    price_min() {
+      return this.brand.brand.icon;
+    },
+    // 24時間の最高取引価格・取得できない場合は「不明」
+    price_max() {
+      return this.brand.brand.icon;
     },
   },
+  filters: {
+    icon_path_filter: function (icon_path)  {
+      return CURRENCY_ICON_PATH + icon_path
+    }
+  }
 }
 </script>
 
@@ -51,5 +81,8 @@ export default {
 .c-trends__item--icon {
   height: 5rem;
   width: 5rem;
+}
+.c-trends__item--realname {
+  font-size: 10px;
 }
 </style>
