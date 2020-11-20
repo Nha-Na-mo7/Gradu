@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import {CURRENCY_ICON_PATH, isArrayExists} from "../../util";
+import { BRAND_ICON_PATH, isArrayExists} from "../../util";
 import { mapState } from "vuex";
 
 export default {
@@ -79,7 +79,7 @@ export default {
   },
   computed: {
     currencyIconPath() {
-      return CURRENCY_ICON_PATH;
+      return BRAND_ICON_PATH;
     },
     ...mapState({
       checkedCurrencies: state => state.news.checkedCurrencies,

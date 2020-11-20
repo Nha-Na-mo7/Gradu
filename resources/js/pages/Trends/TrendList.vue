@@ -28,6 +28,15 @@
             :date='get_updated_at'
         />
 
+        <!-- 絞り込みアコーディオンエリア -->
+        <div class="p-news__modal p-news__modal-show">
+          <button class="c-btn c-btn__main c-btn--primary" @click="show_accordion">設定</button>
+          <SearchAccordion
+            @checked="checked_brand"
+            @reset="reset_brand"
+          />
+        </div>
+
         <!-- ランキング -->
         <div class="p-trends__list">
           <!-- 検索中 -->
@@ -70,6 +79,7 @@
 <script>
 import Loading from '../../components/Loading.vue';
 import SiteLinknav from '../Components/SiteLinknav.vue';
+import SearchAccordion from './SearchAccordion.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Ribbonnav from '../Components/Ribbonnav.vue';
 import Ranking from './Ranking.vue';
@@ -86,16 +96,19 @@ const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
 export default {
   data() {
     return {
+      accordion: false,
       isLoading: false,
       tab: 0,
       trend_data_hour: [],
       trend_data_day: [],
       trend_data_week: [],
+      checked_brands: [],
       search_data: {
         type: 1
       },
     }
   },
+
   computed: {
     page_title() {
       return PAGE_TITLE;
@@ -140,17 +153,35 @@ export default {
         return items;
       }
     },
+    // 指定のidの銘柄に絞った配列を返却する(チェックされた通貨に絞る)
+    refine_brands: function(){
+      return function(array, checked) {
+        // 何もチェックされていない時は絞り込まない
+        if(checked.length === 0) {
+          return array;
+        }else{
+          const result = array.filter((brand) => {
+            // チェックボックスで選択された値と同じ名前の通貨だけを抽出する
+            return checked.indexOf(brand.brand.name) !== -1;
+          })
+          return result;
+        }
+      }
+    },
     // ツイート数が多い順に並び替えたデータを返却する
     sort_tweet_count_desc: function(){
       return function(type) {
-        let items = this.choice_trend_data(type)
-        const sorted_item = items.slice().sort(function (a, b) {
+        const checkedbox = this.checked_brands;
+        let items = this.choice_trend_data(type);
+        let refined = this.refine_brands(items, checkedbox);
+        const sorted_item = refined.slice().sort(function (a, b) {
           return b.tweet_count - a.tweet_count
         });
         // console.log(sorted_item)
         return sorted_item;
       }
     },
+
     // 配列の最初にある更新時刻を最終更新時刻として表示する
     get_updated_at() {
       let items = this.choice_trend_data(this.tab)
@@ -159,20 +190,9 @@ export default {
       }
       return items[0].updated_at;
     },
-
-    // TODO リボンタグ用・このcomputed自体は削除予定
-    today() {
-      return new Date();
-    }
-  },
-  components: {
-    Loading,
-    SiteLinknav,
-    PageTitle,
-    Ribbonnav,
-    Ranking
   },
   methods: {
+    // 指定した時間帯のトレンドテーブルを取得する
     async fetch_trend(type) {
       // トレンド一覧を取得
       const response = await axios.get(`/api/tweet/count`, { params:{type: type} });
@@ -203,7 +223,32 @@ export default {
       }
       // 読み込み中を解除
       this.isLoading = false;
+    },
+    // アコーディオンを開く
+    show_accordion(){
+      this.accordion = true;
+    },
+    // アコーディオンを閉じる
+    close_accordion(){
+      this.accordion = false;
+    },
+    // アコーディオンでチェックされた値を格納
+    checked_brand(array) {
+      this.reset_brand();
+      this.checked_brands = array;
+    },
+    // アコーディオンがリセットされた時の処理
+    reset_brand(){
+      this.checked_brands = [];
     }
+  },
+  components: {
+    Loading,
+    SiteLinknav,
+    PageTitle,
+    Ribbonnav,
+    Ranking,
+    SearchAccordion
   },
   watch: {
     $route: {

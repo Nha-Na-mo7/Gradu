@@ -78,7 +78,7 @@ class CoinCheckController extends Controller
       
       // その時間に集計完了している場合、レコードが存在するので取得し返却する
       if(isset($Updated_tweet_count)) {
-        
+        Log::debug('ある');
         switch ($type){
           case 0:
             $result = TweetCountHour::with(['brand'])->where('updated_at', 'LIKE', "$search_time%")->get();
@@ -94,6 +94,7 @@ class CoinCheckController extends Controller
         
       // 集計が完了していない場合、既に集計済みの最新のものを、ブランドテーブルの数だけ取得する
       }else{
+        Log::debug('ありません');
         // Brandsモデルのレコード数
         $brands_count = Brand::all()->count();
   

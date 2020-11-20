@@ -42,10 +42,8 @@
 </template>
 
 
-
-
 <script>
-import {CURRENCY_ICON_PATH, isArrayExists} from "../../util";
+import { BRAND_ICON_PATH, isArrayExists } from "../../util";
 import {mapState} from "vuex";
 
 const TWITTER_SEARCH_URL = 'https://twitter.com/search?q=';
@@ -95,7 +93,7 @@ export default {
   filters: {
     // svgアイコンのパス
     icon_path_filter: function (icon_path)  {
-      return CURRENCY_ICON_PATH + icon_path
+      return BRAND_ICON_PATH + icon_path
     },
     // JPYを付与する。取得できていない場合は不明とする。
     add_JPY: function (price)  {
