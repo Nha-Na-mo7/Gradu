@@ -35,8 +35,8 @@
 
     <!-- 最高取引価格 & 最低取引価格 -->
     <div class="p-trends__item--data">
-      <div class="p-trends__item--time"><p>1000000円</p></div>
-      <div class="p-trends__item--media"><p>300円</p></div>
+      <div class="p-trends__item--time"><p>{{ price_max | add_JPY }}</p></div>
+      <div class="p-trends__item--media"><p>{{ price_min | add_JPY }}</p></div>
     </div>
   </div>
 </template>
@@ -59,8 +59,7 @@ export default {
   },
   data() {
     return {
-      //TODO 作成用の仮のもの、削除予定
-      brandiconpath: 'mona.svg'
+      transaction_price: []
     }
   },
   computed: {
@@ -68,22 +67,52 @@ export default {
     icon_path() {
       return this.brand.brand.icon;
     },
-    // 24時間の最低取引価格・取得できない場合は「不明」
+    // 24時間の最低取引価格
     price_min() {
-      return this.brand.brand.icon;
+      return this.transaction_price.price_min
     },
-    // 24時間の最高取引価格・取得できない場合は「不明」
+    // 24時間の最高取引価格
     price_max() {
-      return this.brand.brand.icon;
+      return this.transaction_price.price_max
+
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
     search_url() {
       return TWITTER_SEARCH_URL + this.brand.brand.name
+    },
+  },
+  methods: {
+    async get_transaction_price() {
+      const response = await axios.get(`/api/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
+
+      console.log(response.data)
+
+      if(response.data !== ''){
+        this.transaction_price = response.data
+      }
     }
   },
   filters: {
+    // svgアイコンのパス
     icon_path_filter: function (icon_path)  {
       return CURRENCY_ICON_PATH + icon_path
+    },
+    // JPYを付与する。取得できていない場合は不明とする。
+    add_JPY: function (price)  {
+      if(price >= 0){
+        return price + ' JPY'
+      }else{
+        return '不明'
+      }
+    },
+  },
+  watch: {
+    $route: {
+      async handler() {
+        // ページの読み込み直後、トレンド一覧を取得
+        await this.get_transaction_price();
+      },
+      immediate: true
     }
   }
 }

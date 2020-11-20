@@ -28,10 +28,18 @@ class CoinCheckController extends Controller
     // =====================================================
     // DBから、24時間以内の最高・最安取引価格情報を取得し返却する
     // =====================================================
-    public function get_trade_price(){
-      $result = CoincheckPrice::latest('id')->first();
+    public function get_transaction_price(){
+      $brand_id = filter_input(INPUT_GET, 'brand_id');
       
-      return $result;
+      $result = CoincheckPrice::where('brand_id', $brand_id)->latest('id')->first();
+      
+      // 取得できない(データがない)通貨の時は空文字で返却する
+      if(isset($result)){
+        return $result;
+      }else{
+        Log::debug($brand_id.'の通貨は取引価格情報がありませんでした。');
+        return '';
+      }
     }
 
     // =====================================================

@@ -886,7 +886,7 @@ main {
   border: 1px solid #cdcdcd;
 }
 .p-trends__item--brandname {
-  width: 65%;
+  width: 600px;
   font-size: 4.5rem;
   line-height: 1.2;
   font-weight: bold;

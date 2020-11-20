@@ -74,6 +74,8 @@ Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 // =============================================
 // 過去1時間or1日or1週間のツイート数を取得する
 Route::get('/tweet/count', 'CoinCheckController@get_tweet_count');
+// 指定の通貨の24時間以内での最高・最安取引価格情報を取得する
+Route::get('/transaction/price', 'CoinCheckController@get_transaction_price');
 
 
 
