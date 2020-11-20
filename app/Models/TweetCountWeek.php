@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TweetCountWeek extends Model
 {
-  
+    // 実際のツイート数を集計するテーブル・そのモデルです
+    
     public $timestamps = false;
   
     // JSONに含める属性

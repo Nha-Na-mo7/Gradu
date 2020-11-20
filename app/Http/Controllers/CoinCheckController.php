@@ -78,7 +78,6 @@ class CoinCheckController extends Controller
       
       // その時間に集計完了している場合、レコードが存在するので取得し返却する
       if(isset($Updated_tweet_count)) {
-        Log::debug('ある');
         switch ($type){
           case 0:
             $result = TweetCountHour::with(['brand'])->where('updated_at', 'LIKE', "$search_time%")->get();
@@ -92,30 +91,34 @@ class CoinCheckController extends Controller
         }
         return $result;
         
-      // 集計が完了していない場合、既に集計済みの最新のものを、ブランドテーブルの数だけ取得する
+      // 集計が完了していない場合、1つ前の集計時刻に遡り、ブランドテーブルの数だけ取得する
       }else{
-        Log::debug('ありません');
         // Brandsモデルのレコード数
         $brands_count = Brand::all()->count();
   
         switch ($type){
           case 0:
+            $old_search_time = $now->subHour()->format('Y-m-d H:');;
+            
             $result = TweetCountHour::with(['brand'])
-                ->where('updated_at', 'LIKE', "$search_time%")
+                ->where('updated_at', 'LIKE', "$old_search_time%")
                 ->latest('id')
                 ->take($brands_count)
                 ->get();
             break;
           case 1:
+            $old_search_time = $now->subDay()->format('Y-m-d');;
             $result = TweetCountDay::with(['brand'])
-                ->where('updated_at', 'LIKE', "$search_time%")
+                ->where('updated_at', 'LIKE', "$old_search_time%")
                 ->latest('id')
                 ->take($brands_count)
                 ->get();
             break;
           case 2:
+            $old_search_time = $now->subDay()->format('Y-m-d');
+            Log::debug('old case2:'.$old_search_time);
             $result = TweetCountWeek::with(['brand'])
-                ->where('updated_at', 'LIKE', "$search_time%")
+                ->where('updated_at', 'LIKE', "$old_search_time%")
                 ->latest('id')
                 ->take($brands_count)
                 ->get();

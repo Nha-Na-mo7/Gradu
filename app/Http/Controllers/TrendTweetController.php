@@ -8,7 +8,6 @@ use App\Models\TweetCountHour;
 use App\Models\TweetCountWeek;
 use App\Models\UpdatedAtTable;
 use Carbon\CarbonImmutable;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 class TrendTweetController extends Controller
@@ -20,7 +19,6 @@ class TrendTweetController extends Controller
     const UPDATED_AT_TABLES__HOURS_ID = 2;
     const UPDATED_AT_TABLES__DAYS_ID = 3;
     const UPDATED_AT_TABLES__WEEKS_ID = 4;
-    
     
     
     // ==============================================
