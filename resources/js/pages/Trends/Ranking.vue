@@ -11,15 +11,21 @@
 
     <!-- 銘柄名 -->
     <div class="p-trends__item--brandname">
-      <!-- 通貨アイコン -->
-      <img
-          :src="icon_path | icon_path_filter"
-          class="c-trends__item--icon"
+      <a
+          :href="search_url"
+          target="_blank"
+          rel="noopener noreferrer"
       >
-      <span class="">{{ this.brand.brand.name }}</span>
-      <span class="c-trends__item--realname">{{ this.brand.brand.realname }}</span>
+        <!-- 通貨アイコン -->
+        <img
+            :src="icon_path | icon_path_filter"
+            class="c-trends__item--icon"
+        >
+        <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
+        <span class="">{{ this.brand.brand.name }}</span>
+        <span class="c-trends__item--realname">{{ this.brand.brand.realname }}</span>
+      </a>
     </div>
-
 
     <!-- ツイート数 -->
     <div class="p-trends__item--tweetcount">
@@ -41,6 +47,8 @@
 <script>
 import {CURRENCY_ICON_PATH, isArrayExists} from "../../util";
 import {mapState} from "vuex";
+
+const TWITTER_SEARCH_URL = 'https://twitter.com/search?q=';
 
 export default {
   props: {
@@ -68,6 +76,10 @@ export default {
     price_max() {
       return this.brand.brand.icon;
     },
+    // twitterの検索欄に通貨名が入った状態の検索ページURL
+    search_url() {
+      return TWITTER_SEARCH_URL + this.brand.brand.name
+    }
   },
   filters: {
     icon_path_filter: function (icon_path)  {

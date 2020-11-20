@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class CoincheckPrice extends Model
 {
     // JSONに含める属性
-    // account_idはtwitter_accountsテーブルのものを参照するのでこちらでは不要
+    // フロント側で不要な属性は含めない
     protected $visible = [
         'brand_id',
         'price_min',
         'price_max',
-        'updated_at'
+        'updated_at',
+        'brand'
     ];
     
     // fillable
