@@ -48,24 +48,18 @@ Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.
 // =============================================
 // Twitter関連
 // =============================================
-// TODO バッチ用・Twitterアカウント一覧取得
-Route::get('/twitter/index', 'TwitterController@search_accounts')->name('twitter.search_accounts');
-// TODO バッチ用・Twitterオートフォローの動きを確認
-Route::get('/twitter/autofollow/start', 'TwitterController@auto_follow');
-
-
 // アカウント一覧画面/テーブルからアカウント情報を取得
-Route::get('/accounts/index', 'TwitterController@accounts_index')->name('accounts.index');
+Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.index');
 // アカウントコンポーネント/指定したユーザーの新着ツイートを取得
-Route::get('/accounts/tweet/{tweet_id}', 'TwitterController@accounts_tweet')->name('accounts.tweet');
+Route::get('/accounts/tweet/{tweet_id}', 'TwitterAccountListController@accounts_tweet')->name('accounts.tweet');
 
 
 // 認証ユーザーの自動フォローフラグを切り替える
-Route::post('/accounts/autofollowflg', 'TwitterController@toggle_auto_follow_flg')->name('accounts.follow');
-// 指定したTwitterアカウントをフォローする
-Route::post('/accounts/follow', 'TwitterController@accounts_follow')->name('accounts.follow');
+Route::post('/accounts/autofollowflg', 'TwitterAccountListController@toggle_auto_follow_flg')->name('accounts.follow');
+// 指定したTwitterAccountListアカウントをフォローする
+Route::post('/accounts/follow', 'TwitterAccountListController@accounts_follow')->name('accounts.follow');
 // 指定したTwitterアカウントのフォローを外す
-// Route::get('/accounts/get', 'TwitterController@')->name('');
+// Route::get('/accounts/get', 'TwitterAccountListController@')->name('');
 
 
 // =============================================

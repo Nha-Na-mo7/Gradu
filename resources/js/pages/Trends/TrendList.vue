@@ -34,7 +34,10 @@
           <div v-if="isSearching" class="">
             <Loading />
           </div>
-          <div v-else></div>
+          <div
+              class="p-trends__list--container"
+              v-else>
+          </div>
           <Ranking
               v-show="tab === 0"
               v-for="trend_brand in sort_tweet_count_desc(0)"
@@ -207,5 +210,8 @@ export default {
 </script>
 
 <style scoped>
+.p-trends__list--container{
+  transition: .5s;
 
+}
 </style>

@@ -34,9 +34,6 @@
               v-else
           >START AUTO-FOLLOW</button>
         </div>
-        <!-- TODO バッチ処理用のボタン・削除すること -->
-        <button class="c-btn" @click="twitter_index">バッチ処理・ニュースをDBに格納</button>
-        <button class="c-btn" @click="twitter_autofollow">バッチ処理・自動フォロー体験</button>
       </div>
 
       <!-- アカウントリスト -->
@@ -120,19 +117,6 @@ export default {
     },
   },
   methods: {
-    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
-    async twitter_index() {
-      // APIにアクセス
-      const response = await axios.get(`/api/twitter/index`);
-    },
-    // TODO バッチ処理用。本来はこのコンポーネントに存在するものでは無い
-    async twitter_autofollow() {
-      console.log('オートフォロー体験')
-      // APIにアクセス
-      const response = await axios.get(`/api/twitter/autofollow/start`);
-    },
-
-
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
     async fetchAccounts() {
       // 読み込み中ならこのメソッドは発火しない

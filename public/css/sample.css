@@ -1890,6 +1890,10 @@ main {
 .c-trends__item--realname[data-v-6e7588c6] {
   font-size: 10px;
 }
+.p-trends__list--container[data-v-5429d82a] {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
 .message[data-v-b91a6428] {
   background: #98c379;
   height: 40px;
