@@ -27,7 +27,6 @@ import store from './store';
 Vue.use(VueRouter);
 
 
-
 // パスとコンポーネントをマッピング
 const routes = [
   {

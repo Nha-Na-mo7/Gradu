@@ -5,36 +5,47 @@
   <div class="l-container__content">
 
     <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='pageTitle'/>
+    <SiteLinknav :currentPageTitle='page_title'/>
 
     <!-- ページタイトル -->
-    <PageTitle :title='pageTitle'/>
+    <PageTitle :title='page_title'/>
 
-    <!--メインレイアウト-->
-    <div class="p-accounts__container">
+    <!-- 切り替えタブ -->
+    <ul class="tab">
+      <li class="tab__item" @click="tab = 1" v-bind:class="{'tab__item--active': tab === 1}">過去1時間のトレンド</li>
+      <li class="tab__item" @click="tab = 2" v-bind:class="{'tab__item--active': tab === 2}">過去1日のトレンド</li>
+      <li class="tab__item" @click="tab = 3" v-bind:class="{'tab__item--active': tab === 3}">過去1週間のトレンド</li>
+    </ul>
 
-      <!-- リボンタグ -->
-      <Ribbonnav
-          :title='pageTitle'
-          :date='today'
-      />
+    <!-- 切り替えタブによってメインレイアウトを入れ替える-->
+    <div class="p-panel">
 
-      <!-- ランキング -->
-      <div class="p-trends__list">
-        <!-- 検索中 -->
-        <div v-if="isSearching" class="">
-          <Loading />
+      <!--メインレイアウト-->
+      <div class="p-accounts__container" v-bind:class="content_bgcolor">
+        <!-- リボンタグ -->
+        <Ribbonnav
+            :title='ribbon_page_title'
+            :date='today'
+        />
+
+        <!-- ランキング -->
+        <div class="p-trends__list">
+          <!-- 検索中 -->
+          <div v-if="isSearching" class="">
+            <Loading />
+          </div>
+          ランキングパネル
+          <!--        <Ranking-->
+          <!--            v-else-->
+          <!--            v-for="News in fetchedNews"-->
+          <!--            :key="News.id"-->
+          <!--            :entry="News"-->
+          <!--        />-->
+          <Ranking />
+          <Ranking />
+          <Ranking />
+
         </div>
-        <!-- ランキングパネル -->
-<!--        <News-->
-<!--            v-else-->
-<!--            v-for="News in fetchedNews"-->
-<!--            :key="News.id"-->
-<!--            :entry="News"-->
-<!--        />-->
-        <Ranking />
-        <Ranking />
-        <Ranking />
 
       </div>
 
@@ -63,12 +74,35 @@ const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
 export default {
   data() {
     return {
-      isSearching: false
+      isSearching: false,
+      tab: 1
     }
   },
   computed: {
-    pageTitle(){
+    page_title() {
       return PAGE_TITLE;
+    },
+    content_bgcolor() {
+      let bgcolor = ''
+      if(this.tab === 1){
+        bgcolor = ''
+      }else if(this.tab === 2){
+        bgcolor = 'u-bg-green'
+      }else{
+        bgcolor = 'u-bg-purple'
+      }
+      return bgcolor;
+    },
+    ribbon_page_title(){
+      let title = '';
+      if(this.tab === 1){
+        title = '過去1時間のトレンド'
+      }else if(this.tab === 2){
+        title = '過去1日でのトレンド'
+      }else{
+        title = '過去1週間でのトレンド'
+      }
+      return title;
     },
     // TODO リボンタグ用・このcomputed自体は削除予定
     today() {

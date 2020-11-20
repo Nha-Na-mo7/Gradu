@@ -7,19 +7,19 @@ const path = require('path');
 
 const { VueLoaderPlugin } = require("vue-loader");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const StylelintPlugin = require("stylelint-webpack-plugin");
-
 
 // [定数] webpack の出力オプションを指定します
 // 'production' か 'development' を指定
 // ★ 本番前に必ずproductionに変更すること！！！
 const MODE = "development";
-
+// ソースマップの利用有無(productionのときはソースマップを利用しない)
+const enabledSourceMap = MODE === "production";
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
   // development に設定するとソースマップ有効でJSファイルが出力される
   mode: MODE,
+  
   // エントリポイントのapp.jsに@babel/polifillを取り込ませることで、promiseが使えるようになる。
   entry: ["@babel/polyfill", path.resolve(__dirname, 'resources/js/app.js')],
   output: {
@@ -42,6 +42,7 @@ module.exports = {
             options: {
               // css-loaderによるurl()メソッドの取り込みを禁止する
               url: false,
+              sourceMap: enabledSourceMap,
               importLoaders: 2
             }
           },
@@ -49,24 +50,30 @@ module.exports = {
           {
             loader: "postcss-loader",
             options: {
-              plugins: [
-                // Autoprefixerを有効化
-                require("autoprefixer")({
-                  // IE11以上、Android4.4以上、iOS8以上でベンダープレフィックスを付与する
-                  // それ以外のブラウザは最新の２バージョンに対応させる
-                  browsers: [
-                    "last 2 versions",
-                    "ie >= 11",
-                    "Android >= 4",
-                    "iOS >= 8",
-                  ],
-                }),
-              ],
+              sourceMap: true,
+              postcssOptions: {
+                plugins: [
+                  // Autoprefixerを有効化
+                  require("autoprefixer")({
+                    // IE11以上、Android4.4以上、iOS8以上でベンダープレフィックスを付与する
+                    // それ以外のブラウザは最新の２バージョンに対応させる
+                    browsers: [
+                      "last 2 versions",
+                      "ie >= 11",
+                      "Android >= 4",
+                      "iOS >= 8",
+                    ],
+                  }),
+                ],
+              }
             },
           },
           // SASSの設定(一番最初に読み込む)
           {
             loader: "sass-loader",
+            options: {
+              sourceMap: enabledSourceMap,
+            }
           },
         ],
       },
@@ -108,17 +115,13 @@ module.exports = {
     }
   },
   plugins: [
-      // vueを読み込めるようにする
-      new VueLoaderPlugin(),
-      // CSSファイルを外出しにするプラグイン
-      new MiniCssExtractPlugin({
-        // jsファイルの出力先を基準にし、cssディレクトリに出す
-        filename: "../css/sample.css",
-      }),
-      // CSSを見やすく自動修正する
-      new StylelintPlugin({
-        fix: true,
-      }),
+    // vueを読み込めるようにする
+    new VueLoaderPlugin(),
+    // CSSファイルを外出しにするプラグイン
+    new MiniCssExtractPlugin({
+      // jsファイルの出力先を基準にし、cssディレクトリに出す
+      filename: "../css/sample.css",
+    }),
   ],
   //ES5(IE11など)向けの設定
   target: ["web", "es5"],
