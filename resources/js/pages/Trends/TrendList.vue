@@ -12,9 +12,9 @@
 
     <!-- 切り替えタブ -->
     <ul class="c-tab">
-      <li class="c-tab__item" @click="tab = 0" v-bind:class="{'tab__item--active': tab === 0}">過去1時間のトレンド</li>
-      <li class="c-tab__item" @click="tab = 1" v-bind:class="{'tab__item--active': tab === 1}">過去1日のトレンド</li>
-      <li class="c-tab__item" @click="tab = 2" v-bind:class="{'tab__item--active': tab === 2}">過去1週間のトレンド</li>
+      <li class="c-tab__item u-bg-blue" @click="tab = 0" v-bind:class="{'tab__item--active': tab === 0}">過去1時間のトレンド</li>
+      <li class="c-tab__item u-bg-green" @click="tab = 1" v-bind:class="{'tab__item--active': tab === 1}">過去1日のトレンド</li>
+      <li class="c-tab__item u-bg-purple" @click="tab = 2" v-bind:class="{'tab__item--active': tab === 2}">過去1週間のトレンド</li>
     </ul>
 
     <!-- 切り替えタブによってメインレイアウトを入れ替える-->

@@ -5,9 +5,14 @@
   color: #cdcdcd;
 }
 
-.u-bg-purple {
-  background: #efe7fb;
-}
-.u-bg-green {
-  background: #f0f5e7;
+.u-bg {
+  &-blue {
+    background: #f5f6ff;
+  }
+  &-purple {
+    background: #efe7fb;
+  }
+  &-green {
+    background: #f0f5e7;
+  }
 }
