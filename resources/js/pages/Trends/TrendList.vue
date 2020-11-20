@@ -25,13 +25,13 @@
         <!-- リボンタグ -->
         <Ribbonnav
             :title='ribbon_page_title'
-            :date='today'
+            :date='get_updated_at'
         />
 
         <!-- ランキング -->
         <div class="p-trends__list">
           <!-- 検索中 -->
-          <div v-if="isSearching" class="">
+          <div v-if="isLoading" class="">
             <Loading />
           </div>
           <div
@@ -86,7 +86,7 @@ const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
 export default {
   data() {
     return {
-      isSearching: false,
+      isLoading: false,
       tab: 0,
       trend_data_hour: [],
       trend_data_day: [],
@@ -122,9 +122,9 @@ export default {
       }
       return title;
     },
-    // ツイート数が多い順に並び替えたデータを返却する
-    sort_tweet_count_desc: function(){
-      return function(type) {
+    // それぞれに対応した配列を返す
+    choice_trend_data: function() {
+      return function (type) {
         let items;
         switch (type) {
           case 0:
@@ -137,6 +137,13 @@ export default {
             items = this.trend_data_week
             break;
         }
+        return items;
+      }
+    },
+    // ツイート数が多い順に並び替えたデータを返却する
+    sort_tweet_count_desc: function(){
+      return function(type) {
+        let items = this.choice_trend_data(type)
         const sorted_item = items.slice().sort(function (a, b) {
           return b.tweet_count - a.tweet_count
         });
@@ -144,9 +151,13 @@ export default {
         return sorted_item;
       }
     },
-    // TODO 配列の最初にある更新時刻を最終更新時刻として表示する
+    // 配列の最初にある更新時刻を最終更新時刻として表示する
     get_updated_at() {
-
+      let items = this.choice_trend_data(this.tab)
+      if(items.length === 0){
+        return ''
+      }
+      return items[0].updated_at;
     },
 
     // TODO リボンタグ用・このcomputed自体は削除予定
@@ -190,7 +201,6 @@ export default {
       for (let type = 0;type <= 2;type++){
         this.fetch_trend(type);
       }
-
       // 読み込み中を解除
       this.isLoading = false;
     }

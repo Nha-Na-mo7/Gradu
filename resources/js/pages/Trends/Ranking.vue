@@ -85,7 +85,7 @@ export default {
     async get_transaction_price() {
       const response = await axios.get(`/api/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
 
-      console.log(response.data)
+      // console.log(response.data)
 
       if(response.data !== ''){
         this.transaction_price = response.data
