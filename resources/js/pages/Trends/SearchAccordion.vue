@@ -16,7 +16,7 @@
                 name="brand_all"
                 class="c-btn"
                 value="リセット"
-                @click=""
+                @click="reset_checkbox"
             >
           </label>
           <p class="">チェックした通貨に絞ってランキングを表示します。</p>
