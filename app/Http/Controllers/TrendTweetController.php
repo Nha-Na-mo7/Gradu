@@ -467,13 +467,11 @@ class TrendTweetController extends Controller
         }else{
           Log::debug('未実施・または完了していないようです。検索を開始します。');
           $this->count_tweets($SEARCH_TYPE, $i);
-          Log::debug('一度検索を行ったので今回はここで終了となります。');
+          Log::debug('一度検索を行ったので一旦定期ツイート検索(day)は終了となります。');
+          Log::debug('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
           break;
         }
       }
-      Log::debug('============================');
-      Log::debug('定期ツイート検索(day)を終了します');
-      Log::debug('============================');
     }
     
     

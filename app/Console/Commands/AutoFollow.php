@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\TwitterAccountListController;
 use App\Http\Controllers\TwitterController;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -40,13 +41,13 @@ class AutoFollow extends Command
     public function handle()
     {
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      Log::debug('Console/Commands AutoFollow 定刻なので自動フォロー開始');
+      Log::debug('Console/Commands AutoFollow 定刻の自動フォロー開始');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      // TwitterControllerのインスタンスを取得し、自動フォローメソッドを起動する
-      $twitterController = new TwitterController();
+      // TwitterAccountListControllerのインスタンスを取得し、自動フォローメソッドを起動する
+      $twitterAccountList = new TwitterAccountListController();
       
       // 自動フォロー
-      $twitterController->auto_follow();
+      $twitterAccountList->auto_follow();
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       Log::debug('定刻の自動フォロー処理を終了します。');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');

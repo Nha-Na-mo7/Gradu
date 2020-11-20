@@ -13,8 +13,7 @@ import store from "./store/index.js";
 import App from "./App.vue";
 
 
-
-// Vueインスタンスを作成。
+// Vueインスタンスを作成
 // この時ログインがされている場合、そのユーザー情報を取得してからインスタンスを作成する
 const createApp = async () => {
   // 現在のログインユーザーを取得

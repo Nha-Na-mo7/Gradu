@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\TrendTweetController;
 use App\Http\Controllers\TwitterController;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -40,13 +41,13 @@ class SearchTweetCountDaysCommand extends Command
     public function handle()
     {
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      Log::debug('Console/Commands SearchTweetCountDays ツイート数取得(1日)');
+      Log::debug('Console/Commands SearchTweetCountDays ツイート数取得(過去1日)');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      // TwitterControllerのインスタンスを取得し、ツイート数取得メソッドを起動する
-      $twitterController = new TwitterController();
+      // TrendTweetControllerのインスタンスを取得し、ツイート数取得メソッドを起動する
+      $trendTweetController = new TrendTweetController();
   
       // 日ごとのツイート数カウント開始
-      $twitterController->start_tweet_count_days();
+      $trendTweetController->start_tweet_count_days();
       
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       Log::debug('定刻のツイート数取得(1日)を終了します。');

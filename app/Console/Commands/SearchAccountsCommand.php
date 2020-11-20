@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\TwitterAccountListController;
 use App\Http\Controllers\TwitterController;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -42,11 +43,11 @@ class SearchAccountsCommand extends Command
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       Log::debug('Console/Commands SearchAccounts 仮想通貨アカウント取得');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      // TwitterControllerのインスタンスを取得し、アカウント取得メソッドを起動する
-      $twitterController = new TwitterController();
+      // TwitterAccountListControllerのインスタンスを取得し、アカウント取得メソッドを起動する
+      $twitterAccountList = new TwitterAccountListController();
   
       // 仮想通貨アカウント取得
-      $twitterController->search_accounts();
+      $twitterAccountList->search_accounts();
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       Log::debug('定刻の仮想通貨アカウント取得を終了します。');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');

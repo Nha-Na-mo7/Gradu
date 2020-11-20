@@ -83,7 +83,9 @@ export default {
     Ranking
   },
   methods: {
-
+    async get_trend() {
+      console.log('GET!')
+    }
   }
   // watch: {
   //   $route: {

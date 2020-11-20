@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\TrendTweetController;
 use App\Http\Controllers\TwitterController;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -42,10 +43,10 @@ class SearchTweetCountWeeksCommand extends Command
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       Log::debug('Console/Commands SearchTweetCountWeeks ツイート数取得(1週間)');
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
-      // TwitterControllerのインスタンスを取得し、ツイート数取得メソッドを起動する
-      $twitterController = new TwitterController();
+      // TrendTweetControllerのインスタンスを取得し、ツイート数取得メソッドを起動する
+      $trendTweetController = new TrendTweetController();
       
-      $twitterController->make_tweet_count_week();
+      $trendTweetController->make_tweet_count_week();
   
       Log::debug('=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=');
       Log::debug('定刻のツイート数取得(1週間)を終了します。');
