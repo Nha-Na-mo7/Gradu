@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\CoincheckPrice;
+use App\Models\TweetCountDay;
 use App\Models\TweetCountHour;
+use App\Models\TweetCountWeek;
 use App\Models\UpdatedAtTable;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
@@ -35,9 +37,12 @@ class CoinCheckController extends Controller
     // =====================================================
     // DBから、過去1時間or過去1日or1週間の各通貨のツイート数を取得する
     // =====================================================
-    public function get_tweet_count($type){
+    public function get_tweet_count(){
       // 参照するテーブルが違うだけで殆ど同じ処理をするため、引数で分ける
       // $type: 0...hour 1...day 2...week
+      $type = filter_input(INPUT_GET, 'type');
+      Log::debug('type:'.$type);
+  
   
       // 現在時刻で得られる最新の時刻で検索し、コンプリートフラグが立っているかを確認する
       $now = CarbonImmutable::now();
@@ -65,20 +70,49 @@ class CoinCheckController extends Controller
       
       // その時間に集計完了している場合、レコードが存在するので取得し返却する
       if(isset($Updated_tweet_count)) {
-  
-        $result = TweetCountHour::where('updated_at', 'LIKE', "$search_time%")->all();
-  
+        
+        switch ($type){
+          case 0:
+            $result = TweetCountHour::with(['brand'])->where('updated_at', 'LIKE', "$search_time%")->get();
+            break;
+          case 1:
+            $result = TweetCountDay::with(['brand'])->where('updated_at', 'LIKE', "$search_time%")->get();
+            break;
+          case 2:
+            $result = TweetCountWeek::with(['brand'])->where('updated_at', 'LIKE', "$search_time%")->get();
+            break;
+        }
         return $result;
+        
       // 集計が完了していない場合、既に集計済みの最新のものを、ブランドテーブルの数だけ取得する
       }else{
         // Brandsモデルのレコード数
         $brands_count = Brand::all()->count();
-        $result = TweetCountHour::where('complete_flg', true)
-            ->where('updated_at', 'NOT', "$search_time%")
-            ->latest('id')
-            ->take($brands_count)
-            ->get();
-        
+  
+        switch ($type){
+          case 0:
+            $result = TweetCountHour::with(['brand'])
+                ->where('updated_at', 'LIKE', "$search_time%")
+                ->latest('id')
+                ->take($brands_count)
+                ->get();
+            break;
+          case 1:
+            $result = TweetCountDay::with(['brand'])
+                ->where('updated_at', 'LIKE', "$search_time%")
+                ->latest('id')
+                ->take($brands_count)
+                ->get();
+            break;
+          case 2:
+            $result = TweetCountWeek::with(['brand'])
+                ->where('updated_at', 'LIKE', "$search_time%")
+                ->latest('id')
+                ->take($brands_count)
+                ->get();
+            break;
+        }
+
         return $result;
       }
     }

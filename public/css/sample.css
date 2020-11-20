@@ -1244,7 +1244,7 @@ main {
   font-weight: bold;
 }
 
-.tab {
+.c-tab {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1253,7 +1253,7 @@ main {
   margin: 0;
   padding: 0;
 }
-.tab__item {
+.c-tab__item {
   border: 1px solid #dedede;
   border-bottom: 2px solid #dedede;
   -moz-border-radius-topleft: 10px;
@@ -1262,7 +1262,10 @@ main {
   cursor: pointer;
   padding: 1.2rem;
 }
-.tab__item--active {
+.c-tab__item:hover {
+  background: #cdcdcd;
+}
+.c-tab__item--active {
   border-bottom: 2px solid #1b515f;
   color: #222;
   font-weight: bold;

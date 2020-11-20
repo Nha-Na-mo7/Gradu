@@ -79,7 +79,7 @@ Route::get('/news/get', 'GoogleNewsController@get_news')->name('get_news');
 // トレンド一覧表示関連
 // =============================================
 // 過去1時間or1日or1週間のツイート数を取得する
-Route::get('/tweet/count', 'CoinCheckNewsController@get_tweet_count');
+Route::get('/tweet/count', 'CoinCheckController@get_tweet_count');
 
 
 

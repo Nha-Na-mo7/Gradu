@@ -8,8 +8,17 @@ class Brand extends Model
 {
     // タイムスタンプカラムは用意していないので、無理やり挿入しようとしてエラーにならないようにfalseにする
     public $timestamps = false;
-    
-    
+  
+  
+  
+    /**
+     * リレーション - tweet_count_hours テーブル
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tweet_count_hours()
+    {
+      return $this->hasMany('App\Models\TweetCountHour');
+    }
     
     /**
      * リレーション - tweet_count_days テーブル
@@ -19,15 +28,7 @@ class Brand extends Model
     {
       return $this->hasMany('App\Models\TweetCountDay');
     }
-    
-    /**
-     * リレーション - tweet_count_hours テーブル
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tweet_count_hours()
-    {
-      return $this->hasMany('App\Models\TweetCountHour');
-    }
+
     
     /**
      * リレーション - tweet_count_weeks テーブル

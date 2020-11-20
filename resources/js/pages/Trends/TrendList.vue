@@ -11,10 +11,10 @@
     <PageTitle :title='page_title'/>
 
     <!-- 切り替えタブ -->
-    <ul class="tab">
-      <li class="tab__item" @click="tab = 1" v-bind:class="{'tab__item--active': tab === 1}">過去1時間のトレンド</li>
-      <li class="tab__item" @click="tab = 2" v-bind:class="{'tab__item--active': tab === 2}">過去1日のトレンド</li>
-      <li class="tab__item" @click="tab = 3" v-bind:class="{'tab__item--active': tab === 3}">過去1週間のトレンド</li>
+    <ul class="c-tab">
+      <li class="c-tab__item" @click="tab = 0" v-bind:class="{'tab__item--active': tab === 0}">過去1時間のトレンド</li>
+      <li class="c-tab__item" @click="tab = 1" v-bind:class="{'tab__item--active': tab === 1}">過去1日のトレンド</li>
+      <li class="c-tab__item" @click="tab = 2" v-bind:class="{'tab__item--active': tab === 2}">過去1週間のトレンド</li>
     </ul>
 
     <!-- 切り替えタブによってメインレイアウトを入れ替える-->
@@ -34,7 +34,6 @@
           <div v-if="isSearching" class="">
             <Loading />
           </div>
-          ランキングパネル
           <!--        <Ranking-->
           <!--            v-else-->
           <!--            v-for="News in fetchedNews"-->
@@ -75,7 +74,11 @@ export default {
   data() {
     return {
       isSearching: false,
-      tab: 1
+      tab: 0,
+      trend_data: [],
+      search_data: {
+        type: 1
+      },
     }
   },
   computed: {
@@ -117,19 +120,31 @@ export default {
     Ranking
   },
   methods: {
-    async get_trend() {
-      console.log('GET!')
+    async fetch_trend() {
+      // 読み込み中ならこのメソッドは発火しない
+      if(this.isLoading) {
+        return false;
+      }
+      // 読み込みをtrueに
+      this.isLoading = true;
+
+      // パラメータ設定
+      const type = this.search_data
+      // トレンド一覧を取得
+      const response = await axios.get(`/api/tweet/count`, { type });
+
+      console.log(response.data)
+    }
+  },
+  watch: {
+    $route: {
+      async handler() {
+        // ページの読み込み直後、トレンド一覧を取得
+        await this.fetch_trend();
+      },
+      immediate: true
     }
   }
-  // watch: {
-  //   $route: {
-  //     async handler() {
-  //       // ページの読み込み直後、Twitterアカウント一覧を取得
-  //       await this.fetch_TwitterAccount();
-  //     },
-  //     immediate: true
-  //   }
-  // }
 
 }
 
