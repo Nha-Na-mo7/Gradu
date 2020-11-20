@@ -5,10 +5,10 @@
   <div class="l-container__content">
 
     <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='pageTitle'/>
+    <SiteLinknav :currentPageTitle='page_title'/>
 
     <!-- ページタイトル -->
-    <PageTitle :title='pageTitle'/>
+    <PageTitle :title='page_title'/>
 
     <!--メインレイアウト-->
     <div class="p-news__container">
@@ -126,7 +126,7 @@ export default {
     }
   },
   computed: {
-    pageTitle() {
+    page_title() {
       return PAGE_TITLE;
     },
     placeholder() {

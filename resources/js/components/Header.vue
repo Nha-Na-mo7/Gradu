@@ -12,7 +12,7 @@
         <RouterLink class="" to="/accounts">Twitterアカウント一覧</RouterLink>
       </div>
       <div class="p-navbar__item">
-        <RouterLink class="" to="/">アカウント設定</RouterLink>
+        <RouterLink class="" to="/mypage">アカウント設定</RouterLink>
       </div>
       <div class="p-navbar__item" v-if="isLogin">
         <button class="" @click="logout">ログアウト</button>

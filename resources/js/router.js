@@ -15,6 +15,8 @@ import NewsList from './pages/News/NewsList.vue';
 import AccountList from './pages/AccountLists/AccountList.vue';
 // 仮想通貨人気ツイートランキングページ
 import TrendList from './pages/Trends/TrendList.vue';
+// マイページ/アカウント設定
+import Mypage from './pages/Mypage/Mypage.vue';
 
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
@@ -114,7 +116,19 @@ const routes = [
     path: '/news',
     component: NewsList,
     props: true,
-    // TODO ニュースリストは分岐させなくても良い？
+    beforeEnter(to, from, next) {
+      // 未ログイン状態ならログインチェックに戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
+      }
+    }
+  },
+  {
+    path: '/mypage',
+    component: Mypage,
+    props: true,
     beforeEnter(to, from, next) {
       // 未ログイン状態ならログインチェックに戻す
       if(store.getters['auth/loginCheck']) {
