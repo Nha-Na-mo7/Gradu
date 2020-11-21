@@ -7,7 +7,7 @@
   <PageTitle :title='page_title'/>
 
   <!-- ユーザーネームとメールアドレスの変更フォーム -->
-  <div>
+  <div v-if="!system_error">
     <!-- ユーザーネーム -->
     <div>
       <!-- DBから現在のユーザーネームを取得し、入力された状態にしておく-->
@@ -57,16 +57,17 @@
         変更を保存
       </button>
     </div>
-    <div>
-      <span>登録メールアドレス</span>
-      <span>ERROR ドメインが存在しません</span>
-      <!-- DBから現在のメールアドレスを取得し、入力された状態にしておく-->
-      <input type="text">
-      <button class="c-btn">変更する</button>
 
+    <div>
       <p>メールアドレスの変更後、確認メールを自動送信します。必ずメールを受け取れる状態で変更手続きを行ってください。</p>
     </div>
 
+  </div>
+  <div
+      v-else
+  >
+    <h2>ユーザー情報を読み込めませんでした。</h2>
+    <p>しばらくしてからもう一度お試しください。</p>
   </div>
 
 
@@ -108,7 +109,6 @@ export default {
       // エラーチェック
       if(response.status === OK) {
         // フォーム用にデータを格納
-        console.log(response)
         this.form_name = response.data.name
         this.form_mail = response.data.email
       }else{
