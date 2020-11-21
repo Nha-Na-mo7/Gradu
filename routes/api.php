@@ -34,6 +34,9 @@ Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail
 Route::post('/password/reset/{token}', 'Auth\ResetPasswordController@reset')->name('api.password.reset');
 // パスワードリセット
 // Route::post('"/password/reset/{token?}"', 'Auth\ResetPasswordController@showResetForm')->name('api.password.showResetForm');
+// 退会処理
+Route::post('/withdraw', 'UserController@withdraw')->name('user.withdraw');
+
 
 
 // =============================================

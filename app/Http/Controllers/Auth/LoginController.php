@@ -51,9 +51,9 @@ class LoginController extends Controller
       return $user;
     }
   
-    // ====================
-    // ログイン(Twitter)
-    // ====================
+    // ================================
+    // Twitter連携(Twitter新規登録含む)
+    // ================================
     // Twitter認証ページへユーザーをリダイレクトする
     public function redirectToTwitterProvider()
     {
@@ -71,57 +71,70 @@ class LoginController extends Controller
       try {
         $twitter_user = Socialite::with("twitter")->user();
         
-        Log::debug('a:' . print_r($twitter_user, true));
-        
+        Log::debug('twitterアカウント情報を取得しました :' . print_r($twitter_user, true));
+  
         // アクセストークンとTwitterIDの取得
         $token = $twitter_user->token;
         $token_secret = $twitter_user->tokenSecret;
         $twitter_id = $twitter_user->id;
+        
+        // 既にログイン中であれば、設定画面からの連携である
+        if(Auth::check()) {
+          $auth_user = Auth::user();
+          
+          // 既に他のユーザーと連携されているTwitterアカウントではないかを確認
+          $alreadycheck = User::where('twitter_id', $twitter_user->$twitter_id)->first();
+          
+          if(isset($alreadycheck)){
+            Log::debug('既に他のユーザーが連携しているTwitterアカウントです。');
+            return redirect('/mypage')->with('oauth_error', '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。');
+          }
+          
+          
+          // 登録メールアドレスを使ってユーザーレコードを取得する
+          $info = User::where('email', $auth_user->email)->first();
+          
+          // Authしているのでユーザーが取得できないことは無いはずだが、空の場合は処理は行わない。
+          if(isset($info)) {
+            // 取得したユーザーレコードにtwitter_id,token,token_secretを登録
+            $info->fill([
+                'twitter_id' => $twitter_id,
+                'token' => $token,
+                'token_secret' => $token_secret
+            ])->save();
+            Log::debug('Twitter連携が完了しました。');
+          }
+          
+          return $info;
+          
+        // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン・ログイン維持期間のタイムアウト)
+        }else{
+          // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
+          // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
+          // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
+          // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
+          $myinfo = User::firstOrCreate(
+              [
+                  'token' => $token,
+                  'token_secret' => $token_secret,
+                  'twitter_id' => $twitter_id
+              ],
+              [
+                  'name' => $twitter_user->nickname,
+                  'email' => $twitter_user->getEmail(),
+                  'token_secret' => $token_secret
+              ]);
+          Auth::login($myinfo);
+  
+          // 転送する(トレンド一覧画面が良いか)
+          return redirect()->to('/trends');
+        }
       }
       catch (\Exception $e) {
         // エラーならログイン画面へ戻す
+        Log::debug('ログイン失敗です :'. $e->getMessage());
         return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
       }
-  
-      // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
-      // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
-      // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
-      // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
-      $myinfo = User::firstOrCreate(
-          [
-              'token' => $token,
-              'token_secret' => $token_secret,
-              'twitter_id' => $twitter_id
-          ],
-          [
-              'name' => $twitter_user->nickname,
-              'email' => $twitter_user->getEmail(),
-              'token_secret' => $token_secret
-          ]);
-      Auth::login($myinfo);
-  
-      /* TODO:  新規ユーザーの登録について
-       * ・この例文のコードをそのまま貼り付けてTwitterによる新規登録を行った場合、
-       *  パスワードを入力する過程がない為、nullableにしない限りエラーが発生する。
-       * ・パスワード未入力で承認させるのは流石にトラブルの元になる為避けたい
-       *
-       * 【参考:pixiv】
-       * ・pixivでは、Twitter新規登録の場合はまずアプリケーション連携を行う。
-       * その後、「メールアドレス」「パスワード」「ユーザーネーム」「その他登録に必要な情報」
-       * これらを入力させる画面に遷移した。
-       * ・おそらく、あらかじめTwitterトークンをhiddenでどこかにinputフォームとして用意しておき、
-       * ・フォーム送信の際に同時に入力させる仕様になっている。
-       *
-       *  ただし、パスワード入力をさせることはSNSログインを行う観点から見てもユーザーに対して不要な手間を要求させていることが事実である
-       *  メールアドレスだけは必ず入れさせたい
-       *  →SNS用のログインフォームを作成させたい。
-       * ・取得した情報をデフォルトで挿入させることでユーザーに必要な入力を最小限に抑えさせることができる。
-       *
-       * ・CryptoTrendでもこれを実装したい。
-       */
-      
-      return redirect()->to('/'); // ホームへ転送
-      
     }
     
     // // =======================================

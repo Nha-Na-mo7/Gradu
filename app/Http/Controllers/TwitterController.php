@@ -60,4 +60,39 @@ class TwitterController extends Controller
       
       return $connection;
     }
+  
+  
+    
+    // ========================================
+    // Twitterとサービスを連携させる
+    // ========================================
+  
+  
+  
+  
+  
+    
+    // ========================================
+    // Twitterとの連携を解除する
+    // ========================================
+    public function un_linkage(){
+        try {
+          // usersテーブルのアクセストークンを見てtwitterログインやオートフォローなどの処理を行っている
+          // →アクセストークンの項目を空にすれば連携は解除される
+          $user = (new UserController)->auth_user();
+          
+          // usersテーブルのTwitterID・アクセストークン・シークレットを削除する
+          $user->fill{[
+              'twitter_id' => null,
+              'token' => null,
+              'token_secret' => null
+          ]}->save();
+          
+          Log::debug('Twitter連携を解除しました。');
+      
+          return response()->json(['success' => 'Twitter連携を解除しました。']);
+        } catch (\Exception $e) {
+          Log::debug('アカウント情報変更時に例外が発生しました。' .$e->getMessage());
+        }
+    }
 }
