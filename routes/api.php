@@ -64,6 +64,9 @@ Route::post('/accounts/follow', 'TwitterAccountListController@accounts_follow')-
 // 指定したTwitterアカウントのフォローを外す
 // Route::get('/accounts/get', 'TwitterAccountListController@')->name('');
 
+// Twitterとの連携を解除する
+Route::post('/accounts/un_linkage', 'TwitterController@un_linkage')->name('accounts.un_linkage');
+
 
 // =============================================
 // GoogleNews関連
