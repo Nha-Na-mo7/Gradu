@@ -28,7 +28,7 @@ class LoginPostRequest extends FormRequest
         extract(get_object_vars($this));
     
         return [
-            'email' => "required|email|max:100}",
+            'email' => "required|email:strict,dns,spoof|max:100",
             'password' => "required|min:{$PASSWORD_MIN_LENGTH}"
         ];
     }
@@ -40,7 +40,7 @@ class LoginPostRequest extends FormRequest
     
         return [
             'email.required' => '入力してください',
-            'email.email' => 'メールアドレスの形式で入力してください',
+            'email.email' => '正しいメールアドレスの形式で入力してください',
             'email.max' => "100文字以内で入力してください",
             'password.required' => '入力してください',
             'password.min' => "{$PASSWORD_MIN_LENGTH}文字以上で入力してください",

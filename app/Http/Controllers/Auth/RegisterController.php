@@ -23,8 +23,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-    
-    private $PASSWORD_MIN_LENGTH =  8;
   
     use RegistersUsers;
 
@@ -53,13 +51,11 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        // グローバル変数を記述しやすくするもの
-        extract(get_object_vars($this));
         
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email:strict,dns,spoof', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', "min:${PASSWORD_MIN_LENGTH}", 'confirmed'],
+            'name' => ['required', 'max:20'],
+            'email' => ['required', 'string', 'email:strict,dns,spoof', 'max:100', 'unique:users'],
+            'password' => ['required', 'string', "min:8", "max:50", 'confirmed', 'regex:/^[a-zA-Z0-9]+$/'],
         ]);
     }
 
