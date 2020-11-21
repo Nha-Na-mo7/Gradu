@@ -84,6 +84,14 @@ Route::get('/transaction/price', 'CoinCheckController@get_transaction_price');
 
 
 // =============================================
+// ユーザー関連
+// =============================================
+// ユーザーネームを更新する
+Route::post('/user/update/name', 'UserController@update_name')->name('user.update_name');
+// メールアドレスの更新処理
+Route::post('/user/update/mail', 'UserController@update_mail')->name('user.update_mail');
+
+// =============================================
 // その他
 // =============================================
 // 指定のIDの最終更新日時を取得する

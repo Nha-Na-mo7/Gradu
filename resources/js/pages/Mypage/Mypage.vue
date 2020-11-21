@@ -93,6 +93,11 @@ const PAGE_TITLE = 'マイページ(アカウント設定)';
 
 
 export default {
+  date() {
+    return {
+      twitter: false
+    }
+  },
   computed: {
     page_title() {
       return PAGE_TITLE
