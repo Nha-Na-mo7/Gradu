@@ -8,10 +8,10 @@
   <PageTitle :title='page_title'/>
 
   <!-- メインレイアウト -->
-  <div class="p-container">
+  <div class="p-container dummyflex">
 
     <!-- ユーザー名・メールアドレス -->
-    <div>
+    <div class="dummybox">
       <div>
         <h2>ユーザーネーム</h2>
         <p>aaaaaaaaaaaaaaaaaaaaaaaaa</p>
@@ -23,7 +23,7 @@
     </div>
 
     <!-- ユーザー名・メールアドレス -->
-    <div>
+    <div class="dummybox">
       <div>
         <h2>パスワード</h2>
         <p>********</p>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- SNS連携 -->
-    <div>
+    <div class="dummybox">
       <div>
         <h2>SNS連携状態</h2>
         <p>Twitter</p>
@@ -41,7 +41,7 @@
     </div>
 
     <!-- 自動フォロー状態 -->
-    <div>
+    <div class="dummybox">
       <div>
         <h2>Twitterアカウントの自動フォロー</h2>
         <p>ON</p>
@@ -63,7 +63,7 @@
         title="Start for Twitter!"
         @click.stop
         :href="`/login/twitter`"
-    >Twitter連携をする</a>
+    >Twitter連携する</a>
 
   </div>
 
@@ -89,5 +89,19 @@ export default {
 </script>
 
 <style scoped>
-
+.dummyflex {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+}
+.dummybox {
+  width: 45%;
+  font-size: 15px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #0a0a0a;
+  background: #d8d8d8;
+  min-height: 200px;
+}
 </style>

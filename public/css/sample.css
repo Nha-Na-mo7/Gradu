@@ -1898,6 +1898,26 @@ main {
   -webkit-transition: 0.5s;
   transition: 0.5s;
 }
+.dummyflex[data-v-36899e76] {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+}
+.dummybox[data-v-36899e76] {
+  width: 45%;
+  font-size: 15px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  border: 1px solid #0a0a0a;
+  background: #d8d8d8;
+  min-height: 200px;
+}
 .message[data-v-b91a6428] {
   background: #98c379;
   height: 40px;
