@@ -2,21 +2,9 @@
 //  c-site
 //  =============
 .c-site {
-  &__link-nav {
-    font-weight: bold;
-    margin-left: 20px;
-    margin-bottom: 15px;
-    text-shadow: #dedede 0 2px 2px;
-    &__to-top {
-      color: #4FB4D7;
-    }
-    &__to-content {
-      color: orange;
-    }
-    &__to-top:hover, &__to-content:hover {
-      color: #ffcd22;
-    }
-  }
+
+
+
 
   &__title {
     border-bottom: 3px solid #4FB4D7;
@@ -26,6 +14,4 @@
     padding: 5px;
     margin-bottom: 20px;
   }
-
-
 }

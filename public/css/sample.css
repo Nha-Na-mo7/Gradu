@@ -1499,21 +1499,6 @@ main {
   text-align: center;
 }
 
-.c-site__link-nav {
-  font-weight: bold;
-  margin-left: 20px;
-  margin-bottom: 15px;
-  text-shadow: #dedede 0 2px 2px;
-}
-.c-site__link-nav__to-top {
-  color: #4FB4D7;
-}
-.c-site__link-nav__to-content {
-  color: orange;
-}
-.c-site__link-nav__to-top:hover, .c-site__link-nav__to-content:hover {
-  color: #ffcd22;
-}
 .c-site__title {
   border-bottom: 3px solid #4FB4D7;
   color: #4FB4D7;

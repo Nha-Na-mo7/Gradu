@@ -4,9 +4,6 @@
 <template>
   <div class="l-container__content">
 
-    <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='page_title'/>
-
     <!-- ページタイトル -->
     <PageTitle :title='page_title'/>
 
@@ -98,7 +95,6 @@ import News from './News.vue';
 import NothingNews from './NothingNews.vue';
 import SearchModal from './SearchModal.vue';
 import Loading from '../../components/Loading.vue';
-import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import { OK ,DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
@@ -200,7 +196,6 @@ export default {
 
   },
   components: {
-    SiteLinknav,
     News,
     NothingNews,
     SearchModal,

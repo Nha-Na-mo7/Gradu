@@ -4,9 +4,6 @@
 <template>
   <div class="l-container__content">
 
-    <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='page_title'/>
-
     <!-- ページタイトル -->
     <PageTitle :title='page_title'/>
 
@@ -78,7 +75,6 @@
 
 <script>
 import Loading from '../../components/Loading.vue';
-import SiteLinknav from '../Components/SiteLinknav.vue';
 import SearchAccordion from './SearchAccordion.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Ribbonnav from '../Components/Ribbonnav.vue';
@@ -244,7 +240,6 @@ export default {
   },
   components: {
     Loading,
-    SiteLinknav,
     PageTitle,
     Ribbonnav,
     Ranking,

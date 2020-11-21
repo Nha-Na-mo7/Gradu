@@ -4,9 +4,6 @@
 <template>
   <div class="l-container__content">
 
-    <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='pageTitle'/>
-
     <!-- ページタイトル -->
     <PageTitle :title='pageTitle'/>
 
@@ -73,7 +70,6 @@
 import Account from './Account.vue';
 import NothingAccount from './NothingAccount.vue';
 import Loading from '../../components/Loading.vue';
-import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Ribbonnav from '../Components/Ribbonnav.vue';
 import Pagination from '../Components/Pagination.vue';
@@ -188,7 +184,6 @@ export default {
     Account,
     NothingAccount,
     Loading,
-    SiteLinknav,
     PageTitle,
     Ribbonnav,
     Pagination

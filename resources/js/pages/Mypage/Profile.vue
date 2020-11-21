@@ -3,8 +3,6 @@
 <!--======================================================-->
 <template>
   <div class="l-container__content">
-    <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='page_title'/>
 
     <!-- ページタイトル -->
     <PageTitle :title='page_title'/>
@@ -80,7 +78,6 @@
 </template>
 
 <script>
-import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Loading from '../../Components/Loading.vue';
 
@@ -189,7 +186,6 @@ export default {
     }
   },
   components: {
-    SiteLinknav,
     PageTitle,
     Loading
   }

@@ -3,8 +3,6 @@
 <!--=======================================================-->
 <template>
   <div class="l-container__content">
-    <!-- サイトリンク -->
-    <SiteLinknav :currentPageTitle='page_title'/>
 
     <!-- ページタイトル -->
     <PageTitle :title='page_title'/>
@@ -39,13 +37,12 @@
 </template>
 
 <script>
-import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
 import Loading from '../../Components/Loading.vue';
 import PasswordCreate from './PasswordCreate.vue';
 import PasswordUpdate from './PasswordUpdate.vue';
 import { OK , INTERNAL_SERVER_ERROR } from '../../util.js';
-const PAGE_TITLE = 'パスワードの設定';
+const PAGE_TITLE = 'パスワード設定';
 
 export default {
   data() {
@@ -81,7 +78,6 @@ export default {
     },
   },
   components: {
-    SiteLinknav,
     PageTitle,
     Loading,
     PasswordCreate,
