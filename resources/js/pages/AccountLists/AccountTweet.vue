@@ -4,13 +4,21 @@
 <template>
   <!-- 取得したツイートと日付 -->
   <div
-      class="item-4 p-accounts__tweet p-accounts__tweet--data"
+      class="
+      item-4
+      p-accounts__tweet
+      p-accounts__tweet--data"
       v-if="isExistTweet"
   >
     <!-- 実際のツイートテキスト -->
     <p class="p-accounts__tweet">{{ this.text }}</p>
     <!-- 日付・ここをクリックするとツイートのURLに飛ぶ -->
-    <span class="p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--date">
+    <span
+        class="
+        p-accounts__tweet
+        p-accounts__tweet--span
+        p-accounts__tweet--date"
+    >
             <a
                 :href="twitter_tweet_url"
                 target="_blank"
@@ -24,7 +32,12 @@
       class="item-4 p-accounts__tweet--data"
       v-else
   >
-    <span class="p-accounts__tweet p-accounts__tweet--span p-accounts__tweet--nothing"> ~  このユーザーからのツイートはまだありません ~ </span>
+    <span
+        class="
+        p-accounts__tweet
+        p-accounts__tweet--span
+        p-accounts__tweet--nothing"
+    > ~  このユーザーからのツイートはまだありません ~ </span>
   </div>
 </template>
 

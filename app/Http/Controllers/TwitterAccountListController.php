@@ -216,7 +216,7 @@ class TwitterAccountListController extends Controller
                 
                 // アプデしたaccount_idを"アプデ済み配列"へ追加する
                 $updateded_accounts[] = $account_id;
-                Log::debug('アップデートしたアカウントのID配列: ' . print_r($updateded_accounts, true));
+                // Log::debug('アップデートしたアカウントのID配列: ' . print_r($updateded_accounts, true));
                 
               } catch (\Exception $exception) {
                 Log::debug('DBデータの更新時に例外処理に入りました。エラーメッセージ: ' . $exception->getMessage());
@@ -250,7 +250,6 @@ class TwitterAccountListController extends Controller
       $twitter_id = $user->twitter_id;
       
       if(isset($twitter_id)) {
-        Log::debug('認証ユーザーにはtwitter_idが連携されています。'.$twitter_id);
         // 取得したアカウント一覧から、鍵垢以外のものを全て取得する
         // 自分のアカウントは一覧画面に表示させない
         $accounts = TwitterAccount::with(['new_tweet'])

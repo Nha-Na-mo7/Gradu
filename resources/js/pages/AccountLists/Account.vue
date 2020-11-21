@@ -45,8 +45,6 @@
                 >
                   {{ account.name }}
                 </a>
-                <!-- 鍵アイコン / fontawesomeを使う -->
-                <span v-if="account_protected"> 🔒 </span>
               </p>
             </div>
             <!-- Twitterユーザー名 -->
@@ -117,10 +115,9 @@
         </div>
       </div>
 
-      <!-- 新着ツイート1件表示エリア (鍵アカウントの場合は非表示)-->
+      <!-- 新着ツイート1件表示エリア -->
       <div
           class="item-3 p-accounts__tweet--area"
-          v-if="!account_protected"
       >
         <AccountTweet
           :account_url="twitter_account_url"
@@ -153,9 +150,6 @@ export default {
   computed: {
     isFollowing() {
       return this.account.following;
-    },
-    account_protected() {
-      return this.account.protected;
     },
     account_id() {
       return this.account.account_id
