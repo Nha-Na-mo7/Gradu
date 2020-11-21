@@ -12,6 +12,7 @@
 
     <!-- ユーザー名・メールアドレス -->
     <div class="dummybox">
+      <RouterLink to="/mypage/profile">設定変更</RouterLink>
       <div>
         <h2>ユーザーネーム</h2>
         <p>aaaaaaaaaaaaaaaaaaaaaaaaa</p>
@@ -22,8 +23,9 @@
       </div>
     </div>
 
-    <!-- ユーザー名・メールアドレス -->
+    <!-- パスワード -->
     <div class="dummybox">
+      <RouterLink to="/mypage/password">設定変更</RouterLink>
       <div>
         <h2>パスワード</h2>
         <p>********</p>
@@ -33,10 +35,30 @@
     <!-- SNS連携 -->
     <div class="dummybox">
       <div>
-        <h2>SNS連携状態</h2>
-        <p>Twitter</p>
-        <button>連携する</button>
-        <button>連携解除</button>
+        <h2>SNSログイン連携</h2>
+        <h2>Twitter</h2>
+        <!-- 連携中の時 -->
+        <div>
+          <p>連携中</p>
+          <p>Twitterアカウントでログインでき、仮想通貨アカウント一覧機能を利用することができます。</p>
+          <button>解除する</button>
+        </div>
+
+        <!-- 連携していない時 -->
+        <div>
+          <p>連携していません</p>
+          <p>仮想通貨アカウント一覧機能など、一部の機能がご利用できません。</p>
+          <button>
+            <a
+              class="c-btn c-btn--primary c-btn__twitter--login"
+              title="Start for Twitter!"
+              @click.stop
+              :href="`/login/twitter`"
+            >
+              連携する
+            </a>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -54,16 +76,6 @@
       <button class="c-btn">退会する</button>
     </div>
 
-
-    <div class="p-auth__dividingText">
-      <span class="p-auth__dividingText-spanborder">または</span>
-    </div>
-    <a
-        class="c-btn c-btn--primary c-btn__twitter--login"
-        title="Start for Twitter!"
-        @click.stop
-        :href="`/login/twitter`"
-    >Twitter連携する</a>
 
   </div>
 

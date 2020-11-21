@@ -17,6 +17,8 @@ import AccountList from './pages/AccountLists/AccountList.vue';
 import TrendList from './pages/Trends/TrendList.vue';
 // マイページ/アカウント設定
 import Mypage from './pages/Mypage/Mypage.vue';
+import Profile from './pages/Mypage/Profile.vue';
+import PassUpdate from './pages/Mypage/PassUpdate.vue';
 
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
@@ -128,6 +130,32 @@ const routes = [
   {
     path: '/mypage',
     component: Mypage,
+    props: true,
+    beforeEnter(to, from, next) {
+      // 未ログイン状態ならログインチェックに戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
+      }
+    }
+  },
+  {
+    path: '/mypage/profile',
+    component: Profile,
+    props: true,
+    beforeEnter(to, from, next) {
+      // 未ログイン状態ならログインチェックに戻す
+      if(store.getters['auth/loginCheck']) {
+        next();
+      }else{
+        next('/login');
+      }
+    }
+  },
+  {
+    path: '/mypage/password',
+    component: PassUpdate,
     props: true,
     beforeEnter(to, from, next) {
       // 未ログイン状態ならログインチェックに戻す
