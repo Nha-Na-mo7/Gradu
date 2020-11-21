@@ -245,7 +245,26 @@ class TwitterAccountListController extends Controller
     // =======================================
     public function accounts_index()
     {
-      $accounts = TwitterAccount::with(['new_tweet'])->orderBy('account_created_at', 'desc')->paginate();
+      // 自分のTwitterアカウントIDを取得する
+      $user = Auth::user();
+      $twitter_id = $user->twitter_id;
+      
+      if(isset($twitter_id)) {
+        Log::debug('認証ユーザーにはtwitter_idが連携されています。'.$twitter_id);
+        // 取得したアカウント一覧から、鍵垢以外のものを全て取得する
+        // 自分のアカウントは一覧画面に表示させない
+        $accounts = TwitterAccount::with(['new_tweet'])
+            ->where('protected', false)
+            ->orderBy('account_created_at', 'desc')
+            ->whereNotIn('account_id', [$twitter_id])
+            ->paginate();
+      }else{
+        // アカウント連携していなければ見られない画面なはずだが、何らかの理由で見れてしまった時の処理
+        $accounts = TwitterAccount::with(['new_tweet'])
+            ->where('protected', false)
+            ->orderBy('account_created_at', 'desc')
+            ->paginate();
+      }
       
       return $accounts;
     }
@@ -447,13 +466,13 @@ class TwitterAccountListController extends Controller
         // ----------------------------------------
         // ② twitter_accountsテーブルの格納IDを取得する
         // ----------------------------------------
-        // twitter_accountsテーブルのaccount_idカラムを全件取得
-        $accounts = TwitterAccount::select('account_id')->get();
+        // twitter_accountsテーブルのaccount_idカラムを全件取得(鍵垢以外)
+        $accounts = TwitterAccount::select('account_id')->where('protected', false)->get();
         
         // 自動フォロー対象候補のaccount_idを格納する配列
         $candidate_accounts = [];
         
-        // 何らかの理由でaccount_idが0件取得になってしまった場合、自動フォロー以前にフォロー先がないので処理終了。
+        // account_idが0件取得になってしまった場合、自動フォロー以前にフォロー先がないので処理終了。
         if ($accounts->isNotEmpty()) {
           // 取得したaccount_idを1つずつ、自動フォローの候補配列に詰める
           Log::debug('候補となるaccount_idが$accountsに存在します。1つずつ$candidate_accountsに詰めます。');
