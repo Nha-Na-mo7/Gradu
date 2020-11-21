@@ -73,7 +73,10 @@
 
     <!-- 退会処理 -->
     <div class="p-mypage__footer">
-      <button class="c-btn">退会する</button>
+      <button
+          class="c-btn"
+          @click="withdraw"
+      >退会する</button>
     </div>
 
 
@@ -85,12 +88,28 @@
 <script>
 import SiteLinknav from '../Components/SiteLinknav.vue';
 import PageTitle from '../Components/PageTitle.vue';
+import { OK , INTERNAL_SERVER_ERROR } from '../../util.js';
 const PAGE_TITLE = 'マイページ(アカウント設定)';
+
 
 export default {
   computed: {
     page_title() {
       return PAGE_TITLE
+    }
+  },
+  methods: {
+    // 退会処理
+    async withdraw() {
+      if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると色々なサービスの利用ができなくなります。')){
+        const response = await axios.post(`/api/withdraw`);
+
+        if(response.status === OK){
+          window.location = "/";
+        }else{
+          window.location = "/login";
+        }
+      }
     }
   },
   components: {

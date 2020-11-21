@@ -37,13 +37,13 @@ class UserController extends Controller
         // csrfトークンを再生成
         session()->regenerateToken();
         
-        // リダイレクト処理はフロントエンドで行う
+        session()->flash('退会処理が完了しました。');
         
-        // TODO XXXX
-        return response()->json(['success'], 200);
+        // リダイレクト処理はフロントエンドで行う
+        return response(200);
         
       } catch (\Exception $e) {
-        
+        session()->flash('退会処理の途中でエラーが発生しました。');
         // ログアウト
         Auth::logout();
         // セッションを一度消してから再発行
@@ -51,9 +51,8 @@ class UserController extends Controller
         // csrfトークンを再生成
         session()->regenerateToken();
         
-        // TODO XXXX
         Log::debug('退会処理の過程でエラーです。'. $e->getMessage());
-        return response()->json(['error', 'エラーが発生しました。'], 500);
+        return response(500);
       }
     }
     

@@ -16,9 +16,12 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/sample.css') }}">
 </head>
-
-
 <body>
+@if(session('flash_message'))
+    <div class="flash_message">
+        {{ session('flash_message') }}
+    </div>
+@endif
 
 <div id="app">
 
