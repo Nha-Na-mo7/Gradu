@@ -55,13 +55,13 @@ module.exports = {
                 plugins: [
                   // Autoprefixerを有効化
                   require("autoprefixer")({
-                    // IE11以上、Android4.4以上、iOS8以上でベンダープレフィックスを付与する
+                    // Android4.4以上、iOS10以上でベンダープレフィックスを付与する
                     // それ以外のブラウザは最新の２バージョンに対応させる
+                    // IEは非対応
                     browsers: [
                       "last 2 versions",
-                      "ie >= 11",
                       "Android >= 4",
-                      "iOS >= 8",
+                      "iOS >= 10",
                     ],
                   }),
                 ],
