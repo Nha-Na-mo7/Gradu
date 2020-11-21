@@ -24,8 +24,8 @@ class UpdatePasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'password_old' => "required|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/",
-            'password' => "required|confirmed|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/"
+            'old_password' => "required|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/",
+            'password' => "required|confirmed|string|min:8|different:old_password|max:50|regex:/^[a-zA-Z0-9]+$/"
         ];
     }
     
@@ -33,13 +33,14 @@ class UpdatePasswordRequest extends FormRequest
     {
       
         return [
-            'password_old.required' => '入力してください',
-            'password_old.min' => '8文字以上で入力してください',
-            'password_old.max' => '50文字以内で入力してください',
-            'password_old.regex' => "半角英数字のみご利用いただけます",
+            'old_password.required' => '入力してください',
+            'old_password.min' => '8文字以上で入力してください',
+            'old_password.max' => '50文字以内で入力してください',
+            'old_password.regex' => "半角英数字のみご利用いただけます",
           
             'password.required' => '入力してください',
             'password.confirmed' => 'パスワードと再入力が一致していません',
+            'password.different' => '現在のパスワードとは異なるパスワードを入力してください',
             'password.min' => '8文字以上で入力してください',
             'password.max' => '50文字以内で入力してください',
             'password.regex' => "半角英数字のみご利用いただけます",

@@ -90,6 +90,10 @@ Route::get('/transaction/price', 'CoinCheckController@get_transaction_price');
 Route::post('/user/update/name', 'UserController@update_name')->name('user.update_name');
 // メールアドレスの更新処理
 Route::post('/user/update/mail', 'UserController@update_mail')->name('user.update_mail');
+// パスワードの新規登録
+Route::post('/user/create/password', 'UserController@create_password')->name('user.create_password');
+// パスワードの更新
+Route::post('/user/update/password', 'UserController@update_password')->name('user.update_password');
 
 // =============================================
 // その他

@@ -18,7 +18,7 @@ import TrendList from './pages/Trends/TrendList.vue';
 // マイページ/アカウント設定
 import Mypage from './pages/Mypage/Mypage.vue';
 import Profile from './pages/Mypage/Profile.vue';
-import PassUpdate from './pages/Mypage/PassUpdate.vue';
+import PasswordMenu from './pages/Mypage/PasswordMenu.vue';
 
 // エラー系
 import SystemError500 from './pages/errors/System.vue';
@@ -155,7 +155,7 @@ const routes = [
   },
   {
     path: '/mypage/password',
-    component: PassUpdate,
+    component: PasswordMenu,
     props: true,
     beforeEnter(to, from, next) {
       // 未ログイン状態ならログインチェックに戻す
