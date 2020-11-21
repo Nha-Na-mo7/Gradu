@@ -1943,12 +1943,12 @@ main {
   -webkit-justify-content: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .p-footer__item--title[data-v-585a4226] {
   font-size: 1.2rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .p-footer__menus li[data-v-585a4226] {
   padding-top: 10px;

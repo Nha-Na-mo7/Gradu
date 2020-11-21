@@ -24,7 +24,6 @@
           <li><RouterLink class="" to="">プライバシーポリシー</RouterLink></li>
           <li><RouterLink class="" to="">お問い合わせ</RouterLink></li>
         </ul>
-        <button class="c-btn" @click="check_limit_status">[開発用]<br>check_limit_status</button>
       </div>
     </div>
     <!-- Copyright -->
@@ -35,21 +34,10 @@
 </template>
 
 <script>
-import {OK} from "../util";
 
 export default {
   methods: {
-    async check_limit_status() {
-      const response = await axios.get('../api/twitter/check_limit_status');
 
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status)
-        return false
-      }
-
-      console.log(response.data.result.resources)
-    }
   }
 }
 </script>
@@ -92,12 +80,12 @@ export default {
   -webkit-box-pack: center;
   justify-content: center;
 
-  padding-top: 40px;
-  padding-bottom: 40px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .p-footer__item--title {
   font-size: 1.2rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 .p-footer__menus li {
   padding-top: 10px;
