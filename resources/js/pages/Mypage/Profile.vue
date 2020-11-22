@@ -42,23 +42,23 @@
       <!-- メールアドレス -->
       <div>
         <!-- DBから現在のメールアドレスを取得し、入力された状態にしておく-->
-        <label for="mail">メールアドレス</label>
+        <label for="email">メールアドレス</label>
         <!-- エラー表示は要修正-->
-        <ul v-if="errors_mail">
-          <li v-for="error in errors_mail">
+        <ul v-if="errors_email">
+          <li v-for="error in errors_email">
             <span>{{ error }}</span>
           </li>
         </ul>
         <input
-            id="mail"
+            id="email"
             class="p-form__item"
             type="text"
             placeholder="メールアドレスを入力してください"
-            v-model="form_mail"
+            v-model="form_email"
         >
         <button
             class="c-btn"
-            @click="update_mail"
+            @click="update_email"
         >
           変更を保存
         </button>
@@ -92,10 +92,10 @@ export default {
       user: '',
       form_name: '',
       // メールアドレスのフォーム
-      form_mail: '',
-      system_error: '',
-      errors_name: '',
-      errors_mail: '',
+      form_email: '',
+      system_error: [],
+      errors_name: [],
+      errors_email: [],
       isUpdating: false
     }
   },
@@ -115,7 +115,7 @@ export default {
       if(response.status === OK) {
         // フォーム用にデータを格納
         this.form_name = response.data.name
-        this.form_mail = response.data.email
+        this.form_email = response.data.email
         this.isloading = false;
       }else{
         this.system_error = response.data.errors
@@ -153,26 +153,29 @@ export default {
     },
 
     // メールアドレスの変更
-    async update_mail() {
+    async update_email() {
+      console.log('clicked!')
       // 更新処理中は複数回起動できないようにする
-      if(!this.isUpdating){
+      if(this.isUpdating){
         return false;
       }
       this.isUpdating = true;
 
       const response = await axios
-          .post(`/api/user/update/mail`, { mail : this.form_mail })
+          .post(`/api/user/update/email`, { email : this.form_email })
           .catch(error => error.response || error);
 
-      // エラーチェック
+      // バリデーションエラー時
       if(response.status === UNPROCESSABLE_ENTITY ) {
-        this.errors_mail = response.data.errors.mail;
+        this.errors_email = response.data.errors.email;
         this.isUpdating = false;
+      }else if(response.status === INTERNAL_SERVER_ERROR){
+        console.log('500error')
+      }else{
+        // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
+        // TODO フラッシュメッセージ
+        console.log('メールアドレスあてにメールを送信しました。')
       }
-
-      // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-      // TODO フラッシュメッセージ
-      console.log('メールアドレスあてにメールを送信しました。')
       this.isUpdating = false;
     },
   },

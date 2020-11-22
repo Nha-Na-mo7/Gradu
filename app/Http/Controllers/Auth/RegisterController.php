@@ -54,12 +54,12 @@ class RegisterController extends Controller
         
         return Validator::make($data, [
             'name' => ['required', 'max:20'],
-            'email' => ['required', 'string', 'email:strict,dns,spoof', 'max:100', 'unique:users'],
+            'email' => ['required', 'unique:users,email', 'string', 'email:strict,dns,spoof', 'max:100', 'unique:users'],
             'password' => ['required', 'string', "min:8", "max:50", 'confirmed', 'regex:/^[a-zA-Z0-9]+$/'],
         ]);
     }
-
-    /**
+  
+  /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -75,6 +75,9 @@ class RegisterController extends Controller
     }
   
   
+    // TODO フォームリクエストを作成してここに使うこと
+    // https://teratail.com/questions/244665
+    
     // トレイトを使用しているRegisterControllerでregisteredメソッドの中身を実装して上書き。
     protected function registered(Request $request, $user)
     {

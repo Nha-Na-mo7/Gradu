@@ -24,7 +24,7 @@ class UpdateMailRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => "required|email:strict,dns,spoof|max:100",
+            'email' => "required|unique:users,email|email:strict,dns,spoof|max:100",
         ];
     }
     
@@ -33,6 +33,7 @@ class UpdateMailRequest extends FormRequest
 
       return [
           'email.required' => '入力してください',
+          'email.unique' => 'このメールアドレスは既に登録されています',
           'email.email' => '正しいメールアドレスを入力してください',
           'email.max' => "100文字以内で入力してください",
 
