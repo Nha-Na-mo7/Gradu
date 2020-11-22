@@ -48,10 +48,18 @@
         <h2>Twitter</h2>
         <!-- 連携中の時 -->
         <div v-if="isExist_twitter">
-          <p>連携中</p>
-          <p>Twitterアカウントでログインでき、仮想通貨アカウント一覧機能を利用することができます。</p>
+          <div>
+            <p>連携中</p>
+            <p>Twitterアカウントでログインでき、仮想通貨アカウント一覧機能を利用することができます。</p>
 
-          <button class="c-btn" @click="twitter_un_linkage">解除する</button>
+            <button class="c-btn" @click="twitter_un_linkage">解除する</button>
+          </div>
+          <div>
+            <h2>Twitterアカウントの自動フォロー状態</h2>
+            <p v-if="auto_follow_status">ON</p>
+            <p v-else>OFF</p>
+          </div>
+
         </div>
 
         <!-- 連携していない時 -->
@@ -69,15 +77,6 @@
             </a>
           </button>
         </div>
-      </div>
-    </div>
-
-    <!-- 自動フォロー状態 -->
-    <div class="dummybox">
-      <div>
-        <h2>Twitterアカウントの自動フォロー状態</h2>
-        <p v-if="auto_follow_status">ON</p>
-        <p v-else>OFF</p>
       </div>
     </div>
 
