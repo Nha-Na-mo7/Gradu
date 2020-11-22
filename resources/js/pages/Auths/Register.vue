@@ -9,7 +9,7 @@
 
 
 
-      <label for="name">名前</label>
+      <label for="name">ユーザーネーム</label>
       <!--      エラー表示は要修正-->
       <div v-if="registerErrors">
         <span v-if="registerErrors.name">{{ registerErrors.name[0] }}</span>
@@ -24,7 +24,7 @@
       </div>
       <input type="text" class="p-form__item" id="email" v-model="registerForm.email">
 
-      <label for="password">パスワード (半角英数字 8文字以上) </label>
+      <label for="password">パスワード (半角英数字 8~50文字) </label>
       <!--      エラー表示は要修正-->
       <div v-if="registerErrors">
         <span v-if="registerErrors.password">{{ registerErrors.password[0] }}</span>

@@ -69,19 +69,7 @@ class LoginController extends Controller
     //       ?: redirect()->intended($this->redirectPath());
     // }
   
-  
-  
-    // ===================================
-    // ログアウト
-    // ===================================
-    // AuthenticatesUsersトレイトの logout メソッド内、loggetOutメソッドのオーバーライドでレスポンスにセッションの再生成を含ませる。
-    protected function loggedOut(Request $request)
-    {
-      // セッションの再生成
-      $request->session()->regenerate();
-      
-      return response()->json();
-    }
+
     
     // ===================================
     // バリデーション (トレイトのオーバーライド)
@@ -92,5 +80,21 @@ class LoginController extends Controller
           $this->username() => 'required|email:strict,dns,spoof|max:100',
           'password' => 'required|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/',
       ]);
+    }
+  
+  
+  
+    // ===================================
+    // ログアウト
+    // ===================================
+    // 本来はログアウト後のリダイレクト先を設定するトレイト。
+    // AuthenticatesUsersトレイトの logout メソッド内、
+    // loggetOutメソッドのオーバーライドでレスポンスにセッションの再生成を含ませる。
+    protected function loggedOut(Request $request)
+    {
+      // セッションの再生成
+      $request->session()->regenerate();
+      
+      return redirect('/');
     }
 }

@@ -52,7 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'max:20'],
+            'name' => ['required', 'string', 'max:20'],
             'email' => ['required', 'unique:users,email', 'string', 'email:strict,dns,spoof', 'max:100', 'unique:users'],
             'password' => ['required', 'string', "min:8", "max:50", 'confirmed', 'regex:/^[a-zA-Z0-9]+$/'],
         ]);
@@ -72,12 +72,19 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
-  
-  
-    // TODO フォームリクエストを作成してここに使うこと
-    // https://teratail.com/questions/244665
     
-    // トレイトを使用しているRegisterControllerでregisteredメソッドの中身を実装して上書き。
+    // ===================================
+    // リダイレクト先変更(トレイトのオーバーライド)
+    // ===================================
+    public function redirectPath()
+    {
+      return '/mypage';
+    }
+    
+    
+    // ===============================================
+    // トレイトのregisteredメソッドの中身を実装して上書き
+    // ===============================================
     protected function registered(Request $request, $user)
     {
       return $user;

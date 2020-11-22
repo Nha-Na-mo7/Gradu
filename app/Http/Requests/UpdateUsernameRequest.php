@@ -25,7 +25,7 @@ class UpdateUsernameRequest extends FormRequest
     {
         
         return [
-            'name' => "required|max:20",
+            'name' => "required|string|max:20",
         ];
     }
     
@@ -33,6 +33,7 @@ class UpdateUsernameRequest extends FormRequest
     {
 
         return [
+            'name.string' => '文字列で入力してください',
             'name.required' => '入力してください',
             'name.max' => "20文字以内で入力してください",
         ];

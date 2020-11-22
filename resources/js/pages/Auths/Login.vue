@@ -14,7 +14,7 @@
       </div>
       <input type="text" class="p-form__item" id="email" v-model="loginForm.email">
 
-      <label for="password">パスワード (半角英数字 8文字以上) </label>
+      <label for="password">パスワード (半角英数字 8~50文字) </label>
       <div v-if="loginErrors">
         <span v-if="loginErrors.password">{{ loginErrors.password[0] }}</span>
       </div>
