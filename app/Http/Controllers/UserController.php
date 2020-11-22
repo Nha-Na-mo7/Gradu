@@ -51,24 +51,19 @@ class UserController extends Controller
     // 変更後に確認メールを送信する。
     public function update_email(UpdateMailRequest $request) {
       Log::debug('UserController.update_mail メールアドレスの更新');
-      // try {
-      //   $user = Auth::user();
-      //
-      //   $new_email = $request->email;
-      //   Log::debug('変更後のemail :'.$new_email);
-      //
-      //   // 旧メールアドレスと同じメールアドレスが送信された場合は
-      //   if($user->email === $new_email) {
-      //     return response();
-      //   }
-      //   Log::debug('新しいメールアドレス宛にメールを送信しました。');
-      //
-      //   return response(200);
-      // }catch (\Exception $e) {
-      //   Log::debug('エラーが発生しました。'. $e->getMessage());
-      //   return response()->json(['errors'], 500);
-      // }
-      return response()->json(200);
+      try {
+        $user = Auth::user();
+      
+        $new_email = $request->email;
+        Log::debug('変更後のemail :'.$new_email);
+        
+        Log::debug('新しいメールアドレス宛にメールを送信しました。');
+      
+        return response(200);
+      }catch (\Exception $e) {
+        Log::debug('エラーが発生しました。'. $e->getMessage());
+        return response()->json(['errors'], 500);
+      }
     }
     
     // ================================
