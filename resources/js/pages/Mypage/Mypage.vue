@@ -63,7 +63,7 @@
               class="c-btn c-btn--primary c-btn__twitter--login"
               title="Start for Twitter!"
               @click.stop
-              :href="`/login/twitter`"
+              :href="`/twitter/auth/begin`"
             >
               連携する
             </a>

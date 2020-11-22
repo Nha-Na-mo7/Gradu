@@ -22,7 +22,7 @@ class RedirectIfAuthenticated
         // ログイン中に、ログインしていない場合にしかアクセスできないリクエストを送信した時、
         // 代わりにユーザー情報を返すAPIにアクセスさせる。
         if (Auth::guard($guard)->check()) {
-            Log::debug('RedirectifAuthenticated.php');
+            Log::debug('app/Http/Middleware/RedirectifAuthenticated.php');
             return redirect()->route('user');
         }
 

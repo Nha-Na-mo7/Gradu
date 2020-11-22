@@ -21,13 +21,12 @@ use Illuminate\Support\Facades\Route;
 // ②Twitterアプリ側が認証をする
 // 認証が成功したら...
 // ↓
-// ③login/twitter/callbackへユーザー情報を返すので
-// それをUserテーブルに保管する
+// ③login/twitter/callbackへユーザー情報を返す
 
 // Twitter経由での認証を開始するURL
-Route::get('/login/twitter', 'Auth\LoginController@redirectToTwitterProvider');
-// Twitterアプリケーション側から情報が返ってくるURL
-Route::get('/login/twitter/callback', 'Auth\LoginController@handleTwitterProviderCallback');
+Route::get('/twitter/auth/begin', 'TwitterController@redirectToTwitterProvider');
+// Twitterアプリケーション側から情報が返ってくるコールバックURL
+Route::get('/twitter/auth/callback', 'TwitterController@handleTwitterProviderCallback');
 
 // ================
 // other

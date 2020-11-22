@@ -307,7 +307,7 @@ class TwitterAccountListController extends Controller
       }
       
       // APIリクエスト用のインスタンスを作成
-      $connection = $this->connection_instanse_users($token, $token_secret);
+      $connection = (new TwitterController())->connection_instanse_users($token, $token_secret);
       
       // フォローリクエストを飛ばす
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
