@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 
 class ForgotPasswordController extends Controller
 {
@@ -28,45 +29,61 @@ class ForgotPasswordController extends Controller
       $this->middleware('guest');
     }
   
+  
+    // ===================================
+    // バリデータ
+    // ===================================
+    protected function validator(array $data)
+    {
+      return Validator::make($data, [
+          'email' => ['required', 'string', 'email:strict,dns,spoof', 'max:100'],
+      ]);
+    }
+    
+    // ===================================
+    // メール送信 トレイトオーバーライド
+    // ===================================
     public function sendResetLinkEmail(Request $request)
     {
       $this->validateEmail($request);
     
-      $response = $this->broker()->sendResetLink(
-          $request->only('email')
-      );
-      
-      if($response == Password::RESET_LINK_SENT) {
-        Log::debug('this is true(201)');
-        return response()->json([
-            'message' => 'Reset link sent to your email.',
-            'status' => true
-        ], 201);
-      }else{
-        Log::debug('this is false(401)');
+      $response = $this
+          ->broker()
+          ->sendResetLink($request->only('email'));
   
-        return response()->json([
-            'message' => 'Unable to sent reset link', 'status' => false
-        ], 401);
-      }
+      return $response == Password::RESET_LINK_SENT
+          ? $this->sendResetLinkResponse($request, $response)
+          : $this->sendResetLinkFailedResponse($request, $response);
+      
+      //
+      // if($response == Password::RESET_LINK_SENT) {
+      //   Log::debug('this is true(201)');
+      //   return response()->json([
+      //       'message' => 'Reset link sent to your email.',
+      //       'status' => true
+      //   ], 201);
+      // }else{
+      //   Log::debug('this is false(401)');
+      //
+      //   return response()->json([
+      //       'message' => 'Unable to sent reset link', 'status' => false
+      //   ], 401);
+      // }
     }
   
-  
-  /**
+    // ===================================
+    // 偽装メール送信通知 (トレイトオーバーライド)
+    // ===================================
+   /**
      * SendsPasswordResetEmails trait で定義されているメソッドをオーバーライド。
      * usersテーブルに登録されていないメアドが入力されていた場合でも、「送信しました」とメッセージを出す。
      * ただし実際にはメールを送らない。
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  string  $response
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
-      // もともとはこちらの処理
-      //return back()
-      //        ->withInput($request->only('email'))
-      //        ->withErrors(['email' => trans($response)]);
       // レスポンスを成功したときと同様の処理に書き換える。
       $response = 'passwords.sent';
       // 成功時と同じようにバリデーションエラーは出さないで戻す

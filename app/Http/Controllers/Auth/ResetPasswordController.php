@@ -45,8 +45,6 @@ class ResetPasswordController extends Controller
     {
       $this->middleware('guest');
     }
-    
-    // TODO ここにフォームリクエストをつければバリデータはいらない？
     public function reset(Request $request)
     {
       $validate =  $this->validator($request->all());
