@@ -23,9 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/app/Models/EmailReset.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/Notifications/ChangeEmail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/database/migrations/2020_11_22_145953_create_email_resets_table.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/emails/changeEmail.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/ResetPasswordController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/emails/resetPassword.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/resetPassword.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -353,7 +358,7 @@
       <workItem from="1605837897559" duration="273000" />
       <workItem from="1605838186038" duration="17000" />
       <workItem from="1605838213174" duration="2363000" />
-      <workItem from="1605840654025" duration="106974000" />
+      <workItem from="1605840654025" duration="115430000" />
     </task>
     <servers />
   </component>
@@ -484,10 +489,14 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="988" y="360" width="715" height="490" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1601626231573" />
-    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup" timestamp="1605987864557">
+    <state x="721" y="282" key="run.anything.popup" timestamp="1606027443775">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1605987864557" />
+    <state x="721" y="282" key="run.anything.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606027443775" />
+    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup" timestamp="1606027460003">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606027460003" />
     <state x="448" y="382" width="481" height="158" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1603953206479">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>

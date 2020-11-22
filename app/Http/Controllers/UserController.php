@@ -6,10 +6,15 @@ use App\Http\Requests\CreatePasswordRequest;
 use App\Http\Requests\UpdateMailRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUsernameRequest;
+use App\Models\EmailReset;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use function Psy\debug;
 
 class UserController extends Controller
@@ -57,6 +62,8 @@ class UserController extends Controller
         $new_email = $request->email;
         Log::debug('変更後のemail :'.$new_email);
         
+        $result = $this->send_change_email_link($user->id, $new_email);
+        
         Log::debug('新しいメールアドレス宛にメールを送信しました。');
       
         return response(200);
@@ -69,16 +76,86 @@ class UserController extends Controller
     // ================================
     // メールアドレス変更確認メールを送信する
     // ================================
-    public function send_change_mail() {
-    
+    public function send_change_email_link($user_id, $new_email) {
+      Log::debug('UserController.send_change_email_link 変更確認メールの送信');
+  
+      // トークン生成
+      $token = hash_hmac('sha256', Str::random(40) . $new_email, config('app.key'));
+  
+      Log::debug('作成したトークンをDBに保存します。');
+      // トークンをDBに保存
+      $param = [];
+      $param['user_id'] = $user_id;
+      $param['new_email'] = $new_email;
+      $param['token'] = $token;
+ 
+      $email_reset = EmailReset::create($param);
+      
+      // リセットメールを送信する
+      Log::debug($new_email.'宛にリセットメールを送信します。');
+      $email_reset->send_email_reset_notification($token);
+      
+    }
+  
+  
+    // ================================
+    // メールアドレスの更新を確定させる
+    // ================================
+    public function reset_email(Request $request, $token) {
+      Log::debug('============================');
+      Log::debug('reser_email メアド更新完了手続き');
+      Log::debug('============================');
+      // トークンが格納されたレコードを取得する
+      Log::debug('トークンが格納されたレコードがあるか確認します。');
+      $email_resets = DB::table('email_resets')
+          ->where('token', $token)
+          ->first();
+      
+      // トークンが存在している && 有効期限以内かをチェック
+      if ($email_resets && !$this->token_expired($email_resets->created_at)){
+        Log::debug('有効期限以内でした。更新手続きを開始します。');
+        // ユーザーのメアドを更新
+        $user = User::find($email_resets->user_id);
+        $user->email = $email_resets->new_email;
+        $user->save();
+        
+        Log::debug('トークンレコードを削除します');
+        // トークンテーブルからレコードを削除
+        DB::table('email_resets')
+            ->where('token', $token)
+            ->delete();
+        
+        Log::debug('更新手続きは完了しました。マイページにリダイレクトします。');
+        return redirect('/mypage')->with('flash_message', 'メールアドレスの更新が完了しました。');
+        
+      }else{
+        // 有効期限オーバーになったレコードは削除する
+        if($email_resets){
+          Log::debug('有効期限オーバーです。');
+          DB::table('email_resets')
+              ->where('token', $token)
+              ->delete();
+        }
+        
+        Log::debug('更新手続きに失敗しました...。マイページにリダイレクトします。');
+        return redirect('/mypage')->with('flash_message', 'メールアドレスの更新に失敗しました。');
+      }
+    }
+  
+    // =========================================
+    // トークンが有効期限オーバーかをチェックする
+    // =========================================
+    protected function token_expired($createdAt)
+    {
+      // トークンの有効期限は60分に設定
+      $expires = 60 * 60;
+
+      // トークンの作成時刻 + $expiresで設定した時刻と現在時刻を比較する。
+      // isPastでcreated_at + $expiredをオーバーしていた場合、falseを返す。
+      return Carbon::parse($createdAt)->addSeconds($expires)->isPast();
     }
     
-  
-  
-  
-  
-  
-  
+    
     
     // =========================
     // パスワードを新しく設定する
@@ -110,15 +187,6 @@ class UserController extends Controller
     // こちらは純粋なパスワードの更新処理メソッド。
     public function update_password(UpdatePasswordRequest $request) {
       Log::debug('UserController.password_update パスワードの更新');
-      // 入力されたパスワードが同じ者なら弾く
-      // if($request->old_password === $request->password) {
-      //   return response()->json(
-      //       ['errors' =>
-      //           ['password' =>
-      //               ['入力されたパスワードが同じです']
-      //           ]
-      //       ], 422);
-      // }
       
       try {
         // 更新の場合は旧パスワードと一致するかを確認する工程が入る

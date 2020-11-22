@@ -173,7 +173,7 @@ export default {
         console.log('500error')
       }else{
         // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-        // TODO フラッシュメッセージ
+        // TODO フラッシュメッセージ - メールを送信しました。
         console.log('メールアドレスあてにメールを送信しました。')
       }
       this.isUpdating = false;
