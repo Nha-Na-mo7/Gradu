@@ -93,7 +93,7 @@ return [
     'not_regex'            => ':attributeの形式が正しくありません。',
     'numeric'              => ':attributeには、数字を指定してください。',
     'present'              => ':attributeが存在していません。',
-    'regex'                => ':attributeに正しい形式を指定してください。',
+    'regex'                => ':attributeは半角英数字で入力してください。',
     'required'             => ':attributeは入力必須です。',
     'required_if'          => ':otherが:valueの場合、:attributeも指定してください。',
     'required_unless'      => ':otherが:valuesでない場合、:attributeを指定してください。',

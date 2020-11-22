@@ -43,9 +43,9 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
   
-    // ====================
-    // ログイン(フォームから)
-    // ====================
+    // =========================================
+    // フォームからのログイン(トレイトをオーバーライド)
+    // =========================================
     protected function authenticated(Request $request, $user)
     {
       return $user;
@@ -69,9 +69,11 @@ class LoginController extends Controller
     //       ?: redirect()->intended($this->redirectPath());
     // }
   
-    // =============
+  
+  
+    // ===================================
     // ログアウト
-    // =============
+    // ===================================
     // AuthenticatesUsersトレイトの logout メソッド内、loggetOutメソッドのオーバーライドでレスポンスにセッションの再生成を含ませる。
     protected function loggedOut(Request $request)
     {
@@ -79,5 +81,16 @@ class LoginController extends Controller
       $request->session()->regenerate();
       
       return response()->json();
+    }
+    
+    // ===================================
+    // バリデーション (トレイトのオーバーライド)
+    // ===================================
+    protected function validateLogin(Request $request)
+    {
+      $request->validate([
+          $this->username() => 'required|email:strict,dns,spoof|max:100',
+          'password' => 'required|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/',
+      ]);
     }
 }
