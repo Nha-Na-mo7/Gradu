@@ -16,15 +16,15 @@ class CreateFollowTargetsTable extends Migration
         Schema::create('follow_targets', function (Blueprint $table) {
           
           $table->bigIncrements('id');
-          $table->string('account_id')->comment('紐付いているアカウントID');
+          $table->string('account_id')->nullable()->comment('紐付いているアカウントID');
           $table->string('follow_target_id')->comment('フォロー先のアカウントID');
       
-          //外部キーでusersのaccount_idと紐付け。
-          //主テーブルのレコードが削除されたら、このテーブルのデータも一緒に消える。
+          //外部キーでusersのtwitter_idと紐付け。
           $table->foreign('account_id')
               ->references('twitter_id')
               ->on('users')
-              ->onDelete('cascade');
+              ->onDelete('cascade')
+              ->onUpdate('cascade');
         });
     }
 

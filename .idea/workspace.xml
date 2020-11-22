@@ -24,15 +24,11 @@
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterAccountListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterAccountListController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_10_26_124854_create_follow_targets_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_10_26_124854_create_follow_targets_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_01_224149_create_follow_api_limits_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_01_224149_create_follow_api_limits_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/Register.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/Mypage/Mypage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Mypage/Mypage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +356,7 @@
       <workItem from="1605837897559" duration="273000" />
       <workItem from="1605838186038" duration="17000" />
       <workItem from="1605838213174" duration="2363000" />
-      <workItem from="1605840654025" duration="125737000" />
+      <workItem from="1605840654025" duration="128567000" />
     </task>
     <servers />
   </component>

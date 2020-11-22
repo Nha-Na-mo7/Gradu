@@ -174,7 +174,6 @@ export default {
       if(this.isUpdating){
         return false;
       }
-      this.isUpdating = true;
 
       // パスワードが設定されていない場合、警告を出して連携解除できないようにする
       if(!this.isExist_password) {
@@ -183,24 +182,31 @@ export default {
         return false;
       }
 
-      // 更新処理にアクセス
-      const response = await axios
-          .post(`/api/accounts/un_linkage`)
-          .catch(error => error.response || error);
+      // はいが選択されたら解除処理を行う
+      if(confirm('【 Twitterの連携を解除してもよろしいですか？ 】\nTwitterの連携を解除すると、一部の機能がご利用できなくなります。')){
+        this.isUpdating = true;
 
-      console.log(response)
+        // 更新処理にアクセス
+        const response = await axios
+            .post(`/api/accounts/un_linkage`)
+            .catch(error => error.response || error);
 
-      // エラーチェック
-      if(response.status === INTERNAL_SERVER_ERROR) {
+        console.log(response)
+
+        // エラーチェック
+        if(response.status === INTERNAL_SERVER_ERROR) {
+          // TODO フラッシュメッセージ
+          console.log('連携解除に失敗しました。')
+        }else{
+          console.log('解除しました。')
+          this.twitter = false;
+        }
+        // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
         // TODO フラッシュメッセージ
-        console.log('連携解除に失敗しました。')
-      }else{
-        console.log('解除しました。')
-        this.twitter = false;
+        this.isUpdating = false;
+
       }
-      // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-      // TODO フラッシュメッセージ
-      this.isUpdating = false;
+
     },
   },
   watch: {

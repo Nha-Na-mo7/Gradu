@@ -63,44 +63,9 @@ class TwitterController extends Controller
       
       return $connection;
     }
-  
-  
     
-    // ========================================
-    // 設定画面からTwitterとサービスを連携させる
-    // ========================================
-    public function linkage() {
-    
-    }
-    
-    // ========================================
-    // Twitterとの連携を解除する
-    // ========================================
-    public function un_linkage(){
-        Log::debug('TwitterController.un_linkage 連携解除');
-        try {
-          // usersテーブルのアクセストークンを見てtwitterログインやオートフォローなどの処理を行っている
-          // →アクセストークンの項目を空にすれば連携は解除される
-          $user = (new UserController)->auth_user();
-          
-          // usersテーブルのTwitterID・アクセストークン・シークレットを削除する。(fillでnullが入れられないのでベタがき)
-          $user->twitter_id = null;
-          $user->token = null;
-          $user->token_secret = null;
-          $user->save();
-          
-          Log::debug('Twitter連携を解除しました。');
-      
-          return response()->json(['success' => 'Twitter連携を解除しました。'], 200);
-        } catch (\Exception $e) {
-          Log::debug('アカウント情報変更時に例外が発生しました。' .$e->getMessage());
-          return response()->json(['errors' => '連携解除時にエラーが発生しました。しばらくしてからもう一度お試しください。'], 500);
-        }
-    }
-  
-  
     // ================================
-    // Twitter連携(Twitter新規登録含む)
+    // Twitter連携の開始
     // ================================
     // Twitter認証ページへユーザーをリダイレクトする
     public function redirectToTwitterProvider()
@@ -200,6 +165,32 @@ class TwitterController extends Controller
         // エラーならログイン画面へ戻す
         Log::debug('ログイン失敗です :'. $e->getMessage());
         return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
+      }
+    }
+    
+    // ========================================
+    // Twitterとの連携を解除する
+    // ========================================
+    public function un_linkage(){
+      Log::debug('TwitterController.un_linkage 連携解除');
+      try {
+        // usersテーブルのアクセストークンを見てtwitterログインやオートフォローなどの処理を行っている
+        // →アクセストークンの項目を空にすれば連携は解除される
+        $user = Auth::user();
+        
+        // usersテーブルのTwitterID・アクセストークン・シークレットを削除する。オートフォローはオフにする。
+        $user->twitter_id = null;
+        $user->token = null;
+        $user->token_secret = null;
+        $user->auto_follow_flg = false;
+        $user->save();
+        
+        Log::debug('Twitter連携を解除しました。');
+        
+        return response()->json(['success' => 'Twitter連携を解除しました。'], 200);
+      } catch (\Exception $e) {
+        Log::debug('アカウント情報変更時に例外が発生しました。' .$e->getMessage());
+        return response()->json(['errors' => '連携解除時にエラーが発生しました。しばらくしてからもう一度お試しください。'], 500);
       }
     }
 }
