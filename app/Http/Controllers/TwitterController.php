@@ -156,7 +156,8 @@ class TwitterController extends Controller
           // TODO ここでフォローしている人を取得しDBに格納するメソッドを発動
           
           // Twitterログインの場合は利便性重視のユーザーが想定されるので、継続ログインをONとする
-          Auth::login($myinfo, true);
+          // Auth::login($myinfo, true);
+          Auth::login($myinfo);
           
           // 転送する(トレンド一覧画面が良いか)
           return redirect()->to('/trends');

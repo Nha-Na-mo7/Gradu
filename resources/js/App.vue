@@ -45,21 +45,25 @@ export default {
     // ストアのerrorCodeステートを監視
     errorCode: {
       async handler(val) {
-        // 認証エラー(セッションタイムアウト時)
-        if (val === UNAUTHORIZED) {
-          console.log('resources/js/App.vue : 認証切れです')
-          // トークンリフレッシュ
-          await axios.get('/api/refresh-token');
-          // ストアのuserをクリアする
-          this.$store.commit('auth/setUser', null);
-          // ログイン画面へ遷移
-          this.$router.push('/login').catch(err => {});
-        // 500エラー
-        } else if (val === INTERNAL_SERVER_ERROR) {
-          this.$router.push('/500');
-        // 404エラー
-        } else if (val === NOT_FOUND) {
-          this.$router.push('/404');
+
+        switch (val){
+          case UNAUTHORIZED:
+            console.log('resources/js/App.vue : 認証切れです')
+            // トークンリフレッシュ
+            await axios.get('/api/refresh-token');
+            // ストアのuserをクリアする
+            this.$store.commit('auth/setUser', null);
+            // ログイン画面へ遷移
+            this.$router.push('/login').catch(err => {});
+            break;
+
+          case INTERNAL_SERVER_ERROR:
+            this.$router.push('/500');
+            break;
+
+          case NOT_FOUND:
+            this.$router.push('/404');
+            break;
         }
       },
       // 最初の読み込みの段階からこのハンドラーは実行される
