@@ -92,8 +92,9 @@
 </template>
 
 <script>
-import PageTitle from '../Components/PageTitle.vue';
-import Loading from '../../Components/Loading.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+// TODO
+import Loading from '../../layouts/Loading.vue';
 
 import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
 const PAGE_TITLE = 'マイページ(アカウント設定)';

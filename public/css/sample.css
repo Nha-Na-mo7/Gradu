@@ -1828,41 +1828,41 @@ main {
   background: #d8d8d8;
   min-height: 200px;
 }
-.message[data-v-b91a6428] {
+.message[data-v-5026a9d3] {
   background: #98c379;
   height: 40px;
   width: 100%;
   opacity: 0.7;
   z-index: 44;
 }
-.item1[data-v-585a4226] {
+.item1[data-v-0b57cd5f] {
   /*background: #dd69cd;*/
 }
-.item2[data-v-585a4226] {
+.item2[data-v-0b57cd5f] {
   /*background: #ffcd22;*/
 }
-.item3[data-v-585a4226] {
+.item3[data-v-0b57cd5f] {
   /*background: #82AAFF;*/
 }
-.p-footer__container[data-v-585a4226] {
+.p-footer__container[data-v-0b57cd5f] {
   margin: 0 auto;
   max-width: 1200px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   color: #09093e;
 }
-.p-footer__item[data-v-585a4226] {
+.p-footer__item[data-v-0b57cd5f] {
   width: 25%;
   margin-right: 20px;
 }
-.p-footer__logo[data-v-585a4226] {
+.p-footer__logo[data-v-0b57cd5f] {
   width: 50%;
   height: 100px;
   border-radius: 15px;
   margin-right: 100px;
   background: #82AAFF;
 }
-.p-footer__main[data-v-585a4226] {
+.p-footer__main[data-v-0b57cd5f] {
   /*-webkit-box-align: center;*/
   /*align-items: center;*/
   display: -webkit-box;
@@ -1874,18 +1874,18 @@ main {
   padding-top: 30px;
   padding-bottom: 30px;
 }
-.p-footer__item--title[data-v-585a4226] {
+.p-footer__item--title[data-v-0b57cd5f] {
   font-size: 1.2rem;
   margin-bottom: 10px;
 }
-.p-footer__menus li[data-v-585a4226] {
+.p-footer__menus li[data-v-0b57cd5f] {
   padding-top: 10px;
 }
-.p-footer__menus li[data-v-585a4226] :hover {
+.p-footer__menus li[data-v-0b57cd5f] :hover {
   text-decoration: underline;
   cursor: pointer;
 }
-.p-footer__copyright[data-v-585a4226] {
+.p-footer__copyright[data-v-0b57cd5f] {
   text-align: center;
   font-size: 1rem;
   padding: 25px 0;

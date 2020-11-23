@@ -74,10 +74,10 @@
 </template>
 
 <script>
-import Loading from '../../components/Loading.vue';
+import Loading from '../../layouts/Loading.vue';
 import SearchAccordion from './SearchAccordion.vue';
-import PageTitle from '../Components/PageTitle.vue';
-import Ribbonnav from '../Components/Ribbonnav.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Ribbonnav from '../PageComponents/Ribbonnav.vue';
 import Ranking from './Ranking.vue';
 import { OK } from "../../util";
 import { mapState } from 'vuex';

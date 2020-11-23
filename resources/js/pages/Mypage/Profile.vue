@@ -17,7 +17,7 @@
       <!-- ユーザーネーム -->
       <div>
         <!-- DBから現在のユーザーネームを取得し、入力された状態にしておく-->
-        <label for="name">ユーザーネーム(20文字以内)</label>
+        <label for="name">ユーザーネーム( 20文字以内 )</label>
         <!-- エラー表示は要修正-->
         <ul v-if="errors_name">
           <li v-for="error in errors_name">
@@ -65,7 +65,8 @@
       </div>
 
       <div>
-        <p>メールアドレスの変更後、確認メールを自動送信します。必ずメールを受け取れる状態で変更手続きを行ってください。</p>
+        <p>メールアドレスの変更後、確認メールを自動送信します。</p>
+        <p>必ずメールを受け取れる状態で変更手続きを行ってください。</p>
       </div>
 
     </div>
@@ -78,8 +79,8 @@
 </template>
 
 <script>
-import PageTitle from '../Components/PageTitle.vue';
-import Loading from '../../Components/Loading.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Loading from '../../layouts/Loading.vue';
 
 import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
 const PAGE_TITLE = 'プロフィール編集';
@@ -131,7 +132,7 @@ export default {
       }
       this.isUpdating = true;
 
-      // 更新処理にアクセス
+      // 更新処理にアクセスする
       const response = await axios
           .post(`/api/user/update/name`, { name : this.form_name })
           .catch(error => error.response || error);
@@ -142,7 +143,7 @@ export default {
         this.errors_name = response.data.errors.name;
       // 500エラーの時は更新失敗、何もしない
       }else if(response.status === INTERNAL_SERVER_ERROR) {
-        // TODO フラッシュメッセージ
+        // TODO フラッシュメッセージをいれる
         console.log('更新に失敗しました。')
       }else{
         console.log('名前の更新に成功しました。')

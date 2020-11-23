@@ -69,10 +69,10 @@
 <script>
 import Account from './Account.vue';
 import NothingAccount from './NothingAccount.vue';
-import Loading from '../../components/Loading.vue';
-import PageTitle from '../Components/PageTitle.vue';
-import Ribbonnav from '../Components/Ribbonnav.vue';
-import Pagination from '../Components/Pagination.vue';
+import Loading from '../../layouts/Loading.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Ribbonnav from '../PageComponents/Ribbonnav.vue';
+import Pagination from '../PageComponents/Pagination.vue';
 import { OK } from "../../util";
 
 const PAGE_TITLE = '仮想通貨アカウント一覧';

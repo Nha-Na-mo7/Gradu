@@ -94,8 +94,8 @@
 import News from './News.vue';
 import NothingNews from './NothingNews.vue';
 import SearchModal from './SearchModal.vue';
-import Loading from '../../components/Loading.vue';
-import PageTitle from '../Components/PageTitle.vue';
+import Loading from '../../layouts/Loading.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
 import { OK ,DEFAULT_SEARCHWORD } from "../../util";
 import { mapState } from 'vuex';
 
