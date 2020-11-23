@@ -45,18 +45,18 @@ export default {
     // ストアのerrorCodeステートを監視
     errorCode: {
       async handler(val) {
-        // TODO 500エラーが発生した時、500エラー用のコンポーネントに遷移させる、要確認
-        if (val === INTERNAL_SERVER_ERROR) {
-          this.$router.push('/500');
-        // 認証エラー
-        } else if (val === UNAUTHORIZED) {
-          console.log('認証切れです')
+        // 認証エラー(セッションタイムアウト時)
+        if (val === UNAUTHORIZED) {
+          console.log('resources/js/App.vue : 認証切れです')
           // トークンリフレッシュ
           await axios.get('/api/refresh-token');
           // ストアのuserをクリアする
           this.$store.commit('auth/setUser', null);
           // ログイン画面へ遷移
-          this.$router.push('/login');
+          this.$router.push('/login').catch(err => {});
+        // 500エラー
+        } else if (val === INTERNAL_SERVER_ERROR) {
+          this.$router.push('/500');
         // 404エラー
         } else if (val === NOT_FOUND) {
           this.$router.push('/404');
