@@ -7,6 +7,18 @@ use Illuminate\Support\Facades\Log;
 
 class GoogleNewsController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+  
+    // =====================================================
+    // ビューを返却する
+    // =====================================================
+    public function index(){
+      return view('news');
+    }
+    
   
   /* ====================================================
    * Googleニュース 検索

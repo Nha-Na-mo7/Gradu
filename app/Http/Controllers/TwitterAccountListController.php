@@ -24,6 +24,16 @@ class TwitterAccountListController extends Controller
     const MIN_LIMIT_FOLLOW = 15;
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
+  
+  
+  
+    // =====================================================
+    // ビューを返却する
+    // =====================================================
+    public function index(){
+      return view('accountlist');
+    }
+    
     
     // ==================================
     // Twitterアカウント検索 ※バッチ処理

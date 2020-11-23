@@ -20,7 +20,6 @@ class TrendTweetController extends Controller
     const UPDATED_AT_TABLES__DAYS_ID = 3;
     const UPDATED_AT_TABLES__WEEKS_ID = 4;
     
-    
     // ==============================================
     // 仮想通貨や通貨ごとのツイート数を集計する
     // ==============================================
