@@ -27,6 +27,18 @@ class UserController extends Controller
       return Auth::user();
     }
     
+    // ============================
+    // 現在認証中かをチェックする
+    // ============================
+    public function auth_check() {
+      Log::debug('auth_check::'.Auth::check());
+      if(Auth::check()){
+        return response()->json([], 200);
+      }else{
+        return response(419);
+      }
+    }
+    
     // =========================
     // ユーザーネームの更新
     // =========================

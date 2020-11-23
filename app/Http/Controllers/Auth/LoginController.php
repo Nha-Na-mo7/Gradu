@@ -94,7 +94,7 @@ class LoginController extends Controller
     {
       // セッションの再生成
       $request->session()->regenerate();
-      
+
       return redirect('/');
     }
 }

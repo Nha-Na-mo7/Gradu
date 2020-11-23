@@ -93,13 +93,14 @@
 
 <script>
 import PageTitle from '../PageComponents/PageTitle.vue';
-// TODO
 import Loading from '../../layouts/Loading.vue';
+import {authcheckMixin} from '../../authcheckMixin.js';
 
 import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
 const PAGE_TITLE = 'マイページ(アカウント設定)';
 
 export default {
+  mixins: [authcheckMixin],
   data() {
     return {
       loading: true,
@@ -212,6 +213,7 @@ export default {
   watch: {
     $route: {
       async handler() {
+        await this.auth_check();
         // ページの読み込み直後にユーザー取得を行う
         await this.get_user();
       },
