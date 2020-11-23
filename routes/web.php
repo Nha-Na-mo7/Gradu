@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/twitter/auth/begin', 'TwitterController@redirectToTwitterProvider')->name('twitter.begin');
 // Twitterアプリケーション側から情報が返ってくるコールバックURL
 Route::get('/twitter/auth/callback', 'TwitterController@handleTwitterProviderCallback');
+
+Auth::routes();
 
 // ================
 // other
