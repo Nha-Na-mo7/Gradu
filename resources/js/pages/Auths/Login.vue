@@ -72,7 +72,7 @@ export default {
         });
 
         // トップページへ遷移
-        this.$router.push('/');
+        this.$router.push('/mypage');
       }
     },
     // エラーメッセージをクリアする。ページ表示のタイミングで呼び出す。

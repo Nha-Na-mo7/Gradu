@@ -28,11 +28,13 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
   computed: {
-    apiStatus() {
-      return this.$store.auth.apiStatus();
-    },
+    ...mapState({
+      apiStatus: state => state.auth.apiStatus,
+    }),
     isLogin() {
       return this.$store.getters['auth/loginCheck'];
     }
@@ -40,11 +42,10 @@ export default {
   methods: {
     async logout() {
       await this.$store.dispatch('auth/logout');
-
       // apiStatusがtrue(ステータスコードが200)の時
       if(this.apiStatus) {
-        // ログインページへ遷移
-        this.$router.push('/login');
+        // ページトップへ遷移
+        this.$router.push('/');
       }
     }
   }

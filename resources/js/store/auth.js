@@ -48,7 +48,7 @@ const mutations = {
   setUser(state, userdata) {
     state.user = userdata
   },
-  // 通信ステータス番号をセットする
+  // 通信ステータスが成功したか失敗したかをセット
   setApiStatus(state, status) {
     state.apiStatus = status
   },
@@ -87,7 +87,6 @@ const actions = {
   async register (context, data) {
     
     // 始めにエラーステート欄を空にする
-    
     context.commit('setApiStatus', null);
     // 会員登録APIに入力フォームのデータを送り、レスポンスを受け取る
     const response = await axios.post('/api/register', data)
@@ -209,7 +208,6 @@ const actions = {
     // 通信成功時
     if(response.status === OK) {
       // 受け取ったレスポンスを元に、apiStatus,userステートを更新
-      console.log(response)
       // context.commit('setApiStatus', true);
       // context.commit('setUser', response.data);
       return false;
@@ -219,7 +217,6 @@ const actions = {
     context.commit('setApiStatus', false);
     // バリデーションエラーの時
     if(response.status === UNPROCESSABLE_ENTITY) {
-      console.log(response)
       // エラーメッセージをセット
       context.commit('setResetPasswordErrorMessages', response.data);
     } else {
