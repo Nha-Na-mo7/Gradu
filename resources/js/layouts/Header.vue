@@ -1,3 +1,4 @@
+
 <template>
   <nav class="p-navbar">
     <RouterLink to="/">CryptoTrend(ロゴ)</RouterLink>

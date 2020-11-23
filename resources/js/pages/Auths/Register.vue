@@ -45,13 +45,12 @@
       <span class="p-auth__dividingText-spanborder">または</span>
     </div>
 
-    <!-- @click.stopは現状@clickを持つ親コンポーネントで囲んでいない為無意味だが、どう転ぶか不明なので、不要になった段階で外してください-->
     <a
         class="c-btn c-btn--primary c-btn__twitter--login"
         title="Start for Twitter!"
         @click.stop
         :href="`/twitter/auth/begin`"
-    >Twitterでログイン</a>
+    >Twitterで新規登録</a>
   </div>
 </template>
 

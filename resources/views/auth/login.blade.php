@@ -1,72 +1,73 @@
 @extends('layouts.app')
+@section('title', 'CryptoTrend | ログイン')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<div class="l-container--authform p-auth">
+    <div class="">
+        <h2 class="p-auth__title">ログイン</h2>
+        <div class="">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+            <!-- TODO エラーメッセージ用確認 -->
+            @if(Session::has('error_message'))
+                <div class="c-error__authflash">
+                    <p>{{ session('error_message') }}</p>
                 </div>
-            </div>
+            @endif
+
+
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+
+
+                <label
+                        class="p-form__item"
+                        for="email"
+                >メールアドレス</label>
+                @error('email')
+                <div class="c-error">
+                    {{ $message }}
+                </div>
+                @enderror
+                <input
+                        type="text"
+                        class="c-form__input @error('email') c-error__input @enderror"
+                        name="email"
+                        value="{{ old('email') }}"
+                />
+
+                <label class="p-form__item" for="password">パスワード (半角英数字 8~50文字)</label>
+                <input
+                        type="password"
+                        class="c-form__input @error('password') c-error__input @enderror"
+                        name="password"
+                        value="{{ old('password') }}"
+                />
+                @error('password')
+                <div class="c-error">
+                    {{ $message }}
+                </div>
+                @enderror
+
+                <div class="p-form__item p-form__item--check">
+                    <label for="remember">
+                        <input type="checkbox" name="remember" id="remember">
+                        ログイン状態を維持する
+                    </label>
+                </div>
+
+                <div class="">
+                    <button
+                            type="submit"
+                            class="c-btn c-btn__auth"
+                    >ログイン</button>
+                </div>
+
+                <div class="">
+                    <a class="p-form__inquiry" href="{{ route('password.request') }}">
+                        パスワードを忘れた方はこちら</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>

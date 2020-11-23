@@ -1,77 +1,105 @@
 @extends('layouts.app')
+@section('title', 'CryptoTrend | 新規登録')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+<div class="l-container--authform p-auth">
+    <div class="">
+        <h2 class="p-auth__title">アカウントの新規作成</h2>
+        <p>CryptoTrendは、Twitterと連携することでサービスを最大限に利用することが可能です！</p>
+        <div class="">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
+            <div class="">
+                <form method="POST" action="" autocomplete="off">
+                    @csrf
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                    <label
+                            class="p-form__item"
+                            for="name"
+                    >ユーザーネーム ( 20文字以内 )</label>
+                    @error('name')
+                    <div class="c-error">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input
+                            type="text"
+                            class="c-form__input @error('name') c-error__input @enderror"
+                            name="name"
+                            value="{{ old('name') }}"
+                    />
 
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                    <label
+                            class="p-form__item"
+                            for="email"
+                    >メールアドレス</label>
+                    @error('email')
+                    <div class="c-error">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input
+                            type="text"
+                            class="c-form__input @error('email') c-error__input @enderror"
+                            name="email"
+                            value="{{ old('email') }}"
+                    />
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <label
+                            class="p-form__item"
+                            for="password"
+                    >パスワード (半角英数字 8~50文字)</label>
+                    @error('password')
+                    <div class="c-error">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input
+                            type="password"
+                            class="c-form__input @error('password') c-error__input @enderror"
+                            name="password"
+                            value="{{ old('password') }}"
+                    />
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                    <label
+                            class="p-form__item"
+                            for="password-confirm"
+                    >パスワードの再入力</label>
+                    @error('password_confirmation')
+                    <div class="c-error">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input
+                            type="password"
+                            id="password_confirm"
+                            class="c-form__input @error('password_confirmation') c-error__input @enderror"
+                            name="password_confirmation"
+                    />
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <div class="">
+                        <button
+                                class="c-btn c-btn__auth"
+                                type="submit"
+                        >新規登録
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div>
+                <div class="p-auth__dividingText">
+                    <span class="p-auth__dividingText-spanborder">または</span>
                 </div>
+
+                <a
+                        class="c-btn c-btn--primary c-btn__twitter--login"
+                        title="Start for Twitter!"
+                        @click.stop
+                        href="{{ route('twitter.begin') }}"
+                >Twitterで新規登録
+                </a>
             </div>
         </div>
     </div>
+
 </div>
 @endsection

@@ -1,32 +1,20 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name') }}</title>
+<!-- ユーザーが最初に訪れるトップページ -->
+@extends('layouts.app')
 
-    <!-- Scripts -->
+@section('title', 'CryptoTrend | 仮想通貨の今がわかる CryptoTrend[クリプトトレンド]')
 
-    <script src="{{ asset('js/bundle.js') }}" defer></script>
+<!-- descriptionはSPユーザーも想定して、90文字行かない程度が理想 -->
+@section('description', '注目されている仮想通貨がすぐにわかる！銘柄ごとにツイート数を集計し、可視化された最新のトレンド情報で仮想通貨を攻略しよう！仮想通貨のトレンド情報はCryptoTrend。')
+@section('keywords', 'CryptoTrend, クリプトトレンド, 仮想通貨, 暗号通貨, ビットコイン, アルトコイン, BTC, イーサリアム, ETH, Twitter, Twitterアカウント, ツイッター, 自動フォロー, トレンド')
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Merriweather|Roboto:400">
-    <link rel="stylesheet" href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css">
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/sample.css') }}">
-</head>
-<body>
-@if(session('flash_message'))
-    <div class="flash_message">
-        {{ session('flash_message') }}
+@section('content')
+    <div>
+        <h1>CryptoTrend!!!!!!fooooooooo</h1>
     </div>
-@endif
+@endsection
+
+<body>
 
 <div id="app">
 
 </div>
-
-</body>
-
-</html>

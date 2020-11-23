@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 // ③login/twitter/callbackへユーザー情報を返す
 
 // Twitter経由での認証を開始するURL
-Route::get('/twitter/auth/begin', 'TwitterController@redirectToTwitterProvider');
+Route::get('/twitter/auth/begin', 'TwitterController@redirectToTwitterProvider')->name('twitter.begin');
 // Twitterアプリケーション側から情報が返ってくるコールバックURL
 Route::get('/twitter/auth/callback', 'TwitterController@handleTwitterProviderCallback');
 
