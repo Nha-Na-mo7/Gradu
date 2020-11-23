@@ -91,7 +91,8 @@ class TwitterController extends Controller
       try {
         $twitter_user = Socialite::with("twitter")->user();
         
-        Log::debug('twitterアカウント情報を取得しました :' . print_r($twitter_user, true));
+        Log::debug('twitterアカウント情報を取得しました。');
+        // Log::debug(print_r($twitter_user, true));
         
         // アクセストークンとTwitterIDの取得
         $token = $twitter_user->token;

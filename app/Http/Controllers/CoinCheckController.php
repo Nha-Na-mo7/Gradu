@@ -37,7 +37,7 @@ class CoinCheckController extends Controller
       if(isset($result)){
         return $result;
       }else{
-        Log::debug($brand_id.'の通貨は取引価格情報がありませんでした。');
+        // Log::debug($brand_id.'の通貨は取引価格情報がありませんでした。');
         return '';
       }
     }

@@ -99,7 +99,7 @@ class GoogleNewsController extends Controller
     // $max_numの数値以上の記事がある場合、オーバーした分の記事を削る
     if(count($entry_list) > $max_num){
       for ($i = 0; $i < $max_num; $i++) {
-        $scraped_entry_list[$i] = $entry_list{$i};
+        $scraped_entry_list[$i] = $entry_list[$i];
       }
     }else{
       $scraped_entry_list = $entry_list;
