@@ -28,7 +28,7 @@ class CoinCheckController extends Controller
     // ビューを返却する
     // =====================================================
     public function index(){
-      return view('trends');
+      return view('pages.trends');
     }
     
     // =====================================================

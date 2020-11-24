@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     async get_transaction_price() {
-      const response = await axios.get(`/api/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
+      const response = await axios.get(`/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
 
       // console.log(response.data)
 

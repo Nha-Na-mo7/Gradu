@@ -74,7 +74,7 @@ export default {
   methods: {
     // 全ての仮想通貨情報を取得する。選択肢に使用される
     async fetch_brand() {
-      const response = await axios.get('/api/brand');
+      const response = await axios.get('/brand');
       this.fetched_brands = response.data;
     },
     // チェックされた時、チェックボックスの値全てを親コンポネに送る

@@ -24,8 +24,6 @@ import PasswordMenu from './pages/Mypage/PasswordMenu.vue';
 import SystemError500 from './pages/errors/System.vue';
 import NotFound404 from './pages/errors/NotFound.vue';
 
-// ストアのインポート
-import store from './store';
 
 // VueRouterプラグインの使用
 Vue.use(VueRouter);
@@ -33,69 +31,14 @@ Vue.use(VueRouter);
 
 // パスとコンポーネントをマッピング
 const routes = [
-  {
-    path: '/',
-    component: Index
-  },
-  {
-    path: '/login',
-    component: Login,
-    // URL直入力などでログイン済みのユーザーはアクセスできないページに無理やり行こうとした時、
-    // ナビゲーションガードを使ってホームに遷移させる。
-    beforeEnter(to, from, next) {
-      // ログイン状態をチェックし、分岐させる
-      if(store.getters['auth/loginCheck']) {
-        next('/');
-      }else{
-        next();
-      }
-    }
-  },
-  {
-    path: '/register',
-    component: Register,
-    beforeEnter(to, from, next) {
-      // ログイン状態をチェックし、分岐させる
-      if(store.getters['auth/loginCheck']) {
-        next('/');
-      }else{
-        next();
-      }
-    }
-  },
-  {
-    path: '/registerCompletion',
-    component: RegisterCompletion,
-    beforeEnter(to, from, next) {
-      // 未ログイン状態なら戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
-  },
-  {
-    path: '/password/reset',
-    component: PassResetMailSend
-  },
-  {
-    path: '/password/reset/:token',
-    component: PassResetForm,
-    props: true
-  },
+  // {
+  //   path: '/',
+  //   component: Index
+  // },
   {
     path: '/trends',
     component: TrendList,
     props: true,
-    beforeEnter(to, from, next) {
-      // 未ログイン状態ならログインチェックに戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
   },
   {
     path: '/accounts',
@@ -105,66 +48,26 @@ const routes = [
       // 整数でなかった場合、「1」として返す
       return { p: /^[1-9][0-9]*$/.test(p) ? p * 1 : 1 }
     },
-    beforeEnter(to, from, next) {
-      // 未ログイン状態ならログインチェックに戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
   },
   {
     path: '/news',
     component: NewsList,
     props: true,
-    beforeEnter(to, from, next) {
-      // 未ログイン状態ならログインチェックに戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
   },
   {
     path: '/mypage',
     component: Mypage,
     props: true,
-    beforeEnter(to, from, next) {
-      // 未ログイン状態ならログインチェックに戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
   },
   {
     path: '/mypage/profile',
     component: Profile,
     props: true,
-    beforeEnter(to, from, next) {
-      // 未ログイン状態ならログインチェックに戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
   },
   {
     path: '/mypage/password',
     component: PasswordMenu,
     props: true,
-    beforeEnter(to, from, next) {
-      // 未ログイン状態ならログインチェックに戻す
-      if(store.getters['auth/loginCheck']) {
-        next();
-      }else{
-        next('/login');
-      }
-    }
   },
   {
     path: '/500',
