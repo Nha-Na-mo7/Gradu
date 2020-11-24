@@ -19,6 +19,10 @@ use function Psy\debug;
 
 class UserController extends Controller
 {
+    public function __construct(){
+      $this->middleware('auth');
+    }
+  
     // ============================
     // 現在認証中のユーザー情報を返却する
     // ============================
@@ -26,18 +30,18 @@ class UserController extends Controller
       // Log::debug('UserController.auth_user 認証中のユーザー情報を返却します。');
       return Auth::user();
     }
-    
-    // ============================
-    // 現在認証中かをチェックする
-    // ============================
-    public function auth_check() {
-      Log::debug('auth_check::'.Auth::check());
-      if(Auth::check()){
-        return response()->json([], 200);
-      }else{
-        return response(419);
-      }
-    }
+    //
+    // // ============================
+    // // 現在認証中かをチェックする
+    // // ============================
+    // public function auth_check() {
+    //   Log::debug('auth_check::'.Auth::check());
+    //   if(Auth::check()){
+    //     return response()->json([], 200);
+    //   }else{
+    //     return response(419);
+    //   }
+    // }
     
     // =========================
     // ユーザーネームの更新
@@ -154,6 +158,7 @@ class UserController extends Controller
       }
     }
   
+    
     // =========================================
     // トークンが有効期限オーバーかをチェックする
     // =========================================

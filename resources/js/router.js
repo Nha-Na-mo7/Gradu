@@ -4,11 +4,11 @@ import VueRouter from "vue-router";
 // ページコンポーネントのインポート
 import Index from './pages/Index.vue';
 // 認証系
-import Login from './pages/Auths/Login.vue';
-import Register from './pages/Auths/Register.vue';
-import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';
-import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
-import PassResetForm from './pages/Auths/PassResetForm.vue';
+// import Login from './pages/Auths/Login.vue';
+// import Register from './pages/Auths/Register.vue';
+// import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';
+// import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
+// import PassResetForm from './pages/Auths/PassResetForm.vue';
 // Googleニュース
 import NewsList from './pages/News/NewsList.vue';
 // Twitterアカウント一覧
@@ -31,10 +31,10 @@ Vue.use(VueRouter);
 
 // パスとコンポーネントをマッピング
 const routes = [
-  // {
-  //   path: '/',
-  //   component: Index
-  // },
+  {
+    path: '/',
+    component: Index
+  },
   {
     path: '/trends',
     component: TrendList,

@@ -146,6 +146,8 @@ export default {
         // TODO フラッシュメッセージをいれる
         console.log('更新に失敗しました。')
       }else{
+        // 更新成功したらエラーメッセージは空にする
+        this.errors_name = [];
         console.log('名前の更新に成功しました。')
       }
       // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
@@ -173,6 +175,7 @@ export default {
       }else if(response.status === INTERNAL_SERVER_ERROR){
         console.log('500error')
       }else{
+        this.errors_email = [];
         // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
         // TODO フラッシュメッセージ - メールを送信しました。
         console.log('メールアドレスあてにメールを送信しました。')

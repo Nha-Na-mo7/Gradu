@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <!-- ヘッダー -->
+    <!-- header -->
     <header class="l-header">
         <div class="p-navbar">
             <div class="p-header__logo-area">
@@ -88,7 +88,7 @@
         @yield('content')
     </main>
 
-    <!-- フラッシュメッセージ -->
+    <!-- flash message -->
     <!-- 呼び出すときは、flash_messageが存在しているかを確認する。 -->
     <!-- session() を使うことで、SESSIONの中身を取り出すことができる -->
     @if (session('flash_message'))

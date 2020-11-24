@@ -94,13 +94,11 @@
 <script>
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Loading from '../../layouts/Loading.vue';
-import {authcheckMixin} from '../../authcheckMixin.js';
 
 import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
 const PAGE_TITLE = 'マイページ(アカウント設定)';
 
 export default {
-  mixins: [authcheckMixin],
   data() {
     return {
       loading: true,
@@ -159,12 +157,12 @@ export default {
     },
     // 退会処理
     async withdraw() {
-      if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると色々なサービスの利用ができなくなります。')){
+      if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。')){
         const response = await axios.post(`/withdraw`);
-
         if(response.status === OK){
           window.location = "/";
         }else{
+          //TODO フラッシュメッセージを出してログアウトだけさせる
           window.location = "/login";
         }
       }
@@ -205,15 +203,12 @@ export default {
         // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
         // TODO フラッシュメッセージ
         this.isUpdating = false;
-
       }
-
     },
   },
   watch: {
     $route: {
       async handler() {
-        await this.auth_check();
         // ページの読み込み直後にユーザー取得を行う
         await this.get_user();
       },

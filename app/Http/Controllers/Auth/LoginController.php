@@ -51,26 +51,6 @@ class LoginController extends Controller
       return $user;
     }
     
-    // // =======================================
-    // // ログイン維持(remember_me)の期間を変更する
-    // // =======================================
-    // // Laravelのデフォルトで5年維持するようハードコーディングされてしまっているので
-    // //  一度登録されたremember_meトークンを、期間を変更して再登録する。
-    // protected function sendLoginResponse(Request $request)
-    // {
-    //   $request->session()->regenerate();
-    //   $this->clearLoginAttempts($request);
-    //   $cookies = \Auth::getCookieJar();
-    //   $value = $cookies->queued(\Auth::getRecallerName())->getValue();
-    //
-    //   $cookies->queue(\Auth::getRecallerName(), config('auth.remember_me_expiration'));
-    //
-    //   return $this->authenticated($request, $this->guard()->user())
-    //       ?: redirect()->intended($this->redirectPath());
-    // }
-  
-
-    
     // ===================================
     // バリデーション (トレイトのオーバーライド)
     // ===================================
@@ -81,9 +61,7 @@ class LoginController extends Controller
           'password' => 'required|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/',
       ]);
     }
-  
-  
-  
+    
     // ===================================
     // ログアウト
     // ===================================

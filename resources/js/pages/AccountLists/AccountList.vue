@@ -90,7 +90,7 @@ export default {
       isLoading: false, // 読み込み中か
       isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
-      auto_follow_flg: this.$store.getters['auth/auto_follow_flg'],
+      auto_follow_flg: false,
       updated_at: '',
       accounts: [],
       currentPage: 0,
@@ -123,13 +123,6 @@ export default {
       this.isLoading = true;
 
       const response = await axios.get(`/accounts/index/?page=${this.p}`);
-
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status)
-        return false
-      }
-
       console.log(response.data)
 
       this.accounts = response.data.data
@@ -148,13 +141,6 @@ export default {
     async fetchUpdatedAt() {
       const response = await axios.get(`/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`);
 
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status)
-        return false
-      }
-
-      // console.log(response)
       this.updated_at = response.data.updated_at;
     },
     // オートフォローを切り替える

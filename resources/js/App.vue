@@ -24,13 +24,13 @@
 <script>
 import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./util.js";
 // import Message from './layouts/Message.vue';
-import Header from './layouts/Header.vue';
+// import Header from './layouts/Header.vue';
 import Footer from './layouts/footer.vue';
 
 export default {
   components: {
     // Message,
-    Header,
+    // Header,
     Footer
   },
   // computed: {

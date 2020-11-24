@@ -57,17 +57,14 @@ Route::group(['middleware' => 'auth'], function (){
   // =============================================
   // 銘柄関連
   // =============================================
-  // 通貨カラムを全て取得する
-  Route::get('/brand', 'BrandController@get_brands')->name('get_brands');
   // 指定の通貨のカラムを取得する
   Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.brandid');
+  // 通貨カラムを全て取得する
+  Route::get('/brand{any?}', 'BrandController@get_brands')->where('any', '.+')->name('get_brands');
   
   // =============================================
   // Twitter関連
   // =============================================
-  // 一覧画面のビュー返却
-  Route::get('/accounts', 'TwitterAccountListController@index')->name('accounts.index');
-  
   // アカウント一覧画面/テーブルからアカウント情報を取得
   // TODO ルートがまぎらわしいので変更すること
   Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.info');
@@ -85,33 +82,33 @@ Route::group(['middleware' => 'auth'], function (){
   // Twitterとの連携を解除する
   Route::post('/accounts/un_linkage', 'TwitterController@un_linkage')->name('accounts.un_linkage');
   
+  // 一覧画面のビュー返却
+  Route::get('/accounts{any?}', 'TwitterAccountListController@index')->name('accounts.index')->where('any', '.+');
+  
   // =============================================
   // GoogleNews関連
   // =============================================
-  // ビューを返却
-  Route::get('/news', 'GoogleNewsController@index')->name('news.index');
-  
   // 指定したワードでGoogleNewsAPIを使用し、ニュースを取得する
   Route::get('/news/get', 'GoogleNewsController@get_news')->name('news.get_news');
-  
+  // ビューを返却
+  Route::get('/news{any?}', 'GoogleNewsController@index')->name('news.index')->where('any', '.+');
   
   // =============================================
   // トレンド一覧表示関連
   // =============================================
-  // トレンド画面のビューを返却
-  Route::get('/trends', 'CoinCheckController@index')->name('trend.index');
-  
   // 過去1時間or1日or1週間のツイート数を取得する
   Route::get('/tweet/count', 'CoinCheckController@get_tweet_count');
   // 指定の通貨の24時間以内での最高・最安取引価格情報を取得する
   Route::get('/transaction/price', 'CoinCheckController@get_transaction_price');
   
+  // トレンド画面のビューを返却
+  Route::get('/trends{any?}', 'CoinCheckController@index')->where('any', '.+')->name('trend.index');
+  
   // =============================================
   // ユーザー関連
   // =============================================
-  // マイページ・アカウント設定画面のビューを返却する
-  Route::get('/mypage', 'MypageController@index')->name('mypage.index');
-  
+  // ログインしているユーザー情報を取得する
+  Route::get('/user', 'UserController@auth_user');
   // ユーザーネームを更新する
   Route::post('/user/update/name', 'UserController@update_name')->name('user.update_name');
   // メールアドレスの更新処理
@@ -124,6 +121,9 @@ Route::group(['middleware' => 'auth'], function (){
   Route::post('/user/update/password', 'UserController@update_password')->name('user.update_password');
   // 退会処理
   Route::post('/withdraw', 'UserController@withdraw')->name('user.withdraw');
+  
+  // マイページ・アカウント設定画面のビューを返却する
+  Route::get('/mypage{any?}', 'MypageController@index')->name('mypage.index')->where('any', '.+');
   
   // =============================================
   // その他
