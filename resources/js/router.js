@@ -24,9 +24,23 @@ import PasswordMenu from './pages/Mypage/PasswordMenu.vue';
 import SystemError500 from './pages/errors/System.vue';
 import NotFound404 from './pages/errors/NotFound.vue';
 
+// ストアのインポート
+import auth from './store/authenticate_store.js';
 
 // VueRouterプラグインの使用
 Vue.use(VueRouter);
+
+
+// vue-routerからvuexを参照するには直接インポートする
+// 認証切れの場合は/loginへ遷移させる
+async function requireLogin(to, from, next){
+  await auth.actions.check_authenticate();
+  if(!auth.state.authenticate) {
+    next(true);
+  }else{
+    document.location.reload();
+  }
+}
 
 
 // パスとコンポーネントをマッピング
@@ -36,11 +50,13 @@ const routes = [
     component: Index
   },
   {
+    beforeEnter: requireLogin,
     path: '/trends',
     component: TrendList,
     props: true,
   },
   {
+    beforeEnter: requireLogin,
     path: '/accounts',
     component: AccountList,
     props: route => {
@@ -50,21 +66,25 @@ const routes = [
     },
   },
   {
+    beforeEnter: requireLogin,
     path: '/news',
     component: NewsList,
     props: true,
   },
   {
+    beforeEnter: requireLogin,
     path: '/mypage',
     component: Mypage,
     props: true,
   },
   {
+    beforeEnter: requireLogin,
     path: '/mypage/profile',
     component: Profile,
     props: true,
   },
   {
+    beforeEnter: requireLogin,
     path: '/mypage/password',
     component: PasswordMenu,
     props: true,

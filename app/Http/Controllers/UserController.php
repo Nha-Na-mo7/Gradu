@@ -31,18 +31,20 @@ class UserController extends Controller
       Log::debug('?!');
       return Auth::user();
     }
-    //
-    // // ============================
-    // // 現在認証中かをチェックする
-    // // ============================
-    // public function auth_check() {
-    //   Log::debug('auth_check::'.Auth::check());
-    //   if(Auth::check()){
-    //     return response()->json([], 200);
-    //   }else{
-    //     return response(419);
-    //   }
-    // }
+    
+    // ============================
+    // 現在認証中かをチェックする
+    // ============================
+    public function auth_check() {
+      Log::debug('認証状態のチェック auth_check::'.Auth::check());
+      if(Auth::check()){
+        Log::debug('200 認証中です');
+        return response()->json([], 200);
+      }else{
+        Log::debug('401 認証切れです');
+        return response()->json([], 401);
+      }
+    }
     
     // =========================
     // ユーザーネームの更新

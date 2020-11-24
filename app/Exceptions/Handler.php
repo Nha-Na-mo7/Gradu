@@ -51,12 +51,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        // csrf例外だった場合はログイン画面に飛ばす
-        if ($exception instanceof \Illuminate\Session\TokenMismatchException){
-          Log::debug('app/Exceptions/Handler.php render csrf例外だった場合はログイン画面へ');
-          session()->flash('csrfError', true);
-          return redirect()->to('login');
-        }
+        // // csrf例外だった場合はログイン画面に飛ばす
+        // if ($exception instanceof \Illuminate\Session\TokenMismatchException){
+        //   Log::debug('app/Exceptions/Handler.php render csrf例外だった場合はログイン画面へ');
+        //   session()->flash('csrfError', true);
+        //   return redirect()->to('/login');
+        // }
         return parent::render($request, $exception);
     }
 }

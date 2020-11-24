@@ -109,7 +109,6 @@ use Illuminate\Support\Facades\Route;
 // // Route::get('/user', fn() => Auth::user())->name('user');
 // Route::get('/user', 'UserController@auth_user')->name('user');
 // //ログインしているかをチェックする
-// // Route::get('/user', fn() => Auth::user())->name('user');
 // // Route::get('/user/check', 'UserController@auth_check');
 //
 //
