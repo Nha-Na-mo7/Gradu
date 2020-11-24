@@ -172,7 +172,7 @@ export default {
       this.margeSearchWords;
 
       const params = this.searchData;
-      const response = await axios.get(`/api/news/get`, { params });
+      const response = await axios.get(`/news/get`, { params });
 
       console.log(response)
 

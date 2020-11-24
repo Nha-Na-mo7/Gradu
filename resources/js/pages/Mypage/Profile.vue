@@ -109,7 +109,7 @@ export default {
     // ログイン中のユーザーデータを取得する
     async get_user() {
       const response = await axios
-          .get(`/api/user`)
+          .get(`/user`)
           .catch(error => error.response || error);
 
       // エラーチェック
@@ -134,7 +134,7 @@ export default {
 
       // 更新処理にアクセスする
       const response = await axios
-          .post(`/api/user/update/name`, { name : this.form_name })
+          .post(`/user/update/name`, { name : this.form_name })
           .catch(error => error.response || error);
 
       // エラーチェック
@@ -163,7 +163,7 @@ export default {
       this.isUpdating = true;
 
       const response = await axios
-          .post(`/api/user/update/email`, { email : this.form_email })
+          .post(`/user/update/email`, { email : this.form_email })
           .catch(error => error.response || error);
 
       // バリデーションエラー時

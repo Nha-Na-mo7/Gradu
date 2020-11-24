@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // 認証系(認証なしで利用可能)
 // =========================
 // トップページ・index.blade.php
-Route::get('/', 'IndexController@index');
+Route::get('/', 'IndexController@index')->name('home.index');
 // 認証系ルート
 Auth::routes();
 // ログアウト
@@ -69,8 +69,8 @@ Route::group(['middleware' => 'auth'], function (){
   Route::get('/accounts', 'TwitterAccountListController@index')->name('accounts.index');
   
   // アカウント一覧画面/テーブルからアカウント情報を取得
-  // TODO ルートが間際らしいので変更すること
-  Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.index');
+  // TODO ルートがまぎらわしいので変更すること
+  Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.info');
   // アカウントコンポーネント/指定したユーザーの新着ツイートを取得
   Route::get('/accounts/tweet/{tweet_id}', 'TwitterAccountListController@accounts_tweet')->name('accounts.tweet');
   
@@ -99,7 +99,7 @@ Route::group(['middleware' => 'auth'], function (){
   // トレンド一覧表示関連
   // =============================================
   // トレンド画面のビューを返却
-  Route::get('/trends', 'CoinCheckController@index')->name('coincheck.index');
+  Route::get('/trends', 'CoinCheckController@index')->name('trend.index');
   
   // 過去1時間or1日or1週間のツイート数を取得する
   Route::get('/tweet/count', 'CoinCheckController@get_tweet_count');

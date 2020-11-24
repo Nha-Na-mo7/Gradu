@@ -138,7 +138,7 @@ export default {
     // ログイン中のユーザーデータを取得する
     async get_user() {
       const response = await axios
-          .get(`/api/user`)
+          .get(`/user`)
           .catch(error => error.response || error);
 
       // エラーチェック
@@ -160,7 +160,7 @@ export default {
     // 退会処理
     async withdraw() {
       if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると色々なサービスの利用ができなくなります。')){
-        const response = await axios.post(`/api/withdraw`);
+        const response = await axios.post(`/withdraw`);
 
         if(response.status === OK){
           window.location = "/";
@@ -189,7 +189,7 @@ export default {
 
         // 更新処理にアクセス
         const response = await axios
-            .post(`/api/accounts/un_linkage`)
+            .post(`/accounts/un_linkage`)
             .catch(error => error.response || error);
 
         console.log(response)

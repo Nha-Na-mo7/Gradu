@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'CryptoTrend | ログイン')
+@section('title', 'ログイン')
 
 @section('content')
 <div class="l-container--authform p-auth">

@@ -72,7 +72,7 @@ export default {
 
       // 更新処理にアクセス
       const response = await axios
-          .post(`/api/user/create/password`, this.form_password )
+          .post(`/user/create/password`, this.form_password )
           .catch(error => error.response || error)
 
       // エラーチェック

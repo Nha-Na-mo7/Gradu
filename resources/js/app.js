@@ -12,6 +12,8 @@ import App from "./App.vue";
 
 
 // Vueインスタンスを作成
+// #appがない時はインスタンスを作らないようにできるか？
+
 const createApp = async () => {
   
   // ユーザーデータ取得後にVueインスタンスを作成

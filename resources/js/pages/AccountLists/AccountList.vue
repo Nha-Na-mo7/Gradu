@@ -122,7 +122,7 @@ export default {
       // 読み込みをtrueに
       this.isLoading = true;
 
-      const response = await axios.get(`/api/accounts/index/?page=${this.p}`);
+      const response = await axios.get(`/accounts/index/?page=${this.p}`);
 
       // エラー時
       if (response.status !== OK) {
@@ -146,7 +146,7 @@ export default {
     },
     // DBからアカウント一覧のテーブル更新終了時刻を取得
     async fetchUpdatedAt() {
-      const response = await axios.get(`/api/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`);
+      const response = await axios.get(`/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`);
 
       // エラー時
       if (response.status !== OK) {
@@ -173,7 +173,7 @@ export default {
         result = confirm('自動フォローをONにします。よろしいですか？')
       }
       if(result) {
-        const response = await axios.post(`/api/accounts/autofollowflg`, {'follow_flg': flg});
+        const response = await axios.post(`/accounts/autofollowflg`, {'follow_flg': flg});
         this.auto_follow_flg = !flg;
       }else {
         return false

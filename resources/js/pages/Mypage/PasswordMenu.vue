@@ -61,7 +61,7 @@ export default {
     async get_user() {
 
       const response = await axios
-          .get(`/api/user`)
+          .get(`/user`)
           .catch(error => error.response || error);
 
       console.log(response)
