@@ -28,7 +28,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // ================
 // Twitter認証用
 // ================
-// ①login/twitterのURLをユーザーが踏む
+// ①login/twitterにアクセス
 // ↓
 // ②Twitterアプリ側が認証をする
 // 認証が成功したら...

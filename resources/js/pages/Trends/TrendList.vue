@@ -191,7 +191,7 @@ export default {
     // 指定した時間帯のトレンドテーブルを取得する
     async fetch_trend(type) {
       // トレンド一覧を取得
-      const response = await axios.get(`/api/tweet/count`, { params:{type: type} });
+      const response = await axios.get(`/tweet/count`, { params:{type: type} });
 
       // それぞれのトレンドデータに格納
       switch (type) {

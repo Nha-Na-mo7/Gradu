@@ -68,6 +68,19 @@
                         パスワードを忘れた方はこちら</a>
                 </div>
             </form>
+            <div>
+                <div class="p-auth__dividingText">
+                    <span class="p-auth__dividingText-spanborder">または</span>
+                </div>
+
+                <a
+                        class="c-btn c-btn--primary c-btn__twitter--login"
+                        title="Start for Twitter!"
+                        @click.stop
+                        href="{{ route('twitter.begin') }}"
+                >Twitterで新規登録
+                </a>
+            </div>
         </div>
     </div>
 </div>
