@@ -16,7 +16,7 @@ class GoogleNewsController extends Controller
     // ビューを返却する
     // =====================================================
     public function index(){
-      return view('news');
+      return view('pages.news');
     }
     
   

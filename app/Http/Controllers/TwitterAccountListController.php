@@ -31,7 +31,7 @@ class TwitterAccountListController extends Controller
     // ビューを返却する
     // =====================================================
     public function index(){
-      return view('accountlist');
+      return view('pages.accountlist');
     }
     
     

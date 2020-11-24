@@ -14,6 +14,6 @@ class MypageController extends Controller
     // ビューを返却
     public function index()
     {
-      return view('mypage');
+      return view('pages.mypage');
     }
 }
