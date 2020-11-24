@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 // =========================
 // 認証系(認証なしで利用可能)
 // =========================
-// トップページ・index.blade.php
-Route::get('/', 'IndexController@index')->name('home.index');
 // 認証系ルート
 Auth::routes();
 // ログアウト
@@ -28,37 +26,21 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // ================
 // Twitter認証用
 // ================
-// ①login/twitterにアクセス
-// ↓
-// ②Twitterアプリ側が認証をする
-// 認証が成功したら...
-// ↓
-// ③login/twitter/callbackへユーザー情報を返す
-
 // Twitter経由での認証を開始するURL
 Route::get('/twitter/auth/begin', 'TwitterController@redirectToTwitterProvider')->name('twitter.begin');
 // Twitterアプリケーション側から情報が返ってくるコールバックURL
 Route::get('/twitter/auth/callback', 'TwitterController@handleTwitterProviderCallback');
 
 
-// ================
-// other
-// ================
-// APIのURL以外のあらゆるリクエストに対してはindex.bladeテンプレートを返す
-// 画面遷移はフロントエンドのVueRouterが制御する
-// Route::get('/{any?}', 'IndexController@index')->where('any', '.+');
-
-
 // ===========================================
-// 各種ページ これより以下は会員ページ・認証必須となる
+// 会員ページ・認証必須のもの
 // ===========================================
 Route::group(['middleware' => 'auth'], function (){
-  
   // =============================================
   // 銘柄関連
   // =============================================
   // 指定の通貨のカラムを取得する
-  Route::get('/brand/{brand_id}', 'BrandController@get_brands')->name('get_brands.brandid');
+  Route::get('/brand/{brand_id}', 'BrandController@get_brands');
   // 通貨カラムを全て取得する
   Route::get('/brand{any?}', 'BrandController@get_brands')->where('any', '.+')->name('get_brands');
   
@@ -73,14 +55,14 @@ Route::group(['middleware' => 'auth'], function (){
   
   
   // 認証ユーザーの自動フォローフラグを切り替える
-  Route::post('/accounts/autofollowflg', 'TwitterAccountListController@toggle_auto_follow_flg')->name('accounts.follow');
+  Route::post('/accounts/autofollowflg', 'TwitterAccountListController@toggle_auto_follow_flg');
   // 指定したTwitterAccountListアカウントをフォローする
-  Route::post('/accounts/follow', 'TwitterAccountListController@accounts_follow')->name('accounts.follow');
+  Route::post('/accounts/follow', 'TwitterAccountListController@accounts_follow');
   // 指定したTwitterアカウントのフォローを外す
   // Route::get('/accounts/get', 'TwitterAccountListController@')->name('');
   
   // Twitterとの連携を解除する
-  Route::post('/accounts/un_linkage', 'TwitterController@un_linkage')->name('accounts.un_linkage');
+  Route::post('/accounts/un_linkage', 'TwitterController@un_linkage');
   
   // 一覧画面のビュー返却
   Route::get('/accounts{any?}', 'TwitterAccountListController@index')->name('accounts.index')->where('any', '.+');
@@ -89,7 +71,7 @@ Route::group(['middleware' => 'auth'], function (){
   // GoogleNews関連
   // =============================================
   // 指定したワードでGoogleNewsAPIを使用し、ニュースを取得する
-  Route::get('/news/get', 'GoogleNewsController@get_news')->name('news.get_news');
+  Route::get('/news/get', 'GoogleNewsController@get_news');
   // ビューを返却
   Route::get('/news{any?}', 'GoogleNewsController@index')->name('news.index')->where('any', '.+');
   
@@ -108,17 +90,17 @@ Route::group(['middleware' => 'auth'], function (){
   // ユーザー関連
   // =============================================
   // ログインしているユーザー情報を取得する
-  Route::get('/user', 'UserController@auth_user');
+  Route::get('/user/info', 'UserController@auth_user');
   // ユーザーネームを更新する
-  Route::post('/user/update/name', 'UserController@update_name')->name('user.update_name');
+  Route::post('/user/update/name', 'UserController@update_name');
   // メールアドレスの更新処理
-  Route::post('/user/update/email', 'UserController@update_email')->name('user.update_email');
+  Route::post('/user/update/email', 'UserController@update_email');
   // メールアドレスのリセットを確定
-  Route::get('/user/update/email/{token}', 'UserController@reset_email')->name('user.reset_email');
+  Route::get('/user/update/email/{token}', 'UserController@reset_email');
   // パスワードの新規登録
-  Route::post('/user/create/password', 'UserController@create_password')->name('user.create_password');
+  Route::post('/user/create/password', 'UserController@create_password');
   // パスワードの更新
-  Route::post('/user/update/password', 'UserController@update_password')->name('user.update_password');
+  Route::post('/user/update/password', 'UserController@update_password');
   // 退会処理
   Route::post('/withdraw', 'UserController@withdraw')->name('user.withdraw');
   
@@ -131,7 +113,11 @@ Route::group(['middleware' => 'auth'], function (){
   // 指定のIDの最終更新日時を取得する
   Route::get('/updated/at/table', 'SystemController@get_updated_at');
   
-  
 });
 
+// =============================================
+// 上記以外の全てのページに対してindex.blade.phpを返す
+// =============================================
+// トップページ・index.blade.php
+Route::get('/{any?}', 'IndexController@index')->where('any', '.+')->name('home.index');
 

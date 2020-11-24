@@ -24,7 +24,7 @@ module.exports = {
   entry: ["@babel/polyfill", path.resolve(__dirname, 'resources/js/app.js')],
   output: {
     path: path.resolve(__dirname, 'public/js'),
-    filename: 'bundle.js'
+    filename: 'app.js'
   },
   module :{
     rules: [
@@ -120,7 +120,7 @@ module.exports = {
     // CSSファイルを外出しにするプラグイン
     new MiniCssExtractPlugin({
       // jsファイルの出力先を基準にし、cssディレクトリに出す
-      filename: "../css/sample.css",
+      filename: "../css/app.css",
     }),
   ],
   //ES5(IE11など)向けの設定

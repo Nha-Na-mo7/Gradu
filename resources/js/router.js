@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 
 // ページコンポーネントのインポート
 import Index from './pages/Index.vue';
-// 認証系
+// 認証系 過去作さん
 // import Login from './pages/Auths/Login.vue';
 // import Register from './pages/Auths/Register.vue';
 // import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';

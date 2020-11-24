@@ -109,7 +109,7 @@ export default {
     // ログイン中のユーザーデータを取得する
     async get_user() {
       const response = await axios
-          .get(`/user`)
+          .get(`/user/info`)
           .catch(error => error.response || error);
 
       // エラーチェック

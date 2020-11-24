@@ -48,7 +48,9 @@ class LoginController extends Controller
     // =========================================
     protected function authenticated(Request $request, $user)
     {
-      return $user;
+      // ログイン処理後にリダイレクトする先を指定する
+      // ここで$userなんてしたら認証されたユーザー情報をprintするだけの画面になるのでやらないように。
+      return redirect()->to('/mypage');
     }
     
     // ===================================

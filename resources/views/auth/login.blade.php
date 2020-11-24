@@ -18,37 +18,43 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-
-
-                <label
-                        class="p-form__item"
-                        for="email"
-                >メールアドレス</label>
-                @error('email')
-                <div class="c-error">
-                    {{ $message }}
+                <!-- email -->
+                <div>
+                    <label
+                            class="p-form__item u__mt-xl"
+                            for="email"
+                    >メールアドレス</label>
+                    @error('email')
+                    <div class="c-error">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input
+                            type="text"
+                            class="c-form__input @error('email') c-error__input @enderror"
+                            name="email"
+                            value="{{ old('email') }}"
+                    />
                 </div>
-                @enderror
-                <input
-                        type="text"
-                        class="c-form__input @error('email') c-error__input @enderror"
-                        name="email"
-                        value="{{ old('email') }}"
-                />
 
-                <label class="p-form__item" for="password">パスワード (半角英数字 8~50文字)</label>
-                <input
-                        type="password"
-                        class="c-form__input @error('password') c-error__input @enderror"
-                        name="password"
-                        value="{{ old('password') }}"
-                />
-                @error('password')
-                <div class="c-error">
-                    {{ $message }}
+                <!-- password -->
+                <div>
+                    <label class="p-form__item u__mt-xl"
+                           for="password">パスワード (半角英数字 8~50文字)</label>
+                    @error('password')
+                    <div class="c-error">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                    <input
+                            type="password"
+                            class="c-form__input @error('password') c-error__input @enderror"
+                            name="password"
+                            value="{{ old('password') }}"
+                    />
                 </div>
-                @enderror
 
+                <!-- remember me -->
                 <div class="p-form__item p-form__item--check">
                     <label for="remember">
                         <input type="checkbox" name="remember" id="remember">

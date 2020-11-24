@@ -19,11 +19,10 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        // ログイン中に、ログインしていない場合にしかアクセスできないリクエストを送信した時、
-        // 代わりにユーザー情報を返すAPIにアクセスさせる。
+
         if (Auth::guard($guard)->check()) {
-            Log::debug('app/Http/Middleware/RedirectifAuthenticated.php');
-            return redirect()->route('user');
+            Log::debug('app/Http/Middleware/RedirectifAuthenticated.php ログイン中に未ログイン用のページに飛んだので / に飛びます');
+            return redirect('/');
         }
 
         return $next($request);

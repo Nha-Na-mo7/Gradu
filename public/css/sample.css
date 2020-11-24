@@ -1171,6 +1171,11 @@ main {
   font-weight: bold;
 }
 
+.c-form__input {
+  border: 1px solid #666;
+  width: 200px;
+}
+
 .panel {
   border: 1px solid #dedede;
   padding: 1.5rem;
