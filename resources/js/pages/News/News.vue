@@ -17,7 +17,7 @@
     </div>
     <!-- 時刻とメディア -->
     <div class="p-news__item--data">
-      <div class="p-news__item--time"><p>{{ getPubDate | newsUpdate }}</p></div>
+      <div class="p-news__item--time"><p>{{ getPubDate | news_update }}</p></div>
       <div class="p-news__item--media"><p>{{ getSource }}</p></div>
     </div>
 
@@ -85,7 +85,7 @@ export default {
     }
   },
   filters: {
-    newsUpdate: function (date) {
+    news_update: function (date) {
       return moment(date).format('YYYY/MM/DD HH:mm')
     }
   }

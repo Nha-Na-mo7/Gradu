@@ -1,6 +1,3 @@
-<!--===============================-->
-<!--通貨絞り込み用のアコーディオンメニュー-->
-<!--===============================-->
 <template>
   <div>
     <!-- アコーディオンコンテンツ -->
@@ -19,7 +16,8 @@
                 @click="reset_checkbox"
             >
           </label>
-          <p class="">チェックした通貨に絞ってランキングを表示します。</p>
+          <p class="">チェックした通貨を検索条件に指定できます。</p>
+          <p class="">※ 仮想通貨と関係のないニュースが表示される可能性を減らすため、「仮想通貨」は必ず検索ワードに入ります。</p>
 
           <div class="c-checkbox__space">
 
@@ -48,10 +46,12 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
+      </div>
+
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       fetched_brands: [],
-      checked_id:[]
+      checked_id:[],
     }
   },
   computed: {
@@ -83,7 +83,7 @@ export default {
     reset_checkbox() {
       this.checked_id = [];
       this.$emit('reset');
-    }
+    },
   },
   watch: {
     $route: {
@@ -94,6 +94,7 @@ export default {
       immediate: true
     }
   }
+
 }
 </script>
 

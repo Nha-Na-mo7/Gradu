@@ -111,12 +111,16 @@ export default {
     },
     content_bgcolor() {
       let bgcolor = ''
-      if(this.tab === 0){
-        bgcolor = ''
-      }else if(this.tab === 1){
-        bgcolor = 'u-bg-green'
-      }else{
-        bgcolor = 'u-bg-purple'
+      switch (this.tab){
+        case 0:
+          bgcolor = ''
+          break;
+        case 1:
+          bgcolor = 'u-bg-green'
+          break;
+        case 2:
+          bgcolor = 'u-bg-purple'
+          break;
       }
       return bgcolor;
     },

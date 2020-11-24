@@ -26,11 +26,11 @@
                 </div>
                 <!-- 検索欄 -->
                 <div class="c-input__searcharea">
-                  <input type="text" class="c-input" v-model="searchBoxWords" :placeholder="placeholder">
+                  <input type="text" class="c-input" v-model="searchbox_words" :placeholder="placeholder">
                 </div>
                 <!-- リセット用の✖️ボタン -->
-                <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExistSearchWord">
-                  <button class="c-input__btn-circle" @click="resetSearchWord">×</button>
+                <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExist_words">
+                  <button class="c-input__btn-circle" @click="reset_searchword">×</button>
                 </div>
               </form>
             </div>
@@ -40,27 +40,23 @@
             <div class="p-news__searchBox--content">
 
               <div class="p-news__searchBox--content--searchWords">
-                <span>{{ default_and_checkedSearchWords }}</span>
+                <span>{{ default_and_checked_brands }}</span>
               </div>
 
-              <!-- 絞り込みモーダルボタン -->
-              <div class="p-news__modal p-news__modal-show">
-                <button class="c-btn c-btn__main c-btn--primary" @click="showModal">設定</button>
+              <!-- 絞り込みアコーディオンボタン -->
+              <div class="p-news__accordion p-news__accordion-show">
+                <button class="c-btn c-btn__main c-btn--primary" @click="show_accordion">設定</button>
               </div>
-
             </div>
           </div>
-
-
         </div>
-
       </div>
 
-      <!-- 絞り込みモーダル -->
-      <div class="c-modal__hide" v-if="modal">
-        <SearchModal
-          @closeModal="closeModal"
-          @fetch_googleNews="fetch_googleNews"
+      <!-- 絞り込みアコーディオン -->
+      <div class="c-accordion" v-if="accordion">
+        <SearchCheckbox
+          @checked="checked_brand"
+          @reset="reset_brand"
         />
       </div>
 
@@ -93,11 +89,10 @@
 <script>
 import News from './News.vue';
 import NothingNews from './NothingNews.vue';
-import SearchModal from './SearchModal.vue';
+import SearchCheckbox from './SearchCheckbox.vue';
 import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import { OK ,DEFAULT_SEARCHWORD } from "../../util";
-import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'NEWS';
 
@@ -105,18 +100,17 @@ export default {
 
   data() {
     return {
-      modal: false,
+      accordion: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-      isEditMode: false,
 
       fetchedNews: [],
 
-      checkedSearchWords: [],
-      searchBoxWords: '',
-      searchData: {
+      checked_brands: [],
+      searchbox_words: '',
+      search_input_data: {
         keywords: ''
       },
     }
@@ -126,61 +120,65 @@ export default {
       return PAGE_TITLE;
     },
     placeholder() {
-      return '追加したい検索ワードを入れることができます'
+      return '追加したいワードを入れて検索することができます。'
     },
     // 検索欄にワードが存在するか
-    isExistSearchWord() {
-      return this.searchBoxWords !== '';
+    isExist_words() {
+      return this.searchbox_words !== '';
     },
-    default_and_checkedSearchWords() {
-      return DEFAULT_SEARCHWORD + ' ' + this.checkedCurrencies.join(' ');
+    default_and_checked_brands() {
+      return DEFAULT_SEARCHWORD + ' ' + this.checked_brands.join(' ');
     },
-    // checkedCurrencyとsearchBoxWordsを組み合わせたワードを、searchData.keywordsに格納する
-    margeSearchWords() {
-      this.searchData.keywords = this.default_and_checkedSearchWords + ' ' + this.searchBoxWords;
+    // チェックされた通貨と検索欄のワードを組み合わせ、search_input_data.keywordsに格納
+    marge_words() {
+      this.search_input_data.keywords = this.default_and_checked_brands + ' ' + this.searchbox_words;
     },
-    ...mapState({
-      checkedCurrencies: state => state.news.checkedCurrencies,
-    })
-
   },
   methods: {
-    // モーダルを開く
-    showModal(){
-      this.modal = true;
+    // ===================
+    // 検索欄
+    // ===================
+    //アコーディオンモーダルを開く
+    show_accordion(){
+      this.accordion = true;
     },
-    // モーダルを閉じる
-    closeModal(){
-      this.modal = false;
+    //アコーディオンモーダルを閉じる
+    close_accordion(){
+      this.accordion = false;
     },
     // 検索欄を空欄にする
-    resetSearchWord() {
-      this.searchBoxWords = '';
+    rese_searchword() {
+      this.searchbox_words = '';
     },
+    // アコーディオンでチェックされた値を格納
+    checked_brand(array) {
+      this.reset_brand();
+      this.checked_brands = array;
+    },
+    // アコーディオンがリセットされた時の処理
+    reset_brand(){
+      this.checked_brands = [];
+    },
+
+    // =====================
+    // ニュース取得APIリクエスト
+    // =====================
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     async fetch_googleNews() {
       // 検索中には呼び出せないようにする
       if(this.isSearching) {
         return false;
       }
-      // 検索開始、isSearchingをtrueに、isNothingNews、modalをfalseにする
+      // 検索開始、isSearchingをtrueに、isNothingNewsをfalseにする
       this.isSearching = true;
       this.isNothingNews = false;
-      this.modal = false;
 
       // 検索ワードをマージさせる
-      this.margeSearchWords;
+      this.marge_words;
 
-      const params = this.searchData;
+      // 作成した検索ワードを元にNewsAPIにリクエスト
+      const params = this.search_input_data;
       const response = await axios.get(`/news/get`, { params });
-
-      console.log(response)
-
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status)
-        return false
-      }
 
       this.fetchedNews = response.data;
 
@@ -198,7 +196,7 @@ export default {
   components: {
     News,
     NothingNews,
-    SearchModal,
+    SearchCheckbox,
     Loading,
     PageTitle
   },
@@ -211,7 +209,6 @@ export default {
       immediate: true
     }
   }
-
 }
 </script>
 
