@@ -32,7 +32,7 @@ Vue.use(VueRouter);
 
 
 // vue-routerからvuexを参照するには直接インポートする
-// 認証切れの場合は/loginへ遷移させる
+// 認証切れの場合に"/login"へ遷移させる
 async function requireLogin(to, from, next){
   await auth.actions.check_authenticate();
   if(!auth.state.authenticate) {

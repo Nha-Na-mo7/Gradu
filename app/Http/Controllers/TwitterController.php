@@ -129,19 +129,21 @@ class TwitterController extends Controller
                 'token_secret' => $token_secret
             ])->save();
             Log::debug('Twitter連携が完了しました。');
+            
+            // セッションにtwitter_idをいれる
+            Log::debug('セッションにtwitter_idを格納します。');
+            session()->put('twitter_id', $twitter_id);
   
             // フォローしている人を取得し、followsテーブルに格納する
-            Log::debug('ただいま連携したユーザーがフォローしているユーザーをfollowsテーブルに格納します');
+            Log::debug('ただいま連携したユーザーがフォローしているユーザーをfollowsテーブルに格納します。');
             $TwitterAccountList = new TwitterAccountListController();
             $account_list = $TwitterAccountList->make_array_account_list_ids();
             $TwitterAccountList->insert_db_to_follows_by_following($info, $account_list);
             Log::debug('フォロー中 かつ accountsテーブルに保存されているユーザーをfollowsテーブルに格納しました。');
           }
   
-          Log::debug('アカウント設定画面にリダイレクトします');
+          Log::debug('アカウント設定画面にリダイレクトします。');
           return redirect()->to('/mypage');
-          
-          
           
         // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン)
         }else{
@@ -177,21 +179,8 @@ class TwitterController extends Controller
             Log::debug('新規登録処理を行いました。');
           }
           
-          // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
-          // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
-          // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
-          // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
-          // $myinfo = User::firstOrCreate(
-          //     [
-          //         'token' => $token,
-          //         'token_secret' => $token_secret,
-          //         'twitter_id' => $twitter_id
-          //     ],
-          //     [
-          //         'name' => $twitter_user->nickname,
-          //         'email' => $twitter_user->getEmail(),
-          //         'token_secret' => $token_secret
-          //     ]);
+          // セッションにtwitter_idを格納
+          session()->put('twitter_id', $twitter_id);
           
           // ログイン時 or 新規登録時にも、フォローしている人を取得し、followsテーブルに格納する
           Log::debug('ユーザーがフォローしているユーザーをfollowsテーブルに格納します');
@@ -209,7 +198,12 @@ class TwitterController extends Controller
       }
       catch (\Exception $e) {
         // エラーならログイン画面へ戻す
-        Log::debug('ログイン失敗です :'. $e->getMessage());
+        Log::debug('ログイン失敗しました。 :'. $e->getMessage());
+        
+        // セッションを一度消してから再発行、csrfトークンを再生成
+        session()->invalidate();
+        session()->regenerateToken();
+        
         return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
       }
     }

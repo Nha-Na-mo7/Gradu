@@ -61,8 +61,8 @@
 
     <!-- ページネーション -->
     <Pagination
-        :current-page="currentPage"
-        :last-page="lastPage"
+        :current-page="current_page"
+        :last-page="last_page"
     />
 
   </div>
@@ -91,17 +91,17 @@ export default {
   data() {
     return {
       isLoading: false, // 読み込み中か
-      isNothingAccounts: false, // 検索した結果アカウントが見つからなかったか
+      nothing_accounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
       auto_follow_flg: false,
       updated_at: '',
       accounts: [],
-      currentPage: 0,
-      lastPage: 0,
-      searchData: {
-        keywords: '仮想通貨',
-        page: this.p
-      }
+      current_page: 0,
+      last_page: 0,
+      // searchData: {
+      //   keywords: '仮想通貨',
+      //   page: this.p
+      // }
     }
   },
   computed: {
@@ -112,10 +112,27 @@ export default {
       return this.updated_at;
     },
     isNothing() {
-      return this.isNothingAccounts;
+      return this.nothing_accounts;
     },
   },
   methods: {
+    // ログイン中のユーザーデータを取得する
+    async get_user() {
+      const response = await axios
+          .get(`/user/info`)
+          .catch(error => error.response || error);
+
+      // エラーチェック
+      if(response.status === OK) {
+        console.log(response)
+        // フォーム用にデータを格納
+        this.user = response.data
+        this.twitter = (response.data.twitter_id !== null);
+        this.auto_follow =  response.data.auto_follow_flg;
+      }else{
+        this.system_error = response.data.errors
+      }
+    },
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
     async fetchAccounts() {
       // 読み込み中ならこのメソッドは発火しない
@@ -129,15 +146,15 @@ export default {
       console.log(response.data)
 
       this.accounts = response.data.data
-      this.currentPage = response.data.current_page
-      this.lastPage = response.data.last_page
+      this.current_page = response.data.current_page
+      this.last_page = response.data.last_page
 
       // そのページにアカウントがないor通信が思いなどで読み込めないとき
       if(response.data.data.length === 0) {
-        this.isNothingAccounts = true;
+        this.nothing_accounts = true;
       }
 
-      // 読み込みをfalseに、isNothingAccountsをtrueに
+      // 読み込みをfalseに、nothing_accountsをtrueに
       this.isLoading = false;
     },
     // DBからアカウント一覧のテーブル更新終了時刻を取得
@@ -148,6 +165,8 @@ export default {
     },
     // オートフォローを切り替える
     async auto_following() {
+
+      await this.get_user();
 
       const flg = this.auto_follow_flg;
       // getterに何も入っていない場合-1が帰ってくるため、その時は処理を行わない
@@ -186,6 +205,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、DBからTwitterアカウント一覧を取得
+        await this.get_user();
         await this.fetchAccounts();
         await this.fetchUpdatedAt();
       },
