@@ -80,13 +80,4 @@ class RegisterController extends Controller
     {
       return '/mypage';
     }
-    
-    
-    // ===============================================
-    // トレイトのregisteredメソッドの中身を実装して上書き
-    // ===============================================
-    protected function registered(Request $request, $user)
-    {
-      return $user;
-    }
 }
