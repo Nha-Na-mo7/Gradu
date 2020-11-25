@@ -24,7 +24,7 @@
           <button
               class="c-btn c-btn__main c-btn--primary"
               @click="auto_following"
-              v-if="auto_follow_flg"
+              v-if="isAuthFollowFlg"
           >自動フォロー中...</button>
           <button
               class="c-btn c-btn__main c-btn--primary"
@@ -117,6 +117,9 @@ export default {
     isNothing() {
       return this.nothing_accounts;
     },
+    isAuthFollowFlg() {
+      return this.auto_follow_flg;
+    }
   },
   methods: {
     // ログイン中のユーザーデータを取得する
@@ -125,11 +128,13 @@ export default {
           .get(`/user/info`)
           .catch(error => error.response || error);
 
+      console.log(response)
+
       // エラーチェック
       if(response.status === OK) {
         // フォーム用にデータを格納
         this.twitter_id = response.data.twitter_id;
-        this.auto_follow =  response.data.auto_follow_flg;
+        this.auto_follow_flg =  response.data.auto_follow_flg;
       }else{
         this.system_error = response.data.errors
       }
