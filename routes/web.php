@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth'], function (){
   // =============================================
   // Twitter関連
   // =============================================
+  // TODO test
+  Route::get('/twitter/testtest', 'TwitterAccountListController@search_accounts');
+  
+  
+  
   // アカウント一覧画面/テーブルからアカウント情報を取得
   // TODO ルートがまぎらわしいので変更すること
   Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.info');

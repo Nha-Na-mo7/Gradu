@@ -18,6 +18,9 @@
 
       <!-- ヘッドライン -->
       <div class="p-accounts__headline">
+
+        <button class="c-btn" @click="test_search_account">twitterアカウント検索テストボタン</button>
+
         <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">
           <button
@@ -165,6 +168,11 @@ export default {
         return false
       }
     },
+
+    async test_search_account() {
+      console.log('test start ')
+      await axios.get(`/twitter/testtest`);
+    }
   },
   components: {
     Account,

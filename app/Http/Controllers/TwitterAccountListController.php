@@ -48,9 +48,9 @@ class TwitterAccountListController extends Controller
       // APIリクエストの前準備
       // --------------------------
       
-      $query = 'ウェブカツ'; // 検索キーワード
+      $query = '沢口愛華'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 1; // 検索ページ。これを終わるまで繰り返す。
+      $page = 50; // 検索ページ。これを終わるまで繰り返す。
       
       // ループ内で一度更新処理を行ったアカウントのIDを格納する
       $updateded_accounts = [];
@@ -144,7 +144,6 @@ class TwitterAccountListController extends Controller
             // screen_idは変更される場合があるので、user_idで検索をかける
             
             // ツイートをしていない場合: []で帰ってくる
-            // 鍵垢: Not authorized
             
             // 鍵垢では無い場合に最新ツイート検索をする
             if (!$request['protected']) {
@@ -158,6 +157,8 @@ class TwitterAccountListController extends Controller
                       "exclude_replies" => true,
                       "include_rts" => false
                   ));
+              //
+              // Log::debug(print_r($tweetRequest, true));
               
               // 取得したツイートの内容から、表示に必要な情報を抽出して配列に格納
               foreach ($tweetRequest as $tweetreq) {
@@ -170,7 +171,20 @@ class TwitterAccountListController extends Controller
                 if ($created_at !== null) {
                   $addlist['tweet_created_at'] = date('Y-m-d H:i:s', strtotime($created_at));
                 }
+                
+                // 画像ツイートがあれば画像を抽出してDBに格納する([media]=>[0]=>[media_url]
+                Log::debug('***** 画像のチェックをします *****');
+                if (isset($tweetreq->entities->media)) {
+                  Log::debug('画像が存在します');
+                  $media = $tweetreq->entities->media[0];
+                  $addlist['media_url'] = $media->media_url;
+                }else{
+                  Log::debug('画像はありません');
+                  $addlist['media_url'] = null;
+                }
+                
                 $tweetlist = $addlist;
+                
               }
               // 鍵垢の場合は、アカウントのID以外nullとしてテーブルにいれる
               // これは更新処理の時、公開→鍵垢へ変わっていたユーザーのツイートをnullとして更新するため
@@ -181,6 +195,7 @@ class TwitterAccountListController extends Controller
                   'tweet_id_str' => null,
                   'tweet_text' => null,
                   'tweet_created_at' => null,
+                  'media_url' => null,
               );
             }
             

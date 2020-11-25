@@ -17,6 +17,7 @@ class TwitterAccountNewTweet extends Model
       'tweet_id_str',
       'tweet_text',
       'tweet_created_at',
+      'media_url',
       'owner'
   ];
   
@@ -26,6 +27,7 @@ class TwitterAccountNewTweet extends Model
       'tweet_id_str',
       'tweet_text',
       'tweet_created_at',
+      'media_url',
   ];
   
   /**
