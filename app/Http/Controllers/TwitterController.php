@@ -141,24 +141,57 @@ class TwitterController extends Controller
           Log::debug('アカウント設定画面にリダイレクトします');
           return redirect()->to('/mypage');
           
-        // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン・ログイン維持期間のタイムアウト)
+          
+          
+        // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン)
         }else{
           Log::debug('ログインしていません。ログインor新規登録です。');
           // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
           // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
+          $myinfo = User::where('twitter_id', $twitter_id)
+              ->first();
+  
+          // 連携されているアカウントレコードがない場合(新規ユーザーの登録)
+          if(empty($myinfo)) {
+            // Twitterに登録しているメアドが既に他のユーザーと連携されていないかを確認
+            Log::debug('Twitterに登録しているメールアドレスを使ったCryptoアカウントが既に存在する場合はreturnします。');
+            $already_email_registered = User::where('email', $twitter_user->email)->first();
+  
+            
+            // 既に登録済みのメアドを用いたCryptoアカウントがあるなら、登録をせずそのまま元の画面に戻す。
+            if(!empty($already_email_registered)){
+              Log::debug('>Twitterのメアド'.$twitter_user->email.'を使ったCryptoアカウントは既に存在しています。連携・ログイン共に行わず終了します。');
+              Log::debug('===================================================================');
+              // TODO フラッシュ
+              return redirect('/register')->with('oauth_error', 'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。');
+            }
+            
+            // 新規登録の処理
+            $myinfo = User::create([
+                'token' => $token,
+                'token_secret' => $token_secret,
+                'twitter_id' => $twitter_id,
+                'name' => $twitter_user->nickname,
+                'email' => $twitter_user->getEmail()
+            ]);
+            Log::debug('新規登録処理を行いました。');
+          }
+          
+          // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
+          // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
           // レコードがある(連携済みユーザーのログイン時)、$myinfoにそのレコードをオブジェクトで代入
           // レコードがない(新規ユーザーの登録)→第一・第二引数どちらもINSERTしてその情報を$myinfoにオブジェクトで代入する
-          $myinfo = User::firstOrCreate(
-              [
-                  'token' => $token,
-                  'token_secret' => $token_secret,
-                  'twitter_id' => $twitter_id
-              ],
-              [
-                  'name' => $twitter_user->nickname,
-                  'email' => $twitter_user->getEmail(),
-                  'token_secret' => $token_secret
-              ]);
+          // $myinfo = User::firstOrCreate(
+          //     [
+          //         'token' => $token,
+          //         'token_secret' => $token_secret,
+          //         'twitter_id' => $twitter_id
+          //     ],
+          //     [
+          //         'name' => $twitter_user->nickname,
+          //         'email' => $twitter_user->getEmail(),
+          //         'token_secret' => $token_secret
+          //     ]);
           
           // ログイン時 or 新規登録時にも、フォローしている人を取得し、followsテーブルに格納する
           Log::debug('ユーザーがフォローしているユーザーをfollowsテーブルに格納します');

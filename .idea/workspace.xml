@@ -24,7 +24,6 @@
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterAccountListController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterAccountListController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TwitterController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -360,7 +359,7 @@
       <workItem from="1606144243493" duration="128000" />
       <workItem from="1606144379430" duration="749000" />
       <workItem from="1606145150523" duration="29420000" />
-      <workItem from="1606203414161" duration="36955000" />
+      <workItem from="1606203414161" duration="40705000" />
     </task>
     <servers />
   </component>
