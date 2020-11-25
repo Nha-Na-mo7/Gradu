@@ -264,12 +264,11 @@ class TrendTweetController extends Controller
         );
         
         //続きからの時、next_paramsを追加する
-        if($resume_flg) {
+        if($resume_flg && !$next_results) {
           parse_str($next_results, $params);
         }
         
-        // Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
-        
+        Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
         
         // ---------------------------------------------------
         // ④ その検索ワードの全件検索し終える、
