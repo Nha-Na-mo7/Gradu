@@ -3,7 +3,7 @@
 <!-- =================================-->
 @extends('layouts.app')
 
-@section('title', 'マイページ | CryptoTrend')
+@section('title', 'マイページ')
 
 @section('content')
     <div id="app">

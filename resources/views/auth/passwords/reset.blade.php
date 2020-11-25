@@ -1,7 +1,7 @@
 <!-- トークンを元に変更完了させる側のbladeです -->
 
 @extends('layouts.app')
-@section('title', 'CryptoTrend | パスワードの再設定')
+@section('title', 'パスワードの再設定')
 
 @section('content')
 <div class="l-container--authform">

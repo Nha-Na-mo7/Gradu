@@ -45,26 +45,7 @@ class ResetPasswordController extends Controller
     {
       $this->middleware('guest');
     }
-    public function reset(Request $request)
-    {
-      $validate =  $this->validator($request->all());
-      Log::debug('バリデーション');
-  
-      // バリデーション失敗時
-      if($validate->fails()) {
-        // JsonResponseの引数に422を追加してバリデーションエラー扱いにする。(引数なしだと200扱いになるため)
-        return new JsonResponse($validate->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
-      }
-      $response = $this->broker()->reset(
-          $this->credentials($request), function ($user, $password){
-            $this->resetPassword($user, $password);
-          }
-      );
-      
-      return $response == Password::PASSWORD_RESET
-          ? $this->sendResetResponse($request, $response)
-          : $this->sendResetFailedResponse($request, $response);
-    }
+    
     
     protected function resetPassword($user, $password)
     {
@@ -74,18 +55,6 @@ class ResetPasswordController extends Controller
       ])->save();
     }
     
-    protected function sendResetResponse(Request $request, $response)
-    {
-      return new JsonResponse('password Reset');
-    }
-    
-    // バリデーションを通過後
-    // DBにメールアドレスがない、トークンが無効などの場合、422を返却
-    protected function sendResetFailedResponse(Request $request, $response)
-    {
-      // vueコンポーネントで参照するため、キーヴァリューの形式。さらにここで日本語化させる。
-      return new JsonResponse(['reset' => __($response)], Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
     
     protected function validator(array $data)
     {
@@ -93,7 +62,7 @@ class ResetPasswordController extends Controller
           'token' => 'required',
           // 'email' => 'required|email',
           // 'password' => 'required|confirmed|min:8',
-          'email' => 'required|unique:users,email|email:strict,dns,spoof|max:100',
+          'email' => 'required|email:strict,dns,spoof|max:100',
           'password' => 'required|confirmed|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/',
       ]);
     }

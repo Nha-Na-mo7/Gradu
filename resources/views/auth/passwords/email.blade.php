@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'CryptoTrend | パスワードの再設定')
+@section('title', 'パスワードの再設定')
 
 <!-- メールを送信する側 -->
 <!-- 送信後にフラッシュメッセージで送信した旨を通知する -->

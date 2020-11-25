@@ -3,7 +3,7 @@
 <!-- =========================-->
 @extends('layouts.app')
 
-@section('title', 'トレンド通貨・ツイート数ランキング | CryptoTrend')
+@section('title', 'トレンド通貨・ツイート数ランキング')
 
 @section('content')
 
