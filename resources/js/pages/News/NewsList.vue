@@ -16,47 +16,30 @@
         <div class="p-news__searchBox">
 
           <div class="p-news__searchBox--Item">
-            <div class="p-news__searchBox--title"><p>フリーワード</p></div>
-            <div class="p-news__searchBox--content">
-              <!-- 検索フォーム・コンポーネント検討 -->
-              <form class="p-news__search">
-                <!-- 検索虫眼鏡ボタン -->
-                <div class="c-input__btn-area c-input__btn-area__search">
-                  <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
-                </div>
-                <!-- 検索欄 -->
-                <div class="c-input__searcharea">
-                  <input type="text" class="c-input" v-model="searchbox_words" :placeholder="placeholder">
-                </div>
-                <!-- リセット用の✖️ボタン -->
-                <div class="c-input__btn-area c-input__btn-area__reset" v-if="isExist_words">
-                  <button class="c-input__btn-circle" @click="reset_searchword">×</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="p-news__searchBox--Item">
             <div class="p-news__searchBox--title"><p>検索条件</p></div>
             <div class="p-news__searchBox--content">
 
+              <!-- 検索ワードを表示するエリア -->
               <div class="p-news__searchBox--content--searchWords">
                 <span>{{ default_and_checked_brands }}</span>
               </div>
 
-              <!-- 絞り込みアコーディオンボタン -->
-              <div class="p-news__accordion p-news__accordion-show">
-                <button class="c-btn c-btn__main c-btn--primary" @click="show_accordion">設定</button>
+              <!-- 検索虫眼鏡ボタン -->
+              <div class="c-input__btn-area c-input__btn-area__search">
+                <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
               </div>
+
+
             </div>
           </div>
         </div>
       </div>
 
       <!-- 絞り込みアコーディオン -->
-      <div class="c-accordion" v-if="accordion">
+      <div class="c-accordion">
         <SearchCheckbox
-          @checked="checked_brand"
-          @reset="reset_brand"
+            @checked="checked_brand"
+            @reset="reset_brand"
         />
       </div>
 
@@ -105,11 +88,8 @@ export default {
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-
       fetchedNews: [],
-
       checked_brands: [],
-      searchbox_words: '',
       search_input_data: {
         keywords: ''
       },
@@ -119,43 +99,28 @@ export default {
     page_title() {
       return PAGE_TITLE;
     },
-    placeholder() {
-      return '追加したいワードを入れて検索することができます。'
-    },
-    // 検索欄にワードが存在するか
-    isExist_words() {
-      return this.searchbox_words !== '';
-    },
     default_and_checked_brands() {
       return DEFAULT_SEARCHWORD + ' ' + this.checked_brands.join(' ');
     },
-    // チェックされた通貨と検索欄のワードを組み合わせ、search_input_data.keywordsに格納
+    // 「仮想通貨」とチェックされた通貨名の一覧を、search_input_data.keywordsに格納
     marge_words() {
-      this.search_input_data.keywords = this.default_and_checked_brands + ' ' + this.searchbox_words;
+      this.search_input_data.keywords = this.default_and_checked_brands;
     },
   },
   methods: {
     // ===================
     // 検索欄
     // ===================
-    //アコーディオンモーダルを開く
-    show_accordion(){
-      this.accordion = true;
-    },
-    //アコーディオンモーダルを閉じる
-    close_accordion(){
-      this.accordion = false;
-    },
     // 検索欄を空欄にする
     rese_searchword() {
       this.searchbox_words = '';
     },
-    // アコーディオンでチェックされた値を格納
+    // チェックされた値を格納
     checked_brand(array) {
       this.reset_brand();
       this.checked_brands = array;
     },
-    // アコーディオンがリセットされた時の処理
+    // チェックボックスがリセットされた時の処理
     reset_brand(){
       this.checked_brands = [];
     },
