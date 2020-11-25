@@ -190,14 +190,19 @@ class TrendTweetController extends Controller
           
           // 続きからの場合
           if($resume_flg) {
+            Log::debug('続きから開始します');
             $tweetCountModel_day = TweetCountDay::where('complete_flg', false)->first();
             
             // ちょうど更新の切れ目でAPI制限などにより検索が終わった場合、complete_flg=falseの銘柄が存在しないのでその分の処理を分ける。
             if(empty($tweetCountModel_day)){
+              Log::debug('complete_flg=falseが存在しませんでした、切れ目のようです');
               $complete_brands = TweetCountDay::where('updated_at', 'LIKE', "$since_date%")->get();
     
+              Log::debug('銘柄を指定します');
               // 更新途中の銘柄はないので、次から開始する銘柄のIDを指定する
               $resume_brand_id = count($complete_brands) + 1;
+              Log::debug('再開させる銘柄id: '.$resume_brand_id);
+              
     
             }else{
               // 更新途中の銘柄IDを取得する
@@ -263,12 +268,16 @@ class TrendTweetController extends Controller
             'q' => $search_word . ' -filter:replies ' . 'exclude:retweets'.' since:'.$since_date. ' until:'.$until_date, // 検索ワード
         );
         
-        //続きからの時、next_paramsを追加する
-        if($resume_flg && !$next_results) {
+        // Log::debug('設定されたparams(next_results挿入前): '.print_r($params, true));
+        
+        //続きからの時、かつ$next_resultsが存在する時、next_paramsを追加する
+        if($resume_flg && !!$next_results) {
+          Log::debug('next_resultsが存在するので$paramsに追加します');
+          Log::debug('next_results: '.$next_results);
           parse_str($next_results, $params);
         }
         
-        Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
+        // Log::debug('API用の検索パラメータを設定しました: '.print_r($params, true));
         
         // ---------------------------------------------------
         // ④ その検索ワードの全件検索し終える、
