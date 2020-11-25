@@ -102,7 +102,7 @@ class TwitterController extends Controller
         Log::debug('これからログイン済みかのチェックです');
         // 既にログイン中であれば、設定画面からの連携である
         if(Auth::check()) {
-          Log::debug('--- ログイン済みです。');
+          Log::debug('--- ログイン済み ( = 設定画面からの連携処理 )です。');
           $auth_user = Auth::user();
           
           // 既に他のユーザーと連携されているTwitterアカウントの場合、returnさせる
@@ -129,9 +129,15 @@ class TwitterController extends Controller
                 'token_secret' => $token_secret
             ])->save();
             Log::debug('Twitter連携が完了しました。');
+  
+            // フォローしている人を取得し、followsテーブルに格納する
+            Log::debug('ただいま連携したユーザーがフォローしているユーザーをfollowsテーブルに格納します');
+            $TwitterAccountList = new TwitterAccountListController();
+            $account_list = $TwitterAccountList->make_array_account_list_ids();
+            $TwitterAccountList->insert_db_to_follows_by_following($info, $account_list);
+            Log::debug('フォロー中 かつ accountsテーブルに保存されているユーザーをfollowsテーブルに格納しました。');
           }
   
-          // TODO ここでフォローしている人を取得しDBに格納するメソッドを発動
           Log::debug('アカウント設定画面にリダイレクトします');
           return redirect()->to('/mypage');
           
@@ -154,14 +160,18 @@ class TwitterController extends Controller
                   'token_secret' => $token_secret
               ]);
           
-          // TODO ここでフォローしている人を取得しDBに格納するメソッドを発動
+          // ログイン時 or 新規登録時にも、フォローしている人を取得し、followsテーブルに格納する
+          Log::debug('ユーザーがフォローしているユーザーをfollowsテーブルに格納します');
+          $TwitterAccountList = new TwitterAccountListController();
+          $account_list = $TwitterAccountList->make_array_account_list_ids();
+          $TwitterAccountList->insert_db_to_follows_by_following($myinfo, $account_list);
+          Log::debug('フォロー中 かつ accountsテーブルに保存されているユーザーをfollowsテーブルに格納しました。');
           
           // Twitterログインの場合は利便性重視のユーザーが想定されるので、継続ログインをONとする
           Auth::login($myinfo, true);
-          // Auth::login($myinfo);
           
           // 転送する(トレンド一覧画面が良いか)
-          return redirect()->to('/trends');
+          return redirect()->to('/mypage');
         }
       }
       catch (\Exception $e) {
