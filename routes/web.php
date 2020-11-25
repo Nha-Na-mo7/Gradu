@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth'], function (){
   // Twitter関連
   // =============================================
   // TODO test
-  Route::get('/twitter/testtest', 'TwitterAccountListController@search_accounts');
+  Route::get('/twitter/testtest', 'TwitterAccountListController@batch_follow_db_insert');
   
   
   

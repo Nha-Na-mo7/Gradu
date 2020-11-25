@@ -334,6 +334,10 @@ class TwitterAccountListController extends Controller
       // APIリクエスト用のインスタンスを作成
       $connection = (new TwitterController())->connection_instanse_users($token, $token_secret);
       
+      
+      // TODO 先にフォロー関係をチェックし、既にフォロー済みであれば何もせずに終了する
+      
+      
       // フォローリクエストを飛ばす
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
       Log::debug('ID:'.$target_user_id.' にフォローを飛ばしました。');
@@ -380,43 +384,6 @@ class TwitterAccountListController extends Controller
       
       return response()->json(['result' => $twitterRequest]);
     }
-    
-    // =======================================
-    // アカウントと対象アカウントとのフォロー関係を取得
-    // =======================================
-    public function lookup_follow($account_id, $token, $token_secret)
-    {
-      /* GET friendships/lookup - フォロー関係の確認
-       *
-       * ユーザーに変更されることがない"user_id"を指定。
-       * user_id:必須・フォロー先のアカウントID
-       */
-      Log::debug('==============================================');
-      Log::debug('TwitterController.lookup_follow フォロー関係取得');
-      Log::debug('==============================================');
-      $target_user_id = $account_id; // フォロー対象のアカウントのID。
-      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
-      
-      // APIを叩くためのインスタンスを作成
-      $connection = (new TwitterController)->connection_instanse_users($token, $token_secret);
-      
-      $twitterRequest = $connection->get('friendships/lookup', array("user_id" => $target_user_id));
-      Log::debug('ID'.$target_user_id.' とのフォロー関係を取得します。');
-      
-      // エラーチェック
-      if(isset($twitterRequest['errors'])) {
-        Log::debug('result: '. print_r($twitterRequest['errors'], true));
-        return '';
-      } else if(empty($twitterRequest)) {
-        Log::debug('result: null');
-        return '';
-      }
-      
-      return response()->json(['result' => $twitterRequest]);
-    }
-    
-    
-    
     
     // ================================
     // 自動フォローのON/OFF切り替え
@@ -625,7 +592,156 @@ class TwitterAccountListController extends Controller
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 自動フォローを終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('===========================================================');
     }
+  
+  
+  
+    // =======================================
+    // アカウントと対象アカウントとのフォロー関係を取得
+    // =======================================
+    public function lookup_follow($account_id, $token, $token_secret)
+    {
+      /* GET friendships/lookup - フォロー関係の確認
+       *
+       * ユーザーに変更されることがない"user_id"を指定。
+       * user_id:必須・フォロー先のアカウントID
+       */
+      Log::debug('==============================================');
+      Log::debug('TwitterController.lookup_follow フォロー関係取得');
+      Log::debug('==============================================');
+      $target_user_id = $account_id; // フォロー対象のアカウントのID。
+      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
+      
+      // ユーザーのインスタンスを作成
+      $connection = (new TwitterController)->connection_instanse_users($token, $token_secret);
+      
+      // APIリクエスト
+      $twitterRequest = $connection->get('friendships/lookup', array("user_id" => $target_user_id));
+      Log::debug('ID'.$target_user_id.' とのフォロー関係を取得します。');
+      
+      // エラーチェック
+      if(isset($twitterRequest['errors'])) {
+        Log::debug('result: '. print_r($twitterRequest['errors'], true));
+        return '';
+      } else if(empty($twitterRequest)) {
+        Log::debug('result: null');
+        return '';
+      }
+      
+      return response()->json(['result' => $twitterRequest]);
+    }
     
+    
+    
+    
+    
+    
+    
+    // =======================================================================
+    // accountsテーブルに記載されたIDリストと、対象ユーザーがフォローしているIDを比較して
+    // 一致するものをfollowsテーブルに記載する。
+    // バッチ用であるが
+    // =======================================================================
+    public function batch_follow_db_insert(){
+      Log::debug('============================================================');
+      Log::debug(' [定期] TwitterAccountListController.batch_follow_db_insert');
+      Log::debug('============================================================');
+  
+      // ⓪ TwitterIDを持つ全ユーザーのリスト、アカウント検索で拾ったアカウントをDBから取得し、配列で回す
+      $users = User::whereNotNull('twitter_id')->get();
+      $accounts = TwitterAccount::select('account_id')->get();
+      
+      // アカウントリストの配列作成
+      $account_id_list = [];
+      foreach ($accounts as $account) {
+        $account_id_list[] = $account->account_id;
+      }
+  
+  
+      // どちらかが空であれば処理は終了となる
+      if(empty($users) || empty($accounts)) {
+        Log::debug(' ユーザーが存在しない or 検索アカウントが存在しないため処理は行いません。');
+        Log::debug('=============================================================');
+        Log::debug('▲▲▲▲▲▲▲▲ テーブル未登録のフォロー中ユーザー登録を終了します。 ▲▲▲▲▲▲▲▲');
+        Log::debug('=============================================================');
+        exit();
+      }
+      
+      Log::debug('アカウントを回します。');
+      foreach ($users as $user) {
+        $this->insert_db_to_follows_by_following($user, $account_id_list);
+        // // ① 対象ユーザーのフォローリストを取得する
+        // $follow_list = $this->get_account_follow_ids($user->twitter_id, $user->token, $user->token_secret);
+        // // ② twitter_accountsに登録されているIDと比較する
+        // // 1つずつ配列に格納する
+        // if (!empty($follow_ids->ids)){
+        //   foreach ($follow_ids->ids as $id) {
+        //     $follow_list[] = $id;
+        //   }
+        // }else{
+        //   Log::debug('このユーザーは誰もフォローしていません。');
+        //   continue;
+        // }
+        //
+        // // ③ 両者で一致するIDを配列にする
+        // // DBにまだinsertしていないが、accountsに登録されている中で既にフォローしている人のリストを配列として作成
+        // $already_follow_list = array_intersect($follow_list, $accounts);
+        //
+        // // リストが空なら次のユーザーの処理に移行。
+        // if (empty($already_follow_list)) {
+        //   Log::debug('全員フォロー済みです。'.$user->name.'さんの処理は終了します。');
+        //   continue;
+        // }
+        // // ④ ID配列を回して指定のアカウントIDをfollowsテーブルに登録する
+        // Log::debug('accountsに登録されている・フォロー済みテーブルに未登録・実際はフォロー中のユーザーをフォロー済みテーブルに格納します');
+        // foreach ($already_follow_list as $account) {;
+        //   $this->add_table_follows($user->twitter_id, $account);
+        // }
+        Log::debug($user->name.'の処理が終了しました。');
+      }
+      Log::debug('全員の処理が完了しました。');
+      Log::debug('=============================================================');
+      Log::debug('▲▲▲▲▲▲▲▲ テーブル未登録のフォロー中ユーザー登録を終了します。 ▲▲▲▲▲▲▲▲');
+      Log::debug('=============================================================');
+    }
+    
+    
+    // ======================================================================================
+    // アカウントがフォローしているユーザーを取得し、accountsと比較してfollowsに未登録のユーザーを登録する
+    // ======================================================================================
+    // protectedつきか、無差別化を問わないため、アカウントリストは引数で受け取る
+    public function insert_db_to_follows_by_following($user, $accounts_list) {
+      Log::debug('==========  insert_db_to_follows_by_following  ==============');
+      // ① 対象ユーザーのフォローリストを取得する
+      $result_follow_list = $this->get_account_follow_ids($user->twitter_id, $user->token, $user->token_secret);
+      Log::debug('ininininin:'.print_r($result_follow_list, true));
+      
+      // ② twitter_accountsに登録されているIDと比較する
+      // 1つずつ配列に格納する
+      if (!empty($result_follow_list->ids)){
+        foreach ($result_follow_list->ids as $id) {
+          $follow_list[] = $id;
+        }
+      }else{
+        Log::debug('このユーザーは誰もフォローしていません。');
+        return false;
+      }
+  
+      // ③ 両者で一致するIDを配列にする
+      // DBにまだinsertしていないが、accountsに登録されている中で既にフォローしている人のリストを配列として作成
+      $already_follow_list = array_intersect($follow_list, $accounts_list);
+  
+      // リストが空なら次のユーザーの処理に移行。
+      if (empty($already_follow_list)) {
+        Log::debug('全員フォロー済みです。'.$user->name.'さんの処理は終了します。');
+        return false;
+      }
+      // ④ ID配列を回して指定のアカウントIDをfollowsテーブルに登録する
+      Log::debug('accountsに登録されている・フォロー済みテーブルに未登録・実際はフォロー中のユーザーをフォロー済みテーブルに格納します');
+      foreach ($already_follow_list as $account) {;
+        $this->add_table_follows($user->twitter_id, $account);
+      }
+      return true;
+    }
     
     // =======================================
     // アカウントがフォローしているユーザーを取得する
@@ -654,8 +770,6 @@ class TwitterAccountListController extends Controller
       return $twitterRequest;
     }
     
-    
-    
     // ===========================================================
     // 指定したtwitterアカウントIDをfollowsテーブルに登録
     // ===========================================================
@@ -663,8 +777,6 @@ class TwitterAccountListController extends Controller
       Log::debug('==========================================================');
       Log::debug('TwitterController.add_table_follows アカウントをfollowsに登録');
       Log::debug('==========================================================');
-      // TODO 使用目的 登録するアカウントIDはtwitter_accountsに記述のあるものだけで良い、全部載せると膨大な量になる。
-      
       // 数値以外の値が入らないよう、引数はintを指定する。
       // カラムは丸め込み対策でvarchar(255)で作成しているため、配列作成時にキャストする
       $data = [
@@ -679,12 +791,16 @@ class TwitterAccountListController extends Controller
         }else{
           Log::debug('既に登録済みでした。 ID:'.$account_id.'=> フォロー => ID:'.$target_id);
         }
-        return response(200);
+        return response()->json([], 200);
       }catch (\Exception $exception) {
         Log::debug('DBへの登録or更新時にエラー発生: '. $exception->getMessage());
-        return response(500);
+        return response()->json([], 500);
       }
     }
+    
+    
+    
+    
     
     // ===========================================================
     // 指定したtwitterアカウントIDをfollowsテーブルから削除
