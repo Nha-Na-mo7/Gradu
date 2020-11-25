@@ -21,7 +21,7 @@
         <img
             class="p-accounts__icon"
             :src="account.profile_image_url_https"
-            alt="picture">
+            :alt="account.profile_image_url_https">
         </a>
       </div>
     </div>

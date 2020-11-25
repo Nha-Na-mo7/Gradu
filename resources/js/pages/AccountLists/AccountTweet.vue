@@ -22,7 +22,7 @@
         <img
             class=""
             :src="media_url | size_thumb"
-            alt="media_url">
+            :alt="media_url">
       </a>
     </div>
     <div class="item-5">
