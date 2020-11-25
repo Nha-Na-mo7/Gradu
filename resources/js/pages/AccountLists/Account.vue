@@ -76,8 +76,20 @@
           <!-- フォローボタンエリア、そのユーザーがTwitterアカウントを連携していない場合非表示 -->
           <div class="item-5 p-accounts__follow-btn--area">
             <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
-            <button class="c-btn" :class="{'c-btn__disabled': isAutoFollowing}" v-if="isFollowing" @click="destroy">フォロー解除</button>
-            <button class="c-btn" :class="{'c-btn__disabled': isAutoFollowing}" v-else @click="follow">フォローする</button>
+            <button
+                v-if="isFollowing"
+                class="c-btn"
+                :class="{'c-btn__disabled': isAutoFollowing}"
+                :disabled="isAutoFollowing"
+                @click="destroy"
+            >フォロー解除</button>
+            <button
+                v-else
+                class="c-btn"
+                :class="{'c-btn__disabled': isAutoFollowing}"
+                :disabled="isAutoFollowing"
+                @click="follow"
+            >フォローする</button>
           </div>
 
           <!-- FF数 -->
