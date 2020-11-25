@@ -76,8 +76,8 @@
           <!-- フォローボタンエリア、そのユーザーがTwitterアカウントを連携していない場合非表示 -->
           <div class="item-5 p-accounts__follow-btn--area">
             <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
-            <button class="c-btn" v-if="isFollowing" @click="destroy">フォロー中(リムる)</button>
-            <button class="c-btn" v-else @click="follow">フォロー</button>
+            <button class="c-btn" :class="{'c-btn__disabled': isAutoFollowing}" v-if="isFollowing" @click="destroy">フォロー解除</button>
+            <button class="c-btn" :class="{'c-btn__disabled': isAutoFollowing}" v-else @click="follow">フォローする</button>
           </div>
 
           <!-- FF数 -->
@@ -144,17 +144,24 @@ export default {
     follow_list: {
       type: Array,
       required: true
-    }
+    },
+    auto_follow_flg: {
+      type: Boolean,
+      required: true
+    },
   },
   data() {
     return {
       new_tweet: this.account.new_tweet,
-      isFollowing: false
+      isFollowing: false,
     }
   },
   computed: {
     account_id() {
       return this.account.account_id
+    },
+    isAutoFollowing() {
+      return this.auto_follow_flg
     },
     account_screen_name() {
       return this.account.screen_name
@@ -174,6 +181,10 @@ export default {
   },
   methods: {
     async follow() {
+      if(this.isAutoFollowing) {
+        console.log('自動フォローをONにしている間は、ボタンからのフォローはできません。')
+        return false;
+      }
       // フォロー用パラメータオブジェクトを作成
       const follow_param = {
         'user_id': this.account_id,
@@ -197,7 +208,10 @@ export default {
     },
     // フォロー解除
     async destroy() {
-      console.log('this is destroy btn...')
+      if(this.isAutoFollowing) {
+        console.log('自動フォローをONにしている間は、ボタンからのフォロー解除はできません。')
+        return false;
+      }
       // リムーブ用パラメータオブジェクトを作成
       const destroy_param = {
         'user_id': this.account_id,

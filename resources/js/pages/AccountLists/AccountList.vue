@@ -24,7 +24,7 @@
           <button
               class="c-btn c-btn__main c-btn--primary"
               @click="auto_following"
-              v-if="isAuthFollowFlg"
+              v-if="isAutoFollowFlg"
           >自動フォロー中...</button>
           <button
               class="c-btn c-btn__main c-btn--primary"
@@ -53,6 +53,7 @@
             :key="Accounts.id"
             :account="Accounts"
             :follow_list="follow_list"
+            :auto_follow_flg="!!isAutoFollowFlg"
         />
       </div>
 
@@ -117,7 +118,7 @@ export default {
     isNothing() {
       return this.nothing_accounts;
     },
-    isAuthFollowFlg() {
+    isAutoFollowFlg() {
       return this.auto_follow_flg;
     }
   },

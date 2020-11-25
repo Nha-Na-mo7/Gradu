@@ -40,4 +40,10 @@
     margin: auto 0;
     font-size: 1.2rem;
   }
+
+  &__disabled {
+    cursor: not-allowed;
+    background: #dedede;
+    color: #0b2e13;
+  }
 }
