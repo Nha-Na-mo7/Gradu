@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function (){
   Route::get('/brand{any?}', 'BrandController@get_brands')->where('any', '.+')->name('get_brands');
   
   // =============================================
-  // Twitter関連
+  // Twitterアカウント一覧画面関連
   // =============================================
   // TODO test
   Route::get('/twitter/testtest', 'TwitterAccountListController@batch_follow_db_insert');
@@ -57,7 +57,8 @@ Route::group(['middleware' => 'auth'], function (){
   Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.info');
   // アカウントコンポーネント/指定したユーザーの新着ツイートを取得
   Route::get('/accounts/tweet/{tweet_id}', 'TwitterAccountListController@accounts_tweet')->name('accounts.tweet');
-  
+  // アカウントコンポーネント/認証中ユーザーのフォローリストを取得
+  Route::get('/accounts/followlist', 'TwitterAccountListController@get_follow_target_list');
   
   // 認証ユーザーの自動フォローフラグを切り替える
   Route::post('/accounts/autofollowflg', 'TwitterAccountListController@toggle_auto_follow_flg');

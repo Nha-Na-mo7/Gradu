@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Log;
 
 class TwitterAccountListController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
   
     // twitterAPIが1日にフォローできる最大数。
     // ただし1日に1回のリセットだとフォローに偏りが出やすくなるので、
@@ -25,15 +29,56 @@ class TwitterAccountListController extends Controller
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
   
-  
-  
+    
     // =====================================================
     // ビューを返却する
     // =====================================================
     public function index(){
       return view('pages.accountlist');
     }
+  
+    // =======================================
+    // アカウント一覧ページ/DBからアカウント一覧の取得
+    // =======================================
+    public function accounts_index()
+    {
+      // 自分のTwitterアカウントIDを取得する
+      $user = Auth::user();
+      $twitter_id = $user->twitter_id;
+      
+      if(isset($twitter_id)) {
+        // 取得したアカウント一覧から、鍵垢以外のものを全て取得する
+        // 自分のアカウントは一覧画面に表示させない
+        $accounts = TwitterAccount::with(['new_tweet'])
+            ->where('protected', false)
+            ->orderBy('account_created_at', 'desc')
+            ->whereNotIn('account_id', [$twitter_id])
+            ->paginate();
+      }else{
+        // アカウント連携していなければ見られない画面なはずだが、何らかの理由で見れてしまった時の処理
+        $accounts = TwitterAccount::with(['new_tweet'])
+            ->where('protected', false)
+            ->orderBy('account_created_at', 'desc')
+            ->paginate();
+      }
+      return $accounts;
+    }
     
+    // ==============================================================
+    // アカウント一覧ページ/認証中ユーザーのfollow_targetsテーブル情報を返却する
+    // ==============================================================
+    public function get_follow_target_list(){
+      // 自分のTwitterアカウントIDを取得する
+      $user = Auth::user();
+      $twitter_id = $user->twitter_id;
+  
+      // フォローしているユーザーのIDの羅列を返却する
+      $follow_list = FollowTarget::select('follow_target_id')
+          ->where('account_id', $twitter_id)
+          ->get();
+
+      return $follow_list;
+    }
     
     // ==================================
     // Twitterアカウント検索 ※バッチ処理
@@ -265,33 +310,7 @@ class TwitterAccountListController extends Controller
       }
     }
     
-    // =======================================
-    // アカウント一覧ページ/DBからアカウント一覧の取得
-    // =======================================
-    public function accounts_index()
-    {
-      // 自分のTwitterアカウントIDを取得する
-      $user = Auth::user();
-      $twitter_id = $user->twitter_id;
-      
-      if(isset($twitter_id)) {
-        // 取得したアカウント一覧から、鍵垢以外のものを全て取得する
-        // 自分のアカウントは一覧画面に表示させない
-        $accounts = TwitterAccount::with(['new_tweet'])
-            ->where('protected', false)
-            ->orderBy('account_created_at', 'desc')
-            ->whereNotIn('account_id', [$twitter_id])
-            ->paginate();
-      }else{
-        // アカウント連携していなければ見られない画面なはずだが、何らかの理由で見れてしまった時の処理
-        $accounts = TwitterAccount::with(['new_tweet'])
-            ->where('protected', false)
-            ->orderBy('account_created_at', 'desc')
-            ->paginate();
-      }
-      
-      return $accounts;
-    }
+
     
     // =======================================
     // 指定したアカウントをフォローする(ボタンから)
@@ -419,8 +438,6 @@ class TwitterAccountListController extends Controller
       
       // 認証ユーザーを取得
       $user = Auth::user();
-      
-      Log::debug($request);
       // 「現在の」自動フォローフラグを1or0で取得
       $auto_follow_flg = $request->follow_flg;
       
@@ -434,7 +451,7 @@ class TwitterAccountListController extends Controller
         $user->auto_follow_flg = true;
         $user->update();
       }
-      return response(200);
+      return response([], 200);
     }
     
     
@@ -735,9 +752,9 @@ class TwitterAccountListController extends Controller
       return $account_id_list;
     }
   
-    // =======================================
-    // アカウントがフォローしているユーザーを取得する
-    // =======================================
+    // ======================================================
+    // アカウントがフォローしているユーザーをTwitterAPI経由で取得する
+    // ======================================================
     private function get_account_follow_ids($account_id, $token, $token_secret) {
       /*
        * GET friends/ids
@@ -789,10 +806,6 @@ class TwitterAccountListController extends Controller
         return response()->json([], 500);
       }
     }
-    
-    
-    
-    
     
     // ===========================================================
     // 指定したtwitterアカウントIDをfollowsテーブルから削除

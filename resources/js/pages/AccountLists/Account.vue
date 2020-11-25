@@ -76,7 +76,6 @@
           <!-- フォローボタンエリア、そのユーザーがTwitterアカウントを連携していない場合非表示 -->
           <div class="item-5 p-accounts__follow-btn--area">
             <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
-            <button class="c-btn" @click="destroy">フォロー中(リムる)</button>
             <button class="c-btn" v-if="isFollowing" @click="destroy">フォロー中(リムる)</button>
             <button class="c-btn" v-else @click="follow">フォロー</button>
           </div>
@@ -133,7 +132,7 @@
 </template>
 
 <script>
-import {DEFAULT_TWITTER_URL, OK} from "../../util";
+import { DEFAULT_TWITTER_URL, OK } from "../../util";
 import AccountTweet from './AccountTweet.vue';
 
 export default {
@@ -141,17 +140,19 @@ export default {
     account: {
       type: Object,
       required: true
+    },
+    follow_list: {
+      type: Array,
+      required: true
     }
   },
   data() {
     return {
       new_tweet: this.account.new_tweet,
+      isFollowing: false
     }
   },
   computed: {
-    isFollowing() {
-      return this.account.following;
-    },
     account_id() {
       return this.account.account_id
     },
@@ -191,9 +192,10 @@ export default {
         console.log('フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。')
         return false
       }
+      this.isFollowing = true;
       console.log('フォローしました')
     },
-
+    // フォロー解除
     async destroy() {
       console.log('this is destroy btn...')
       // リムーブ用パラメータオブジェクトを作成
@@ -202,8 +204,24 @@ export default {
       }
       // TODO フォロー制限の処理がいい加減なので修正すること
       const response = await axios.post('../accounts/destroy', destroy_param);
-
+      this.isFollowing = false;
     },
+    // フォロー状態のチェック
+    async isFollowing_check() {
+      var check = false;
+
+      // フォローリストをループさせ、TwitterIDと一致していたらtrueを返す
+      for (var i = 0, len = this.follow_list.length; i < len; i++) {
+        if (this.account_id === this.follow_list[i]['follow_target_id']) {
+          check = true;
+          break;
+        }
+      }
+      // 一致するTwitterIDがある場合はisFollowingがtrueとなる
+      if(check){
+        this.isFollowing = true;
+      }
+    }
   },
   components: {
     AccountTweet
@@ -212,6 +230,15 @@ export default {
     // ユーザー名にはレスポンスに"@"が付いていないので、付与する
     add_AtSign_to_screen_name: function (screen_name)  {
       return '@' + screen_name
+    }
+  },
+  watch: {
+    $route: {
+      async handler() {
+        // ページの読み込み直後、DBからTwitterアカウント一覧を取得
+        await this.isFollowing_check();
+      },
+      immediate: true
     }
   }
 }

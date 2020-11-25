@@ -28,7 +28,6 @@ class UserController extends Controller
     // ============================
     public function auth_user() {
       Log::debug('UserController.auth_user 認証中のユーザー情報を返却します。');
-      Log::debug('?!');
       return Auth::user();
     }
     

@@ -19,8 +19,6 @@
       <!-- ヘッドライン -->
       <div class="p-accounts__headline">
 
-        <button class="c-btn" @click="test_search_account">twitterアカウント検索テストボタン</button>
-
         <!-- 自動フォローボタンの位置確認 -->
         <div class="p-news__modal p-news__modal-show">
           <button
@@ -54,6 +52,7 @@
             v-for="Accounts in accounts"
             :key="Accounts.id"
             :account="Accounts"
+            :follow_list="follow_list"
         />
       </div>
 
@@ -96,15 +95,16 @@ export default {
       isLoading: false, // 読み込み中か
       nothing_accounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
+      twitter_id: 0,
       auto_follow_flg: false,
       updated_at: '',
       accounts: [],
+      follow_list: [],
       current_page: 0,
       last_page: 0,
-      // searchData: {
-      //   keywords: '仮想通貨',
-      //   page: this.p
-      // }
+      total: 0, //総アカウント数
+      from: 0, // 100件中21~40 の21の部分
+      to: 0, // 100件中21~40 の40の部分
     }
   },
   computed: {
@@ -127,11 +127,24 @@ export default {
 
       // エラーチェック
       if(response.status === OK) {
-        console.log(response)
         // フォーム用にデータを格納
-        this.user = response.data
-        this.twitter = (response.data.twitter_id !== null);
+        this.twitter_id = response.data.twitter_id;
         this.auto_follow =  response.data.auto_follow_flg;
+      }else{
+        this.system_error = response.data.errors
+      }
+    },
+    // ログイン中のユーザーのフォローリストを取得する
+    async get_follow_list() {
+      const response = await axios
+          .get(`/accounts/followlist`)
+          .catch(error => error.response || error);
+
+      // エラーチェック
+      if(response.status === OK) {
+        // フォーム用にデータを格納
+        this.follow_list = response.data;
+        console.log(this.follow_list)
       }else{
         this.system_error = response.data.errors
       }
@@ -151,6 +164,9 @@ export default {
       this.accounts = response.data.data
       this.current_page = response.data.current_page
       this.last_page = response.data.last_page
+      this.total = response.data.total
+      this.from = response.data.from
+      this.to = response.data.to
 
       // そのページにアカウントがないor通信が思いなどで読み込めないとき
       if(response.data.data.length === 0) {
@@ -168,16 +184,8 @@ export default {
     },
     // オートフォローを切り替える
     async auto_following() {
-
-      await this.get_user();
-
-      const flg = this.auto_follow_flg;
-      // getterに何も入っていない場合-1が帰ってくるため、その時は処理を行わない
-      if(flg === -1) {
-        return false
-      }
-
       var result = false;
+      const flg = this.auto_follow_flg;
       if( flg ) {
         result = confirm('自動フォローをOFFにします。よろしいですか？')
       } else {
@@ -185,16 +193,15 @@ export default {
       }
       if(result) {
         const response = await axios.post(`/accounts/autofollowflg`, {'follow_flg': flg});
-        this.auto_follow_flg = !flg;
+        if(response.status === OK) {
+          this.auto_follow_flg = !flg;
+          console.log('フラッシュ... オートフォローフラグを切り替えました。')
+        }
+        return true;
       }else {
         return false
       }
     },
-
-    async test_search_account() {
-      console.log('test start ')
-      await axios.get(`/twitter/testtest`);
-    }
   },
   components: {
     Account,
@@ -209,6 +216,7 @@ export default {
       async handler() {
         // ページの読み込み直後、DBからTwitterアカウント一覧を取得
         await this.get_user();
+        await this.get_follow_list();
         await this.fetchAccounts();
         await this.fetchUpdatedAt();
       },
