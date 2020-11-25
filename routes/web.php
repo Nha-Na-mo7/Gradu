@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function (){
   // 指定したTwitterAccountListアカウントをフォローする
   Route::post('/accounts/follow', 'TwitterAccountListController@accounts_follow');
   // 指定したTwitterアカウントのフォローを外す
-  // Route::get('/accounts/get', 'TwitterAccountListController@')->name('');
+  Route::post('/accounts/destroy', 'TwitterAccountListController@accounts_destroy');
   
   // Twitterとの連携を解除する
   Route::post('/accounts/un_linkage', 'TwitterController@un_linkage');

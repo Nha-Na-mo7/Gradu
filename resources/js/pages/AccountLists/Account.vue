@@ -64,7 +64,7 @@
           <!-- Twitterプロフィール -->
           <div
               class="item-5 p-accounts__profile--description"
-              v-if="isExistProfileDescription"
+              v-if="isExist_profile_description"
           >
             <p>{{ account.description }}</p>
           </div>
@@ -76,7 +76,8 @@
           <!-- フォローボタンエリア、そのユーザーがTwitterアカウントを連携していない場合非表示 -->
           <div class="item-5 p-accounts__follow-btn--area">
             <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
-            <button class="c-btn" v-if="isFollowing" @click="un_follow">フォロー中</button>
+            <button class="c-btn" @click="destroy">フォロー中(リムる)</button>
+            <button class="c-btn" v-if="isFollowing" @click="destroy">フォロー中(リムる)</button>
             <button class="c-btn" v-else @click="follow">フォロー</button>
           </div>
 
@@ -157,7 +158,7 @@ export default {
     account_screen_name() {
       return this.account.screen_name
     },
-    isExistProfileDescription() {
+    isExist_profile_description() {
       return this.account.description !== '';
     },
     twitter_account_url() {
@@ -178,38 +179,30 @@ export default {
       }
 
       // TODO フォロー制限の処理がいい加減なので修正すること
-      const response = await axios.post('../api/accounts/follow', follow_param);
-
-      // エラー時
-      if (response.status !== OK) {
-        this.$store.commit('error/setErrorCode', response.status)
-        return false
-      }
+      const response = await axios.post('../accounts/follow', follow_param);
 
       console.log('フォローボタンを押しました')
 
       // フォロー失敗時(API制限か削除・凍結のどちらか)(errorに項目が入れられて帰ってくる)
-      if (response.data.error !== null) {
-        this.$store.commit('message/setContent', {
-          content: response.data.error
-        });
-        return false
-      }
       //
       // // 対象アカウントが削除/凍結されフォローできなかった場合
       // // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
-      // if (response.data.result.errors !== undefined) {
-      //   console.log('flash')
-      //   // フラッシュメッセージ
-      //   this.$store.commit('message/setContent', {
-      //     content: 'フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。'
-      //   });
-      //   return false
-      // }
+      if (response.data.result.errors !== undefined) {
+        console.log('フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。')
+        return false
+      }
       console.log('フォローしました')
     },
-    un_follow() {
-      alert('this is un_follow btn...')
+
+    async destroy() {
+      console.log('this is destroy btn...')
+      // リムーブ用パラメータオブジェクトを作成
+      const destroy_param = {
+        'user_id': this.account_id,
+      }
+      // TODO フォロー制限の処理がいい加減なので修正すること
+      const response = await axios.post('../accounts/destroy', destroy_param);
+
     },
   },
   components: {

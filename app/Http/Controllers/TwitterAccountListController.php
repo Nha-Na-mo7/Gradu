@@ -361,9 +361,9 @@ class TwitterAccountListController extends Controller
     
     
     // =======================================
-    // 指定したアカウントのフォローを解除する
+    //TODO  指定したアカウントのフォローを解除する
     // =======================================
-    public function accounts_unfollow(Request $request)
+    public function accounts_destroy(Request $request)
     {
       /* POST friendships/destroy - フォロー解除する
        *
@@ -373,16 +373,38 @@ class TwitterAccountListController extends Controller
       Log::debug('==============================================');
       Log::debug('TwitterController.accounts_unfollow フォロー解除');
       Log::debug('==============================================');
-      $target_user_id = $request->user_id; // フォロー対象のアカウントのID。
-      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
+      // ログイン中のユーザー情報を取得
+      $user = Auth::user();
+      // 処理をするユーザーのTwitterID
+      $account_id = $user->twitter_id;
+      // リムーブ対象のアカウントID
+      $target_user_id = $request->user_id;
+      // トークン・シークレット
+      $token = $user->token;
+      $token_secret = $user->token_secret;
+      // テスト用・削除済みのID
+      // $target_user_id = 1044456766241558529;
       
-      // APIを叩くためのインスタンスを作成
-      $connection = (new TwitterController)->connection_instanse_users($request->token, $request->token_secret);
+      // インスタンスを作成
+      $connection = (new TwitterController)->connection_instanse_users($token, $token_secret);
       
+      // APIリクエスト
       $twitterRequest = $connection->post('friendships/destroy', array("user_id" => $target_user_id));
       Log::debug('ID:'.$target_user_id.' のフォローを解除しました。');
-      
-      return response()->json(['result' => $twitterRequest]);
+  
+      // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
+      if ($connection->getLastHttpCode() === 200) {
+        Log::debug('followsテーブルからフォローしたIDを消去します。');
+        $this->delete_table_follows($account_id, $target_user_id);
+      } else {
+        // 何らかのリクエストエラーが起きた時
+        Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
+      }
+  
+      Log::debug('=======================================================');
+      Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 手動フォローフォロー解除完了 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
+      Log::debug('=======================================================');
+      return response()->json(['result' => $twitterRequest], 200);
     }
     
     // ================================
@@ -785,11 +807,11 @@ class TwitterAccountListController extends Controller
             ->delete();
         
         Log::debug('ID'.$account_id.'のフォローリストからID:'.$target_id.'を削除しました。');
-        return response(200);
+        return response()->json([], 200);
         
       }catch (\Exception $exception) {
         Log::debug('レコードの削除時にエラー発生: '. $exception->getMessage());
-        return response(500);
+        return response([], 500);
       }
     }
     
