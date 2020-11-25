@@ -151,17 +151,26 @@ class TrendTweetController extends Controller
           
           // 続きからの場合
           if($resume_flg) {
-            // 更新されている項目がある場合、complete_flgは必ずfalseとなっている項目が存在するため、取得できる
+            // 更新途中で終わっている項目がある場合、complete_flgは必ずfalseとなっている項目が存在するため、取得できる
             $tweetCountModel = TweetCountHour::where('complete_flg', false)->first();
             
-            // 更新途中の銘柄IDを取得する
-            $resume_brand_id = $tweetCountModel->brand_id;
-            // 途中までのカウントを取得する
-            $tweet_count = $tweetCountModel->tweet_count;
+            // ちょうど更新の切れ目でAPI制限などにより検索が終わった場合、complete_flg=falseの銘柄が存在しないのでその分の処理を分ける。
+            if(empty($tweetCountModel)){
+              $complete_brands = TweetCountHour::where('updated_at', 'LIKE', "$since_date%")->get();
+              
+              // 更新途中の銘柄はないので、次から開始する銘柄のIDを指定する
+              $resume_brand_id = count($complete_brands) + 1;
+              
+            }else{
+              // 更新途中の銘柄IDを取得する
+              $resume_brand_id = $tweetCountModel->brand_id;
+              // 途中までのカウントを取得する
+              $tweet_count = $tweetCountModel->tweet_count;
+              // 検索再開地点のnext_resultsパラメータを取得する
+              $next_results = $tweetCountModel->next_results;
+            }
             // type:0なので1時間前の時刻を取得する
             $since_date = (new CarbonImmutable($Updated_tweet_count->updated_at))->subHour();
-            // 検索再開地点のnext_resultsパラメータを取得する
-            $next_results = $tweetCountModel->next_results;
             
           }else{
             $until_date_insert_db_format = $now;
@@ -183,13 +192,21 @@ class TrendTweetController extends Controller
           if($resume_flg) {
             $tweetCountModel_day = TweetCountDay::where('complete_flg', false)->first();
             
-            // 更新途中の銘柄IDを取得する
-            $resume_brand_id = $tweetCountModel_day->brand_id;
-            // 途中までのカウントを取得する
-            $tweet_count = $tweetCountModel_day->tweet_count;
-            // 次のパラメータを取得する
-            $next_results = $tweetCountModel_day->next_results;
-            
+            // ちょうど更新の切れ目でAPI制限などにより検索が終わった場合、complete_flg=falseの銘柄が存在しないのでその分の処理を分ける。
+            if(empty($tweetCountModel_day)){
+              $complete_brands = TweetCountDay::where('updated_at', 'LIKE', "$since_date%")->get();
+    
+              // 更新途中の銘柄はないので、次から開始する銘柄のIDを指定する
+              $resume_brand_id = count($complete_brands) + 1;
+    
+            }else{
+              // 更新途中の銘柄IDを取得する
+              $resume_brand_id = $tweetCountModel_day->brand_id;
+              // 途中までのカウントを取得する
+              $tweet_count = $tweetCountModel_day->tweet_count;
+              // 検索再開地点のnext_resultsパラメータを取得する
+              $next_results = $tweetCountModel_day->next_results;
+            }
             
           }else{
             $until_date_insert_db_format = $today->subDays($sub_times - 1); //2020-10-02 00:00:00
