@@ -132,7 +132,7 @@ class TwitterController extends Controller
             
             // セッションにtwitter_idをいれる
             Log::debug('セッションにtwitter_idを格納します。');
-            session()->put('twitter_id', $twitter_id);
+            session(['twitter_id' => $twitter_id]);
   
             // フォローしている人を取得し、followsテーブルに格納する
             Log::debug('ただいま連携したユーザーがフォローしているユーザーをfollowsテーブルに格納します。');
@@ -180,7 +180,7 @@ class TwitterController extends Controller
           }
           
           // セッションにtwitter_idを格納
-          session()->put('twitter_id', $twitter_id);
+          session(['twitter_id' => $twitter_id]);
           
           // ログイン時 or 新規登録時にも、フォローしている人を取得し、followsテーブルに格納する
           Log::debug('ユーザーがフォローしているユーザーをfollowsテーブルに格納します');

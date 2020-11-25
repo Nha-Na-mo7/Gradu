@@ -5,14 +5,14 @@
   <div class="l-container__content">
 
     <!-- ページタイトル -->
-    <PageTitle :title='pageTitle'/>
+    <PageTitle :title='page_title'/>
 
     <!--メインレイアウト-->
     <div class="p-accounts__container">
 
       <!-- リボンタグ -->
       <Ribbonnav
-          :title='pageTitle'
+          :title='page_title'
           :date='twitter_accounts_table_updated_at'
       />
 
@@ -56,6 +56,9 @@
             :account="Accounts"
         />
       </div>
+
+    </div>
+    <div>
 
     </div>
 
@@ -105,7 +108,7 @@ export default {
     }
   },
   computed: {
-    pageTitle(){
+    page_title(){
       return PAGE_TITLE;
     },
     twitter_accounts_table_updated_at() {
