@@ -7,10 +7,12 @@ import './bootstrap.js';
 import '../sass/app.scss';
 
 import Vue from "vue";
-// ルーティングの定義
+// ストアの定義
 import store from "./store/index.js";
 // ルーティングの定義
 import router from "./router.js";
+// ルーティングの定義
+import paginate from "./paginate.js";
 // ルートコンポーネント
 import App from "./App.vue";
 
@@ -25,6 +27,7 @@ const createApp = async () => {
     el: '#app',
     store,
     router,
+    paginate,
     components: { App },
     template: '<App />'
   });

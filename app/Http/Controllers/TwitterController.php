@@ -15,7 +15,7 @@ class TwitterController extends Controller
     // トレンド通貨集計はTrendTweetControllerを参照してください。
   
     // Twitter連携関係でフラッシュメッセージに使う
-    const ALREADY_EXIST_ACCOUNT_ERROR_MSG = 'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。\n別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。';
+    const ALREADY_EXIST_ACCOUNT_ERROR_MSG = 'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。';
     const OTHER_USED_ACCOUNT_ERROR_MSG =  '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。';
     const FAIL_LOGIN_MSG = 'Twitterログインに失敗しました。';
     const SUCCESS_LINKAGE = 'Twitterアカウントと連携しました！';
@@ -121,7 +121,8 @@ class TwitterController extends Controller
             Log::debug('> 他のユーザーが連携しているTwitterアカウントです。連携処理は行わずにレスポンスして終了します。');
             Log::debug('===================================================================');
 
-            return redirect('/mypage')->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
+            // redirect()->intended()で連携後に元の画面に戻るらしいが？
+            return redirect()->intended()->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
           }
           
           // 登録メールアドレスを使ってユーザーレコードを取得する
@@ -150,8 +151,8 @@ class TwitterController extends Controller
             Log::debug('フォロー中 かつ accountsテーブルに保存されているユーザーをfollowsテーブルに格納しました。');
           }
   
-          Log::debug('アカウント設定画面にリダイレクトします。');
-          return redirect('mypage')->with('system_message', self::SUCCESS_LINKAGE);
+          Log::debug('連携した元の画面にリダイレクトします。');
+          return redirect()->intended()->with('system_message', self::SUCCESS_LINKAGE);
           
         // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン)
         }else{
@@ -174,7 +175,8 @@ class TwitterController extends Controller
               Log::debug('===================================================================');
               
               // 新規登録画面へリダイレクトする。この時フラッシュメッセージも付与する
-              return redirect('/register')
+              return redirect()
+                  ->intended()
                   ->with('system_message', self::ALREADY_EXIST_ACCOUNT_ERROR_MSG);
             }
             
@@ -215,7 +217,7 @@ class TwitterController extends Controller
         session()->regenerateToken();
         
         // ログイン画面へ戻す
-        return redirect('/login')->with('system_message', self::FAIL_LOGIN_MSG);
+        return redirect()->intended()->with('system_message', self::FAIL_LOGIN_MSG);
       }
     }
     
