@@ -43,7 +43,7 @@
 
 
 <script>
-import { BRAND_ICON_PATH } from "../../util";
+import { OK, BRAND_ICON_PATH } from "../../util";
 
 const TWITTER_SEARCH_URL = 'https://twitter.com/search?q=';
 
