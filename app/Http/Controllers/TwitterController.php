@@ -21,6 +21,7 @@ class TwitterController extends Controller
     const SUCCESS_LINKAGE = 'Twitterアカウントと連携しました！';
     const SUCCESS_TWITTER_LOGIN = 'Twitterアカウントでログインしました！';
 
+    
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
     // =======================================
