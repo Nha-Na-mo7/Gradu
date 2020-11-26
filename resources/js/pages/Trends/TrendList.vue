@@ -37,31 +37,36 @@
         <!-- ランキング -->
         <div class="p-trends__list">
           <!-- 検索中 -->
-          <div v-if="isLoading" class="">
+          <div v-if="isLoading_status" class="">
             <Loading />
           </div>
+
+          <div v-else-if="isNothing_status">
+            <NothingTrends />
+          </div>
+
           <div
               class="p-trends__list--container"
               v-else>
+            <Ranking
+                v-show="tab === 0"
+                v-for="trend_brand in sort_tweet_count_desc(0)"
+                :key="trend_brand.id"
+                :brand="trend_brand"
+            />
+            <Ranking
+                v-show="tab === 1"
+                v-for="trend_brand in sort_tweet_count_desc(1)"
+                :key="trend_brand.id"
+                :brand="trend_brand"
+            />
+            <Ranking
+                v-show="tab === 2"
+                v-for="trend_brand in sort_tweet_count_desc(2)"
+                :key="trend_brand.id"
+                :brand="trend_brand"
+            />
           </div>
-          <Ranking
-              v-show="tab === 0"
-              v-for="trend_brand in sort_tweet_count_desc(0)"
-              :key="trend_brand.id"
-              :brand="trend_brand"
-          />
-          <Ranking
-              v-show="tab === 1"
-              v-for="trend_brand in sort_tweet_count_desc(1)"
-              :key="trend_brand.id"
-              :brand="trend_brand"
-          />
-          <Ranking
-              v-show="tab === 2"
-              v-for="trend_brand in sort_tweet_count_desc(2)"
-              :key="trend_brand.id"
-              :brand="trend_brand"
-          />
 
         </div>
 
@@ -75,6 +80,7 @@
 
 <script>
 import Loading from '../../layouts/Loading.vue';
+import NothingTrends from './NothingTrends.vue';
 import SearchAccordion from './SearchAccordion.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
@@ -88,6 +94,7 @@ export default {
     return {
       accordion: false,
       isLoading: false,
+      isNothing: false,
       tab: 0,
       trend_data_hour: [],
       trend_data_day: [],
@@ -98,10 +105,15 @@ export default {
       },
     }
   },
-
   computed: {
     page_title() {
       return PAGE_TITLE;
+    },
+    isLoading_status(){
+      return this.isLoading
+    },
+    isNothing_status(){
+      return this.isNothing
     },
     content_bgcolor() {
       let bgcolor = ''
@@ -171,7 +183,6 @@ export default {
         const sorted_item = refined.slice().sort(function (a, b) {
           return b.tweet_count - a.tweet_count
         });
-        // console.log(sorted_item)
         return sorted_item;
       }
     },
@@ -187,22 +198,29 @@ export default {
   },
   methods: {
     // 指定した時間帯のトレンドテーブルを取得する
-    // TODO ERROR
     async fetch_trend(type) {
       // トレンド一覧を取得
-      const response = await axios.get(`/tweet/count`, { params:{type: type} });
+      const response = await axios
+          .get(`/tweet/count`, { params:{type: type} })
+          .catch(error => error.response || error);
 
-      // それぞれのトレンドデータに格納
-      switch (type) {
-        case 0:
-          this.trend_data_hour = response.data;
-          break;
-        case 1:
-          this.trend_data_day = response.data;
-          break;
-        case 2:
-          this.trend_data_week = response.data;
-          break;
+      // 通信成功時
+      if (response.status === OK) {
+        // それぞれのトレンドデータに格納
+        switch (type) {
+          case 0:
+            this.trend_data_hour = response.data;
+            break;
+          case 1:
+            this.trend_data_day = response.data;
+            break;
+          case 2:
+            this.trend_data_week = response.data;
+            break;
+        }
+      }else{
+        // 何らかの理由でエラーが出た場合は、トレンドが取得できなかった旨を表示する
+        this.isNothing = true;
       }
     },
     // 上記のfetch_trendを、時間・日・週の全てで取得する
@@ -242,6 +260,7 @@ export default {
     PageTitle,
     Ribbonnav,
     Ranking,
+    NothingTrends,
     SearchAccordion
   },
   watch: {

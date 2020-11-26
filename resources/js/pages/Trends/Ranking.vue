@@ -80,13 +80,11 @@ export default {
   },
   methods: {
     // 24時間以内の取引価格の取得
-    // TODO ERROR
     async get_transaction_price() {
       const response = await axios.get(`/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
 
-      // console.log(response.data)
-
-      if(response.data !== ''){
+      // 通信成功時(取引価格だけ取得エラーするのは考えにくいが、もし起きた場合は「不明」と表示させる)
+      if(response.status === OK && response.data !== '') {
         this.transaction_price = response.data
       }
     }

@@ -49,7 +49,6 @@ class GoogleNewsController extends Controller
     $API_BASE_URL = 'https://news.google.com/rss/search?ie=UTF-8&oe=UTF-8&hl=ja&gl=JP&q=';
     // 日本語のニュースに限定する
     $API_PARAM_URL = '&ceid=JP:ja';
-    
     // 検索キーワードの文字コードを変更
     $query = urlencode(mb_convert_encoding($keywords, "UTF-8", "auto"));
     
@@ -57,19 +56,15 @@ class GoogleNewsController extends Controller
     $api_url = $API_BASE_URL . $query . $API_PARAM_URL;
     Log::debug('APIリクエストURL :'.$api_url);
     
-    
-    
     // --------------------
     // APIへリクエストを飛ばす
     // --------------------
-    // APIにリクエスト。その結果はsimplexmlに格納する。
+    // レスポンスはsimplexmlに格納する。
     $content = file_get_contents($api_url);
     $xml = simplexml_load_string($content);
     
     // $xml確認用
     // Log::debug(print_r($xml, true));
-    
-    
     
     // ----------------------------------------
     // アクセス後、必要な情報をレスポンスするまでの工程

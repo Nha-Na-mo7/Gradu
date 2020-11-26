@@ -1,9 +1,7 @@
 <template>
   <div>
-    <!-- アコーディオンコンテンツ -->
+    <!-- コンテンツ(SP用に開閉できるようにする) -->
     <div class="c-accordion">
-      <button class="c-accordion__btn">絞り込む(アコーディオンオープン)</button>
-
       <div class="">
         <!--  通貨での絞り込み -->
         <div class="">
@@ -55,7 +53,7 @@
 </template>
 
 <script>
-import { BRAND_ICON_PATH } from "../../util";
+import { OK , BRAND_ICON_PATH } from "../../util";
 
 export default {
   data() {
@@ -70,11 +68,14 @@ export default {
     },
   },
   methods: {
-    // TODO ERROR
     // 全ての仮想通貨情報を取得する。選択肢に使用される
     async fetch_brand() {
-      const response = await axios.get('/brand');
-      this.fetched_brands = response.data;
+      const response = await axios.get('/brand').catch(error => error.response || error);
+
+      // 検索を絞るためのチェックボックスであり、最悪通信失敗しても大きく影響しないので通信失敗時はdata更新しないだけに止める。
+      if(response.status === OK) {
+        this.fetched_brands = response.data;
+      }
     },
     // チェックされた時、チェックボックスの値全てを親コンポネに送る
     isChecked(brand) {
@@ -89,8 +90,7 @@ export default {
   watch: {
     $route: {
       async handler() {
-        // TODO ERROR
-        // ページの読み込み直後、brandsテーブルから通過情報全てを取得する
+        // 読み込み直後、brandsテーブルから通過情報全てを取得する
         await this.fetch_brand();
       },
       immediate: true

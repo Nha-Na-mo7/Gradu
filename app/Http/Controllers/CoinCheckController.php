@@ -19,9 +19,12 @@ class CoinCheckController extends Controller
      * CoincheckAPIのtickerで取得可能な通貨は「ビットコイン」のみ
      */
   
-    // brandsテーブルの通貨ID
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+    // brandsテーブルのBTCの通貨ID
     const BTC_ID = 1;
-  
     
     // =====================================================
     // ビューを返却する
@@ -52,25 +55,27 @@ class CoinCheckController extends Controller
     // DBから、過去1時間or過去1日or1週間の各通貨のツイート数を取得する
     // =====================================================
     public function get_tweet_count(){
+      Log::debug('CoinCheckController.get_tweet_count ツイート数を取得する');
       // 参照するテーブルが違うだけで殆ど同じ処理をするため、引数で分ける
       // $type: 0...hour 1...day 2...week
       $type = filter_input(INPUT_GET, 'type');
-      Log::debug('type:'.$type);
-  
-  
+      
       // 現在時刻で得られる最新の時刻で検索し、コンプリートフラグが立っているかを確認する
       $now = CarbonImmutable::now();
   
       switch ($type){
         case 0:
+          Log::debug('過去1時間のツイート数を取得します。');
           $table_id = 2;
           $search_time = $now->format('Y-m-d H:');
           break;
         case 1:
+          Log::debug('過去1日のツイート数を取得します。');
           $table_id = 3;
           $search_time = $now->format('Y-m-d');
           break;
         case 2:
+          Log::debug('過去1週間のツイート数を取得します。');
           $table_id = 4;
           $search_time = $now->format('Y-m-d');
           break;
@@ -97,46 +102,28 @@ class CoinCheckController extends Controller
         }
         return $result;
         
-      // 集計が完了していない場合、1つ前の集計時刻に遡り、ブランドテーブルの数だけ取得する
+      // 集計が完了していない場合、1つ前の集計時刻に遡り取得する
       }else{
-        // Brandsモデルのレコード数
-        $brands_count = Brand::all()->count();
-  
         switch ($type){
           case 0:
-            $old_search_time = $now->subHour()->format('Y-m-d H:');;
+            $old_search_time = $now->subHour()->format('Y-m-d H:');
             
-            $result = TweetCountHour::with(['brand'])
-                ->where('updated_at', 'LIKE', "$old_search_time%")
-                ->latest('id')
-                ->take($brands_count)
-                ->get();
+            $result = TweetCountHour::with(['brand'])->where('updated_at', 'LIKE', "$old_search_time%")->get();
             break;
           case 1:
-            $old_search_time = $now->subDay()->format('Y-m-d');;
-            $result = TweetCountDay::with(['brand'])
-                ->where('updated_at', 'LIKE', "$old_search_time%")
-                ->latest('id')
-                ->take($brands_count)
-                ->get();
+            $old_search_time = $now->subDay()->format('Y-m-d');
+            $result = TweetCountDay::with(['brand'])->where('updated_at', 'LIKE', "$old_search_time%")->get();
             break;
           case 2:
             $old_search_time = $now->subDay()->format('Y-m-d');
             Log::debug('old case2:'.$old_search_time);
-            $result = TweetCountWeek::with(['brand'])
-                ->where('updated_at', 'LIKE', "$old_search_time%")
-                ->latest('id')
-                ->take($brands_count)
-                ->get();
+            $result = TweetCountWeek::with(['brand'])->where('updated_at', 'LIKE', "$old_search_time%")->get();
             break;
         }
 
         return $result;
       }
     }
-  
-  
-  
   
   
     // ============================================================
@@ -209,9 +196,7 @@ class CoinCheckController extends Controller
     {
       $access_key = config('services.coincheck')['access_key'];
       $secret_key = config('services.coincheck')['secret_key'];
-      
-      $coincheck = new Coincheck($access_key, $secret_key);
-      
-      return $coincheck;
+  
+      return new Coincheck($access_key, $secret_key);
   }
 }

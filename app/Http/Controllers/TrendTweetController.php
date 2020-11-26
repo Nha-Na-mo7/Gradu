@@ -12,7 +12,13 @@ use Illuminate\Support\Facades\Log;
 
 class TrendTweetController extends Controller
 {
-    // search/tweetsAPIが15分間の間に検索できる最大数。誤差でAPI制限に
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+    
+    // search/tweetsAPIが15分間の間に検索できる最大数は450。
+    // 誤差でAPI制限にかかるのを避けるため余裕を持って440に設定。APIの仕様が変わった場合こちらを編集してください。
     const SEARCH_TWEETS_LIMIT = 440;
     
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
@@ -33,8 +39,7 @@ class TrendTweetController extends Controller
      * ④ その検索ワードを全件検索し終える、またはAPI制限上限に到達するまでループしながら検索をかける
      * ⑤ 取得できたツイートの総数をカウントする
      * ⑥ 1度の検索で全件取得しきれなかった場合、レスポンスに付与されたnext_resultsのURLを使って再度検索を行う
-     *
-     * ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
+     * > ④〜⑥を繰り返し、期間内の取得ツイートが無くなったらfor文ループを抜ける
      *
      * ⑦ 検索で取得できた通貨のツイート数をDBに登録する
      * ⑧ その時間のツイート検索が完了したかの確認をして、updated_at_tablesに更新時刻、complete_flgを記述し終了。
@@ -50,11 +55,10 @@ class TrendTweetController extends Controller
       /*
        * 1時間以内のツイート全て・24時間以内のツイート全てを集計する。
        * 1週間以内のツイートに関しては過去1日以内のツイート×7日分の合計値で算出する
-       * ・APIの仕様で、7日間の期間指定をしたとしても取得できなくなる場合がある
-       * ・毎時毎時7日分のツイート検索を行うのはサービスとしても負荷が大きい
+       * ・APIの仕様で、7日間の期間指定をしたとしても極端に少ないツイート数しか検出できなくなる場合がある
+       * ・また毎時間7日分のツイート検索を行うのはサービスとしても負荷が大きい
        * ・一回でも7日分のツイート数さえ取得してしまえば、後は1日以内のツイートを算出すればよくなり負荷が軽くなる。余計なAPI制限にかかってエラーを起こす危険も減少する。
        */
-      
       
       // searchType 0:1時間以内のみ 1:過去1日間に検索をかける
       
@@ -91,7 +95,7 @@ class TrendTweetController extends Controller
           $search_time = $now->format('Y-m-d H:');
           break;
         case 1:
-          // テーブル検索用、その日の集計が完了しているかの判定なので検索は日付だけでOK
+          // テーブル検索用、その日の集計が完了しているかの判定用なので検索は日付だけでOK
           $sub_now = $now->subDays($sub_times - 1);
           $search_time = $sub_now->format('Y-m-d');
           break;
@@ -103,7 +107,6 @@ class TrendTweetController extends Controller
           ->where('updated_at', 'LIKE', "$search_time%")
           ->first();
       
-      
       // 既にその時間のレコードが存在する場合、complete_flgをチェックし、その時間の更新が完了しているかを確認する
       if(isset($Updated_tweet_count)) {
         
@@ -114,16 +117,17 @@ class TrendTweetController extends Controller
           Log::debug('============================================');
           exit();
           
-          // 中断されていた場合
+        // 中断されていた場合
         }else{
-          Log::debug('集計の途中で中断されているようです。IDと集計開始時刻を取得し、再開します。');
+          Log::debug('集計の途中で中断されています。IDと集計開始時刻を取得し、再開します。');
           // 再開フラグをtrueに
           $resume_flg = true;
           
           // 検索終了後にDBに格納する更新時刻を元々入っていたレコードから取得しておく
           $until_date_insert_db_format = new CarbonImmutable($Updated_tweet_count->updated_at);
         }
-        
+      
+      // レコード自体がない場合、集計未実施
       }else{
         Log::debug('集計が未実施です。');
         $Updated_tweet_count = UpdatedAtTable::where('id', $table_id)->first();
@@ -132,18 +136,16 @@ class TrendTweetController extends Controller
         $Updated_tweet_count->fill([
             'complete_flg' => false,
         ])->save();
-        
       }
-      
       
       // 引数の検索条件によって、sinceを分ける(0: -1hour、1: -1day)
       // さらに、対応するTweetCountモデルを取得する
       Log::debug('遡って取得する時間(since)を算出します。');
       switch ($search_type){
         case 0:
+          // 1時間前の時刻を$since_dateとして取得。
           Log::debug('$search_type :'.$search_type.'(= hour)です。1時間前の時刻を取得します。');
-          $subHour = $now->subHour();
-          $since_date = $subHour;
+          $since_date = $now->subHour();
           
           // 検索用・DB用にフォーマットを修正
           $until_date = $now->format('Y-m-d_H:i:s_\J\S\T');
@@ -173,6 +175,7 @@ class TrendTweetController extends Controller
             $since_date = (new CarbonImmutable($Updated_tweet_count->updated_at))->subHour();
             
           }else{
+            // 続きからではない場合、DBに挿入用の時刻を用意しておく
             $until_date_insert_db_format = $now;
           }
           break;
@@ -202,7 +205,6 @@ class TrendTweetController extends Controller
               // 更新途中の銘柄はないので、次から開始する銘柄のIDを指定する
               $resume_brand_id = count($complete_brands) + 1;
               Log::debug('再開させる銘柄id: '.$resume_brand_id);
-              
     
             }else{
               // 更新途中の銘柄IDを取得する
@@ -219,12 +221,12 @@ class TrendTweetController extends Controller
           break;
       }
       
-      
-      // ----------------------------------------------------------------------------------------------------
+      // --------------------------------------------------------------------------------------------------
       // ① brandsテーブル(取り扱う通貨名)のレコードを全て取得し、銘柄名とカタカナ名を組み合わせた検索ワードを作り、配列に格納
-      // ----------------------------------------------------------------------------------------------------
+      // --------------------------------------------------------------------------------------------------
       $search_words = $this->make_brands_searchwords_array();
-      if($search_words === false){
+      // brandsテーブルが空だった場合、falseが帰ってくるので処理が終了(通常起こらない処理)。
+      if(!$search_words){
         exit();
       }
       
@@ -267,8 +269,6 @@ class TrendTweetController extends Controller
             'result_type' => 'recent', // 最新のツイート
             'q' => $search_word . ' -filter:replies ' . 'exclude:retweets'.' since:'.$since_date. ' until:'.$until_date, // 検索ワード
         );
-        
-        // Log::debug('設定されたparams(next_results挿入前): '.print_r($params, true));
         
         //続きからの時、かつ$next_resultsが存在する時、next_paramsを追加する
         if($resume_flg && !!$next_results) {
@@ -501,9 +501,9 @@ class TrendTweetController extends Controller
     // バッチ用・(weeks)7日分の集計データを合算し、1週間分のデータとして保存する
     // ======================================================
     public function make_tweet_count_week(){
-      Log::debug('=======================================');
-      Log::debug('定期 TwitterController.make_week_tweet_count');
-      Log::debug('=======================================');
+      Log::debug('==============================================================');
+      Log::debug('定期 TwitterController.make_week_tweet_count 7日分のツイートを合算');
+      Log::debug('==============================================================');
       // brandsテーブルのレコード数を取得
       $brands_count = Brand::all()->count();
       // 今日の日付
@@ -569,6 +569,8 @@ class TrendTweetController extends Controller
     // =======================================
     // brandsテーブルの全通貨名を配列にして返却する
     // =======================================
+    // ツイート検索用に使うものです。
+    // 通貨アイコンパスやIDなどは返却されないため、フロント側では使わないメソッドです。
     public function make_brands_searchwords_array(){
       Log::debug('=============================');
       Log::debug('make_brands_searchwords_array');
