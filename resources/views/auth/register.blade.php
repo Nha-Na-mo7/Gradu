@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title',新規登録')
+@section('title','新規登録')
 
 @section('content')
 <div class="l-container--authform p-auth">

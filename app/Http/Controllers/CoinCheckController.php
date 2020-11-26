@@ -8,7 +8,6 @@ use App\Models\TweetCountDay;
 use App\Models\TweetCountHour;
 use App\Models\TweetCountWeek;
 use App\Models\UpdatedAtTable;
-use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Coincheck\Coincheck;
 use Illuminate\Http\Request;
@@ -35,6 +34,7 @@ class CoinCheckController extends Controller
     // DBから、24時間以内の最高・最安取引価格情報を取得し返却する
     // =====================================================
     public function get_transaction_price(){
+      Log::debug('CoinCheckController.get_transaction_price 24時間以内の取引価格情報');
       $brand_id = filter_input(INPUT_GET, 'brand_id');
       
       $result = CoincheckPrice::where('brand_id', $brand_id)->latest('id')->first();
@@ -168,9 +168,6 @@ class CoinCheckController extends Controller
     }
   
   
-  
-  
-    
     // ==========================
     // BTCのティッカーを取得する
     // ==========================

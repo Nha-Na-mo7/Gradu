@@ -53,6 +53,7 @@ class ResetPasswordController extends Controller
           'password' => bcrypt($password),
           'remember_token' => Str::random(60),
       ])->save();
+      
     }
     
     
@@ -60,8 +61,6 @@ class ResetPasswordController extends Controller
     {
       return Validator::make($data, [
           'token' => 'required',
-          // 'email' => 'required|email',
-          // 'password' => 'required|confirmed|min:8',
           'email' => 'required|email:strict,dns,spoof|max:100',
           'password' => 'required|confirmed|string|min:8|max:50|regex:/^[a-zA-Z0-9]+$/',
       ]);

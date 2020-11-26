@@ -43,8 +43,7 @@
 
 
 <script>
-import { BRAND_ICON_PATH, isArrayExists } from "../../util";
-import {mapState} from "vuex";
+import { BRAND_ICON_PATH } from "../../util";
 
 const TWITTER_SEARCH_URL = 'https://twitter.com/search?q=';
 
@@ -80,6 +79,8 @@ export default {
     },
   },
   methods: {
+    // 24時間以内の取引価格の取得
+    // TODO ERROR
     async get_transaction_price() {
       const response = await axios.get(`/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
 

@@ -1,7 +1,7 @@
 // Ajax通信用のAxiosライブラリの設定が記述されている、デフォルトのjsファイル
 import './bootstrap.js';
 // jQuery
-import './jquery.js';
+// import './jquery.js';
 
 // webpackでsassをコンパイルする用
 import '../sass/app.scss';

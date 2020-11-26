@@ -4,11 +4,11 @@
 <template>
   <!-- 取得したツイートと日付 -->
   <div
-      class="
+    class="
       item-4
       p-accounts__tweet
       p-accounts__tweet--data"
-      v-if="exist_tweet"
+    v-if="exist_tweet"
   >
     <!-- 実際のツイートテキスト・画像 -->
     <div class="item-5">
@@ -29,9 +29,10 @@
       <!-- 日付・ここをクリックするとツイートのURLに飛ぶ -->
       <span
           class="
-        p-accounts__tweet
-        p-accounts__tweet--span
-        p-accounts__tweet--date">
+            p-accounts__tweet
+            p-accounts__tweet--span
+            p-accounts__tweet--date"
+      >
           <a
               :href="twitter_tweet_url"
               target="_blank"
@@ -48,9 +49,9 @@
   >
     <span
         class="
-        p-accounts__tweet
-        p-accounts__tweet--span
-        p-accounts__tweet--nothing"
+          p-accounts__tweet
+          p-accounts__tweet--span
+          p-accounts__tweet--nothing"
     > ~  このユーザーからのツイートはまだありません ~ </span>
   </div>
 </template>

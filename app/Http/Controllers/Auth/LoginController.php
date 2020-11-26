@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -48,11 +45,11 @@ class LoginController extends Controller
     // =========================================
     protected function authenticated(Request $request, $user)
     {
-      // ログイン画面に移行する前にtwitter_idをセッションに登録する
+      // ログイン画面に移行する前にtwitter_idをセッションに登録する(アカウント一覧画面で表示判定に使う)
       $twitter_id = $user->twitter_id;
       
       if(!empty($twitter_id)) {
-        session()->put('twitter_id', $twitter_id);
+        session(['twitter_id' => $twitter_id]);;
       }
       
       // ログイン処理後にリダイレクトする先を指定する

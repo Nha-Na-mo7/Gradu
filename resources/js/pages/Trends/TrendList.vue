@@ -80,14 +80,8 @@ import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
 import Ranking from './Ranking.vue';
 import { OK } from "../../util";
-import { mapState } from 'vuex';
 
 const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
-
-// 必要情報
-// ・月・日・週のツイート数(それぞれについて)
-// 最大通貨
-// 通貨情報
 
 export default {
   data() {
@@ -193,6 +187,7 @@ export default {
   },
   methods: {
     // 指定した時間帯のトレンドテーブルを取得する
+    // TODO ERROR
     async fetch_trend(type) {
       // トレンド一覧を取得
       const response = await axios.get(`/tweet/count`, { params:{type: type} });

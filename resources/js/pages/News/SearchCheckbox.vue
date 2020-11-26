@@ -70,6 +70,7 @@ export default {
     },
   },
   methods: {
+    // TODO ERROR
     // 全ての仮想通貨情報を取得する。選択肢に使用される
     async fetch_brand() {
       const response = await axios.get('/brand');
@@ -88,6 +89,7 @@ export default {
   watch: {
     $route: {
       async handler() {
+        // TODO ERROR
         // ページの読み込み直後、brandsテーブルから通過情報全てを取得する
         await this.fetch_brand();
       },
