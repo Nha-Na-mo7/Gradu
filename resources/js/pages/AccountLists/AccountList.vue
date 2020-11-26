@@ -192,11 +192,12 @@ export default {
           .get(`/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`)
           .catch(error => error.response || error);
 
-      if(response.statue === OK){
+      if(response.status === OK){
         this.updated_at = response.data.updated_at;
       }
     },
 
+    // 自動フォローのON/OFF切り替え
     async toggle_auto_following() {
       var result = false;
       const flg = this.auto_follow_flg;
@@ -205,12 +206,14 @@ export default {
       } else {
         result = confirm('自動フォローをONにします。よろしいですか？')
       }
+      // confirmではいが選択されたら切り替えを行う
       if(result) {
         const response = await axios
             .post(`/accounts/autofollowflg`, {'follow_flg': flg})
             .catch(error => error.response || error);
 
-        if(response.data.status === OK) {
+        // エラーハンドリング
+        if(response.status === OK) {
           this.auto_follow_flg = !flg;
           // フラッシュメッセージをセット
           this.$store.commit('message/setContentSuccess', {

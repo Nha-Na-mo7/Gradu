@@ -43,7 +43,7 @@ export default {
 .c-flash {
   position: absolute;
   transition: all 3s;
-  top: 15px;
+  top: 25px;
   right: 10px;
 
   height: 60px;
@@ -53,7 +53,7 @@ export default {
   border-radius: 4px;
   z-index: 5;
 
-  font-size: 20px;
+  font-size: 15px;
 }
 .c-flash__success {
   background: #b6e395;

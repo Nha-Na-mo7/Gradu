@@ -1842,14 +1842,14 @@ main {
   position: absolute;
   -webkit-transition: all 3s;
   transition: all 3s;
-  top: 15px;
+  top: 25px;
   right: 10px;
   height: 60px;
   width: 480px;
   opacity: 0.7;
   border-radius: 4px;
   z-index: 5;
-  font-size: 20px;
+  font-size: 15px;
 }
 .c-flash__success[data-v-5026a9d3] {
   background: #b6e395;
