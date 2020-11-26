@@ -82,9 +82,11 @@ export default {
         this.errors_password_confirmation = response.data.errors.password_confirmation;
         // 500エラーの時は更新失敗
       }else if(response.status === INTERNAL_SERVER_ERROR) {
+        console.log(response.data.errors)
         // TODO フラッシュメッセージ
         console.log('作成に失敗しました。')
       }else{
+        console.log(response.data.success)
         console.log('パスワードの新規作成に成功しました。')
         this.isUpdating = false;
         // パスワード作成完了後はマイページに戻す

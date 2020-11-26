@@ -53,8 +53,7 @@ Route::group(['middleware' => 'auth'], function (){
   
   
   // アカウント一覧画面/テーブルからアカウント情報を取得
-  // TODO ルートがまぎらわしいので変更すること
-  Route::get('/accounts/index', 'TwitterAccountListController@accounts_index')->name('accounts.info');
+  Route::get('/accounts/list', 'TwitterAccountListController@get_accounts_list');
   // アカウントコンポーネント/指定したユーザーの新着ツイートを取得
   Route::get('/accounts/tweet/{tweet_id}', 'TwitterAccountListController@accounts_tweet')->name('accounts.tweet');
   // アカウントコンポーネント/認証中ユーザーのフォローリストを取得

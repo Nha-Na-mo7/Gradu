@@ -193,15 +193,16 @@ export default {
         console.log(response)
 
         // エラーチェック
-        if(response.status === INTERNAL_SERVER_ERROR) {
-          // TODO フラッシュメッセージ
-          console.log('連携解除に失敗しました。')
-        }else{
+        if(response.status === OK) {
+          // TODO フラッシュ
+          console.log(response.data.success)
           console.log('解除しました。')
           this.twitter = false;
+        }else{
+          console.log(response.data.errors)
+          // TODO フラッシュメッセージ
+          console.log('連携解除に失敗しました。')
         }
-        // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-        // TODO フラッシュメッセージ
         this.isUpdating = false;
       }
     },

@@ -144,7 +144,7 @@
 </template>
 
 <script>
-import { DEFAULT_TWITTER_URL, OK } from "../../util";
+import { DEFAULT_TWITTER_URL, OK, INTERNAL_SERVER_ERROR, FORBIDDEN } from "../../util";
 import AccountTweet from './AccountTweet.vue';
 
 export default {
@@ -193,7 +193,7 @@ export default {
   },
   methods: {
     async follow() {
-      if(this.isAutoFollowing) {
+      if (this.isAutoFollowing) {
         console.log('自動フォローをONにしている間は、ボタンからのフォローはできません。')
         return false;
       }
@@ -202,21 +202,23 @@ export default {
         'user_id': this.account_id,
       }
 
-      // TODO フォロー制限の処理がいい加減なので修正すること
-      const response = await axios.post('../accounts/follow', follow_param);
+      const response = await axios.post('../accounts/follow', follow_param).catch(error => error.response || error);
 
-      console.log('フォローボタンを押しました')
-
-      // フォロー失敗時(API制限か削除・凍結のどちらか)(errorに項目が入れられて帰ってくる)
-      //
-      // // 対象アカウントが削除/凍結されフォローできなかった場合
-      // // TODO 自動フォロー中でない場合はフラッシュメッセージを表示させる
-      if (response.data.result.errors !== undefined) {
-        console.log('フォローできませんでした。ユーザーが凍結されているか、削除された可能性があります。')
-        return false
+      // エラーハンドリング
+      // 403エラーは、「API制限」「フォロー済みのアカウントをフォローしようとする」などで発生する。
+      // ※ 二重フォローは、パフォーマンス上の理由で200を返却することもある。
+      if(response.status === OK){
+        // TODO フラッシュ フォローに成功しました！など
+        console.log(response.data);
+        this.isFollowing = true;
+      }else if (response.status === FORBIDDEN) {
+        // TODO フラッシュ レスポンスメッセージを表示。
+        console.log(response.data.errors)
+        // response.data.errors
+      }else{
+        // TODO フラッシュ ここにくるのは全部500
+        console.log(response.data.errors)
       }
-      this.isFollowing = true;
-      console.log('フォローしました')
     },
     // フォロー解除
     async destroy() {
@@ -228,9 +230,17 @@ export default {
       const destroy_param = {
         'user_id': this.account_id,
       }
-      // TODO フォロー制限の処理がいい加減なので修正すること
-      const response = await axios.post('../accounts/destroy', destroy_param);
-      this.isFollowing = false;
+      // APIリクエスト
+      const response = await axios.post('../accounts/destroy', destroy_param).catch(error => error.response || error);
+      // エラーハンドリング(フォロー解除は200か500のみ)
+      if(response.status === OK){
+        // TODO フラッシュ フォロー解除しました！など
+        console.log(response.data);
+        this.isFollowing = false;
+      }else{
+        // TODO フラッシュ ここにくるのは全部500
+        console.log(response.data.errors)
+      }
     },
     // フォロー状態のチェック
     async isFollowing_check() {

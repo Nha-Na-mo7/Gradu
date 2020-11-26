@@ -106,11 +106,13 @@ export default {
         // 500エラーの時は更新失敗
       } else if(response.status === INTERNAL_SERVER_ERROR) {
         // TODO フラッシュメッセージ
+        console.log(response.data.errors)
         console.log('作成に失敗しました。')
 
         this.isUpdating = false;
 
       } else {
+        console.log(response.data.success)
         console.log('パスワードの新規作成に成功しました。')
 
         this.isUpdating = false;

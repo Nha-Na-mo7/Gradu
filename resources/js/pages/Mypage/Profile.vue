@@ -118,9 +118,6 @@ export default {
         this.form_name = response.data.name
         this.form_email = response.data.email
         this.isloading = false;
-      }else{
-        this.system_error = response.data.errors
-        this.isloading = false;
       }
     },
 
@@ -141,23 +138,22 @@ export default {
       if(response.status === UNPROCESSABLE_ENTITY) {
         // バリデーションエラー。帰ってきたエラーメッセージを格納
         this.errors_name = response.data.errors.name;
-      // 500エラーの時は更新失敗、何もしない
+      // 500エラーの時は更新失敗
       }else if(response.status === INTERNAL_SERVER_ERROR) {
+        console.log(response.data.errors)
         // TODO フラッシュメッセージをいれる
         console.log('更新に失敗しました。')
       }else{
+        console.log(response.data.success)
         // 更新成功したらエラーメッセージは空にする
         this.errors_name = [];
         console.log('名前の更新に成功しました。')
       }
-      // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-      // TODO フラッシュメッセージ
       this.isUpdating = false;
     },
 
     // メールアドレスの変更
     async update_email() {
-      console.log('clicked!')
       // 更新処理中は複数回起動できないようにする
       if(this.isUpdating){
         return false;
@@ -172,12 +168,16 @@ export default {
       if(response.status === UNPROCESSABLE_ENTITY ) {
         this.errors_email = response.data.errors.email;
         this.isUpdating = false;
+      // 500エラー時
       }else if(response.status === INTERNAL_SERVER_ERROR){
+        // TODO フラッシュ
+        console.log(response.data.errors)
         console.log('500error')
       }else{
-        this.errors_email = [];
         // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
         // TODO フラッシュメッセージ - メールを送信しました。
+        console.log(response.data.success)
+        this.errors_email = [];
         console.log('メールアドレスあてにメールを送信しました。')
       }
       this.isUpdating = false;

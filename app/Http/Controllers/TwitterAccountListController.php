@@ -24,8 +24,8 @@ class TwitterAccountListController extends Controller
     // ただし1日に1回のリセットだとフォローに偏りが出やすくなるので、
     // 処理では1/2した12時間ごとにフォローカウントをリセットするようにしている。
     const DAILY_LIMIT_FOLLOW = 400;
-    // twitterAPIが15分の間にフォローできる最大数。
-    const MIN_LIMIT_FOLLOW = 15;
+    // twitterAPIが15分の間にフォローできる最大数。こちらも15分ごとのカウントリセットで偏りが出ることを想定して少し少ない人数に設定。
+    const MIN_LIMIT_FOLLOW = 12;
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
   
@@ -40,7 +40,7 @@ class TwitterAccountListController extends Controller
     // =======================================
     // アカウント一覧ページ/DBからアカウント一覧の取得
     // =======================================
-    public function accounts_index()
+    public function get_accounts_list()
     {
       // 自分のTwitterアカウントIDを取得する
       $user = Auth::user();
@@ -182,9 +182,9 @@ class TwitterAccountListController extends Controller
                 'profile_image_url_https' => $replaced_fullImg
             );
             
-            // --------------------------
+            // ------------------------------
             // 最新のツイート1件検索
-            // --------------------------
+            // ------------------------------
             // GET statuses/user_timelineを使う
             // screen_idは変更される場合があるので、user_idで検索をかける
             
@@ -213,6 +213,7 @@ class TwitterAccountListController extends Controller
                     'tweet_text' => $tweetreq->text ?? null,
                 );
                 $created_at = $tweetreq->created_at ?? null;
+                // 日付 date型に直して格納
                 if ($created_at !== null) {
                   $addlist['tweet_created_at'] = date('Y-m-d H:i:s', strtotime($created_at));
                 }
@@ -343,35 +344,47 @@ class TwitterAccountListController extends Controller
       $check_limit_day = $this->api_limit_check_day($account_id);
       
       // 制限チェックのどちらかに引っかかった場合、フォロー処理はせずに終了する
-      if($check_limit15 && $check_limit_day) {
-        Log::debug('accounts_follow: API制限チェックOKでした。');
-      }else{
+      if(!$check_limit15 && !$check_limit_day) {
         Log::debug('accounts_follow: システム上のAPI制限に引っかかったため、フォローはせずに終了します。');
-        return response()->json(['error' => 'フォロー制限がかかっています。しばらくお待ちください'], 200);
+        return response()->json(['error' => 'フォロー制限です。しばらくお待ちください'], 403);
       }
       
       // APIリクエスト用のインスタンスを作成
       $connection = (new TwitterController())->connection_instanse_users($token, $token_secret);
       
-      
-      // TODO 先にフォロー関係をチェックし、既にフォロー済みであれば何もせずに終了する
-      
-      
       // フォローリクエストを飛ばす
+      Log::debug('ID:'.$target_user_id.' にフォローを飛ばします。');
       $twitterRequest = $connection->post('friendships/create', array("user_id" => $target_user_id));
-      Log::debug('ID:'.$target_user_id.' にフォローを飛ばしました。');
       
       // フォローの成功失敗を問わず、APIにリクエストを飛ばしたのでカウントは更新する
       $this->increment_follow_count($account_id);
       
       // フォロー成功したら、followsテーブルにフォローしたアカウントIDを登録する
       if ($connection->getLastHttpCode() === 200) {
+        
+        if($twitterRequest->following){
+          // フォロー済みだが200で帰ってきてしまった場合の処理
+          Log::debug('二重フォローかつ200で戻ってきてしまった場合の処理');
+          return response()->json(['error' => 'フォローできませんでした。'], 403);
+        }
+        
+        
         Log::debug('followsテーブルにフォローしたIDを登録します。');
         $this->add_table_follows($account_id, $target_user_id);
+        
+      // 既にフォロー済みのユーザーをフォローした場合など
+      } elseif ($connection->getLastHttpCode() === 403) {
+        // 403エラーが二重フォロー以外でも帰ってくる可能性を考慮し、
+        // フォローテーブルへの登録は自動更新に任せてメッセージだけを返却する。
+        Log::debug('403エラーです。二重フォローが考えられます。');
+        return response()->json(['error' => 'フォローできませんでした。'], 403);
+        
+      // それ以外のエラーの場合
       } else {
-        // 何らかのリクエストエラーが起きた時
         Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
+        return response()->json(['error' => 'エラーが発生しました。'], 500);
       }
+      
       Log::debug('=======================================================');
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 手動フォローを終了します。 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('=======================================================');
@@ -380,7 +393,7 @@ class TwitterAccountListController extends Controller
     
     
     // =======================================
-    //TODO  指定したアカウントのフォローを解除する
+    // 指定したアカウントのフォローを解除する
     // =======================================
     public function accounts_destroy(Request $request)
     {
@@ -418,6 +431,7 @@ class TwitterAccountListController extends Controller
       } else {
         // 何らかのリクエストエラーが起きた時
         Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
   
       Log::debug('=======================================================');
@@ -545,7 +559,6 @@ class TwitterAccountListController extends Controller
               $follow_list[] = $id;
             }
           }
-          // TODO 最新のフォロー済みアカウントリストはどのタイミングでfollowテーブルに格納する？
           
           // ----------------------------------------------------
           // ⑤ フォロー済みのアカウントを除外した未フォローリストを作成する

@@ -23,12 +23,12 @@
         <div class="p-news__modal p-news__modal-show">
           <button
               class="c-btn c-btn__main c-btn--primary"
-              @click="auto_following"
+              @click="toggle_auto_following"
               v-if="isAutoFollowFlg"
           >自動フォロー中...</button>
           <button
               class="c-btn c-btn__main c-btn--primary"
-              @click="auto_following"
+              @click="toggle_auto_following"
               v-else
           >START AUTO-FOLLOW</button>
         </div>
@@ -36,14 +36,15 @@
 
       <!-- アカウントリスト -->
       <div class="p-accounts__list">
-        <!-- 読み込み中 -->
-        <div v-if="isLoading" class="">
-          <Loading />
-        </div>
 
         <!-- アカウントが見つからなかった場合 -->
-        <div v-else-if="isNothing">
+        <div v-if="isNothingStatus">
           <NothingAccount />
+        </div>
+
+        <!-- 読み込み中 -->
+        <div v-else-if="isLoading" class="">
+          <Loading />
         </div>
 
         <!-- アカウントコンポーネント -->
@@ -64,6 +65,7 @@
 
     <!-- ページネーション -->
     <Pagination
+        v-if="!isLoading && !isNothingStatus"
         :current-page="current_page"
         :last-page="last_page"
     />
@@ -115,7 +117,7 @@ export default {
     twitter_accounts_table_updated_at() {
       return this.updated_at;
     },
-    isNothing() {
+    isNothingStatus() {
       return this.nothing_accounts;
     },
     isAutoFollowFlg() {
@@ -129,15 +131,14 @@ export default {
           .get(`/user/info`)
           .catch(error => error.response || error);
 
-      console.log(response)
-
       // エラーチェック
       if(response.status === OK) {
         // フォーム用にデータを格納
         this.twitter_id = response.data.twitter_id;
         this.auto_follow_flg =  response.data.auto_follow_flg;
       }else{
-        this.system_error = response.data.errors
+        // 取得できなかった場合は、アカウント情報を表示させない
+        this.nothing_accounts = true;
       }
     },
     // ログイン中のユーザーのフォローリストを取得する
@@ -150,9 +151,8 @@ export default {
       if(response.status === OK) {
         // フォーム用にデータを格納
         this.follow_list = response.data;
-        console.log(this.follow_list)
       }else{
-        this.system_error = response.data.errors
+        this.nothing_accounts = true;
       }
     },
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
@@ -164,32 +164,41 @@ export default {
       // 読み込みをtrueに
       this.isLoading = true;
 
-      const response = await axios.get(`/accounts/index/?page=${this.p}`);
-      console.log(response.data)
+      const response = await axios
+          .get(`/accounts/list/?page=${this.p}`)
+          .catch(error => error.response || error);
 
-      this.accounts = response.data.data
-      this.current_page = response.data.current_page
-      this.last_page = response.data.last_page
-      this.total = response.data.total
-      this.from = response.data.from
-      this.to = response.data.to
+      // 通信成功時、各種アカウント取得結果を格納する
+      if (response.status === OK){
+        this.accounts = response.data.data
+        this.current_page = response.data.current_page
+        this.last_page = response.data.last_page
+        this.total = response.data.total
+        this.from = response.data.from
+        this.to = response.data.to
 
-      // そのページにアカウントがないor通信が思いなどで読み込めないとき
-      if(response.data.data.length === 0) {
+        // そのページにアカウントがないor通信が重いなどで読み込めないとき、nothing_accountsをtrueとする
+        if(response.data.data.length === 0) {
+          this.nothing_accounts = true;
+        }
+      }else{
         this.nothing_accounts = true;
       }
-
-      // 読み込みをfalseに、nothing_accountsをtrueに
       this.isLoading = false;
     },
     // DBからアカウント一覧のテーブル更新終了時刻を取得
     async fetchUpdatedAt() {
-      const response = await axios.get(`/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`);
+      const response = await axios
+          .get(`/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`)
+          .catch(error => error.response || error);
 
-      this.updated_at = response.data.updated_at;
+      if(response.statue === OK){
+        this.updated_at = response.data.updated_at;
+      }
     },
-    // オートフォローを切り替える
-    async auto_following() {
+
+    // オートフォローを切り替える // TODO フラッシュメッセージ FLASH flash
+    async toggle_auto_following() {
       var result = false;
       const flg = this.auto_follow_flg;
       if( flg ) {
@@ -198,14 +207,14 @@ export default {
         result = confirm('自動フォローをONにします。よろしいですか？')
       }
       if(result) {
-        const response = await axios.post(`/accounts/autofollowflg`, {'follow_flg': flg});
-        if(response.status === OK) {
+        const response = await axios
+            .post(`/accounts/autofollowflg`, {'follow_flg': flg})
+            .catch(error => error.response || error);
+
+        if(response.data.status === OK) {
           this.auto_follow_flg = !flg;
-          console.log('フラッシュ... オートフォローフラグを切り替えました。')
+          //TODO フラッシュ(オートフォローを flg にしました / 成功)
         }
-        return true;
-      }else {
-        return false
       }
     },
   },

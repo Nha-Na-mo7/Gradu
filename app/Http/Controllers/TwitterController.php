@@ -10,7 +10,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 class TwitterController extends Controller
 {
-    // Twitterのインスタンス作成などのコントローラです。
+    // Twitterのインスタンス作成、連携処理などのコントローラです。
     // 自動フォローや仮想通貨アカウント検索はTwitterAccountListControllerを
     // トレンド通貨集計はTrendTweetControllerを参照してください。
 
@@ -113,6 +113,7 @@ class TwitterController extends Controller
             Log::debug('> 他のユーザーが連携しているTwitterアカウントです。連携処理は行わずにレスポンスして終了します。');
             Log::debug('===================================================================');
             // TODO フラッシュ
+            // return redirect('/mypage')->json(['error' => '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。'], 403);
             return redirect('/mypage')->with('oauth_error', '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。');
           }
           

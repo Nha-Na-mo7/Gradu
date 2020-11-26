@@ -59,7 +59,6 @@ export default {
   methods: {
     // ログイン中のユーザーデータを取得する
     async get_user() {
-
       const response = await axios
           .get(`/user/info`)
           .catch(error => error.response || error);
@@ -72,8 +71,6 @@ export default {
           this.isExist_password = true
         }
         this.isloading = false;
-      }else{
-        this.system_error = response.data.errors
       }
     },
   },

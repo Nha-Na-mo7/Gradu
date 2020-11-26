@@ -61,10 +61,10 @@ class UserController extends Controller
         $user->save();
         
         Log::debug('ユーザーネームの変更完了しました。');
-        return response(200);
+        return response()->json(['success' => 'ユーザーネームを更新しました！'], 200);
       }catch(\Exception $e) {
         Log::debug('エラーが発生しました。'. $e->getMessage());
-        return response()->json(['errors'], 500);
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
     
@@ -84,17 +84,17 @@ class UserController extends Controller
         
         Log::debug('新しいメールアドレス宛にメールを送信しました。');
       
-        return response(200);
+        return response()->json(['success' => '新しいメールアドレス宛に確認メールを送信しました。'], 200);
       }catch (\Exception $e) {
         Log::debug('エラーが発生しました。'. $e->getMessage());
-        return response()->json(['errors'], 500);
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
     
     // ================================
     // メールアドレス変更確認メールを送信する
     // ================================
-    public function send_change_email_link($user_id, $new_email) {
+    private function send_change_email_link($user_id, $new_email) {
       Log::debug('UserController.send_change_email_link 変更確認メールの送信');
   
       // トークン生成
@@ -171,6 +171,8 @@ class UserController extends Controller
 
       // トークンの作成時刻 + $expiresで設定した時刻と現在時刻を比較する。
       // isPastでcreated_at + $expiredをオーバーしていた場合、falseを返す。
+      $result = Carbon::parse($createdAt)->addSeconds($expires)->isPast();
+      Log::debug('トークンが有効期限いないかどうか→'.$result);
       return Carbon::parse($createdAt)->addSeconds($expires)->isPast();
     }
     
@@ -190,13 +192,11 @@ class UserController extends Controller
         $user->save();
         
         Log::debug('パスワードを新規登録しました。');
-        
-        return response(200);
+        return response()->json(['success' => 'パスワードを登録しました！'], 200);
         
       }catch (\Exception $e){
-        
         Log::debug('エラーが発生しました。'. $e->getMessage());
-        return response()->json(['errors'], 500);
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
     
@@ -224,17 +224,16 @@ class UserController extends Controller
         }
         
         Log::debug('old_passwordが認証ユーザーのテーブルのパスワードと一致しました。更新処理を開始します。');
-        
         $user->password = Hash::make($request->password);
         $user->save();
         
         Log::debug('パスワードが更新されました');
         
-        return response(200);
+        return response()->json(['success' => 'パスワードを更新しました！'], 200);
         
       } catch (\Exception $e){
         Log::debug('エラーが発生しました。'. $e->getMessage());
-        return response()->json(['errors'], 500);
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
   
@@ -263,7 +262,7 @@ class UserController extends Controller
         session()->flash('退会処理が完了しました。');
         
         // リダイレクト処理はフロントエンドで行う
-        return response(200);
+        return response()->json(['success' => '退会しました。'], 200);
         
       } catch (\Exception $e) {
         session()->flash('退会処理の途中でエラーが発生しました。');
@@ -275,7 +274,8 @@ class UserController extends Controller
         session()->regenerateToken();
         
         Log::debug('退会処理の過程でエラーです。'. $e->getMessage());
-        return response()->json(['errors'], 500);
+        // TODO 画面遷移を伴うセッションなので...?
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
 }
