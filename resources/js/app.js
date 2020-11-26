@@ -8,7 +8,7 @@ import '../sass/app.scss';
 
 import Vue from "vue";
 // ルーティングの定義
-import Vuex from "./store/index.js";
+import store from "./store/index.js";
 // ルーティングの定義
 import router from "./router.js";
 // ルートコンポーネント
@@ -23,7 +23,7 @@ const createApp = async () => {
   // ユーザーデータ取得後にVueインスタンスを作成
   new Vue({
     el: '#app',
-    Vuex,
+    store,
     router,
     components: { App },
     template: '<App />'

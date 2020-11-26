@@ -2,15 +2,17 @@
 // ルート用Store
 // ====================
 import Vue from 'vue';
-import vuex from 'vuex';
+import Vuex from 'vuex';
 
 import authenticate from './authenticate_store';
+import message from './message';
 
-Vue.use(vuex);
+Vue.use(Vuex);
 
-const store = new vuex.Store({
+const store = new Vuex.Store({
   modules: {
     authenticate,
+    message
   }
 });
 

@@ -1838,6 +1838,20 @@ main {
   background: #d8d8d8;
   min-height: 200px;
 }
+.c-flash[data-v-5026a9d3] {
+  position: absolute;
+  -webkit-transition: all 3s;
+  transition: all 3s;
+  top: 15px;
+  right: 10px;
+  background: #b6e395;
+  height: 60px;
+  width: 480px;
+  opacity: 0.7;
+  border-radius: 4px;
+  z-index: 5;
+  font-size: 20px;
+}
 .item1[data-v-0b57cd5f] {
   /*background: #dd69cd;*/
 }

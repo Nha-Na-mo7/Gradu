@@ -81,6 +81,7 @@
 <script>
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Loading from '../../layouts/Loading.vue';
+// import Vuex from ''
 
 import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
 const PAGE_TITLE = 'プロフィール編集';
@@ -147,7 +148,15 @@ export default {
         console.log(response.data.success)
         // 更新成功したらエラーメッセージは空にする
         this.errors_name = [];
-        console.log('名前の更新に成功しました。')
+
+
+        // TODO // フラッシュメッセージ
+        this.$store.commit('message/setContent', {
+          content: response.data.success
+        });
+
+
+
       }
       this.isUpdating = false;
     },

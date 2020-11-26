@@ -3,13 +3,17 @@
 <!--===============================-->
 
 <template>
-<div class="message" v-show="message">
-  {{ message }}
+<div class="c-flash" v-show="message">
+  <p>✔︎</p>
+  <span>
+    {{ message }}
+  </span>
 </div>
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
+
 export default {
   computed: {
     ...mapState({
@@ -20,11 +24,19 @@ export default {
 </script>
 
 <style scoped>
-.message {
-  background: #98c379;
-  height: 40px;
-  width: 100%;
+.c-flash {
+  position: absolute;
+  transition: all 3s;
+  top: 15px;
+  right: 10px;
+  background: #b6e395;
+  height: 60px;
+  width: 480px;
   opacity: 0.7;
-  z-index: 44;
+
+  border-radius: 4px;
+  z-index: 5;
+
+  font-size: 20px;
 }
 </style>
