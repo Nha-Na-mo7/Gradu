@@ -54,7 +54,7 @@ class LoginController extends Controller
       
       // ログイン処理後にリダイレクトする先を指定する
       // ここで$userなんてしたら認証されたユーザー情報をprintするだけの画面になるのでやらないように。
-      return redirect()->to('/mypage');
+      return redirect('/mypage')->with('system_message', 'ログインしました！');
     }
     
     // ===================================

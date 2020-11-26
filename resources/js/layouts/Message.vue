@@ -40,25 +40,5 @@ export default {
 </script>
 
 <style scoped>
-.c-flash {
-  position: absolute;
-  transition: all 3s;
-  top: 25px;
-  right: 10px;
 
-  height: 60px;
-  width: 480px;
-  opacity: 0.7;
-
-  border-radius: 4px;
-  z-index: 5;
-
-  font-size: 15px;
-}
-.c-flash__success {
-  background: #b6e395;
-}
-.c-flash__error {
-  background: #e39598;
-}
 </style>

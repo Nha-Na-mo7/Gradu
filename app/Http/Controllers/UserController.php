@@ -259,13 +259,13 @@ class UserController extends Controller
         // csrfトークンを再生成
         session()->regenerateToken();
         
-        session()->flash('退会処理が完了しました。');
+        \Session::flash('system_message', '退会しました。ご利用いただきありがとうございました。');
         
         // リダイレクト処理はフロントエンドで行う
-        return response()->json(['success' => '退会しました。'], 200);
+        return response(200);
         
       } catch (\Exception $e) {
-        session()->flash('退会処理の途中でエラーが発生しました。');
+        Log::debug('退会処理の過程でエラーです。'. $e->getMessage());
         // ログアウト
         Auth::logout();
         // セッションを一度消してから再発行
@@ -273,9 +273,10 @@ class UserController extends Controller
         // csrfトークンを再生成
         session()->regenerateToken();
         
-        Log::debug('退会処理の過程でエラーです。'. $e->getMessage());
-        // TODO 画面遷移を伴うセッションなので...?
-        return response()->json(['errors' => 'エラーが発生しました。'], 500);
+        \Session::flash('system_message', '退会処理中にエラーが発生しました。');
+  
+        // リダイレクト処理はフロントエンドで行う
+        return response(500);
       }
     }
 }

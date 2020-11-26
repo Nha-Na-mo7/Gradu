@@ -1,0 +1,27 @@
+// ==============
+//  c-flash
+//  =============
+.c-flash {
+  position: absolute;
+  background: #d6f0ff;
+
+  transition: all 3s;
+
+  top: 30px;
+  right: 10px;
+
+  height: 60px;
+  width: 480px;
+  opacity: 0.7;
+
+  border-radius: 4px;
+  z-index: 5;
+
+  font-size: 15px;
+  &__success {
+    background: #b6e395;
+  }
+  &__error {
+    background: #e39598;
+  }
+}

@@ -155,15 +155,13 @@ export default {
         this.isloading = false;
       }
     },
-    // 退会処理
+    // 退会処理 PHP側でデータ削除して、フロント側で画面遷移させる。
     async withdraw() {
       if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。')){
         const response = await axios.post(`/withdraw`);
         if(response.status === OK){
-          // TODO フラッシュ
           window.location = "/";
         }else{
-          // TODO フラッシュ メッセージを出してログアウトだけさせる
           window.location = "/login";
         }
       }

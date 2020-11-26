@@ -27,6 +27,15 @@
 </head>
 
 <body>
+    <!-- flash message -->
+    <!-- メッセージが消える処理・タッチすると消える処理はjQueryなどで処理すること-->
+    <!-- https://qiita.com/usaginooheso/items/6a99e565f16de2f9ddf7 -->
+    @if(Session::has('system_message'))
+        <div class="c-flash" role="alert">
+            <p>{{ session('system_message') }}</p>
+        </div>
+    @endif
+
     <!-- header -->
     <header class="l-header">
         <div class="p-navbar">
@@ -88,14 +97,6 @@
         @yield('content')
     </main>
 
-    <!-- flash message -->
-    <!-- 呼び出すときは、flash_messageが存在しているかを確認する。 -->
-    <!-- session() を使うことで、SESSIONの中身を取り出すことができる -->
-    @if (session('flash_message'))
-        <div class="" role="alert">
-            {{ session('flash_message') }}
-        </div>
-    @endif
 
 </body>
 </html>

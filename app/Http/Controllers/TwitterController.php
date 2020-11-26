@@ -13,6 +13,13 @@ class TwitterController extends Controller
     // Twitterのインスタンス作成、連携処理などのコントローラです。
     // 自動フォローや仮想通貨アカウント検索はTwitterAccountListControllerを
     // トレンド通貨集計はTrendTweetControllerを参照してください。
+  
+    // Twitter連携関係でフラッシュメッセージに使う
+    const ALREADY_EXIST_ACCOUNT_ERROR_MSG = 'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。\n別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。';
+    const OTHER_USED_ACCOUNT_ERROR_MSG =  '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。';
+    const FAIL_LOGIN_MSG = 'Twitterログインに失敗しました。';
+    const SUCCESS_LINKAGE = 'Twitterアカウントと連携しました！';
+    const SUCCESS_TWITTER_LOGIN = 'Twitterアカウントでログインしました！';
 
     // =======================================
     // 認証ユーザーによるコネクションインスタンスの作成
@@ -99,7 +106,7 @@ class TwitterController extends Controller
         $token_secret = $twitter_user->tokenSecret;
         $twitter_id = $twitter_user->id;
         
-        Log::debug('これからログイン済みかのチェックです');
+        Log::debug('ログイン済みかチェックします');
         // 既にログイン中であれば、設定画面からの連携である
         if(Auth::check()) {
           Log::debug('--- ログイン済み ( = 設定画面からの連携処理 )です。');
@@ -112,9 +119,8 @@ class TwitterController extends Controller
           if(!empty($alreadycheck)){
             Log::debug('> 他のユーザーが連携しているTwitterアカウントです。連携処理は行わずにレスポンスして終了します。');
             Log::debug('===================================================================');
-            // TODO フラッシュ
-            // return redirect('/mypage')->json(['error' => '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。'], 403);
-            return redirect('/mypage')->with('oauth_error', '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。');
+
+            return redirect('/mypage')->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
           }
           
           // 登録メールアドレスを使ってユーザーレコードを取得する
@@ -144,7 +150,7 @@ class TwitterController extends Controller
           }
   
           Log::debug('アカウント設定画面にリダイレクトします。');
-          return redirect()->to('/mypage');
+          return redirect('mypage')->with('system_message', self::SUCCESS_LINKAGE);
           
         // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン)
         }else{
@@ -163,10 +169,12 @@ class TwitterController extends Controller
             
             // 既に登録済みのメアドを用いたCryptoアカウントがあるなら、登録をせずそのまま元の画面に戻す。
             if(!empty($already_email_registered)){
-              Log::debug('>Twitterのメアド'.$twitter_user->email.'を使ったCryptoアカウントは既に存在しています。連携・ログイン共に行わず終了します。');
+              Log::debug($twitter_user->email.'を使ったCryptoアカウントは既に存在しています。連携・ログイン共に行わず終了します。');
               Log::debug('===================================================================');
-              // TODO フラッシュ
-              return redirect('/register')->with('oauth_error', 'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。');
+              
+              // 新規登録画面へリダイレクトする。この時フラッシュメッセージも付与する
+              return redirect('/register')
+                  ->with('system_message', self::ALREADY_EXIST_ACCOUNT_ERROR_MSG);
             }
             
             // 新規登録の処理
@@ -194,7 +202,7 @@ class TwitterController extends Controller
           Auth::login($myinfo, true);
           
           // 転送する(トレンド一覧画面が良いか)
-          return redirect()->to('/mypage');
+          return redirect('mypage')->with('system_message', self::SUCCESS_TWITTER_LOGIN);
         }
       }
       catch (\Exception $e) {
@@ -205,7 +213,8 @@ class TwitterController extends Controller
         session()->invalidate();
         session()->regenerateToken();
         
-        return redirect('/login')->with('oauth_error', 'ログインに失敗しました');
+        // ログイン画面へ戻す
+        return redirect('/login')->with('system_message', self::FAIL_LOGIN_MSG);
       }
     }
     

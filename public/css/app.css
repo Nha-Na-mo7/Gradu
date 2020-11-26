@@ -1181,6 +1181,27 @@ main {
   width: 200px;
 }
 
+.c-flash {
+  position: absolute;
+  background: #d6f0ff;
+  -webkit-transition: all 3s;
+  transition: all 3s;
+  top: 30px;
+  right: 10px;
+  height: 60px;
+  width: 480px;
+  opacity: 0.7;
+  border-radius: 4px;
+  z-index: 5;
+  font-size: 15px;
+}
+.c-flash__success {
+  background: #b6e395;
+}
+.c-flash__error {
+  background: #e39598;
+}
+
 .panel {
   border: 1px solid #dedede;
   padding: 1.5rem;
@@ -1837,25 +1858,6 @@ main {
   border: 1px solid #0a0a0a;
   background: #d8d8d8;
   min-height: 200px;
-}
-.c-flash[data-v-5026a9d3] {
-  position: absolute;
-  -webkit-transition: all 3s;
-  transition: all 3s;
-  top: 25px;
-  right: 10px;
-  height: 60px;
-  width: 480px;
-  opacity: 0.7;
-  border-radius: 4px;
-  z-index: 5;
-  font-size: 15px;
-}
-.c-flash__success[data-v-5026a9d3] {
-  background: #b6e395;
-}
-.c-flash__error[data-v-5026a9d3] {
-  background: #e39598;
 }
 .item1[data-v-0b57cd5f] {
   /*background: #dd69cd;*/

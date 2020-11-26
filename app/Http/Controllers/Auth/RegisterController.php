@@ -78,6 +78,7 @@ class RegisterController extends Controller
     // ===================================
     public function redirectPath()
     {
+      \Session::flash('system_message', 'ログインしました！');
       return '/mypage';
     }
 }
