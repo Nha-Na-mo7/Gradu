@@ -149,9 +149,8 @@ export default {
         // 更新成功したらエラーメッセージは空にする
         this.errors_name = [];
 
-
-        // TODO // フラッシュメッセージ
-        this.$store.commit('message/setContent', {
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success
         });
 
