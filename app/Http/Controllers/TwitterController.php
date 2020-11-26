@@ -228,7 +228,7 @@ class TwitterController extends Controller
         
         Log::debug('Twitter連携を解除しました。');
         
-        return response()->json(['success' => 'Twitter連携を解除しました。'], 200);
+        return response()->json(['success' => 'Twitterの連携を解除しました。'], 200);
       } catch (\Exception $e) {
         Log::debug('アカウント情報変更時に例外が発生しました。' .$e->getMessage());
         return response()->json(['errors' => '連携解除時にエラーが発生しました。しばらくしてからもう一度お試しください。'], 500);

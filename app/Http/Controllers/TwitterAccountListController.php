@@ -346,7 +346,7 @@ class TwitterAccountListController extends Controller
       // 制限チェックのどちらかに引っかかった場合、フォロー処理はせずに終了する
       if(!$check_limit15 && !$check_limit_day) {
         Log::debug('accounts_follow: システム上のAPI制限に引っかかったため、フォローはせずに終了します。');
-        return response()->json(['error' => 'フォロー制限です。しばらくお待ちください'], 403);
+        return response()->json(['errors' => 'フォロー制限です。しばらくお待ちください'], 403);
       }
       
       // APIリクエスト用のインスタンスを作成
@@ -365,10 +365,8 @@ class TwitterAccountListController extends Controller
         if($twitterRequest->following){
           // フォロー済みだが200で帰ってきてしまった場合の処理
           Log::debug('二重フォローかつ200で戻ってきてしまった場合の処理');
-          return response()->json(['error' => 'フォローできませんでした。'], 403);
+          return response()->json(['errors' => 'フォローできませんでした。しばらくお待ちください。'], 403);
         }
-        
-        
         Log::debug('followsテーブルにフォローしたIDを登録します。');
         $this->add_table_follows($account_id, $target_user_id);
         
@@ -377,18 +375,18 @@ class TwitterAccountListController extends Controller
         // 403エラーが二重フォロー以外でも帰ってくる可能性を考慮し、
         // フォローテーブルへの登録は自動更新に任せてメッセージだけを返却する。
         Log::debug('403エラーです。二重フォローが考えられます。');
-        return response()->json(['error' => 'フォローできませんでした。'], 403);
+        return response()->json(['errors' => 'フォローできませんでした。しばらくお待ちください。'], 403);
         
       // それ以外のエラーの場合
       } else {
         Log::debug('APIリクエストエラー: '. print_r($twitterRequest, true));
-        return response()->json(['error' => 'エラーが発生しました。'], 500);
+        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
       
       Log::debug('=======================================================');
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 手動フォローを終了します。 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('=======================================================');
-      return response()->json(['result' => $twitterRequest], 200);
+      return response()->json(['success' => 'フォローしました！'], 200);
     }
     
     
@@ -437,7 +435,7 @@ class TwitterAccountListController extends Controller
       Log::debug('=======================================================');
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 手動フォローフォロー解除完了 ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('=======================================================');
-      return response()->json(['result' => $twitterRequest], 200);
+      return response()->json(['success' => 'フォローを解除しました。'], 200);
     }
     
     // ================================
@@ -454,18 +452,22 @@ class TwitterAccountListController extends Controller
       $user = Auth::user();
       // 「現在の」自動フォローフラグを1or0で取得
       $auto_follow_flg = $request->follow_flg;
+      // レスポンス用メッセージ
+      $msg = '';
       
       // 現時点でON(follow_flg === 1)の時
       if($auto_follow_flg) {
         Log::debug('ID:'.$user->id.'、'.$user->name.'さんの自動フォローをOFFにします');
         $user->auto_follow_flg = false;
         $user->update();
+        $msg = '自動フォローを OFF にしました！';
       }else{
         Log::debug('ID:'.$user->id.'、'.$user->name.'さんの自動フォローをONにします');
         $user->auto_follow_flg = true;
         $user->update();
+        $msg =  '自動フォローを ON にしました！';
       }
-      return response([], 200);
+      return response(['success' => $msg], 200);
     }
     
     

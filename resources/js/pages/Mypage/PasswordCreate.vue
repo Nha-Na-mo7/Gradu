@@ -80,20 +80,25 @@ export default {
         // バリデーションエラー。帰ってきたエラーメッセージを格納
         this.errors_password = response.data.errors.password;
         this.errors_password_confirmation = response.data.errors.password_confirmation;
+
         // 500エラーの時は更新失敗
       }else if(response.status === INTERNAL_SERVER_ERROR) {
-        console.log(response.data.errors)
-        // TODO フラッシュメッセージ
-        console.log('作成に失敗しました。')
-      }else{
-        console.log(response.data.success)
-        console.log('パスワードの新規作成に成功しました。')
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.errors
+        })
         this.isUpdating = false;
+
+      }else{
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentSuccess', {
+          content: response.data.success
+        })
+        this.isUpdating = false;
+
         // パスワード作成完了後はマイページに戻す
-        window.location = "/mypage"
+        this.$router.push('/mypage')
       }
-      // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-      // TODO フラッシュメッセージ
     },
   },
 }

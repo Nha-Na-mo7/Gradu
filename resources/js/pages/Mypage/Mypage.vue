@@ -160,9 +160,10 @@ export default {
       if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。')){
         const response = await axios.post(`/withdraw`);
         if(response.status === OK){
+          // TODO フラッシュ
           window.location = "/";
         }else{
-          //TODO フラッシュメッセージを出してログアウトだけさせる
+          // TODO フラッシュ メッセージを出してログアウトだけさせる
           window.location = "/login";
         }
       }
@@ -190,18 +191,18 @@ export default {
             .post(`/accounts/un_linkage`)
             .catch(error => error.response || error);
 
-        console.log(response)
-
         // エラーチェック
         if(response.status === OK) {
-          // TODO フラッシュ
-          console.log(response.data.success)
-          console.log('解除しました。')
+          // フラッシュメッセージをセット
+          this.$store.commit('message/setContentSuccess', {
+            content: response.data.success
+          })
           this.twitter = false;
         }else{
-          console.log(response.data.errors)
-          // TODO フラッシュメッセージ
-          console.log('連携解除に失敗しました。')
+          // フラッシュメッセージをセット
+          this.$store.commit('message/setContentError', {
+            content: response.data.errors
+          })
         }
         this.isUpdating = false;
       }

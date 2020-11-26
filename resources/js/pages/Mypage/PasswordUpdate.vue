@@ -92,8 +92,6 @@ export default {
           .post(`/user/update/password`, this.form_password )
           .catch(error => error.response || error);
 
-      console.log(response)
-
       // エラーチェック
       if(response.status === UNPROCESSABLE_ENTITY) {
         // バリデーションエラー。帰ってきたエラーメッセージを格納
@@ -101,27 +99,22 @@ export default {
         this.errors_password = response.data.errors.password;
         this.errors_password_confirmation = response.data.errors.password_confirmation;
 
-        this.isUpdating = false;
-
-        // 500エラーの時は更新失敗
+        // 500エラーの時
       } else if(response.status === INTERNAL_SERVER_ERROR) {
-        // TODO フラッシュメッセージ
-        console.log(response.data.errors)
-        console.log('作成に失敗しました。')
-
-        this.isUpdating = false;
-
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.errors
+        })
+        // 成功時
       } else {
-        console.log(response.data.success)
-        console.log('パスワードの新規作成に成功しました。')
-
-        this.isUpdating = false;
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentSuccess', {
+          content: response.data.success
+        })
         // パスワード更新完了後はマイページに戻す
-        window.location = "/mypage"
+        this.$router.push('/mypage')
       }
-      // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-      // TODO フラッシュメッセージ
-
+      this.isUpdating = false;
     },
   },
 }

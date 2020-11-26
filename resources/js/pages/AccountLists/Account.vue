@@ -194,7 +194,10 @@ export default {
   methods: {
     async follow() {
       if (this.isAutoFollowing) {
-        console.log('自動フォローをONにしている間は、ボタンからのフォローはできません。')
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: '自動フォローをONにしている場合、ボタンからのフォローはできません。'
+        })
         return false;
       }
       // フォロー用パラメータオブジェクトを作成
@@ -202,44 +205,62 @@ export default {
         'user_id': this.account_id,
       }
 
-      const response = await axios.post('../accounts/follow', follow_param).catch(error => error.response || error);
+      // APIにリクエスト
+      const response = await axios
+          .post('../accounts/follow', follow_param)
+          .catch(error => error.response || error);
 
       // エラーハンドリング
       // 403エラーは、「API制限」「フォロー済みのアカウントをフォローしようとする」などで発生する。
       // ※ 二重フォローは、パフォーマンス上の理由で200を返却することもある。
       if(response.status === OK){
-        // TODO フラッシュ フォローに成功しました！など
-        console.log(response.data);
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentSuccess', {
+          content: response.data.success
+        })
         this.isFollowing = true;
       }else if (response.status === FORBIDDEN) {
-        // TODO フラッシュ レスポンスメッセージを表示。
-        console.log(response.data.errors)
-        // response.data.errors
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.errors
+        })
       }else{
-        // TODO フラッシュ ここにくるのは全部500
-        console.log(response.data.errors)
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.errors
+        })
       }
     },
     // フォロー解除
     async destroy() {
       if(this.isAutoFollowing) {
-        console.log('自動フォローをONにしている間は、ボタンからのフォロー解除はできません。')
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: '自動フォローをONにしている場合、ボタンからフォロー解除はできません。'
+        })
         return false;
       }
       // リムーブ用パラメータオブジェクトを作成
       const destroy_param = {
         'user_id': this.account_id,
       }
-      // APIリクエスト
-      const response = await axios.post('../accounts/destroy', destroy_param).catch(error => error.response || error);
+      // APIにリクエスト
+      const response = await axios
+          .post('../accounts/destroy', destroy_param)
+          .catch(error => error.response || error);
+
       // エラーハンドリング(フォロー解除は200か500のみ)
       if(response.status === OK){
-        // TODO フラッシュ フォロー解除しました！など
-        console.log(response.data);
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentSuccess', {
+          content: response.data.success
+        })
         this.isFollowing = false;
       }else{
-        // TODO フラッシュ ここにくるのは全部500
-        console.log(response.data.errors)
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.errors
+        })
       }
     },
     // フォロー状態のチェック

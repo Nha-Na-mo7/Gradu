@@ -141,9 +141,10 @@ export default {
         this.errors_name = response.data.errors.name;
       // 500エラーの時は更新失敗
       }else if(response.status === INTERNAL_SERVER_ERROR) {
-        console.log(response.data.errors)
-        // TODO フラッシュメッセージをいれる
-        console.log('更新に失敗しました。')
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.error
+        })
       }else{
         console.log(response.data.success)
         // 更新成功したらエラーメッセージは空にする
@@ -178,15 +179,16 @@ export default {
         this.isUpdating = false;
       // 500エラー時
       }else if(response.status === INTERNAL_SERVER_ERROR){
-        // TODO フラッシュ
-        console.log(response.data.errors)
-        console.log('500error')
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content: response.data.error
+        })
       }else{
-        // ここでページにすぐさま反映させる。フラッシュメッセージで更新報告もする。
-        // TODO フラッシュメッセージ - メールを送信しました。
-        console.log(response.data.success)
+        // 送信完了したらフラッシュメッセージを表示し、バリデーションエラーリストを空にする
+        this.$store.commit('message/setContentSuccess', {
+          content: response.data.success
+        })
         this.errors_email = [];
-        console.log('メールアドレスあてにメールを送信しました。')
       }
       this.isUpdating = false;
     },

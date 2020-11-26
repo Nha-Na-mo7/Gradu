@@ -197,7 +197,6 @@ export default {
       }
     },
 
-    // オートフォローを切り替える // TODO フラッシュメッセージ FLASH flash
     async toggle_auto_following() {
       var result = false;
       const flg = this.auto_follow_flg;
@@ -213,7 +212,15 @@ export default {
 
         if(response.data.status === OK) {
           this.auto_follow_flg = !flg;
-          //TODO フラッシュ(オートフォローを flg にしました / 成功)
+          // フラッシュメッセージをセット
+          this.$store.commit('message/setContentSuccess', {
+            content: response.data.success
+          })
+        }else{
+          // フラッシュメッセージをセット
+          this.$store.commit('message/setContentError', {
+            content: 'エラーが発生しました。'
+          })
         }
       }
     },
