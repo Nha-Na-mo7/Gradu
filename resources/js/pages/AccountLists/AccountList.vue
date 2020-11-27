@@ -56,8 +56,8 @@
             <paginate
                 v-model="currentPage"
                 :page-count="getPageCount"
-                :page-range="10"
-                :margin-pages="1"
+                :page-range="3"
+                :margin-pages="3"
                 :click-handler="clickCallback"
                 :prev-text="'＜'"
                 :next-text="'＞'"
@@ -82,8 +82,8 @@
             <paginate
                 v-model="currentPage"
                 :page-count="getPageCount"
-                :page-range="10"
-                :margin-pages="1"
+                :page-range="5"
+                :margin-pages="3"
                 :click-handler="clickCallback"
                 :prev-text="'＜'"
                 :next-text="'＞'"
@@ -152,15 +152,19 @@ export default {
     page_title(){
       return PAGE_TITLE;
     },
+    // アカウント一覧の最終更新時刻
     twitter_accounts_table_updated_at() {
       return this.updated_at;
     },
+    // アカウントが見つからなかったかを返すcomputed
     isNothingStatus() {
       return this.nothing_accounts;
     },
+    // オートフォローがONがどうか
     isAutoFollowFlg() {
       return this.auto_follow_flg;
     },
+    // ユーザーがTwitterアカウントと連携しているかどうか(!! 二重否定で確実にboolean型とする)
     isExistTwitterAccount() {
       return !!this.twitter_id;
     },

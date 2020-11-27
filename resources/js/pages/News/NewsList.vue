@@ -95,7 +95,7 @@ import NothingNews from './NothingNews.vue';
 import SearchCheckbox from './SearchCheckbox.vue';
 import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
-import { OK ,DEFAULT_SEARCHWORD } from "../../util";
+import { DEFAULT_SEARCHWORD } from "../../util";
 
 import Vue from "vue"
 import Paginate from 'vuejs-paginate'
@@ -117,9 +117,9 @@ export default {
       search_input_data: {
         keywords: ''
       },
+      // ページネーション用
       parPage: 10,
       currentPage: 1
-
     }
   },
   computed: {
@@ -190,8 +190,6 @@ export default {
       // 記事数が0の時、isNothingNewsをtrueにする
       if(!this.fetchedNews.length) {
         this.isNothingNews = true;
-      }else{
-        //ある場合はページネーション用の設定項目を入れる
       }
 
       // 検索終了、isSearchingをfalseに戻す
