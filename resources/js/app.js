@@ -17,20 +17,19 @@ import paginate from "./paginate.js";
 import App from "./App.vue";
 
 
-// Vueインスタンスを作成
-// #appがない時はインスタンスを作らないようにできるか？
-
+// Vueインスタンスを作成するメソッド
 const createApp = async () => {
-  
-  // ユーザーデータ取得後にVueインスタンスを作成
-  new Vue({
-    el: '#app',
-    store,
-    router,
-    paginate,
-    components: { App },
-    template: '<App />'
-  });
+  // id="app"がHTMLに存在する時のみVueインスタンスを作成
+  if(document.getElementById("app") != null) {
+    new Vue({
+      el: '#app',
+      store,
+      router,
+      paginate,
+      components: { App },
+      template: '<App />'
+    });
+  }
 }
 
 // 上記メソッドを呼び出し。
