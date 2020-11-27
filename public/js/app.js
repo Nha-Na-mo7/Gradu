@@ -6387,11 +6387,10 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
   \*********************************/
 /*! namespace exports */
 /*! exports [not provided] [no usage info] */
-/*! runtime requirements: __webpack_require__.r, __webpack_exports__, __webpack_require__.* */
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+/*! runtime requirements:  */
+/***/ (function() {
 
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack:///./resources/sass/app.scss?");
+eval("throw new Error(\"Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\\nModuleBuildError: Module build failed (from ./node_modules/sass-loader/dist/cjs.js):\\nSassError: Expected identifier.\\n  ╷\\n9 │   @media {\\n  │          ^\\n  ╵\\n  resources/sass/foundation/mixin.scss 9:10   mq()\\n  resources/sass/layout/l-container.scss 6:3  @import\\n  /Applications/MAMP/htdocs/CryptoTrend/resources/sass/app.scss 32:9                                  root stylesheet\\n    at processResult (/Applications/MAMP/htdocs/CryptoTrend/node_modules/webpack/lib/NormalModule.js:582:19)\\n    at /Applications/MAMP/htdocs/CryptoTrend/node_modules/webpack/lib/NormalModule.js:675:5\\n    at /Applications/MAMP/htdocs/CryptoTrend/node_modules/loader-runner/lib/LoaderRunner.js:397:11\\n    at /Applications/MAMP/htdocs/CryptoTrend/node_modules/loader-runner/lib/LoaderRunner.js:252:18\\n    at context.callback (/Applications/MAMP/htdocs/CryptoTrend/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\\n    at /Applications/MAMP/htdocs/CryptoTrend/node_modules/sass-loader/dist/index.js:73:7\\n    at Function.call$2 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:88844:16)\\n    at _render_closure1.call$2 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:78084:12)\\n    at _RootZone.runBinary$3$3 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:26377:18)\\n    at _RootZone.runBinary$3 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:26381:19)\\n    at _FutureListener.handleError$1 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:24870:19)\\n    at _Future__propagateToListeners_handleError.call$0 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:25162:49)\\n    at Object._Future__propagateToListeners (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:4489:77)\\n    at _Future._completeError$2 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:24996:9)\\n    at _AsyncAwaitCompleter.completeError$2 (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:24358:12)\\n    at Object._asyncRethrow (/Applications/MAMP/htdocs/CryptoTrend/node_modules/sass/sass.dart.js:4238:17)\");\n\n//# sourceURL=webpack:///./resources/sass/app.scss?");
 
 /***/ }),
 

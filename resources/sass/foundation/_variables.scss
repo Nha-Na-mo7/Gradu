@@ -59,8 +59,10 @@ $brand-color_IOST: #f6f6f6;
 // -----------------
 // font-size
 // -----------------
+$font-size_ss: 10px;
 $font-size_s: 12px;
 $font-size_m: 14px;
+$font-size_default: 16px;
 $font-size_l: 18px;
 $font-size_xl: 24px;
 $font-size_xxl: 30px;
@@ -92,10 +94,8 @@ $space_3l: 40px;
 //$breakpoint-lg: 1000px !default;
 
 $breakpoints: (
+    'ss': 'screen and (max-width: 320px)', // iPhone5(iOS10)
     'sm': 'screen and (max-width: 414px)',
-    'md': 'screen and (min-width: 415px) and (max-width: 768px) ',
-    'min_md': 'screen and (min-width: 769px)',
-    'lg': 'screen and (max-width: 1000px)',
-    'xl': 'screen and (max-width: 1200px)',
-    'xxl': 'screen and (min-width: 1200px)',
+    'md': 'screen and (max-width: 768px)',
+    'lg': 'screen and (max-width: 1024px)',
 ) !default;
