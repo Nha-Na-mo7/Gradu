@@ -50,12 +50,17 @@
           <Loading />
         </div>
         <!-- ニュースコンポーネント、検索中は非表示 -->
-        <News
-            v-else
-            v-for="News in fetchedNews"
-            :key="News.id"
-            :entry="News"
-        />
+        <div v-else>
+          <paginate name="paginate-news" :list="fetchedNews" :per="10">
+            <News
+                v-for="News in paginated('paginate-news')"
+                :key="News.id"
+                :entry="News"
+            />
+          </paginate>
+          <paginate-links for="paginate-news" class="pagination" :show-step-links="true"></paginate-links>
+
+        </div>
       </div>
 
       <!-- 記事がない時 -->
@@ -89,6 +94,7 @@ export default {
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
       fetchedNews: [],
+      paginate: ['paginate-news'],
       checked_brands: [],
       search_input_data: {
         keywords: ''
