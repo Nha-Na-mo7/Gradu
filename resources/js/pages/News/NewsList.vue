@@ -29,7 +29,6 @@
                 <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
               </div>
 
-
             </div>
           </div>
         </div>
@@ -51,14 +50,22 @@
         </div>
         <!-- ニュースコンポーネント、検索中は非表示 -->
         <div v-else>
-          <paginate name="paginate-news" :list="fetchedNews" :per="10">
+          <paginate name="paginate-news" :list="fetchedNews" :per="20">
             <News
                 v-for="News in paginated('paginate-news')"
                 :key="News.id"
                 :entry="News"
             />
           </paginate>
-          <paginate-links for="paginate-news" class="pagination" :show-step-links="true"></paginate-links>
+          <paginate-links
+              for="paginate-news"
+              :classes="{
+                'ul': 'c-paginate__container',
+                'li': 'c-paginate__item',
+              }"
+          >
+
+          </paginate-links>
 
         </div>
       </div>
