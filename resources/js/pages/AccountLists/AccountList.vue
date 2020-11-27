@@ -51,19 +51,36 @@
           <!-- アカウントコンポーネント -->
           <Account
               v-else
-              v-for="Accounts in accounts"
+              v-for="Accounts in getAccountsItems"
               :key="Accounts.id"
               :account="Accounts"
               :follow_list="follow_list"
               :auto_follow_flg="!!isAutoFollowFlg"
           />
+          <paginate
+              v-model="currentPage"
+              :page-count="getPageCount"
+              :page-range="10"
+              :margin-pages="1"
+              :click-handler="clickCallback"
+              :prev-text="'＜'"
+              :next-text="'＞'"
+              :hide-prev-next="true"
+              :containerClass="'c-paginate__container'"
+              :page-class="'c-paginate__item'"
+              :page-link-class="'c-paginate__link'"
+              :prev-class="'c-paginate__item c-paginate__item--prev'"
+              :prev-link-class="'c-paginate__link'"
+              :next-class="'c-paginate__item c-paginate__item--next'"
+              :next-link-class="'c-paginate__link'"
+              :active-class="'c-paginate__item--active'"
+              list="" name="">
+          </paginate>
         </div>
-        <!-- ページネーション -->
-        <Pagination
-            v-if="!isLoading && !isNothingStatus"
-            :current-page="current_page"
-            :last-page="last_page"
-        />
+
+
+
+
       </div>
     </div>
 
@@ -82,8 +99,11 @@ import NothingAccount from './NothingAccount.vue';
 import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
-import Pagination from '../PageComponents/Pagination.vue';
 import { OK } from "../../util";
+
+import Vue from "vue"
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
 
 const PAGE_TITLE = '仮想通貨アカウント一覧';
 
@@ -103,13 +123,10 @@ export default {
       twitter_id: 1,
       auto_follow_flg: false,
       updated_at: '',
-      accounts: [],
       follow_list: [],
-      current_page: 0,
-      last_page: 0,
-      total: 0, //総アカウント数
-      from: 0, // 100件中21~40 の21の部分
-      to: 0, // 100件中21~40 の40の部分
+      accounts: [],
+      parPage: 10,
+      currentPage: 1
     }
   },
   computed: {
@@ -127,6 +144,19 @@ export default {
     },
     isExistTwitterAccount() {
       return !!this.twitter_id;
+    },
+    // ======================
+    // ページネーション用
+    // ======================
+    // ページネーション用にアカウントリストを細分化する
+    getAccountsItems: function() {
+      let current = this.currentPage * this.parPage;
+      let start = current - this.parPage;
+      return this.accounts.slice(start, current);
+    },
+    // 総ページ数
+    getPageCount: function() {
+      return Math.ceil(this.accounts.length / this.parPage);
     }
   },
   methods: {
@@ -171,20 +201,15 @@ export default {
       this.isLoading = true;
 
       const response = await axios
-          .get(`/accounts/list/?page=${this.p}`)
+          .get(`/accounts/list`)
           .catch(error => error.response || error);
 
       // 通信成功時、各種アカウント取得結果を格納する
       if (response.status === OK){
-        this.accounts = response.data.data
-        this.current_page = response.data.current_page
-        this.last_page = response.data.last_page
-        this.total = response.data.total
-        this.from = response.data.from
-        this.to = response.data.to
+        this.accounts = response.data
 
         // そのページにアカウントがないor通信が重いなどで読み込めないとき、nothing_accountsをtrueとする
-        if(response.data.data.length === 0) {
+        if(response.data.length === 0) {
           this.nothing_accounts = true;
         }
       }else{
@@ -233,6 +258,12 @@ export default {
         }
       }
     },
+    // ======================
+    // ページネーション用
+    // ======================
+    clickCallback: function (pageNum) {
+      this.currentPage = Number(pageNum);
+    }
   },
   components: {
     Account,
@@ -241,7 +272,6 @@ export default {
     Loading,
     PageTitle,
     Ribbonnav,
-    Pagination
   },
   watch: {
     $route: {

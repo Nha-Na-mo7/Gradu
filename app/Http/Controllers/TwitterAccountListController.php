@@ -53,13 +53,13 @@ class TwitterAccountListController extends Controller
             ->where('protected', false)
             ->orderBy('account_created_at', 'desc')
             ->whereNotIn('account_id', [$twitter_id])
-            ->paginate();
+            ->get();
       }else{
         // アカウント連携していなければ見られない画面なはずだが、何らかの理由で見れてしまった時の処理
         $accounts = TwitterAccount::with(['new_tweet'])
             ->where('protected', false)
             ->orderBy('account_created_at', 'desc')
-            ->paginate();
+            ->get();
       }
       return $accounts;
     }

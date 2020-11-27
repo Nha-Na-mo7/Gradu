@@ -120,8 +120,6 @@ export default {
       parPage: 10,
       currentPage: 1
 
-
-
     }
   },
   computed: {
@@ -135,7 +133,10 @@ export default {
     marge_words() {
       this.search_input_data.keywords = this.default_and_checked_brands;
     },
-
+    // ======================
+    // ページネーション用
+    // ======================
+    // ページネーション用にニュースリストを細分化する
     getNewsItems: function() {
       let current = this.currentPage * this.parPage;
       let start = current - this.parPage;
@@ -234,9 +235,6 @@ export default {
   width: inherit;
 }
 
-.p-news__search {
-  width: 100%;
-}
 .p-news__searchBox--Inner {
   display: -webkit-box;
   display: -webkit-flex;
