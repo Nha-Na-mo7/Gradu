@@ -45,13 +45,6 @@ class LoginController extends Controller
     // =========================================
     protected function authenticated(Request $request, $user)
     {
-      // ログイン画面に移行する前にtwitter_idをセッションに登録する(アカウント一覧画面で表示判定に使う)
-      $twitter_id = $user->twitter_id;
-      
-      if(!empty($twitter_id)) {
-        session(['twitter_id' => $twitter_id]);;
-      }
-      
       // ログイン処理後にリダイレクトする先を指定する
       // ここで$userなんてしたら認証されたユーザー情報をprintするだけの画面になるのでやらないように。
       return redirect('/mypage')->with('system_message', 'ログインしました！');

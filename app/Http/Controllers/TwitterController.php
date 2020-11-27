@@ -114,15 +114,13 @@ class TwitterController extends Controller
           $auth_user = Auth::user();
           
           // 既に他のユーザーと連携されているTwitterアカウントの場合、returnさせる
-          Log::debug('既に他のユーザーと連携されているTwitterアカウントではないかをチェックします');
           $alreadycheck = User::where('twitter_id', $twitter_user->id)->first();
           
           if(!empty($alreadycheck)){
-            Log::debug('> 他のユーザーが連携しているTwitterアカウントです。連携処理は行わずにレスポンスして終了します。');
+            Log::debug('他のユーザーが連携しているTwitterアカウントです。連携処理は行わずにレスポンスして終了します。');
             Log::debug('===================================================================');
 
-            // redirect()->intended()で連携後に元の画面に戻るらしいが？
-            return redirect()->intended()->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
+            return redirect()->intended('/mypage')->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
           }
           
           // 登録メールアドレスを使ってユーザーレコードを取得する
@@ -138,10 +136,6 @@ class TwitterController extends Controller
                 'token_secret' => $token_secret
             ])->save();
             Log::debug('Twitter連携が完了しました。');
-            
-            // セッションにtwitter_idをいれる
-            Log::debug('セッションにtwitter_idを格納します。');
-            session(['twitter_id' => $twitter_id]);
   
             // フォローしている人を取得し、followsテーブルに格納する
             Log::debug('ただいま連携したユーザーがフォローしているユーザーをfollowsテーブルに格納します。');
@@ -151,7 +145,7 @@ class TwitterController extends Controller
             Log::debug('フォロー中 かつ accountsテーブルに保存されているユーザーをfollowsテーブルに格納しました。');
           }
   
-          Log::debug('連携した元の画面にリダイレクトします。');
+          Log::debug('リダイレクトします。');
           return redirect()->intended()->with('system_message', self::SUCCESS_LINKAGE);
           
         // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン)
@@ -167,7 +161,6 @@ class TwitterController extends Controller
             // Twitterに登録しているメアドが既に他のユーザーと連携されていないかを確認
             Log::debug('Twitterに登録しているメールアドレスを使ったCryptoアカウントが既に存在する場合はreturnします。');
             $already_email_registered = User::where('email', $twitter_user->email)->first();
-  
             
             // 既に登録済みのメアドを用いたCryptoアカウントがあるなら、登録をせずそのまま元の画面に戻す。
             if(!empty($already_email_registered)){
@@ -175,7 +168,7 @@ class TwitterController extends Controller
               Log::debug('===================================================================');
               
               // 新規登録画面へリダイレクトする。この時フラッシュメッセージも付与する
-              return redirect()
+              return redirect('/register')
                   ->intended()
                   ->with('system_message', self::ALREADY_EXIST_ACCOUNT_ERROR_MSG);
             }
@@ -190,9 +183,6 @@ class TwitterController extends Controller
             ]);
             Log::debug('新規登録処理を行いました。');
           }
-          
-          // セッションにtwitter_idを格納
-          session(['twitter_id' => $twitter_id]);
           
           // ログイン時 or 新規登録時にも、フォローしている人を取得し、followsテーブルに格納する
           Log::debug('ユーザーがフォローしているユーザーをfollowsテーブルに格納します');
@@ -217,7 +207,7 @@ class TwitterController extends Controller
         session()->regenerateToken();
         
         // ログイン画面へ戻す
-        return redirect()->intended()->with('system_message', self::FAIL_LOGIN_MSG);
+        return redirect()->intended('/login')->with('system_message', self::FAIL_LOGIN_MSG);
       }
     }
     
