@@ -29,6 +29,7 @@
                 <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
               </div>
 
+
             </div>
           </div>
         </div>
@@ -50,25 +51,30 @@
         </div>
         <!-- ニュースコンポーネント、検索中は非表示 -->
         <div v-else>
-          <paginate name="paginate-news" :list="fetchedNews" :per="10">
-            <News
-                v-for="News in paginated('paginate-news')"
-                :key="News.id"
-                :entry="News"
-            />
+          <News
+              v-for="News in getNewsItems"
+              :key="News.id"
+              :entry="News"
+          />
+          <paginate
+              v-model="currentPage"
+              :page-count="getPageCount"
+              :page-range="10"
+              :margin-pages="1"
+              :click-handler="clickCallback"
+              :prev-text="'＜'"
+              :next-text="'＞'"
+              :hide-prev-next="true"
+              :containerClass="'c-paginate__container'"
+              :page-class="'c-paginate__item'"
+              :page-link-class="'c-paginate__link'"
+              :prev-class="'c-paginate__item c-paginate__item--prev'"
+              :prev-link-class="'c-paginate__link'"
+              :next-class="'c-paginate__item c-paginate__item--next'"
+              :next-link-class="'c-paginate__link'"
+              :active-class="'c-paginate__item--active'"
+              list="" name="">
           </paginate>
-          <paginate-links
-              for="paginate-news"
-              :limit="3"
-              :classes="{
-                'ul': 'c-paginate__container',
-                'li': 'c-paginate__item',
-              }"
-              :hide-single-page="true"
-          >
-
-          </paginate-links>
-
         </div>
       </div>
 
@@ -91,6 +97,10 @@ import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import { OK ,DEFAULT_SEARCHWORD } from "../../util";
 
+import Vue from "vue"
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
 const PAGE_TITLE = 'NEWS';
 
 export default {
@@ -103,11 +113,15 @@ export default {
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
       fetchedNews: [],
-      paginate: ['paginate-news'],
       checked_brands: [],
       search_input_data: {
         keywords: ''
       },
+      parPage: 10,
+      currentPage: 1
+
+
+
     }
   },
   computed: {
@@ -121,6 +135,16 @@ export default {
     marge_words() {
       this.search_input_data.keywords = this.default_and_checked_brands;
     },
+
+    getNewsItems: function() {
+      let current = this.currentPage * this.parPage;
+      let start = current - this.parPage;
+      return this.fetchedNews.slice(start, current);
+    },
+    // 総ページ数
+    getPageCount: function() {
+      return Math.ceil(this.fetchedNews.length / this.parPage);
+    }
   },
   methods: {
     // ===================
@@ -165,12 +189,21 @@ export default {
       // 記事数が0の時、isNothingNewsをtrueにする
       if(!this.fetchedNews.length) {
         this.isNothingNews = true;
+      }else{
+        //ある場合はページネーション用の設定項目を入れる
       }
 
       // 検索終了、isSearchingをfalseに戻す
       this.isSearching = false;
+      console.log(response)
       return response.status;
     },
+    // ======================
+    // ページネーション用
+    // ======================
+    clickCallback: function (pageNum) {
+      this.currentPage = Number(pageNum);
+    }
 
   },
   components: {
