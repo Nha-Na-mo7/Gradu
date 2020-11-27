@@ -51,7 +51,7 @@
           <!-- アカウントコンポーネント -->
           <div v-else>
             <div>
-              <p>{{this.getStartCount}} ~ {{this.getEndCount}} / {{ this.accounts.length }}アカウント</p>
+              <p>{{ this.getStartCount }} ~ {{ this.getEndCount }} / {{ this.accounts.length }}アカウント</p>
             </div>
             <paginate
                 v-model="currentPage"
