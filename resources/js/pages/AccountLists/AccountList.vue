@@ -49,38 +49,57 @@
           </div>
 
           <!-- アカウントコンポーネント -->
-          <Account
-              v-else
-              v-for="Accounts in getAccountsItems"
-              :key="Accounts.id"
-              :account="Accounts"
-              :follow_list="follow_list"
-              :auto_follow_flg="!!isAutoFollowFlg"
-          />
-          <paginate
-              v-model="currentPage"
-              :page-count="getPageCount"
-              :page-range="10"
-              :margin-pages="1"
-              :click-handler="clickCallback"
-              :prev-text="'＜'"
-              :next-text="'＞'"
-              :hide-prev-next="true"
-              :containerClass="'c-paginate__container'"
-              :page-class="'c-paginate__item'"
-              :page-link-class="'c-paginate__link'"
-              :prev-class="'c-paginate__item c-paginate__item--prev'"
-              :prev-link-class="'c-paginate__link'"
-              :next-class="'c-paginate__item c-paginate__item--next'"
-              :next-link-class="'c-paginate__link'"
-              :active-class="'c-paginate__item--active'"
-              list="" name="">
-          </paginate>
+          <div v-else>
+            <div>
+              <p>{{this.getStartCount}} ~ {{this.getEndCount}} / {{ this.accounts.length }}アカウント</p>
+            </div>
+            <paginate
+                v-model="currentPage"
+                :page-count="getPageCount"
+                :page-range="10"
+                :margin-pages="1"
+                :click-handler="clickCallback"
+                :prev-text="'＜'"
+                :next-text="'＞'"
+                :hide-prev-next="true"
+                :containerClass="'c-paginate__container'"
+                :page-class="'c-paginate__item'"
+                :page-link-class="'c-paginate__link'"
+                :prev-class="'c-paginate__item c-paginate__item--prev'"
+                :prev-link-class="'c-paginate__link'"
+                :next-class="'c-paginate__item c-paginate__item--next'"
+                :next-link-class="'c-paginate__link'"
+                :active-class="'c-paginate__item--active'"
+                list="" name="">
+            </paginate>
+            <Account
+                v-for="Accounts in getAccountsItems"
+                :key="Accounts.id"
+                :account="Accounts"
+                :follow_list="follow_list"
+                :auto_follow_flg="!!isAutoFollowFlg"
+            />
+            <paginate
+                v-model="currentPage"
+                :page-count="getPageCount"
+                :page-range="10"
+                :margin-pages="1"
+                :click-handler="clickCallback"
+                :prev-text="'＜'"
+                :next-text="'＞'"
+                :hide-prev-next="true"
+                :containerClass="'c-paginate__container'"
+                :page-class="'c-paginate__item'"
+                :page-link-class="'c-paginate__link'"
+                :prev-class="'c-paginate__item c-paginate__item--prev'"
+                :prev-link-class="'c-paginate__link'"
+                :next-class="'c-paginate__item c-paginate__item--next'"
+                :next-link-class="'c-paginate__link'"
+                :active-class="'c-paginate__item--active'"
+                list="" name="">
+            </paginate>
+          </div>
         </div>
-
-
-
-
       </div>
     </div>
 
@@ -157,6 +176,20 @@ export default {
     // 総ページ数
     getPageCount: function() {
       return Math.ceil(this.accounts.length / this.parPage);
+    },
+    // 現在の表示開始箇所 (21-30件表示中 の21の部分)
+    getStartCount: function (){
+      return ((this.currentPage - 1) * this.parPage) + 1;
+    },
+    // 現在の表示終了箇所 (21-30件表示中 の30の部分)
+    getEndCount: function (){
+      let current = this.currentPage * this.parPage;
+      let over_check = current > this.accounts.length
+      if(over_check) {
+        return this.accounts.length
+      }else{
+        return current;
+      }
     }
   },
   methods: {
