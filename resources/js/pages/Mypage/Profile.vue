@@ -146,7 +146,6 @@ export default {
           content: response.data.error
         })
       }else{
-        console.log(response.data.success)
         // 更新成功したらエラーメッセージは空にする
         this.errors_name = [];
 
@@ -154,8 +153,6 @@ export default {
         this.$store.commit('message/setContentSuccess', {
           content: response.data.success
         });
-
-
 
       }
       this.isUpdating = false;

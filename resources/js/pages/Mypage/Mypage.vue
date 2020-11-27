@@ -141,7 +141,6 @@ export default {
 
       // エラーチェック
       if(response.status === OK) {
-        console.log(response)
         // フォーム用にデータを格納
         this.user = response.data
         this.twitter = (response.data.twitter_id !== null);

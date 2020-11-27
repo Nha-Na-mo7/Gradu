@@ -63,7 +63,6 @@ export default {
           .get(`/user/info`)
           .catch(error => error.response || error);
 
-      console.log(response)
       // エラーチェック
       if(response.status === OK) {
         // パスワードが既に設定されている場合、isExist_passwordをtrueとする
