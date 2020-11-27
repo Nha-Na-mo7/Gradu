@@ -50,7 +50,7 @@
         </div>
         <!-- ニュースコンポーネント、検索中は非表示 -->
         <div v-else>
-          <paginate name="paginate-news" :list="fetchedNews" :per="20">
+          <paginate name="paginate-news" :list="fetchedNews" :per="10">
             <News
                 v-for="News in paginated('paginate-news')"
                 :key="News.id"
@@ -59,10 +59,12 @@
           </paginate>
           <paginate-links
               for="paginate-news"
+              :limit="3"
               :classes="{
                 'ul': 'c-paginate__container',
                 'li': 'c-paginate__item',
               }"
+              :hide-single-page="true"
           >
 
           </paginate-links>

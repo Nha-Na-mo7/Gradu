@@ -1524,6 +1524,19 @@ main {
   font-size: 15px;
 }
 
+.c-paginate__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c-paginate__item {
+  width: 40px;
+  height: 40px;
+  background: #4FB4D7;
+  border: 1px solid #000;
+}
+
 .title {
   font-weight: bold;
   margin: 2rem 0;
