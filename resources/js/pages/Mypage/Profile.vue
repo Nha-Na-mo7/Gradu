@@ -13,67 +13,83 @@
     </div>
 
     <!-- ユーザーネームとメールアドレスの変更フォーム -->
-    <div v-else>
-      <!-- ユーザーネーム -->
-      <div>
-        <!-- DBから現在のユーザーネームを取得し、入力された状態にしておく-->
-        <label for="name">ユーザーネーム( 20文字以内 )</label>
-        <!-- エラー表示は要修正-->
-        <ul v-if="errors_name">
-          <li v-for="error in errors_name">
-            <span>{{ error }}</span>
-          </li>
-        </ul>
-        <input
-            id="name"
-            class="p-form__item"
-            type="text"
-            placeholder="ユーザーネームを入力してください"
-            v-model="form_name"
-        >
-        <button
-            class="c-btn"
-            @click="update_name"
-        >
-          変更を保存
-        </button>
-      </div>
+    <div class="p-setting" v-else>
+      <div class="p-setting__container">
+        <!-- ユーザーネーム -->
+        <div class="p-form">
 
-      <!-- メールアドレス -->
-      <div>
-        <!-- DBから現在のメールアドレスを取得し、入力された状態にしておく-->
-        <label for="email">メールアドレス</label>
-        <!-- エラー表示は要修正-->
-        <ul v-if="errors_email">
-          <li v-for="error in errors_email">
-            <span>{{ error }}</span>
-          </li>
-        </ul>
-        <input
-            id="email"
-            class="p-form__item"
-            type="text"
-            placeholder="メールアドレスを入力してください"
-            v-model="form_email"
-        >
-        <button
-            class="c-btn"
-            @click="update_email"
-        >
-          変更を保存
-        </button>
-      </div>
+          <label
+              class="p-form__info"
+              for="name"
+          >ユーザーネーム( 20文字以内 )</label>
 
-      <div>
-        <p>メールアドレスの変更後、確認メールを自動送信します。</p>
-        <p>必ずメールを受け取れる状態で変更手続きを行ってください。</p>
-      </div>
+          <ul v-if="errors_name">
+            <li class="c-error" v-for="error in errors_name">
+              <span>{{ error }}</span>
+            </li>
+          </ul>
+          <input
+              id="name"
+              class="p-form__item"
+              type="text"
+              v-model="form_name"
+          >
+          <div class="u-text--center">
+            <button
+                class="c-btn"
+                @click="update_name"
+            >
+              変更を保存
+            </button>
+          </div>
+        </div>
 
+        <div class="c-border">
+          <div class="c-border__dividingText">
+            <span class="c-border__dividingText-spanborder"></span>
+          </div>
+        </div>
+
+        <!-- メールアドレス -->
+        <div>
+          <!-- DBから現在のメールアドレスを取得し、入力された状態にしておく-->
+          <div class="p-form__description u-mb-l">
+            <p>メールアドレスを入力後、確認メールを自動送信します。</p>
+            <p>必ずメールを受け取れる状態で変更手続きを行ってください。</p>
+          </div>
+          <label
+              class="p-form__info"
+              for="email">メールアドレス
+          </label>
+          <!-- エラー表示は要修正-->
+          <ul v-if="errors_email">
+            <li class="c-error" v-for="error in errors_email">
+              <span>{{ error }}</span>
+            </li>
+          </ul>
+          <input
+              id="email"
+              class="p-form__item"
+              type="text"
+              v-model="form_email"
+          >
+          <div class="u-text--center">
+            <button
+                class="c-btn"
+                @click="update_name"
+            >
+              メールアドレスを変更
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <!-- 戻るボタン -->
-    <RouterLink to="/mypage" class="c-btn">マイページへ戻る</RouterLink>
-
+    <div class="u-text--center">
+      <RouterLink to="/mypage" class="c-btn">マイページへ戻る</RouterLink>
+    </div>
 
   </div>
 </template>

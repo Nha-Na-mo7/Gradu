@@ -67,9 +67,12 @@
             </form>
 
             <div class="p-auth__another">
-                <div class="p-auth__dividingText">
-                    <span class="p-auth__dividingText-spanborder">または</span>
+                <div class="c-border">
+                    <div class="c-border__dividingText">
+                        <span class="c-border__dividingText-spanborder">または</span>
+                    </div>
                 </div>
+
 
                 <a
                         class="c-btn c-btn__twitter"

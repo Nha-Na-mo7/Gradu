@@ -26,12 +26,10 @@
 
     </div>
 
-    <div>
-      <p>※ 他のサービスと同じパスワードは使用しないでください</p>
-    </div>
-
     <!-- 戻るボタン -->
-    <RouterLink to="/mypage" class="c-btn">マイページへ戻る</RouterLink>
+    <div class="u-text--center">
+      <RouterLink to="/mypage" class="c-btn">マイページへ戻る</RouterLink>
+    </div>
 
   </div>
 </template>

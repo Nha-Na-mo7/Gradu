@@ -1,50 +1,64 @@
 <!--=======================================================-->
 <!-- パスワードを新規作成するコンポーネント(Twitterで新規登録した人用)-->
 <!--=======================================================-->
-
 <template>
-  <div>
-    <label for="password">新しいパスワード(半角英数字 8~50文字)</label>
-    <!-- エラー表示は要修正-->
-    <ul v-if="errors_password">
-      <li v-for="error in errors_password">
-        <span>{{ error }}</span>
-      </li>
-    </ul>
-    <input
-        id="password"
-        class="p-form__item"
-        type="password"
-        placeholder="パスワードを入力してください"
-        v-model="form_password.password"
-    >
+  <div class="p-setting">
+    <div class="p-setting__container">
+      <div class="p-form">
 
-    <label for="password_confirmation">パスワード【再入力】</label>
-    <!-- エラー表示は要修正-->
-    <ul v-if="errors_password_confirmation">
-      <li v-for="error in errors_password_confirmation">
-        <span>{{ error }}</span>
-      </li>
-    </ul>
-    <input
-        id="password_confirmation"
-        class="p-form__item"
-        type="password"
-        placeholder="同じパスワードをもう一度入力してください"
-        v-model="form_password.password_confirmation"
-    >
+        <div class="p-form__decription">
+          <p>※ 他のサービスと同じパスワードは使用しないでください</p>
+        </div>
 
-    <button
-        class="c-btn"
-        @click="create_password"
-    >
-      パスワードを登録する
-    </button>
+        <label
+            class="p-form__info"
+            for="password"
+        >新しいパスワード(半角英数字 8~50文字)</label>
+
+        <ul v-if="errors_password">
+          <li class="c-error" v-for="error in errors_password">
+            <span>{{ error }}</span>
+          </li>
+        </ul>
+        <input
+            id="password"
+            class="p-form__item"
+            type="password"
+            v-model="form_password.password"
+        >
+
+        <label
+            class="p-form__info"
+            for="password_confirmation"
+        >パスワード【再入力】</label>
+
+        <ul v-if="errors_password_confirmation">
+          <li v-for="error in errors_password_confirmation">
+            <span>{{ error }}</span>
+          </li>
+        </ul>
+        <input
+            id="password_confirmation"
+            class="p-form__item"
+            type="password"
+            v-model="form_password.password_confirmation"
+        >
+
+        <div class="u-text--center">
+          <button
+              class="c-btn"
+              @click="create_password"
+          >
+            パスワードを登録する
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { OK , UNPROCESSABLE_ENTITY , INTERNAL_SERVER_ERROR } from "../../util";
+import { UNPROCESSABLE_ENTITY , INTERNAL_SERVER_ERROR } from "../../util";
 
 export default {
   data() {
