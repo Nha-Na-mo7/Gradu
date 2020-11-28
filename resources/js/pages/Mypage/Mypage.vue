@@ -41,15 +41,12 @@
           </div>
           <div class="p-documentbox__body" v-if="isExist_password">
             <!-- 実際の桁数に関係なく********とする -->
-            <div class="p-documentbox__item">
-              <p>********</p>
-            </div>
+            <h2 class="p-documentbox__item p-documentbox__item--info">パスワード設定済</h2>
+            <p class="p-documentbox__item">＊＊＊＊＊＊＊＊</p>
           </div>
           <div class="p-documentbox__body" v-else>
-            <div class="p-documentbox__item">
-              <p>パスワードは設定されていません</p>
-              <p>Twitterの連携を解除するには、パスワードの設定が必要です。</p>
-            </div>
+            <h2 class="p-documentbox__item p-documentbox__item--info">パスワードは設定されていません</h2>
+            <p class="p-documentbox__item">Twitterの連携を解除するには、パスワードの設定が必要です。</p>
           </div>
         </div>
       </div>
@@ -58,19 +55,18 @@
         <!-- SNS連携 -->
         <div class="p-documentbox">
           <div class="p-documentbox__header">
-            <h2 class="p-documentbox__title">SNS連携状態</h2>
+            <h2 class="p-documentbox__title">Twitter連携状態</h2>
           </div>
 
           <!-- 連携中の時 -->
           <div class="p-documentbox__body" v-if="isExist_twitter">
-            <div class="p-documentbox__item">
-              <h2>Twitter</h2>
-              <span class="u-text--right">連携中</span>
+            <div class="p-documentbox__item p-documentbox__item--info">
+              <h2>Twitterと連携中</h2>
             </div>
             <div>
-              <p class="p-documentbox__item">Twitterアカウントでログインでき、仮想通貨アカウント一覧機能を利用することができます。</p>
-              <div>
-                <button class="c-btn" @click="twitter_un_linkage">解除する</button>
+              <p class="p-documentbox__item">仮想通貨アカウント一覧機能を利用することができます。</p>
+              <div class="p-documentbox__footer">
+                <button class="c-btn c-btn__twitter" @click="twitter_un_linkage">連携を解除する</button>
               </div>
             </div>
           </div>
@@ -78,22 +74,23 @@
           <!-- 連携していない時 -->
 
           <div class="p-documentbox__body" v-else>
-            <h2 class="p-documentbox__item">Twitter</h2>
-            <p>連携していません</p>
+            <div class="p-documentbox__item p-documentbox__item--info">
+              <h2>連携していません</h2>
+            </div>
             <div>
-              <p class="p-documentbox__item">仮想通貨アカウント一覧機能など、一部の機能がご利用できません。</p>
-              <div>
-                <button>
-                  <a
-                      class="c-btn c-btn__twitter"
-                      title="Start for Twitter!"
-                      @click.stop
-                      :href="`/twitter/auth/begin`"
-                  >
-                    連携する
-                  </a>
-                </button>
-              </div>
+              <p class="p-documentbox__item">仮想通貨アカウント一覧機能がご利用できません。</p>
+            </div>
+            <div class="p-documentbox__footer">
+              <button>
+                <a
+                    class="c-btn c-btn__twitter"
+                    title="Start for Twitter!"
+                    @click.stop
+                    :href="`/twitter/auth/begin`"
+                >
+                  連携する
+                </a>
+              </button>
             </div>
           </div>
         </div>
@@ -105,9 +102,9 @@
           </div>
           <div class="p-documentbox__body">
             <div class="p-documentbox__item">
-              <p>退会処理を行うと、CryptoTrendのサービスがご利用いただけなくなります。</p>
+              <p>退会すると、CryptoTrendのサービスがご利用いただけなくなります。</p>
             </div>
-            <div class="p-documentbox__item">
+            <div class="p-documentbox__footer">
               <button
                   class="c-btn"
                   @click="withdraw"
