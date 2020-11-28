@@ -3,9 +3,14 @@
 //  =============
 .l-header {
   width: 100%;
-  position: fixed;
-  z-index: 3;
-  top: 0;
+  height: 60px;
 
-  padding: 0;
+  background: $background-color_header;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  top: 0;
+  z-index: 3;
 }

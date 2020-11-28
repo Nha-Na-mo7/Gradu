@@ -1,10 +1,8 @@
-@extends('layouts.app')
-
-<div class="p-footer__container">
+<div class="p-footer">
     <!-- ロゴとナビ -->
     <div class="p-footer__main">
         <div class="p-footer__logo">
-            <a href="">ロゴマーク</a>
+            <a href="">ロゴマーク!?</a>
         </div>
 
         <!-- サービス -->

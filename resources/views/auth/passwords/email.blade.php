@@ -2,10 +2,9 @@
 @section('title', 'パスワードの再設定')
 
 <!-- メールを送信する側 -->
-<!-- 送信後にフラッシュメッセージで送信した旨を通知する -->
 
 @section('content')
-<div class="l-container--authform">
+<div class="l-container__auth">
     <div class="">
         <div>
             <h2 class="p-auth__title">パスワードを忘れた場合</h2>

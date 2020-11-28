@@ -16,10 +16,10 @@
       </div>
     </main>
 
-    <!-- フッター -->
-    <footer id="footer" class="l-footer p-footer">
-      <Footer />
-    </footer>
+<!--    &lt;!&ndash; フッター &ndash;&gt;-->
+<!--    <footer id="footer" class="l-footer p-footer">-->
+<!--      <Footer />-->
+<!--    </footer>-->
   </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
   components: {
     Message,
     // Header,
-    Footer
+    // Footer
   },
   // computed: {
   //   // エラー時のステータスコード番号

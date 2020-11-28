@@ -2,7 +2,7 @@
 @section('title', 'ログイン')
 
 @section('content')
-<div class="l-container--authform p-auth">
+<div class="l-container__auth p-auth">
     <div class="">
         <h2 class="p-auth__title">ログイン</h2>
         <div class="">

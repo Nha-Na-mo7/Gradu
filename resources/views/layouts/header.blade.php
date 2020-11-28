@@ -1,28 +1,27 @@
-<!-- =================-->
-<!-- 共通のヘッダー     -->
-<!-- =================-->
-@extends('layouts.app')
+{{-- ================= --}}
+{{-- 共通のヘッダー      --}}
+{{-- ================= --}}
+{{-- ロゴ  --}}
+<header id="header" class="l-header">
+    <div class="p-header">
 
-@section('header')
-    <!-- ロゴ -->
-    <div>
-        <div class="p-header__logo-area">
-            <a class="p-header lololink" href="{{ route('home.index') }}">
-                <img class="p-header__logo" src="" alt="CryptoTrend" />
-{{--                <img class="p-header__logo" src="{{ asset('images/header_logo.png') }}" alt="CryptoTrend" />--}}
-            </a>
-        </div>
+        {{-- ロゴ --}}
+        <a class="p-header__logo" href="{{ route('home.index') }}">
+            <img class="p-header__logo" src="" alt="CryptoTrend" />
+            {{--                <img class="p-header__logo" src="{{ asset('images/header_logo.png') }}" alt="CryptoTrend" />--}}
+        </a>
 
-        <!-- SPサイト用メニュー -->
-        <div id="" class="p-header__burger">
+        {{-- SPサイト用メニュー  --}}
+        <div id="" class="p-header__trigger">
             <span></span>
             <span></span>
             <span></span>
         </div>
 
-        <!-- ナビバー -->
-        <nav id="" class="p-header p-header__nav p-header__nav__sp   p-navbar__menu">
-            <ul class="p-header__list">
+        {{-- ナビバー  --}}
+        <nav id="" class="p-header__nav p-header__nav__sp">
+
+            <ul class="p-header__menu">
                 @guest
                     <li class="p-header__item">
                         <a class="p-header__item--link" href="{{ route('login') }}">ログイン</a>
@@ -44,7 +43,7 @@
                         <a class="p-header__item--link" href="{{ route('mypage.index') }}">マイページ</a>
                     </li>
                     <li class="p-header__item">
-                        <!-- TODO ログアウト処理を用意すること-->
+                        {{-- TODO ログアウト処理を用意すること --}}
                         <a class="p-header__item--link"
                            href="{{ route('logout') }}"
                            onclick="event.preventDefault();
@@ -58,4 +57,4 @@
             </ul>
         </nav>
     </div>
-@endsection
+</header>

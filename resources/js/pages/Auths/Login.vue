@@ -2,7 +2,7 @@
 <!--ログイン画面-->
 <!--==========-->
 <template>
-  <div class="l-container--authform p-auth">
+  <div class="l-container__auth p-auth">
     <h2 class="p-auth__title">ログイン</h2>
     <form class="p-form" @submit.prevent="login">
 

@@ -4,7 +4,7 @@
 @section('title', 'パスワードの再設定')
 
 @section('content')
-<div class="l-container--authform">
+<div class="l-container__auth">
     <div class="">
         <div>
             <h2 class="p-auth__title">パスワードの再設定</h2>

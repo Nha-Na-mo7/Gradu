@@ -16,7 +16,7 @@
 // 参考: Twitter...#55acee
 // https://www.colordic.org/colorscheme/55acee
 
-$font-color_dark: #1b515f;
+$font-color_default: #1f1f1f;
 $font-color_white: #ffffff;
 
 $color_CoinCheck: #50cdcd;
@@ -24,8 +24,11 @@ $color_Twitter: #55acee;
 
 $color_Primary: #52c8e3;
 
-$background-color_base: #ecf0f1;
+// 背景
+$background-color_base: #f6f6f6;
 $background-color_content-title: #52a5e3;
+$background-color_header: #c7dbee;
+$background-color_footer: #c7dbee;
 
 
 
@@ -89,7 +92,7 @@ $space_3l: 40px;
 //  }
 //}
 
-//$breakpoint-sm: 400px !default;
+//$breakpoint-sm: 414px !default;
 //$breakpoint-md: 768px !default;
 //$breakpoint-lg: 1000px !default;
 

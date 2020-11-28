@@ -2,7 +2,7 @@
 @section('title','新規登録')
 
 @section('content')
-<div class="l-container--authform p-auth">
+<div class="l-container__auth p-auth">
     <div class="">
         <h2 class="p-auth__title">アカウントの新規作成</h2>
         <p>CryptoTrendは、Twitterと連携することでサービスを最大限に利用することが可能です！</p>

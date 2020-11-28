@@ -22,8 +22,6 @@
 //  layout
 //  ===============================
 
-//  Wrapper
-@import 'layout/l-wrapper';
 //  header
 @import 'layout/l-header';
 //  footer
@@ -44,7 +42,7 @@
 //  form
 @import 'object/project/p-form';
 //  navbar
-@import 'object/project/p-navbar';
+@import 'object/project/p-header';
 //  footer
 @import 'object/project/p-footer';
 //  news
