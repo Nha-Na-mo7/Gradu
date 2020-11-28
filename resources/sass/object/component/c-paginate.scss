@@ -2,19 +2,31 @@
 //  c-paginate
 //  =============
 .c-paginate {
-  &__container {
-    display: flex;
+  display: flex;
+  margin: 0 auto;
+  padding-top: 10px;
+  width: 80%;
+  justify-content: center;
+  @include mq() {
+    width: 100%;
   }
   &__item {
-    background: #4FB4D7;
-    border: 1px solid #000;
-    margin-right: 5px;
-
-    & .c-paginate__link {
-      width: 40px;
-      height: 40px;
-      display: inline-block;
+    background: #ffffff;
+    border-radius: 4px;
+    margin-right: $space_m;
+    position: relative;
+    &:hover {
+      background: #cdcdcd;
+    }
+    &--active {
+      background: #ffd7e8;
     }
   }
-
+  &__link {
+    padding: 10px 10px;
+    display: block;
+    @include mq() {
+      padding: 5px 5px;
+    }
+  }
 }

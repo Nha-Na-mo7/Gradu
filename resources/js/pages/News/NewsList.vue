@@ -8,7 +8,7 @@
     <PageTitle :title='page_title'/>
 
     <!--メインレイアウト-->
-    <div class="p-news__container">
+    <div class="p-news">
 
       <!-- サーチボックス -->
       <div class="p-news__searchBox--Inner">
@@ -59,13 +59,13 @@
           <paginate
               v-model="currentPage"
               :page-count="getPageCount"
-              :page-range="10"
+              :page-range="3"
               :margin-pages="1"
               :click-handler="clickCallback"
               :prev-text="'＜'"
               :next-text="'＞'"
               :hide-prev-next="true"
-              :containerClass="'c-paginate__container'"
+              :containerClass="'c-paginate'"
               :page-class="'c-paginate__item'"
               :page-link-class="'c-paginate__link'"
               :prev-class="'c-paginate__item c-paginate__item--prev'"
