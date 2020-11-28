@@ -2,11 +2,9 @@
 //  p-account
 //  =============
 .p-accounts{
-  &__container {
-    background: #f5f6ff;
-    box-shadow: #f5f6ff 0 0 20px;
-    padding: 15px 40px;
-  }
+  background: #f5f6ff;
+  box-shadow: #f5f6ff 0 0 20px;
+  padding: 15px 40px;
 
   &__list {
     margin-bottom: 20px;

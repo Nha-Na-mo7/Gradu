@@ -8,7 +8,7 @@
     <PageTitle :title='page_title'/>
 
     <!--メインレイアウト-->
-    <div v-if="isExistTwitterAccount" class="p-accounts__container">
+    <div v-if="isExistTwitterAccount" class="p-accounts">
 
       <div>
         <!-- リボンタグ -->

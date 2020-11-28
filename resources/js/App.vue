@@ -7,14 +7,14 @@
 <!--    </header>-->
 
     <!-- メイン -->
-    <main>
-      <div class="l-container">
-        <!-- フラッシュメッセージ -->
-        <Message />
-        <!-- 実際にコンポーネントが切り替わるエリア -->
-        <RouterView />
-      </div>
-    </main>
+<!--    <main>-->
+<!--      <div class="l-container">-->
+<!--      </div>-->
+<!--    </main>-->
+    <!-- フラッシュメッセージ -->
+    <Message />
+    <!-- 実際にコンポーネントが切り替わるエリア -->
+    <RouterView />
 
 <!--    &lt;!&ndash; フッター &ndash;&gt;-->
 <!--    <footer id="footer" class="l-footer p-footer">-->

@@ -567,7 +567,7 @@ input[type=checkbox] {
   }
 }
 
-.p-accounts__container {
+.p-accounts {
   background: #f5f6ff;
   -webkit-box-shadow: #f5f6ff 0 0 20px;
           box-shadow: #f5f6ff 0 0 20px;
