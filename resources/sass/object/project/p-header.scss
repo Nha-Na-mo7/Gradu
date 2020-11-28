@@ -13,6 +13,7 @@
     display: flex;
     height: 100%;
     &__sp {
+      display: none;
       // sp表示の時は右に隠れ、トリガーが押された時だけ左に出てくる
       @include mq(){
         position: absolute;

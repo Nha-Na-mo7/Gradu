@@ -1,0 +1,15 @@
+// ==============
+//  p-mypage
+//  =============
+.p-mypage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  &__column {
+    width: 49%;
+    @include mq() {
+      width: 100%;
+    }
+  }
+}

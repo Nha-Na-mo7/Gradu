@@ -15,78 +15,110 @@
   <!-- メインレイアウト -->
   <div v-else class="p-container dummyflex">
 
-    <!-- ユーザー名・メールアドレス -->
-    <div class="dummybox">
-      <RouterLink to="/mypage/profile">プロフィールの設定変更</RouterLink>
-      <div>
-        <h2>ユーザーネーム</h2>
-        <p>{{ this.auth_name }}</p>
-      </div>
-      <div>
-        <h2>登録メールアドレス</h2>
-        <p>{{ this.auth_mail }}</p>
-      </div>
-    </div>
-
-    <!-- パスワード -->
-    <div class="dummybox">
-      <RouterLink to="/mypage/password">パスワードの変更</RouterLink>
-      <div v-if="isExist_password">
-        <!-- 実際の桁数に関係なく********とする -->
-        <p>********</p>
-      </div>
-      <div v-else>
-        <p>パスワードは設定されていません</p>
-        <p>Twitterの連携を解除するには、パスワードの設定が必要です。</p>
-      </div>
-    </div>
-
-    <!-- SNS連携 -->
-    <div class="dummybox">
-      <div>
-        <h2>SNS ログイン連携</h2>
-        <h2>Twitter</h2>
-        <!-- 連携中の時 -->
-        <div v-if="isExist_twitter">
-          <div>
-            <p>連携中</p>
-            <p>Twitterアカウントでログインでき、仮想通貨アカウント一覧機能を利用することができます。</p>
-
-            <button class="c-btn" @click="twitter_un_linkage">解除する</button>
+    <div class="p-mypage">
+      <div class="p-mypage__column">
+        <!-- ユーザー名・メールアドレス -->
+        <div class="p-documentbox">
+          <div class="p-documentbox__header">
+            <h2 class="p-documentbox__title">プロフィール</h2>
+            <RouterLink to="/mypage/profile">設定する ></RouterLink>
           </div>
-          <div>
-            <h2>Twitterアカウントの自動フォロー状態</h2>
-            <p v-if="auto_follow_status">ON</p>
-            <p v-else>OFF</p>
+          <div class="p-documentbox__body">
+            <h2 class="p-documentbox__item p-documentbox__item--info">ユーザーネーム</h2>
+            <p class="p-documentbox__item">{{ this.auth_name }}</p>
           </div>
-
+          <div class="p-documentbox__body">
+            <h2 class="p-documentbox__item p-documentbox__item--info">登録メールアドレス</h2>
+            <p class="p-documentbox__item">{{ this.auth_mail }}</p>
+          </div>
         </div>
 
-        <!-- 連携していない時 -->
-        <div v-else>
-          <p>連携していません</p>
-          <p>仮想通貨アカウント一覧機能など、一部の機能がご利用できません。</p>
-          <button>
-            <a
-              class="c-btn c-btn--primary c-btn__twitter--login"
-              title="Start for Twitter!"
-              @click.stop
-              :href="`/twitter/auth/begin`"
-            >
-              連携する
-            </a>
-          </button>
+        <!-- パスワード -->
+        <div class="p-documentbox">
+          <div class="p-documentbox__header">
+            <h2 class="p-documentbox__title">パスワード</h2>
+            <RouterLink to="/mypage/password">設定する ></RouterLink>
+          </div>
+          <div class="p-documentbox__body" v-if="isExist_password">
+            <!-- 実際の桁数に関係なく********とする -->
+            <div class="p-documentbox__item">
+              <p>********</p>
+            </div>
+          </div>
+          <div class="p-documentbox__body" v-else>
+            <div class="p-documentbox__item">
+              <p>パスワードは設定されていません</p>
+              <p>Twitterの連携を解除するには、パスワードの設定が必要です。</p>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="p-mypage__column">
+        <!-- SNS連携 -->
+        <div class="p-documentbox">
+          <div class="p-documentbox__header">
+            <h2 class="p-documentbox__title">SNS連携状態</h2>
+          </div>
+
+          <!-- 連携中の時 -->
+          <div class="p-documentbox__body" v-if="isExist_twitter">
+            <div class="p-documentbox__item">
+              <h2>Twitter</h2>
+              <span class="u-text--right">連携中</span>
+            </div>
+            <div>
+              <p class="p-documentbox__item">Twitterアカウントでログインでき、仮想通貨アカウント一覧機能を利用することができます。</p>
+              <div>
+                <button class="c-btn" @click="twitter_un_linkage">解除する</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 連携していない時 -->
+
+          <div class="p-documentbox__body" v-else>
+            <h2 class="p-documentbox__item">Twitter</h2>
+            <p>連携していません</p>
+            <div>
+              <p class="p-documentbox__item">仮想通貨アカウント一覧機能など、一部の機能がご利用できません。</p>
+              <div>
+                <button>
+                  <a
+                      class="c-btn c-btn__twitter"
+                      title="Start for Twitter!"
+                      @click.stop
+                      :href="`/twitter/auth/begin`"
+                  >
+                    連携する
+                  </a>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 退会処理 -->
+        <div class="p-documentbox">
+          <div class="p-documentbox__header">
+            <h2 class="p-documentbox__title">退会する</h2>
+          </div>
+          <div class="p-documentbox__body">
+            <div class="p-documentbox__item">
+              <p>退会処理を行うと、CryptoTrendのサービスがご利用いただけなくなります。</p>
+            </div>
+            <div class="p-documentbox__item">
+              <button
+                  class="c-btn"
+                  @click="withdraw"
+              >退会する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <!-- 退会処理 -->
-    <div class="p-mypage__footer">
-      <button
-          class="c-btn"
-          @click="withdraw"
-      >退会する</button>
-    </div>
   </div>
 </div>
 </template>
@@ -96,7 +128,7 @@ import PageTitle from '../PageComponents/PageTitle.vue';
 import Loading from '../../layouts/Loading.vue';
 
 import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
-const PAGE_TITLE = 'マイページ(アカウント設定)';
+const PAGE_TITLE = 'マイページ';
 
 export default {
   data() {
@@ -104,7 +136,6 @@ export default {
       loading: true,
       twitter: false,
       password: false,
-      auto_follow: false,
       mail: '',
       name: ''
     }
@@ -121,9 +152,6 @@ export default {
     },
     isExist_password(){
       return this.password
-    },
-    auto_follow_status(){
-      return this.auto_follow
     },
     auth_mail(){
       return this.mail
@@ -145,7 +173,6 @@ export default {
         this.user = response.data
         this.twitter = (response.data.twitter_id !== null);
         this.password = (response.data.password !== null);
-        this.auto_follow =  response.data.auto_follow_flg;
         this.mail =  response.data.email;
         this.name =  response.data.name;
         this.loading = false;
@@ -222,19 +249,5 @@ export default {
 </script>
 
 <style scoped>
-.dummyflex {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  position: relative;
-}
-.dummybox {
-  width: 45%;
-  font-size: 15px;
-  margin-right: 20px;
-  margin-bottom: 30px;
-  border: 1px solid #0a0a0a;
-  background: #d8d8d8;
-  min-height: 200px;
-}
+
 </style>

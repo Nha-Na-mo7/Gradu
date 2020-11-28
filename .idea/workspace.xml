@@ -23,7 +23,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sass/object/project/p-documentbox.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/sass/object/project/p-mypage.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Mypage/Mypage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Mypage/Mypage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/utility/u-space.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/utility/u-space.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -361,7 +369,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="16384000" />
+      <workItem from="1606542821189" duration="27501000" />
     </task>
     <servers />
   </component>
@@ -384,10 +392,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1023" y="404" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1604309199206">
+    <state x="968" y="187" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606569730108">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="1023" y="404" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1177@0.23.1920.1177" timestamp="1604309199206" />
+    <state x="968" y="187" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1920.1177@0.23.1920.1177" timestamp="1606569730108" />
     <state x="1136" y="23" width="470" height="1177" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1604907804811">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
@@ -500,10 +508,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="721" y="282" key="run.anything.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606027443775" />
-    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup" timestamp="1606321002680">
+    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup" timestamp="1606575170168">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606321002680" />
+    <state x="1032" y="285" width="670" height="676" key="search.everywhere.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606575170168" />
     <state x="448" y="382" width="481" height="158" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1603953206479">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
