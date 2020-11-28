@@ -1822,6 +1822,11 @@ input[type=checkbox] {
   padding: 5px;
   margin-bottom: 20px;
 }
+@media screen and (max-width: 414px) {
+  .c-site__title {
+    font-size: 20px;
+  }
+}
 
 .p-news__container {
   background: #f5f8ff;

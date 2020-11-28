@@ -2,7 +2,6 @@
 //  c-site
 //  =============
 .c-site {
-
   &__title {
     border-bottom: 3px solid #c6ebf8;
     color: #8cdbf6;
@@ -10,5 +9,8 @@
     font-weight: bold;
     padding: 5px;
     margin-bottom: 20px;
+    @include mq() {
+      font-size: 20px;
+    }
   }
 }
