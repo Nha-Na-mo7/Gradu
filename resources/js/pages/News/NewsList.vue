@@ -178,6 +178,9 @@ export default {
       this.isSearching = true;
       this.isNothingNews = false;
 
+      // 現在ページを1に戻す(戻さないと新しく検索した場合にも、途中のページから表示されてしまう)
+      this.currentPage = 1;
+
       // 検索ワードをマージさせる
       this.marge_words;
 
