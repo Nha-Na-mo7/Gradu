@@ -3,6 +3,21 @@
 //  =============
 .p-form {
   padding: $space_xxl 0;
+
+  &__title {
+    font-size: $font-size_xl;
+    text-align: center;
+    margin-bottom: $space_l;
+  }
+  &__decription {
+    margin-bottom: $space_xl;
+  }
+  &__info {
+    margin-bottom: $space_s;
+    display: inline-block;
+  }
+
+
   &__item {
     border: 1px solid #dedede;
     border-radius: 0.25rem;
@@ -14,17 +29,20 @@
 
     &:focus {
       // 以下はわかりやすく変数名をつけて管理すること
-      border: 1px solid #f66d9b;
-      box-shadow: 0 0 5px #f66d9b;
+      border: 1px solid $input-color;
+      box-shadow: 0 0 5px $input-color;
     }
     &--error {
       // フォームのエラー時に該当箇所を赤背景にする
       background: #fff3f3;
     }
-  }
-  label {
-    display: inline-block;
-    margin-bottom: 0.5rem;
+
+    &--check {
+      margin-top: $space_xxl;
+      & input {
+        vertical-align: baseline;
+      }
+    }
   }
 
   &__textarea {

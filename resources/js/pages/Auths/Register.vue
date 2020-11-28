@@ -3,7 +3,7 @@
 <!--==========-->
 <template>
   <div class="l-container--authform p-auth">
-    <h2 class="p-auth__title">アカウントを作成</h2>
+    <h2 class="p-form__title">アカウントを作成</h2>
     <p>CryptoTrendは、Twitterと連携することでサービスを最大限に利用することが可能です！</p>
     <form class="p-form" @submit.prevent="register" autocomplete="off">
 

@@ -3,7 +3,7 @@
 <!--=================-->
 <template>
   <div class="l-container--authform">
-    <h2 class="p-auth__title">ユーザー登録が完了しました！</h2>
+    <h2 class="p-form__title">ユーザー登録が完了しました！</h2>
     <div>
       <p>登録してくれてありがとう！</p>
       <RouterLink

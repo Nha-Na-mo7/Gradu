@@ -25,27 +25,26 @@
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/layouts/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/layouts/Footer.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/PassResetForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/PassResetForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/PassResetMailSend.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/PassResetMailSend.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/Register.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Auths/RegisterCompletion.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Auths/RegisterCompletion.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/foundation/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/foundation/_variables.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/foundation/base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/foundation/base.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-container.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-container.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-footer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-header.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-wrapper.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-tab.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-tab.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-footer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-errors.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-error.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-flash.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-flash.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-form.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-site.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-site.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-auth.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-auth.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-form.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/footer.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -383,7 +382,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="2687000" />
+      <workItem from="1606542821189" duration="10974000" />
     </task>
     <servers />
   </component>
@@ -514,10 +513,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="264" y="23" width="1436" height="1128" key="dock-window-2/0.23.1920.1177@0.23.1920.1177" timestamp="1603956207439" />
-    <state x="942" y="330" width="715" height="706" key="find.popup" timestamp="1606540475564">
+    <state x="942" y="330" width="829" height="706" key="find.popup" timestamp="1606550104359">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="942" y="330" width="715" height="706" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606540475564" />
+    <state x="942" y="330" width="829" height="706" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606550104359" />
     <state x="721" y="282" key="run.anything.popup" timestamp="1606027443775">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>

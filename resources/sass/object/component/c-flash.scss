@@ -19,9 +19,9 @@
 
   font-size: 15px;
   &__success {
-    background: #b6e395;
+    background: $background-color_success;
   }
   &__error {
-    background: #e39598;
+    background: $background-color_error;
   }
 }

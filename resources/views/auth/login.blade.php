@@ -3,61 +3,52 @@
 
 @section('content')
 <div class="l-container__auth p-auth">
-    <div class="">
-        <h2 class="p-auth__title">ログイン</h2>
-        <div class="">
-
-            <!-- TODO エラーメッセージ用確認 -->
-            @if(Session::has('error_message'))
-                <div class="c-error__authflash">
-                    <p>{{ session('error_message') }}</p>
-                </div>
-            @endif
-
+    <div class="p-auth__container">
+        <h2 class="p-form__title">ログイン</h2>
+        <div class="p-form">
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-
                 <!-- email -->
-                <div>
-                    <label
-                            class="p-form__item u__mt-xl"
-                            for="email"
-                    >メールアドレス</label>
-                    @error('email')
-                    <div class="c-error">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                    <input
-                            type="text"
-                            class="c-form__input @error('email') c-error__input @enderror"
-                            name="email"
-                            value="{{ old('email') }}"
-                    />
+                <label
+                        class="p-form__info"
+                        for="email"
+                >メールアドレス</label>
+                @error('email')
+                <div class="c-error">
+                    {{ $message }}
                 </div>
+                @enderror
+                <input
+                        type="text"
+                        class="c-form__input @error('email') c-error__input @enderror"
+                        name="email"
+                        value="{{ old('email') }}"
+                />
 
                 <!-- password -->
-                <div>
-                    <label class="p-form__item u__mt-xl"
-                           for="password">パスワード (半角英数字 8~50文字)</label>
-                    @error('password')
-                    <div class="c-error">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                    <input
-                            type="password"
-                            class="c-form__input @error('password') c-error__input @enderror"
-                            name="password"
-                            value="{{ old('password') }}"
-                    />
+                <label class="p-form__info"
+                       for="password">パスワード (半角英数字 8~50文字)</label>
+                @error('password')
+                <div class="c-error">
+                    {{ $message }}
                 </div>
+                @enderror
+                <input
+                        type="password"
+                        class="c-form__input @error('password') c-error__input @enderror"
+                        name="password"
+                        value="{{ old('password') }}"
+                />
 
                 <!-- remember me -->
-                <div class="p-form__item p-form__item--check">
+                <div class="p-form__info p-form__item--check">
                     <label for="remember">
-                        <input type="checkbox" name="remember" id="remember">
+                        <input
+                                type="checkbox"
+                                name="remember"
+                                id="remember"
+                                class="c-form__check">
                         ログイン状態を維持する
                     </label>
                 </div>
@@ -69,12 +60,13 @@
                     >ログイン</button>
                 </div>
 
-                <div class="">
-                    <a class="p-form__inquiry" href="{{ route('password.request') }}">
+                <div class="u__mt-xl">
+                    <a class="p-form__forget c-btn" href="{{ route('password.request') }}">
                         パスワードを忘れた方はこちら</a>
                 </div>
             </form>
-            <div>
+
+            <div class="p-auth__another">
                 <div class="p-auth__dividingText">
                     <span class="p-auth__dividingText-spanborder">または</span>
                 </div>
@@ -84,7 +76,7 @@
                         title="Start for Twitter!"
                         @click.stop
                         href="{{ route('twitter.begin') }}"
-                >Twitterでログイン
+                >Twitterで新規登録
                 </a>
             </div>
         </div>

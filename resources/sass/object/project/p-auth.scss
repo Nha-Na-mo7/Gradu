@@ -3,16 +3,25 @@
 //  =============
 .p-auth {
 
-  .p-auth__dividingText {
-    margin: $space_xxl auto $space_l;
+  &__container {
+    margin-top: 50px;
+    margin-bottom: 120px;
+  }
+
+  &__another {
+    margin: $space_l auto;
     text-align: center;
+  }
+
+  &__dividingText {
+    margin: $space_xxl auto $space_l;
     // 横に伸びる棒線
     &-spanborder {
       display: inline-block;
       padding: 0 $space_xxl;
       position: relative;
+      background: #fff; //TODO 背景色と同じにする
       z-index: 1;
-      background: #fff; //要修正
     }
     &:before{
       border-top: 1px solid #2e1f1a;
@@ -26,14 +35,8 @@
     }
   }
 
-  &__title {
-    font-size: $font-size_xl;
-    text-align: center;
-    margin-bottom: $space_xl;
 
 
-
-  }
   &__checkbox {
     margin-bottom: $space_xl;
   }

@@ -33,6 +33,10 @@ a {
   transition: all .3s;
 }
 
+input[type=checkbox] {
+  transform: scale(1.5);
+}
+
 main {
   //margin-bottom: 6rem;
   //margin-top: 7rem;

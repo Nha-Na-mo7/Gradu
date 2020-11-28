@@ -8,7 +8,7 @@
 
 <template>
   <div class="l-container--authform">
-    <h2 class="p-auth__title">パスワードを忘れた場合</h2>
+    <h2 class="p-form__title">パスワードを忘れた場合</h2>
     <p>アカウント作成時にご登録いただいたメールアドレスを入力してください。</p>
     <p>入力したメールアドレス宛に、パスワード変更ページのURLが記載されたメールを送信します。</p>
     <form class="p-form" @submit.prevent="resetMailSubmit">

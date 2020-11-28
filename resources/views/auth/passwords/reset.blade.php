@@ -7,7 +7,7 @@
 <div class="l-container__auth">
     <div class="">
         <div>
-            <h2 class="p-auth__title">パスワードの再設定</h2>
+            <h2 class="p-form__title">パスワードの再設定</h2>
             <p>新しく設定するパスワードを入力してください。</p>
         </div>
 

@@ -3,17 +3,18 @@
 
 @section('content')
 <div class="l-container__auth p-auth">
-    <div class="">
-        <h2 class="p-auth__title">アカウントの新規作成</h2>
-        <p>CryptoTrendは、Twitterと連携することでサービスを最大限に利用することが可能です！</p>
+    <div class="p-auth__container">
+        <h2 class="p-form__title">アカウントの新規作成</h2>
+        <p class="p-form__description">CryptoTrendは、Twitterと連携することでサービスを最大限に利用できます！</p>
         <div class="">
 
-            <div class="">
-                <form method="POST" action="" autocomplete="off">
+            {{-- 実際のフォーム --}}
+            <div class="p-form">
+                <form method="POST" action="">
                     @csrf
 
                     <label
-                            class="p-form__item"
+                            class="p-form__info"
                             for="name"
                     >ユーザーネーム ( 20文字以内 )</label>
                     @error('name')
@@ -29,7 +30,7 @@
                     />
 
                     <label
-                            class="p-form__item"
+                            class="p-form__info"
                             for="email"
                     >メールアドレス</label>
                     @error('email')
@@ -45,7 +46,7 @@
                     />
 
                     <label
-                            class="p-form__item"
+                            class="p-form__info"
                             for="password"
                     >パスワード (半角英数字 8~50文字)</label>
                     @error('password')
@@ -61,7 +62,7 @@
                     />
 
                     <label
-                            class="p-form__item"
+                            class="p-form__info"
                             for="password-confirm"
                     >パスワードの再入力</label>
                     @error('password_confirmation')
@@ -85,7 +86,7 @@
                     </div>
                 </form>
             </div>
-            <div>
+            <div class="p-auth__another">
                 <div class="p-auth__dividingText">
                     <span class="p-auth__dividingText-spanborder">または</span>
                 </div>

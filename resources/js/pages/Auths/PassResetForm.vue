@@ -6,7 +6,7 @@
 
 <template>
   <div class="l-container--authform">
-    <h2 class="p-auth__title">STEP4 パスワードの再設定</h2>
+    <h2 class="p-form__title">STEP4 パスワードの再設定</h2>
     <p>ご登録いただいたメールアドレスと、新しく設定するパスワードを入力してください。</p>
     <p>新しいパスワードでそのままログインされます。</p>
     <form class="p-form" @submit.prevent="resetPassword">

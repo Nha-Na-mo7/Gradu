@@ -3,7 +3,7 @@
 <!--==========-->
 <template>
   <div class="l-container__auth p-auth">
-    <h2 class="p-auth__title">ログイン</h2>
+    <h2 class="p-form__title">ログイン</h2>
     <form class="p-form" @submit.prevent="login">
 
       <label for="email">メールアドレス</label>
