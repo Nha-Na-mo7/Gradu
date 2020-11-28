@@ -23,7 +23,7 @@
                         type="text"
                         class="c-form__input @error('email') c-error__input @enderror"
                         name="email"
-                        value="{{ old('email') }}"
+                        value="{{ $email ?? old('email') }}"
                 />
 
                 <!-- password -->
@@ -53,15 +53,15 @@
                     </label>
                 </div>
 
-                <div class="">
+                <div class="u-text--center">
                     <button
                             type="submit"
                             class="c-btn c-btn__auth"
                     >ログイン</button>
                 </div>
 
-                <div class="u__mt-xl">
-                    <a class="p-form__forget c-btn" href="{{ route('password.request') }}">
+                <div class="p-form__submit">
+                    <a class="c-btn" href="{{ route('password.request') }}">
                         パスワードを忘れた方はこちら</a>
                 </div>
             </form>
@@ -72,11 +72,11 @@
                 </div>
 
                 <a
-                        class="c-btn c-btn--primary c-btn__twitter--login"
+                        class="c-btn c-btn__twitter"
                         title="Start for Twitter!"
                         @click.stop
                         href="{{ route('twitter.begin') }}"
-                >Twitterで新規登録
+                >Twitterでログイン
                 </a>
             </div>
         </div>

@@ -2,33 +2,40 @@
 //  c-button
 //  =============
 .c-btn {
+  min-width: 250px;
+  border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
 
   display: inline-block;
   font-family: inherit;
-  line-height: 1;
-  padding: $space_m 50px;
+  padding: 15px 20px;
   transition: all 0.5s;
-  -moz-transition: all 0.5s;
-  -webkit-transition: all 0.5s;
-  color: #f1f1f1;
-  background: #5892d9;
+  background: #cdcdcd; //TODO
   &:hover {
+    transition: all .5s;
     background: #7eb1d6;
   }
 
-  &--link {
+  &__auth {
+    background: $btn-color_auth;
+  }
+  &__twitter {
+    font-size: $font-size_l;
+    background: $btn-color_twitter;
+    color: $font-color_white;
+    &:hover {
+      background: #257cc4;
+    }
+  }
+
+  &__link {
     border: 0;
   }
 
-  &--fluid {
+  &__fluid {
     width: 100%;
-  }
-
-
-  &--primary {
-    background: $color_Primary;
   }
 
   &__follow {

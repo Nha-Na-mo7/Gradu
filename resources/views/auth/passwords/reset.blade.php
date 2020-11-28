@@ -4,14 +4,14 @@
 @section('title', 'パスワードの再設定')
 
 @section('content')
-<div class="l-container__auth">
-    <div class="">
+<div class="l-container__auth p-auth">
+    <div class="p-auth__container">
         <div>
             <h2 class="p-form__title">パスワードの再設定</h2>
-            <p>新しく設定するパスワードを入力してください。</p>
+            <p class="p-form__decription">新しく設定するパスワードを入力してください。</p>
         </div>
 
-        <div class="">
+        <div class="p-form">
             <form method="POST" action="{{ route('password.update') }}">
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
@@ -64,7 +64,7 @@
                         type="password"
                         name="password_confirmation"
                 />
-                <div class="">
+                <div class="p-form__submit">
                     <button class="c-btn c-btn__auth" type="submit">
                         パスワードを変更
                     </button>

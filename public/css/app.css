@@ -614,6 +614,10 @@ input[type=checkbox] {
   margin-bottom: 5px;
   display: inline-block;
 }
+.p-form__submit {
+  margin-top: 40px;
+  text-align: center;
+}
 .p-form__item {
   border: 1px solid #dedede;
   border-radius: 0.25rem;
@@ -628,14 +632,19 @@ input[type=checkbox] {
   -webkit-box-shadow: 0 0 5px #f66d9b;
           box-shadow: 0 0 5px #f66d9b;
 }
-.p-form__item--error {
-  background: #fff3f3;
-}
 .p-form__item--check {
   margin-top: 30px;
+  margin-bottom: 50px;
 }
 .p-form__item--check input {
   vertical-align: baseline;
+}
+.p-form__send {
+  margin-top: 15px;
+  margin-bottom: 50px;
+}
+.p-form__send--msg {
+  font-size: 24px;
 }
 .p-form__textarea {
   resize: none;
@@ -1262,29 +1271,39 @@ input[type=checkbox] {
 }
 
 .c-btn {
+  min-width: 250px;
+  border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
+  text-align: center;
   display: inline-block;
   font-family: inherit;
-  line-height: 1;
-  padding: 10px 50px;
-  transition: all 0.5s;
-  -moz-transition: all 0.5s;
+  padding: 15px 20px;
   -webkit-transition: all 0.5s;
-  color: #f1f1f1;
-  background: #5892d9;
+  transition: all 0.5s;
+  background: #cdcdcd;
 }
 .c-btn:hover {
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
   background: #7eb1d6;
 }
-.c-btn--link {
+.c-btn__auth {
+  background: #acd9e7;
+}
+.c-btn__twitter {
+  font-size: 18px;
+  background: #55acee;
+  color: #ffffff;
+}
+.c-btn__twitter:hover {
+  background: #257cc4;
+}
+.c-btn__link {
   border: 0;
 }
-.c-btn--fluid {
+.c-btn__fluid {
   width: 100%;
-}
-.c-btn--primary {
-  background: #52c8e3;
 }
 .c-btn__main {
   text-align: center;
@@ -1847,29 +1866,32 @@ input[type=checkbox] {
   background: #f0f5e7;
 }
 
-.u__mt-l {
+.u-mt-l {
   margin-top: 15px;
 }
-.u__mt-xl {
+.u-mt-xl {
   margin-top: 20px;
 }
-.u__mt-3l {
+.u-mt-3l {
   margin-top: 40px;
 }
-.u__mb-l {
+.u-mb-l {
   margin-bottom: 15px;
 }
-.u__mb-xl {
+.u-mb-xl {
   margin-bottom: 20px;
 }
-.u__mb-3l {
+.u-mb-3l {
   margin-bottom: 40px;
 }
-.u__pd {
+.u-pd {
   padding: 5px 5px;
 }
 .u-overflow__hidden {
   overflow: hidden;
+}
+.u-text--center {
+  text-align: center;
 }
 .p-news__item[data-v-1e9a0c14] {
   -webkit-animation: fadeIn-data-v-1e9a0c14 1s;

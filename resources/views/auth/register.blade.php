@@ -26,7 +26,7 @@
                             type="text"
                             class="c-form__input @error('name') c-error__input @enderror"
                             name="name"
-                            value="{{ old('name') }}"
+                            value="{{ $name ?? old('name') }}"
                     />
 
                     <label
@@ -42,7 +42,7 @@
                             type="text"
                             class="c-form__input @error('email') c-error__input @enderror"
                             name="email"
-                            value="{{ old('email') }}"
+                            value="{{ $email ?? old('email') }}"
                     />
 
                     <label
@@ -77,7 +77,7 @@
                             name="password_confirmation"
                     />
 
-                    <div class="">
+                    <div class="p-form__submit">
                         <button
                                 class="c-btn c-btn__auth"
                                 type="submit"
@@ -92,7 +92,7 @@
                 </div>
 
                 <a
-                        class="c-btn c-btn--primary c-btn__twitter--login"
+                        class="c-btn c-btn__twitter"
                         title="Start for Twitter!"
                         @click.stop
                         href="{{ route('twitter.begin') }}"

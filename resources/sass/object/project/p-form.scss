@@ -16,8 +16,10 @@
     margin-bottom: $space_s;
     display: inline-block;
   }
-
-
+  &__submit {
+    margin-top: 40px;
+    text-align: center;
+  }
   &__item {
     border: 1px solid #dedede;
     border-radius: 0.25rem;
@@ -26,22 +28,24 @@
     padding: $space_m $space_l;
     letter-spacing: .1rem;
     width: 100%;
-
     &:focus {
-      // 以下はわかりやすく変数名をつけて管理すること
       border: 1px solid $input-color;
       box-shadow: 0 0 5px $input-color;
-    }
-    &--error {
-      // フォームのエラー時に該当箇所を赤背景にする
-      background: #fff3f3;
     }
 
     &--check {
       margin-top: $space_xxl;
+      margin-bottom: 50px;
       & input {
         vertical-align: baseline;
       }
+    }
+  }
+  &__send {
+    margin-top: 15px;
+    margin-bottom: 50px;
+    &--msg {
+      font-size: $font-size_xl;
     }
   }
 

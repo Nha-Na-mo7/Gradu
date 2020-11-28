@@ -2,27 +2,27 @@
 //  utility-space
 //  ===============
 .u{
-  &__mt-l {
+  &-mt-l {
     margin-top: $space_l;
   }
-  &__mt-xl {
+  &-mt-xl {
     margin-top: $space_xl;
   }
-  &__mt-3l {
+  &-mt-3l {
     margin-top: $space_3l;
   }
 
-  &__mb-l {
+  &-mb-l {
     margin-bottom: $space_l;
   }
-  &__mb-xl {
+  &-mb-xl {
     margin-bottom: $space_xl;
   }
-  &__mb-3l {
+  &-mb-3l {
     margin-bottom: $space_3l;
   }
 
-  &__pd {
+  &-pd {
     padding: $space_s $space_s;
   }
 
@@ -31,5 +31,10 @@
     &__hidden {
       overflow: hidden;
     }
+  }
+
+
+  &-text--center {
+    text-align: center;
   }
 }
