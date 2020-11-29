@@ -9,10 +9,9 @@
 
   <div class="p-accounts__item">
 
-
-    <!-- サムネイル表示エリア、縦に長く、他のコンテンツは設置しない -->
-    <div class="item-2 item2-left p-accounts__left-side">
-      <div class="item-3 p-accounts__icon--area">
+    <!-- アカウントアイコン表示エリア -->
+    <div class="p-accounts__column p-accounts__column--left">
+      <div>
         <a
             :href="twitter_account_url"
             target="_blank"
@@ -26,16 +25,15 @@
       </div>
     </div>
 
+    <!-- アイコン以外のコンテンツ -->
+    <div class="p-accounts__column p-accounts__column--right">
 
-    <div class="item-2 p-accounts__right-side">
-
-      <!-- プロフィールとフォロー関連のエリア -->
-      <div class="item-3 p-accounts__data--area">
-
+      <!-- ユーザー名とフォローボタン -->
+      <div class="p-accounts__data">
         <!-- アカウント名など -->
-        <div class="item-4 p-accounts__profile--area">
+        <div class="p-accounts__name">
           <!-- アカウント名 -->
-          <div class="item-6 p-accounts__profile--nickname">
+          <div class="p-accounts__name--nickname">
             <p>
               <a
                   :href="twitter_account_url"
@@ -47,7 +45,7 @@
             </p>
           </div>
           <!-- Twitterユーザー名 -->
-          <div class="item-6 p-accounts__profile--username">
+          <div class="p-accounts__name--username">
           <span>
             <a
                 :href="twitter_account_url"
@@ -58,12 +56,10 @@
             </a>
           </span>
           </div>
-
         </div>
 
-
         <!-- フォローボタンエリア -->
-        <div class="item-5 p-accounts__follow-btn--area">
+        <div class="p-accounts__btn--area">
           <button
               v-if="isFollowing"
               class="c-btn c-btn__follow c-btn__follow--destroy"
@@ -83,52 +79,49 @@
 
       <!-- Twitterプロフィール -->
       <div
-          class="item-5 p-accounts__profile--description"
+          class="p-accounts__description"
           v-if="isExist_profile_description"
       >
         <p>{{ account.description }}</p>
       </div>
 
-      <!--  -->
-      <div class="item-4 p-accounts__follow--area">
-        <!-- FF数 -->
-        <div class="item-5 p-accounts__ff--area">
+      <!-- FF数 -->
+      <div class="p-accounts__ff">
 
-          <div class="item-6 p-accounts__ff--item">
-            <div class="item-7 p-accounts__ff--title"><p>フォロー</p></div>
-            <div class="item-7 p-accounts__ff--count">
-              <p>
-                <a
-                    :href="twitter_following_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                  {{ account.friends_count }}
-                </a>
-              </p>
-            </div>
+        <div class="p-accounts__ff--item">
+          <div class="p-accounts__ff--title"><p>フォロー</p></div>
+          <div class="p-accounts__ff--count">
+            <p>
+              <a
+                  :href="twitter_following_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                {{ account.friends_count }}
+              </a>
+            </p>
           </div>
+        </div>
 
-          <div class="item-6 p-accounts__ff--item">
-            <div class="item-7 p-accounts__ff--title"><p>フォロワー</p></div>
-            <div class="item-7 p-accounts__ff--count">
-              <p>
-                <a
-                    :href="twitter_followers_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                  {{ account.followers_count }}
-                </a>
-              </p>
-            </div>
+        <div class="p-accounts__ff--item">
+          <div class="p-accounts__ff--title"><p>フォロワー</p></div>
+          <div class="p-accounts__ff--count">
+            <p>
+              <a
+                  :href="twitter_followers_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+              >
+                {{ account.followers_count }}
+              </a>
+            </p>
           </div>
         </div>
       </div>
 
       <!-- 新着ツイート1件表示エリア -->
       <div
-          class="item-3 p-accounts__tweet--area"
+          class="p-accounts__tweet"
       >
         <AccountTweet
           :account_url="twitter_account_url"
@@ -302,34 +295,7 @@ export default {
 
 <style scoped>
 .p-accounts__item {
-  animation: fadeIn 1s;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 
-/*.item-2 {*/
-/*  background: #c5ccd9;*/
-/*}*/
-/*.item-3 {*/
-/*  background: #bfabcb;*/
-/*}*/
-/*.item-4 {*/
-/*  background: #c4ceff;*/
-/*}*/
-/*.item-5 {*/
-/*  background: #d2eed5;*/
-/*}*/
-/*.item-6 {*/
-/*  background: #ffdaf7;*/
-/*}*/
-/*.item-7 {*/
-/*  background: #b5fff0;*/
-/*}*/
 
 </style>

@@ -20,6 +20,7 @@
         <!-- ヘッドライン -->
         <div class="p-accounts__headline">
 
+<!--           TODO newsタグになっているので修正すること -->
           <!-- 自動フォローボタンの位置確認 -->
           <div class="p-news__modal p-news__modal-show">
             <button

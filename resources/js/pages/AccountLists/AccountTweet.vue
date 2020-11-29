@@ -4,15 +4,14 @@
 <template>
   <!-- 取得したツイートと日付 -->
   <div
-    class="
-      item-4
-      p-accounts__tweet
-      p-accounts__tweet--data"
+    class="p-accounts__tweet--data"
     v-if="exist_tweet"
   >
     <!-- 実際のツイートテキスト・画像 -->
-    <div class="item-5">
-      <p class="p-accounts__tweet">{{ this.text }}</p>
+    <div class="">
+      <!-- テキスト -->
+      <p class="">{{ this.text }}</p>
+      <!-- 画像 -->
       <a
           v-if="exist_media"
           :href="media_url"
@@ -25,14 +24,9 @@
             :alt="media_url">
       </a>
     </div>
-    <div class="item-5">
+    <div class="">
       <!-- 日付・ここをクリックするとツイートのURLに飛ぶ -->
-      <span
-          class="
-            p-accounts__tweet
-            p-accounts__tweet--span
-            p-accounts__tweet--date"
-      >
+      <span class="p-accounts__tweet--span p-accounts__tweet--date">
           <a
               :href="twitter_tweet_url"
               target="_blank"
@@ -44,15 +38,12 @@
 
   <!-- 新着ツイートが存在しないとき(RTのみで、まだ本人からのツイートがない場合など) -->
   <div
-      class="item-4 p-accounts__tweet--data"
+      class="p-accounts__tweet--data"
       v-else
   >
-    <span
-        class="
-          p-accounts__tweet
-          p-accounts__tweet--span
-          p-accounts__tweet--nothing"
-    > ~  このユーザーからのツイートはまだありません ~ </span>
+    <span class="p-accounts__tweet--span p-accounts__tweet--nothing">
+      ~  このユーザーからのツイートはまだありません ~
+    </span>
   </div>
 </template>
 
