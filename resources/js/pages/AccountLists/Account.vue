@@ -78,14 +78,14 @@
             <!-- フォローしていないアカウントを優先表示するので、フォローしているアカウントはページ更新すると出てこなくなる-->
             <button
                 v-if="isFollowing"
-                class="c-btn"
+                class="c-btn c-btn__follow c-btn__follow--destroy"
                 :class="{'c-btn__disabled': isAutoFollowing}"
                 :disabled="isAutoFollowing"
                 @click="destroy"
             >フォロー解除</button>
             <button
                 v-else
-                class="c-btn"
+                class="c-btn c-btn__follow"
                 :class="{'c-btn__disabled': isAutoFollowing}"
                 :disabled="isAutoFollowing"
                 @click="follow"
