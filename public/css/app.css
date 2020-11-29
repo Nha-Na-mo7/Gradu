@@ -559,8 +559,8 @@ input[type=checkbox] {
   }
 }
 .l-container__content {
-  margin-top: 50px;
-  margin-bottom: 120px;
+  max-width: 980px;
+  margin: 50px auto 120px;
 }
 @media screen and (max-width: 414px) {
   .l-container__content {
@@ -1204,7 +1204,6 @@ input[type=checkbox] {
       flex-wrap: wrap;
 }
 .p-news__checkbox {
-  max-width: 1200px;
   margin: 0 auto;
 }
 .p-news__list {
@@ -1360,6 +1359,9 @@ input[type=checkbox] {
   top: 8px;
 }
 
+.p-trends {
+  padding: 15px 40px;
+}
 .p-trends__list {
   margin: 20px 30px;
 }
@@ -2165,7 +2167,6 @@ input[type=checkbox] {
       flex-wrap: wrap;
 }
 .p-news__checkbox {
-  max-width: 1200px;
   margin: 0 auto;
 }
 .p-news__list {

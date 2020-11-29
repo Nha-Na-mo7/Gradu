@@ -14,8 +14,8 @@
     }
   }
   &__content {
-    margin-top: 50px;
-    margin-bottom: 120px;
+    max-width: 980px;
+    margin: 50px auto 120px;
 
     @include mq() {
       padding: 0 $space_l;

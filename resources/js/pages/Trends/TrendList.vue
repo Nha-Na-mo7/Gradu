@@ -18,7 +18,7 @@
     <div class="p-panel">
 
       <!--メインレイアウト-->
-      <div class="p-accounts__container" v-bind:class="content_bgcolor">
+      <div class="p-trends" v-bind:class="content_bgcolor">
         <!-- リボンタグ -->
         <Ribbonnav
             :title='ribbon_page_title'
