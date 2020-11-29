@@ -45,6 +45,11 @@
           </div>
         </div>
 
+        <!-- 検索ボタン -->
+        <div class="">
+          <button class="c-btn" @click="search_googleNews">検索する</button>
+        </div>
+
       </div>
 
     </div>
@@ -85,6 +90,10 @@ export default {
     reset_checkbox() {
       this.checked_id = [];
       this.$emit('reset');
+    },
+    // 検索を開始する
+    search_googleNews() {
+      this.$emit('search');
     },
   },
   watch: {

@@ -31,10 +31,10 @@
                     </li>
                 @else
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('trend.index') }}">トレンドランキング</a>
+                        <a class="p-header__item--link" href="{{ route('trend.index') }}">トレンド</a>
                     </li>
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('accounts.index') }}">仮想通貨アカウント一覧</a>
+                        <a class="p-header__item--link" href="{{ route('accounts.index') }}">アカウント一覧</a>
                     </li>
                     <li class="p-header__item">
                         <a class="p-header__item--link" href="{{ route('news.index') }}">ニュース</a>

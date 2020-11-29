@@ -24,6 +24,56 @@
       background: #FFF;
       box-shadow: #929292 0 1px 5px;
     }
+
+    &Box {
+      border-bottom: solid 1px #DDD;
+      margin-bottom: 30px;
+      padding-bottom: 18px;
+
+      width: inherit;
+      &--Inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-left: auto;
+        margin-right: auto;
+
+        width: 100%;
+        padding: 0 30px;
+
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      &--Item {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        margin-top: 15px;
+        @include mq() {
+          font-size: 14px;
+          justify-content: unset;
+          flex-direction: column;
+        }
+      }
+
+      &--title {
+        color: #AAA;
+        display: flex;
+        width: 140px;
+      }
+      &--content {
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+      }
+      &--content--searchWords {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+    }
+
   }
 
   &__list {
@@ -62,7 +112,8 @@
     }
 
     &--title {
-      width: 80%;
+      width: 75%;
+      padding-right: $space_s;
       line-height: 1.2;
       @include mq() {
         width: 100%;
@@ -90,7 +141,7 @@
       .p-news__item--time {
         font-size: 15px;
         margin-bottom: $space_s;
-        height: 30%;
+        height: 40%;
         width: 100%;
         color: #4dc0b5;
       }

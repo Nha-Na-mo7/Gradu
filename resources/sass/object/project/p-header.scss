@@ -10,12 +10,13 @@
   align-items: center;
 
   &__nav {
+    // TODO base.cssのbodyにoverflow-x:hiddenをつけて調整中、実機確認ののち修正すること
     display: flex;
     height: 100%;
     &__sp {
-      display: none;
       // sp表示の時は右に隠れ、トリガーが押された時だけ左に出てくる
       @include mq(){
+        display: none;
         position: absolute;
         top: 0;
         right: -100%;
@@ -34,7 +35,6 @@
       }
     }
   }
-
 
   &__menu {
     display: flex;
@@ -77,9 +77,9 @@
     height: 32px;
     z-index: 3;
     @include mq(){
-      display: inline-block;
+      display: block;
     }
-    span {
+    & span {
       display: inline-block;
       transition: all .5s;
       position: absolute;

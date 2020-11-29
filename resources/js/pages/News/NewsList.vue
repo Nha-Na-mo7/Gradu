@@ -24,12 +24,6 @@
                 <span>{{ default_and_checked_brands }}</span>
               </div>
 
-              <!-- 検索虫眼鏡ボタン -->
-              <div class="c-input__btn-area c-input__btn-area__search">
-                <button class="c-input__btn-circle" @click.prevent="fetch_googleNews">🔎</button>
-              </div>
-
-
             </div>
           </div>
         </div>
@@ -40,6 +34,7 @@
         <SearchCheckbox
             @checked="checked_brand"
             @reset="reset_brand"
+            @search="search_googleNews"
         />
       </div>
 
@@ -112,7 +107,7 @@ export default {
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
-      fetchedNews: [],
+      searchedNews: [],
       checked_brands: [],
       search_input_data: {
         keywords: ''
@@ -140,11 +135,11 @@ export default {
     getNewsItems: function() {
       let current = this.currentPage * this.parPage;
       let start = current - this.parPage;
-      return this.fetchedNews.slice(start, current);
+      return this.searchedNews.slice(start, current);
     },
     // 総ページ数
     getPageCount: function() {
-      return Math.ceil(this.fetchedNews.length / this.parPage);
+      return Math.ceil(this.searchedNews.length / this.parPage);
     }
   },
   methods: {
@@ -169,7 +164,7 @@ export default {
     // ニュース取得APIリクエスト
     // =====================
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
-    async fetch_googleNews() {
+    async search_googleNews() {
       // 検索中には呼び出せないようにする
       if(this.isSearching) {
         return false;
@@ -188,10 +183,10 @@ export default {
       const params = this.search_input_data;
       const response = await axios.get(`/news/get`, { params });
 
-      this.fetchedNews = response.data;
+      this.searchedNews = response.data;
 
       // 記事数が0の時、isNothingNewsをtrueにする
-      if(!this.fetchedNews.length) {
+      if(!this.searchedNews.length) {
         this.isNothingNews = true;
       }
 
@@ -204,7 +199,15 @@ export default {
     // ======================
     clickCallback: function (pageNum) {
       this.currentPage = Number(pageNum);
+    },
+
+    scrollTop: function () {
+      window.scrollTo({
+        top: 0,
+      });
     }
+
+
 
   },
   components: {
@@ -218,80 +221,17 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、ニュース取得
-        await this.fetch_googleNews();
+        await this.search_googleNews();
       },
       immediate: true
+    },
+    currentPage: function (newPage, oldPage) {
+      this.scrollTop();
     }
   }
 }
 </script>
 
 <style scoped>
-.p-news__searchBox {
-  border-bottom: solid 1px #DDD;
-  margin-bottom: 30px;
-  padding-bottom: 18px;
 
-  width: inherit;
-}
-
-.p-news__searchBox--Inner {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  margin-left: auto;
-  margin-right: auto;
-
-  width: 100%;
-  padding: 0 30px;
-
-  font-size: 16px;
-  line-height: 1.5;
-}
-.p-news__searchBox--Item {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  -webkit-justify-content: space-between;
-  justify-content: space-between;
-
-  margin-top: 15px;
-}
-
-.p-news__searchBox--title {
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  color: #AAA;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 140px;
-
-  padding: 0 10px;
-}
-.p-news__searchBox--content {
-  width: 80%;
-  display: flex;
-  justify-content: space-between;
-}
-.p-news__searchBox--content--searchWords {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-}
 </style>

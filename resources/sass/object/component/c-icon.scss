@@ -6,9 +6,11 @@
   background: #f6e47d;
   font-weight: bold;
   position: absolute;
-  top: 5px;
+  top: 1px;
   right: -15px;
   display: inline-block;
   text-align: center;
   opacity: 0.8;
+
+  font-size: $font-size_s;
 }
