@@ -343,8 +343,11 @@ class TwitterAccountListController extends Controller
       $check_limit15 = $this->api_limit_check_15min($account_id);
       $check_limit_day = $this->api_limit_check_day($account_id);
       
+      Log::debug('limit15: '.$check_limit15);
+      Log::debug('limit_day: '.$check_limit_day);
+      
       // 制限チェックのどちらかに引っかかった場合、フォロー処理はせずに終了する
-      if(!$check_limit15 && !$check_limit_day) {
+      if($check_limit15 ==  false || $check_limit_day == false) {
         Log::debug('accounts_follow: システム上のAPI制限に引っかかったため、フォローはせずに終了します。');
         return response()->json(['errors' => 'フォロー制限です。しばらくお待ちください'], 403);
       }

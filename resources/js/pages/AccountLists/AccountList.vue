@@ -79,7 +79,7 @@
                 v-for="Accounts in getAccountsItems"
                 :key="Accounts.id"
                 :account="Accounts"
-                :follow_list="follow_list"
+                :follow_flg="checkAlreadyFollow(Accounts.account_id)"
                 :auto_follow_flg="!!isAutoFollowFlg"
             />
             <div class="u-text--center">
@@ -175,6 +175,18 @@ export default {
     // ユーザーがTwitterアカウントと連携しているかどうか(!! 二重否定で確実にboolean型とする)
     isExistTwitterAccount() {
       return !!this.twitter_id;
+    },
+    // 引数に指定したアカウントのIDがユーザーのフォローリストに含まれているかの判定
+    checkAlreadyFollow: function(){
+      return function(id) {
+        // フォローリストをループさせ、TwitterIDと一致していたらtrueを返す
+        for (var i = 0, len = this.follow_list.length; i < len; i++) {
+          if (id === this.follow_list[i]['follow_target_id']) {
+            return true;
+          }
+        }
+        return false;
+      }
     },
     // ======================
     // ページネーション用

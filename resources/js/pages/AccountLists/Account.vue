@@ -2,16 +2,13 @@
 <!--アカウント一覧画面でいくつも描画される各twitterアカウントの情報-->
 <!--=======================================================-->
 
-<!-- TODO item2~7のクラス、及びscope内のスタイルは、本番に上げる前に外してください！ -->
-
-
 <template>
 
   <div class="p-accounts__item">
 
     <!-- アカウントアイコン表示エリア -->
     <div class="p-accounts__column p-accounts__column--left">
-      <div>
+      <div class="p-accounts__icon--container">
         <a
             :href="twitter_account_url"
             target="_blank"
@@ -61,7 +58,7 @@
         <!-- フォローボタンエリア -->
         <div class="p-accounts__btn--area">
           <button
-              v-if="isFollowing"
+              v-if="follow_flg"
               class="c-btn c-btn__follow c-btn__follow--destroy"
               :class="{'c-btn__disabled': isAutoFollowing}"
               :disabled="isAutoFollowing"
@@ -145,8 +142,8 @@ export default {
       type: Object,
       required: true
     },
-    follow_list: {
-      type: Array,
+    follow_flg: {
+      type: Boolean,
       required: true
     },
     auto_follow_flg: {
@@ -158,6 +155,7 @@ export default {
     return {
       new_tweet: this.account.new_tweet,
       isFollowing: false,
+      firstFollowCheck: false
     }
   },
   computed: {
@@ -182,6 +180,16 @@ export default {
     twitter_followers_url() {
       return this.twitter_account_url + '/followers';
     },
+    check_follow_status: function () {
+      return function() {
+        if(this.firstFollowCheck) {
+          return this.isFollowing
+        }else{
+          this.firstFollowCheck = true;
+          return this.follow_flg
+        }
+      }
+    }
   },
   methods: {
     async follow() {
@@ -210,7 +218,7 @@ export default {
         this.$store.commit('message/setContentSuccess', {
           content: response.data.success
         })
-        this.isFollowing = true;
+        this.follow_flg = true;
       }else if (response.status === FORBIDDEN) {
         // フラッシュメッセージをセット
         this.$store.commit('message/setContentError', {
@@ -255,21 +263,8 @@ export default {
         })
       }
     },
-    // フォロー状態のチェック
     async isFollowing_check() {
-      var check = false;
-
-      // フォローリストをループさせ、TwitterIDと一致していたらtrueを返す
-      for (var i = 0, len = this.follow_list.length; i < len; i++) {
-        if (this.account_id === this.follow_list[i]['follow_target_id']) {
-          check = true;
-          break;
-        }
-      }
-      // 一致するTwitterIDがある場合はisFollowingがtrueとなる
-      if(check){
-        this.isFollowing = true;
-      }
+      this.isFollowing = this.follow_flg;
     }
   },
   components: {
@@ -284,7 +279,7 @@ export default {
   watch: {
     $route: {
       async handler() {
-        // ページの読み込み直後、DBからTwitterアカウント一覧を取得
+        // ページの読み込み直後、フォロー状態をチェックする
         await this.isFollowing_check();
       },
       immediate: true
