@@ -632,6 +632,11 @@ input[type=checkbox] {
       -ms-flex-direction: column;
           flex-direction: column;
 }
+@media screen and (max-width: 768px) {
+  .p-accounts__left-side {
+    margin-right: 10px;
+  }
+}
 @media screen and (max-width: 414px) {
   .p-accounts__left-side {
     margin-right: 5px;
@@ -642,20 +647,32 @@ input[type=checkbox] {
   width: 80px;
   border-radius: 50%;
 }
+@media screen and (max-width: 768px) {
+  .p-accounts__icon {
+    height: 50px;
+    width: 50px;
+  }
+}
 @media screen and (max-width: 414px) {
   .p-accounts__icon {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
   }
 }
 .p-accounts__icon--area {
   height: 80px;
   width: 80px;
 }
+@media screen and (max-width: 768px) {
+  .p-accounts__icon--area {
+    height: 50px;
+    width: 50px;
+  }
+}
 @media screen and (max-width: 414px) {
   .p-accounts__icon--area {
-    height: 40px;
-    width: 40px;
+    height: 30px;
+    width: 30px;
   }
 }
 .p-accounts__icon--area img :hover {
@@ -678,14 +695,14 @@ input[type=checkbox] {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .p-accounts__profile {
   margin-bottom: 5px;
   line-height: 100%;
 }
 .p-accounts__profile--area {
-  width: 70%;
+  width: 75%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -696,7 +713,7 @@ input[type=checkbox] {
 }
 @media screen and (max-width: 414px) {
   .p-accounts__profile--area {
-    width: 50%;
+    width: 65%;
   }
 }
 .p-accounts__profile--nickname {
@@ -710,9 +727,14 @@ input[type=checkbox] {
   cursor: pointer;
   text-decoration: underline;
 }
+@media screen and (max-width: 768px) {
+  .p-accounts__profile--nickname {
+    font-size: 16px;
+  }
+}
 @media screen and (max-width: 414px) {
   .p-accounts__profile--nickname {
-    font-size: 18px;
+    font-size: 14px;
   }
 }
 .p-accounts__profile--username {
@@ -726,10 +748,16 @@ input[type=checkbox] {
 .p-accounts__profile--description {
   line-height: 150%;
   font-size: 15px;
+  margin-bottom: 5px;
 }
 .p-accounts__profile--description span {
   font-size: 10px;
   color: #b4b4b4;
+}
+@media screen and (max-width: 768px) {
+  .p-accounts__profile--description {
+    font-size: 12px;
+  }
 }
 @media screen and (max-width: 414px) {
   .p-accounts__profile--description {
@@ -744,8 +772,7 @@ input[type=checkbox] {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 25%;
-  border-left: 1px solid #b4b4b4;
+  border-top: 1px solid #1f1f1f;
 }
 .p-accounts__follow-btn--area {
   display: -webkit-box;
@@ -757,7 +784,7 @@ input[type=checkbox] {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 10px;
+  margin: 0 auto;
 }
 .p-accounts__ff {
   width: 50%;
@@ -775,27 +802,42 @@ input[type=checkbox] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .p-accounts__ff--count {
   line-height: 150%;
   text-align: center;
-  font-size: 20px;
+  font-size: 18px;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__ff--count {
+    font-size: 14px;
+  }
 }
 .p-accounts__ff--count:hover {
   cursor: pointer;
   text-decoration: underline;
 }
 .p-accounts__ff--title {
+  width: 80px;
   font-size: 12px;
   letter-spacing: 0.5px;
-  color: #b4b4b4;
+  color: #1f1f1f;
 }
 .p-accounts__ff--item {
-  text-align: center;
-  height: 50%;
-  width: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   word-break: break-all;
 }
 .p-accounts__tweet--data {
@@ -814,8 +856,15 @@ input[type=checkbox] {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;
   white-space: -o-pre-wrap;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 20px;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__tweet--data {
+    font-size: 12px;
+    padding: 3px 5px;
+    line-height: 15px;
+  }
 }
 .p-accounts__tweet--span {
   color: #a4a4a4;
@@ -1515,15 +1564,15 @@ input[type=checkbox] {
 @media screen and (max-width: 768px) {
   .c-btn__follow {
     min-width: 60px;
-    font-size: 15px;
-    padding: 8px 15px;
+    font-size: 14px;
+    padding: 10px 8px;
   }
 }
 @media screen and (max-width: 414px) {
   .c-btn__follow {
     min-width: 40px;
     font-size: 10px;
-    padding: 5px 10px;
+    padding: 10px 5px;
   }
 }
 .c-btn__follow:hover {
@@ -1668,7 +1717,7 @@ input[type=checkbox] {
 .c-ribbon__content--left {
   left: 0;
 }
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 768px) {
   .c-ribbon__content--left {
     display: none;
   }
@@ -2354,24 +2403,24 @@ input[type=checkbox] {
     opacity: 1;
 }
 }
-.item-2[data-v-2fe28b22] {
-  /*background: #c5ccd9;*/
-}
-.item-3[data-v-2fe28b22] {
-  /*background: #bfabcb;*/
-}
-.item-4[data-v-2fe28b22] {
-  /*background: #c4ceff;*/
-}
-.item-5[data-v-2fe28b22] {
-  /*background: #d2eed5;*/
-}
-.item-6[data-v-2fe28b22] {
-  /*background: #ffdaf7;*/
-}
-.item-7[data-v-2fe28b22] {
-  /*background: #b5fff0;*/
-}
+/*.item-2 {*/
+/*  background: #c5ccd9;*/
+/*}*/
+/*.item-3 {*/
+/*  background: #bfabcb;*/
+/*}*/
+/*.item-4 {*/
+/*  background: #c4ceff;*/
+/*}*/
+/*.item-5 {*/
+/*  background: #d2eed5;*/
+/*}*/
+/*.item-6 {*/
+/*  background: #ffdaf7;*/
+/*}*/
+/*.item-7 {*/
+/*  background: #b5fff0;*/
+/*}*/
 .renkei[data-v-ea61d8de] {
   text-align: center;
 }

@@ -53,6 +53,9 @@
     margin-right: 20px;
     display: flex;
     flex-direction: column;
+    @include mq($breakpoint: md) {
+      margin-right: 10px;
+    }
     @include mq() {
       margin-right: 5px;
     }
@@ -62,18 +65,26 @@
     height: 80px;
     width: 80px;
     border-radius: 50%;
+    @include mq($breakpoint: md) {
+      height: 50px;
+      width: 50px;
+    }
     @include mq() {
-      height: 40px;
-      width: 40px;
+      height: 30px;
+      width: 30px;
     }
 
     // アイコンの表示エリア
     &--area {
       height: 80px;
       width: 80px;
+      @include mq($breakpoint: md) {
+        height: 50px;
+        width: 50px;
+      }
       @include mq() {
-        height: 40px;
-        width: 40px;
+        height: 30px;
+        width: 30px;
       }
       & img {
         :hover {
@@ -96,7 +107,7 @@
     &--area {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
   }
 
@@ -108,11 +119,11 @@
 
     // アカウント名・ユーザー名・デスクリプションのエリア
     &--area {
-      width: 70%;
+      width: 75%;
       display: flex;
       flex-direction: column;
       @include mq() {
-        width: 50%;
+        width: 65%;
       }
 
     }
@@ -127,8 +138,11 @@
         cursor: pointer;
         text-decoration: underline;
       }
+      @include mq($breakpoint: md) {
+        font-size: $font-size_default;
+      }
       @include mq() {
-        font-size: $font-size_l;
+        font-size: $font-size_m;
       }
 
     }
@@ -146,13 +160,17 @@
     &--description {
       line-height: 150%;
       font-size: 15px;
+      margin-bottom: $space_s;
       // 投稿時刻
       & span {
-        font-size: 10px;
+        font-size: $font-size_ss;
         color: #b4b4b4;
       }
+      @include mq($breakpoint: md) {
+        font-size: $font-size_s;
+      }
       @include mq() {
-        font-size: 10px;
+        font-size: $font-size_ss;
       }
     }
   }
@@ -162,9 +180,7 @@
     &--area {
       display: flex;
       flex-direction: column;
-      width: 25%;
-
-      border-left: 1px solid #b4b4b4; // TODO FFエリアの左のボーダーは不要なら取り除いてください
+      border-top: 1px solid $font-color_default;
     }
 
     // フォローボタンのエリア
@@ -172,7 +188,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 10px;
+      margin: 0 auto;
     }
   }
 
@@ -187,15 +203,19 @@
     // 表示エリア
     &--area {
       display: flex;
+      flex-direction: column;
       justify-content: space-around;
-
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
     // そのアカウントユーザーのフォロー数orフォロワー数を表す数字
     &--count {
       line-height: 150%;
       text-align: center;
-      font-size: 20px;
-
+      font-size: $font-size_l;
+      @include mq() {
+        font-size: $font-size_m;
+      }
       &:hover {
         cursor: pointer;
         text-decoration: underline;
@@ -203,25 +223,21 @@
     }
     // フォロー中 or フォロワー の文言
     &--title {
+      width: 80px;
       font-size: 12px;
       letter-spacing: .5px;
-      color: #b4b4b4;
+      color: $font-color_default;
     }
     // 共通要素
     &--item {
-      text-align: center;
-      height: 50%; // TODO 1/2にする
-      width: 50%; //TODO 1/2ならなんでも良い
+      display: flex;
+      align-items: center;
       word-break: break-all;
     }
   }
 
   // 新着ツイート
   &__tweet {
-    // 表示エリア
-    &--area {
-    }
-
     // 新着ツイートと、日付
     &--data {
       display: flex;
@@ -237,8 +253,14 @@
       white-space: -moz-pre-wrap;
       white-space: -o-pre-wrap;
 
-      font-size: 14px;
+      font-size: 15px;
       line-height: 20px;
+      @include mq() {
+        font-size: 12px;
+        padding: 3px 5px;
+        line-height: 15px;
+
+      }
     }
     &--span {
       color: #a4a4a4;

@@ -28,7 +28,7 @@
 
     &--left {
       left: 0;
-      @include mq() {
+      @include mq($breakpoint: md) {
         display: none;
       }
     }

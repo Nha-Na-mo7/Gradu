@@ -40,13 +40,13 @@
     background: #ffffff;
     @include mq($breakpoint: md) {
       min-width: 60px;
-      font-size: 15px;
-      padding: 8px 15px;
+      font-size: $font-size_m;
+      padding: 10px 8px;
     }
     @include mq() {
       min-width: 40px;
-      font-size: 10px;
-      padding: 5px 10px;
+      font-size: $font-size_ss;
+      padding: 10px 5px;
     }
     &:hover {
       background: #257cc4;

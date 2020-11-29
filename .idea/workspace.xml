@@ -28,6 +28,8 @@
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-ribbonnav.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-ribbonnav.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -365,7 +367,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="52651000" />
+      <workItem from="1606542821189" duration="59175000" />
     </task>
     <servers />
   </component>
