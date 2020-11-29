@@ -18,54 +18,54 @@
     <div class="p-mypage">
       <div class="p-mypage__column">
         <!-- ユーザー名・メールアドレス -->
-        <div class="p-documentbox">
-          <div class="p-documentbox__header">
-            <h2 class="p-documentbox__title">プロフィール</h2>
+        <div class="p-documentbox c-documentbox">
+          <div class="c-documentbox__header">
+            <h2 class="c-documentbox__title">プロフィール</h2>
             <RouterLink to="/mypage/profile">設定する ></RouterLink>
           </div>
-          <div class="p-documentbox__body">
-            <h2 class="p-documentbox__item p-documentbox__item--info">ユーザーネーム</h2>
-            <p class="p-documentbox__item">{{ this.auth_name }}</p>
+          <div class="c-documentbox__body">
+            <h2 class="c-documentbox__item c-documentbox__item--info">ユーザーネーム</h2>
+            <p class="c-documentbox__item">{{ this.auth_name }}</p>
           </div>
-          <div class="p-documentbox__body">
-            <h2 class="p-documentbox__item p-documentbox__item--info">登録メールアドレス</h2>
-            <p class="p-documentbox__item">{{ this.auth_mail }}</p>
+          <div class="c-documentbox__body">
+            <h2 class="c-documentbox__item c-documentbox__item--info">登録メールアドレス</h2>
+            <p class="c-documentbox__item">{{ this.auth_mail }}</p>
           </div>
         </div>
 
         <!-- パスワード -->
-        <div class="p-documentbox">
-          <div class="p-documentbox__header">
-            <h2 class="p-documentbox__title">パスワード</h2>
+        <div class="p-documentbox c-documentbox">
+          <div class="c-documentbox__header">
+            <h2 class="c-documentbox__title">パスワード</h2>
             <RouterLink to="/mypage/password">設定する ></RouterLink>
           </div>
-          <div class="p-documentbox__body" v-if="isExist_password">
+          <div class="c-documentbox__body" v-if="isExist_password">
             <!-- 実際の桁数に関係なく********とする -->
-            <h2 class="p-documentbox__item p-documentbox__item--info">パスワード設定済</h2>
-            <p class="p-documentbox__item">＊＊＊＊＊＊＊＊</p>
+            <h2 class="c-documentbox__item c-documentbox__item--info">パスワード設定済</h2>
+            <p class="c-documentbox__item">＊＊＊＊＊＊＊＊</p>
           </div>
-          <div class="p-documentbox__body" v-else>
-            <h2 class="p-documentbox__item p-documentbox__item--info">パスワードは設定されていません</h2>
-            <p class="p-documentbox__item">Twitterの連携を解除するには、パスワードの設定が必要です。</p>
+          <div class="c-documentbox__body" v-else>
+            <h2 class="c-documentbox__item c-documentbox__item--info">パスワードは設定されていません</h2>
+            <p class="c-documentbox__item">Twitterの連携を解除するには、パスワードの設定が必要です。</p>
           </div>
         </div>
       </div>
 
       <div class="p-mypage__column">
         <!-- SNS連携 -->
-        <div class="p-documentbox">
-          <div class="p-documentbox__header">
-            <h2 class="p-documentbox__title">Twitter連携状態</h2>
+        <div class="p-documentbox c-documentbox">
+          <div class="c-documentbox__header">
+            <h2 class="c-documentbox__title">Twitter連携状態</h2>
           </div>
 
           <!-- 連携中の時 -->
-          <div class="p-documentbox__body" v-if="isExist_twitter">
-            <div class="p-documentbox__item p-documentbox__item--info">
+          <div class="c-documentbox__body" v-if="isExist_twitter">
+            <div class="c-documentbox__item c-documentbox__item--info">
               <h2>Twitterと連携中</h2>
             </div>
             <div>
-              <p class="p-documentbox__item">仮想通貨アカウント一覧機能を利用することができます。</p>
-              <div class="p-documentbox__footer">
+              <p class="c-documentbox__item">仮想通貨アカウント一覧機能を利用することができます。</p>
+              <div class="c-documentbox__footer">
                 <button class="c-btn c-btn__twitter" @click="twitter_un_linkage">連携を解除する</button>
               </div>
             </div>
@@ -73,14 +73,14 @@
 
           <!-- 連携していない時 -->
 
-          <div class="p-documentbox__body" v-else>
-            <div class="p-documentbox__item p-documentbox__item--info">
+          <div class="c-documentbox__body" v-else>
+            <div class="c-documentbox__item c-documentbox__item--info">
               <h2>連携していません</h2>
             </div>
             <div>
-              <p class="p-documentbox__item">仮想通貨アカウント一覧機能がご利用できません。</p>
+              <p class="c-documentbox__item">仮想通貨アカウント一覧機能がご利用できません。</p>
             </div>
-            <div class="p-documentbox__footer">
+            <div class="c-documentbox__footer">
               <button>
                 <a
                     class="c-btn c-btn__twitter"
@@ -96,15 +96,15 @@
         </div>
 
         <!-- 退会処理 -->
-        <div class="p-documentbox">
-          <div class="p-documentbox__header">
-            <h2 class="p-documentbox__title">退会する</h2>
+        <div class="p-documentbox c-documentbox">
+          <div class="c-documentbox__header">
+            <h2 class="c-documentbox__title">退会する</h2>
           </div>
-          <div class="p-documentbox__body">
-            <div class="p-documentbox__item">
+          <div class="c-documentbox__body">
+            <div class="c-documentbox__item">
               <p>退会すると、CryptoTrendのサービスがご利用いただけなくなります。</p>
             </div>
-            <div class="p-documentbox__footer">
+            <div class="c-documentbox__footer">
               <button
                   class="c-btn"
                   @click="withdraw"
