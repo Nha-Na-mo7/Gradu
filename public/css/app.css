@@ -1633,6 +1633,7 @@ input[type=checkbox] {
   background: #1d7ebe;
   border-radius: 4px;
   position: relative;
+  word-break: break-all;
 }
 @media screen and (max-width: 414px) {
   .c-ribbon {
@@ -1972,6 +1973,8 @@ input[type=checkbox] {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-shadow: none;
+          box-shadow: none;
 }
 .c-nothing h2 {
   font-weight: bold;
