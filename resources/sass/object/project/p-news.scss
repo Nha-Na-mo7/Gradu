@@ -50,7 +50,7 @@
         justify-content: space-between;
 
         margin-top: 15px;
-        @include mq() {
+        @include mq($breakpoint: md) {
           font-size: 14px;
           justify-content: unset;
           flex-direction: column;
@@ -73,7 +73,10 @@
         flex-wrap: wrap;
       }
     }
-
+  }
+  &__checkbox {
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   &__list {
@@ -100,7 +103,7 @@
     display: inline-flex;
     word-break: break-word;
 
-    @include mq() {
+    @include mq($breakpoint: md) {
       flex-direction: column;
     }
 
@@ -112,24 +115,26 @@
     }
 
     &--title {
-      width: 75%;
-      padding-right: $space_s;
       line-height: 1.2;
-      @include mq() {
-        width: 100%;
-        padding-bottom: $space_s;
-        border-bottom: 1px solid #cdcdcd;
-      }
       &:hover {
         text-decoration: underline;
         text-decoration-color: #0b2e13;
+      }
+      &--area {
+        width: 75%;
+        padding-right: $space_s;
+        @include mq($breakpoint: md) {
+          width: 90%;
+          border-bottom: 1px solid #cdcdcd;
+          padding-bottom: $space_m;
+        }
       }
     }
     &--data {
       width: 20%;
       display: flex;
       flex-direction: column;
-      @include mq() {
+      @include mq($breakpoint: md) {
         width: 100%;
       }
 
@@ -166,5 +171,9 @@
         font-size: 15px;
       }
     }
+  }
+  &__24hour {
+    border: 1px solid #f6e47d;
+    box-shadow: #f6e47d 0 0 3px;
   }
 }

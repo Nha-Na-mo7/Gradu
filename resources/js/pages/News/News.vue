@@ -2,13 +2,17 @@
 <!--ニュース一覧画面でいくつも描画されるニュースリンクへのコンポーネント-->
 <!--=======================================================-->
 <template>
-  <div class="p-news__item p-news__item--entry">
+  <div
+      class="p-news__item p-news__item--entry"
+      :class="{'p-news__24hour': is_sub_24hour}"
+  >
     <!-- 24H以内の記事に付与されるアイコン -->
-    <span v-if="is_sub_24hour" class="c-icon">NEW!!</span>
+    <span v-if="is_sub_24hour" class="c-icon__new">NEW!!</span>
     <!-- 記事のタイトル -->
-    <div class="p-news__item--title">
-      <h2 class="">
+    <div class="p-news__item--title--area">
+      <h2>
         <a
+            class="p-news__item--title"
             :href="get_url"
             target="_blank"
             rel="noopener noreferrer"

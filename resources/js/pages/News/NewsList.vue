@@ -30,7 +30,7 @@
       </div>
 
       <!-- 絞り込みアコーディオン -->
-      <div class="c-accordion">
+      <div class="p-news__checkbox">
         <SearchCheckbox
             @checked="checked_brand"
             @reset="reset_brand"

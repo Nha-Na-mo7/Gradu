@@ -26,9 +26,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-paginate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-paginate.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/News.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/News.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-icon.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -366,7 +367,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="66670000" />
+      <workItem from="1606542821189" duration="68875000" />
     </task>
     <servers />
   </component>
@@ -497,10 +498,10 @@
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
     <state x="264" y="23" width="1436" height="1128" key="dock-window-2/0.23.1920.1177@0.23.1920.1177" timestamp="1603956207439" />
-    <state x="991" y="121" width="829" height="706" key="find.popup" timestamp="1606591797964">
+    <state x="991" y="121" width="829" height="706" key="find.popup" timestamp="1606653802747">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="991" y="121" width="829" height="706" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606591797964" />
+    <state x="991" y="121" width="829" height="706" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1606653802747" />
     <state x="721" y="282" key="run.anything.popup" timestamp="1606027443775">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
