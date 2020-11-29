@@ -662,6 +662,23 @@ input[type=checkbox] {
     width: 30px;
   }
 }
+.p-accounts__icon--container {
+  overflow: hidden;
+  height: 80px;
+  width: 80px;
+}
+@media screen and (max-width: 768px) {
+  .p-accounts__icon--container {
+    height: 50px;
+    width: 50px;
+  }
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__icon--container {
+    height: 30px;
+    width: 30px;
+  }
+}
 .p-accounts__data {
   display: -webkit-box;
   display: -ms-flexbox;

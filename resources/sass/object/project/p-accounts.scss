@@ -74,6 +74,19 @@
       height: 30px;
       width: 30px;
     }
+    &--container {
+      overflow: hidden;
+      height: 80px;
+      width: 80px;
+      @include mq($breakpoint: md) {
+        height: 50px;
+        width: 50px;
+      }
+      @include mq() {
+        height: 30px;
+        width: 30px;
+      }
+    }
   }
   // プロフィール・及びフォロー関係のエリア。
   &__data {
