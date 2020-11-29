@@ -21,6 +21,9 @@
   &__auth {
     background: $btn-color_auth;
   }
+  &__news {
+    min-width: 150px;
+  }
   &__twitter {
     background: $btn-color_twitter;
     color: $font-color_white;

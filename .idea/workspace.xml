@@ -26,13 +26,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/News/SearchCheckbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/SearchCheckbox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/foundation/base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/foundation/base.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-icon.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-icon.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-header.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-checkbox.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-checkbox.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -370,7 +366,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="46887000" />
+      <workItem from="1606542821189" duration="48424000" />
     </task>
     <servers />
   </component>

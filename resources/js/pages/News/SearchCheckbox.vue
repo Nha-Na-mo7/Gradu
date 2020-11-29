@@ -1,19 +1,10 @@
 <template>
   <div>
     <!-- コンテンツ(SP用に開閉できるようにする) -->
-    <div class="c-accordion">
+    <div class="c-checkbox">
       <div class="">
         <!--  通貨での絞り込み -->
         <div class="">
-          <label>
-            <input
-                type="button"
-                name="brand_all"
-                class="c-btn"
-                value="リセット"
-                @click="reset_checkbox"
-            >
-          </label>
           <p class="">チェックした通貨を検索条件に指定できます。</p>
           <p class="">※ 仮想通貨と関係のないニュースが表示される可能性を減らすため、「仮想通貨」は必ず検索ワードに入ります。</p>
 
@@ -21,7 +12,7 @@
 
             <!-- 通貨一覧 -->
             <div
-                class=""
+                class="c-checkbox__item"
                 v-for="brand in fetched_brands"
                 :key="brand.id"
             >
@@ -47,13 +38,21 @@
 
         <!-- 検索ボタン -->
         <div class="">
-          <button class="c-btn" @click="search_googleNews">検索する</button>
+          <button
+              class="c-btn c-btn__news"
+              @click="search_googleNews"
+          >検索する</button>
+        </div>
+
+        <div>
+          <button
+              class="c-btn c-btn__news"
+              @click="reset_checkbox"
+          >リセット</button>
         </div>
 
       </div>
-
     </div>
-
   </div>
 </template>
 
