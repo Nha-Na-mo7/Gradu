@@ -1379,6 +1379,16 @@ input[type=checkbox] {
 .p-trends {
   padding: 15px 40px;
 }
+.p-trends__table tr {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: #6cb2eb;
+  border: 1px solid #4d4d4d;
+}
+.p-trends__table--icon {
+  width: 40px;
+}
 .p-trends__list {
   margin: 20px 30px;
 }

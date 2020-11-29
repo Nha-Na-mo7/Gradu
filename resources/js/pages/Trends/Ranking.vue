@@ -4,8 +4,8 @@
 <template>
 
   <tr>
-    <th>1</th>
-    <th>
+    <td>1</td>
+    <td>
       <a
           :href="search_url"
           target="_blank"
@@ -14,17 +14,17 @@
         <!-- 通貨アイコン -->
         <img
             :src="icon_path | icon_path_filter"
-            class="c-trends__table--icon"
+            class="p-trends__table--icon"
             :alt="this.brand.brand.name"
         >
         <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
         <span class="">{{ this.brand.brand.name }}</span>
         <span class="c-trends__item--realname">{{ this.brand.brand.realname }}</span>
       </a>
-    </th>
-    <th>{{ this.brand.tweet_count }}</th>
-    <th>{{ price_max | add_JPY }}</th>
-    <th>{{ price_min | add_JPY }}</th>
+    </td>
+    <td>{{ this.brand.tweet_count }}</td>
+    <td>{{ price_max | add_JPY }}</td>
+    <td>{{ price_min | add_JPY }}</td>
   </tr>
 
 

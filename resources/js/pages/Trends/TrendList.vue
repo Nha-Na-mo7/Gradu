@@ -49,7 +49,7 @@
             <div class="p-trends__table">
               <table class="p-trends__table--inner">
                 <tr>
-                  <th class="">トレンド通貨ランキング</th>
+                  <th class="">順位</th>
                   <th>通貨</th>
                   <th>ツイート数</th>
                   <th>最高取引価格（24H）</th>
