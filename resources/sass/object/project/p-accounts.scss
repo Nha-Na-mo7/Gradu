@@ -150,6 +150,7 @@
     padding-bottom: 10px;
     // 共通要素
     &--item {
+      margin-bottom: $space_s;
       display: flex;
       align-items: center;
       word-break: break-all;
@@ -157,9 +158,10 @@
     // アカウントユーザーのフォロー数orフォロワー数を表す数字
     &--count {
       line-height: 150%;
+      font-weight: bold;
       font-size: $font-size_l;
       @include mq() {
-        font-size: $font-size_m;
+        font-size: $font-size_l;
       }
       &:hover {
         text-decoration: underline;

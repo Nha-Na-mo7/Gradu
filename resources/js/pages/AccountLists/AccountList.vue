@@ -20,7 +20,7 @@
         <!-- ヘッドライン -->
         <div class="p-accounts__headline">
 
-<!--           TODO newsタグになっているので修正すること -->
+          <!-- TODO newsタグになっているので修正すること -->
           <!-- 自動フォローボタンの位置確認 -->
           <div class="p-news__modal p-news__modal-show">
             <button
@@ -51,28 +51,30 @@
 
           <!-- アカウントコンポーネント -->
           <div v-else>
-            <div>
-              <p>{{ this.getStartCount }} ~ {{ this.getEndCount }} / {{ this.accounts.length }}アカウント</p>
+            <div class="u-text--center">
+              <div>
+                <p>{{ this.getStartCount }} - {{ this.getEndCount }} / {{ this.accounts.length }}アカウント</p>
+              </div>
+              <paginate
+                  v-model="currentPage"
+                  :page-count="getPageCount"
+                  :page-range="3"
+                  :margin-pages="1"
+                  :click-handler="clickCallback"
+                  :prev-text="'＜'"
+                  :next-text="'＞'"
+                  :hide-prev-next="true"
+                  :containerClass="'c-paginate'"
+                  :page-class="'c-paginate__item'"
+                  :page-link-class="'c-paginate__link'"
+                  :prev-class="'c-paginate__item c-paginate__item--prev'"
+                  :prev-link-class="'c-paginate__link'"
+                  :next-class="'c-paginate__item c-paginate__item--next'"
+                  :next-link-class="'c-paginate__link'"
+                  :active-class="'c-paginate__item--active'"
+                  list="" name="">
+              </paginate>
             </div>
-            <paginate
-                v-model="currentPage"
-                :page-count="getPageCount"
-                :page-range="3"
-                :margin-pages="3"
-                :click-handler="clickCallback"
-                :prev-text="'＜'"
-                :next-text="'＞'"
-                :hide-prev-next="true"
-                :containerClass="'c-paginate'"
-                :page-class="'c-paginate__item'"
-                :page-link-class="'c-paginate__link'"
-                :prev-class="'c-paginate__item c-paginate__item--prev'"
-                :prev-link-class="'c-paginate__link'"
-                :next-class="'c-paginate__item c-paginate__item--next'"
-                :next-link-class="'c-paginate__link'"
-                :active-class="'c-paginate__item--active'"
-                list="" name="">
-            </paginate>
             <Account
                 v-for="Accounts in getAccountsItems"
                 :key="Accounts.id"
@@ -80,25 +82,30 @@
                 :follow_list="follow_list"
                 :auto_follow_flg="!!isAutoFollowFlg"
             />
-            <paginate
-                v-model="currentPage"
-                :page-count="getPageCount"
-                :page-range="5"
-                :margin-pages="3"
-                :click-handler="clickCallback"
-                :prev-text="'＜'"
-                :next-text="'＞'"
-                :hide-prev-next="true"
-                :containerClass="'c-paginate'"
-                :page-class="'c-paginate__item'"
-                :page-link-class="'c-paginate__link'"
-                :prev-class="'c-paginate__item c-paginate__item--prev'"
-                :prev-link-class="'c-paginate__link'"
-                :next-class="'c-paginate__item c-paginate__item--next'"
-                :next-link-class="'c-paginate__link'"
-                :active-class="'c-paginate__item--active'"
-                list="" name="">
-            </paginate>
+            <div class="u-text--center">
+              <paginate
+                  v-model="currentPage"
+                  :page-count="getPageCount"
+                  :page-range="3"
+                  :margin-pages="1"
+                  :click-handler="clickCallback"
+                  :prev-text="'＜'"
+                  :next-text="'＞'"
+                  :hide-prev-next="true"
+                  :containerClass="'c-paginate'"
+                  :page-class="'c-paginate__item'"
+                  :page-link-class="'c-paginate__link'"
+                  :prev-class="'c-paginate__item c-paginate__item--prev'"
+                  :prev-link-class="'c-paginate__link'"
+                  :next-class="'c-paginate__item c-paginate__item--next'"
+                  :next-link-class="'c-paginate__link'"
+                  :active-class="'c-paginate__item--active'"
+                  list="" name="">
+              </paginate>
+              <div>
+                <p>{{ this.getStartCount }} - {{ this.getEndCount }} / {{ this.accounts.length }}アカウント</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
