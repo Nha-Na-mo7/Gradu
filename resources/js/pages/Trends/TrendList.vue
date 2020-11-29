@@ -18,7 +18,7 @@
     <div class="p-panel">
 
       <!--メインレイアウト-->
-      <div class="p-trends" v-bind:class="content_bgcolor">
+      <div class="p-accounts__container" v-bind:class="content_bgcolor">
         <!-- リボンタグ -->
         <Ribbonnav
             :title='ribbon_page_title'
@@ -45,27 +45,38 @@
             <NothingTrends />
           </div>
 
-          <div
-              class="p-trends__list--container"
-              v-else>
-            <Ranking
-                v-show="tab === 0"
-                v-for="trend_brand in sort_tweet_count_desc(0)"
-                :key="trend_brand.id"
-                :brand="trend_brand"
-            />
-            <Ranking
-                v-show="tab === 1"
-                v-for="trend_brand in sort_tweet_count_desc(1)"
-                :key="trend_brand.id"
-                :brand="trend_brand"
-            />
-            <Ranking
-                v-show="tab === 2"
-                v-for="trend_brand in sort_tweet_count_desc(2)"
-                :key="trend_brand.id"
-                :brand="trend_brand"
-            />
+          <div v-else class="p-trends__table__area">
+            <div class="p-trends__table">
+              <table class="p-trends__table--inner">
+                <tr>
+                  <th class="">トレンド通貨ランキング</th>
+                  <th>通貨</th>
+                  <th>ツイート数</th>
+                  <th>最高取引価格（24H）</th>
+                  <th>最安取引価格（24H）</th>
+                </tr>
+                <Ranking
+                    v-show="tab === 0"
+                    v-for="trend_brand in sort_tweet_count_desc(0)"
+                    :key="trend_brand.id"
+                    :brand="trend_brand"
+                />
+                <Ranking
+                    v-show="tab === 1"
+                    v-for="trend_brand in sort_tweet_count_desc(1)"
+                    :key="trend_brand.id"
+                    :brand="trend_brand"
+                />
+                <Ranking
+                    v-show="tab === 2"
+                    v-for="trend_brand in sort_tweet_count_desc(2)"
+                    :key="trend_brand.id"
+                    :brand="trend_brand"
+                />
+
+              </table>
+            </div>
+          </div>
           </div>
 
         </div>

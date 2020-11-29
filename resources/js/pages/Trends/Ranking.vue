@@ -2,15 +2,10 @@
 <!--ランキングページで表示される順位表一枚一枚のコンポーネント-->
 <!--===============================================-->
 <template>
-<!--  スマホの場合は1画面に情報が収まりきらないので、タップorスワイプなどで情報を切り替えられるようにする-->
 
-  <div class="p-trends__item">
-    <!-- 順位パネル -->
-    <div class="p-trends__item--rank">
-    </div>
-
-    <!-- 銘柄名 -->
-    <div class="p-trends__item--brandname">
+  <tr>
+    <th>1</th>
+    <th>
       <a
           :href="search_url"
           target="_blank"
@@ -19,28 +14,21 @@
         <!-- 通貨アイコン -->
         <img
             :src="icon_path | icon_path_filter"
-            class="c-trends__item--icon"
+            class="c-trends__table--icon"
+            :alt="this.brand.brand.name"
         >
         <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
         <span class="">{{ this.brand.brand.name }}</span>
         <span class="c-trends__item--realname">{{ this.brand.brand.realname }}</span>
       </a>
-    </div>
+    </th>
+    <th>{{ this.brand.tweet_count }}</th>
+    <th>{{ price_max | add_JPY }}</th>
+    <th>{{ price_min | add_JPY }}</th>
+  </tr>
 
-    <!-- ツイート数 -->
-    <div class="p-trends__item--tweetcount">
-      <span class="">{{ this.brand.tweet_count }}</span>
-    </div>
 
-
-    <!-- 最高取引価格 & 最低取引価格 -->
-    <div class="p-trends__item--data">
-      <div class="p-trends__item--time"><p>{{ price_max | add_JPY }}</p></div>
-      <div class="p-trends__item--media"><p>{{ price_min | add_JPY }}</p></div>
-    </div>
-  </div>
 </template>
-
 
 <script>
 import { OK, BRAND_ICON_PATH } from "../../util";
@@ -71,7 +59,6 @@ export default {
     // 24時間の最高取引価格
     price_max() {
       return this.transaction_price.price_max
-
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
     search_url() {
