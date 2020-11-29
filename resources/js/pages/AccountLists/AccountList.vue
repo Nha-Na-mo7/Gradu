@@ -308,6 +308,12 @@ export default {
     // ======================
     clickCallback: function (pageNum) {
       this.currentPage = Number(pageNum);
+    },
+
+    scrollTop: function () {
+      window.scrollTo({
+        top: 0,
+      });
     }
   },
   components: {
@@ -328,6 +334,9 @@ export default {
         await this.fetchUpdatedAt();
       },
       immediate: true
+    },
+    currentPage: function (newPage, oldPage) {
+      this.scrollTop();
     }
   }
 

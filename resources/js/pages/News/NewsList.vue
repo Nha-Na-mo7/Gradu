@@ -206,9 +206,6 @@ export default {
         top: 0,
       });
     }
-
-
-
   },
   components: {
     News,
