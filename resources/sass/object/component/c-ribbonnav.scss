@@ -8,24 +8,36 @@
   color: #FFF;
 
   font-size: 20px;
-
   margin-bottom: 15px;
-
   background: #1d7ebe;
   border-radius: 4px;
-
   position: relative;
 
+  @include mq() {
+    height: 25px;
+    font-size: $font-size_m;
+    margin-bottom: $space_s;
+
+  }
   &__content {
     position: absolute;
     padding: 8px 20px;
-
+    @include mq() {
+      padding: 4px 10px;
+    }
 
     &--left {
       left: 0;
+      @include mq() {
+        display: none;
+      }
     }
     &--right {
       right: 0;
+      @include mq() {
+        left: 0;
+        right: unset;
+      }
     }
   }
 

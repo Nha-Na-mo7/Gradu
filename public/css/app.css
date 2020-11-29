@@ -574,6 +574,11 @@ input[type=checkbox] {
           box-shadow: #f5f6ff 0 0 20px;
   padding: 15px 40px;
 }
+@media screen and (max-width: 414px) {
+  .p-accounts {
+    padding: 0;
+  }
+}
 .p-accounts__list {
   margin-bottom: 20px;
 }
@@ -595,6 +600,11 @@ input[type=checkbox] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__item {
+    padding: 10px 5px;
+  }
 }
 .p-accounts__item:nth-child(2n) {
   background: #fbf7fd;
@@ -622,14 +632,31 @@ input[type=checkbox] {
       -ms-flex-direction: column;
           flex-direction: column;
 }
+@media screen and (max-width: 414px) {
+  .p-accounts__left-side {
+    margin-right: 5px;
+  }
+}
 .p-accounts__icon {
   height: 80px;
   width: 80px;
   border-radius: 50%;
 }
+@media screen and (max-width: 414px) {
+  .p-accounts__icon {
+    height: 40px;
+    width: 40px;
+  }
+}
 .p-accounts__icon--area {
   height: 80px;
   width: 80px;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__icon--area {
+    height: 40px;
+    width: 40px;
+  }
 }
 .p-accounts__icon--area img :hover {
   cursor: pointer;
@@ -667,6 +694,11 @@ input[type=checkbox] {
       -ms-flex-direction: column;
           flex-direction: column;
 }
+@media screen and (max-width: 414px) {
+  .p-accounts__profile--area {
+    width: 50%;
+  }
+}
 .p-accounts__profile--nickname {
   line-height: 120%;
   width: 100%;
@@ -678,8 +710,13 @@ input[type=checkbox] {
   cursor: pointer;
   text-decoration: underline;
 }
+@media screen and (max-width: 414px) {
+  .p-accounts__profile--nickname {
+    font-size: 18px;
+  }
+}
 .p-accounts__profile--username {
-  font-size: 12px;
+  font-size: 10px;
   color: #a4a4a4;
 }
 .p-accounts__profile--username span:hover {
@@ -693,6 +730,11 @@ input[type=checkbox] {
 .p-accounts__profile--description span {
   font-size: 10px;
   color: #b4b4b4;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__profile--description {
+    font-size: 10px;
+  }
 }
 .p-accounts__follow--area {
   display: -webkit-box;
@@ -1574,15 +1616,38 @@ input[type=checkbox] {
   border-radius: 4px;
   position: relative;
 }
+@media screen and (max-width: 414px) {
+  .c-ribbon {
+    height: 25px;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+}
 .c-ribbon__content {
   position: absolute;
   padding: 8px 20px;
 }
+@media screen and (max-width: 414px) {
+  .c-ribbon__content {
+    padding: 4px 10px;
+  }
+}
 .c-ribbon__content--left {
   left: 0;
 }
+@media screen and (max-width: 414px) {
+  .c-ribbon__content--left {
+    display: none;
+  }
+}
 .c-ribbon__content--right {
   right: 0;
+}
+@media screen and (max-width: 414px) {
+  .c-ribbon__content--right {
+    left: 0;
+    right: unset;
+  }
 }
 .c-ribbon__date {
   font-weight: bold;
