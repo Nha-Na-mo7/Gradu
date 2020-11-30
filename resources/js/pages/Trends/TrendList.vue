@@ -18,10 +18,9 @@
             :date='get_updated_at'
         />
 
-        <!-- 絞り込みアコーディオンエリア -->
+        <!-- 絞り込みエリア -->
         <div class="p-news__modal p-news__modal-show">
-          <button class="c-btn c-btn__main c-btn--primary" @click="show_accordion">設定</button>
-          <SearchAccordion
+          <TrendCheckbox
             @checked="checked_brand"
             @reset="reset_brand"
           />
@@ -101,7 +100,7 @@
 <script>
 import Loading from '../../layouts/Loading.vue';
 import NothingTrends from './NothingTrends.vue';
-import SearchAccordion from './SearchAccordion.vue';
+import TrendCheckbox from './TrendCheckbox.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
 import Ranking from './Ranking.vue';
@@ -112,7 +111,6 @@ const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
 export default {
   data() {
     return {
-      accordion: false,
       isLoading: false,
       isNothing: false,
       tab: 0,
@@ -242,20 +240,12 @@ export default {
       // 読み込み中を解除
       this.isLoading = false;
     },
-    // アコーディオンを開く
-    show_accordion(){
-      this.accordion = true;
-    },
-    // アコーディオンを閉じる
-    close_accordion(){
-      this.accordion = false;
-    },
-    // アコーディオンでチェックされた値を格納
+    //チェックボックスでチェックされた値を格納
     checked_brand(array) {
       this.reset_brand();
       this.checked_brands = array;
     },
-    // アコーディオンがリセットされた時の処理
+    // チェックボックスがリセットされた時の処理
     reset_brand(){
       this.checked_brands = [];
     }
@@ -266,7 +256,7 @@ export default {
     Ribbonnav,
     Ranking,
     NothingTrends,
-    SearchAccordion
+    TrendCheckbox
   },
   watch: {
     $route: {

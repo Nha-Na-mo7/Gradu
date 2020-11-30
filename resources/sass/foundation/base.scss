@@ -35,7 +35,8 @@ a {
 }
 
 input[type=checkbox] {
-  transform: scale(1.5);
+  cursor: pointer;
+  transform: scale(1.5) translateY(-2.5px);
 }
 
 main {

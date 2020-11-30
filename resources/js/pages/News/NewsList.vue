@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <!-- 絞り込みアコーディオン -->
+      <!-- 絞り込み -->
       <div class="p-news__checkbox">
         <SearchCheckbox
             @checked="checked_brand"

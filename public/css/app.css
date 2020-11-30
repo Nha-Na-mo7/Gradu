@@ -512,8 +512,9 @@ a {
 }
 
 input[type=checkbox] {
-  -webkit-transform: scale(1.5);
-          transform: scale(1.5);
+  cursor: pointer;
+  -webkit-transform: scale(1.5) translateY(-2.5px);
+          transform: scale(1.5) translateY(-2.5px);
 }
 
 .l-header {
@@ -1400,6 +1401,10 @@ input[type=checkbox] {
   font-weight: bold;
   margin-top: 10px;
 }
+.p-trends__checkbox--description {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .p-trends__table {
   margin: 0 auto;
   margin-top: 15px;
@@ -1422,7 +1427,7 @@ input[type=checkbox] {
 .p-trends__table tr > th, .p-trends__table tr td {
   padding: 10px 15px;
 }
-.p-trends__table tr:nth-of-type(2n) {
+.p-trends__table tr:nth-of-type(2n-1) {
   background: #f6f6f6;
 }
 .p-trends__table--count {
@@ -1437,6 +1442,11 @@ input[type=checkbox] {
 .p-trends__table--inner {
   margin: 0 auto;
   position: relative;
+}
+.p-trends__table--btn--inner {
+  text-align: right;
+  margin-right: 5px;
+  margin-bottom: 10px;
 }
 .p-trends__item--name {
   font-size: 18px;
@@ -1470,6 +1480,10 @@ input[type=checkbox] {
 }
 .c-btn__news {
   min-width: 150px;
+}
+.c-btn__trends {
+  min-width: 100px;
+  padding: 10px 15px;
 }
 .c-btn__twitter {
   background: #55acee;
@@ -1908,7 +1922,7 @@ input[type=checkbox] {
   }
 }
 .c-checkbox__space {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1924,7 +1938,7 @@ input[type=checkbox] {
   font-size: 18px;
   width: 25%;
   height: 30px;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
 }
 @media screen and (max-width: 768px) {
   .c-checkbox__item {

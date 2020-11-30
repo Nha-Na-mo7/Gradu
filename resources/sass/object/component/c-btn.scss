@@ -24,6 +24,11 @@
   &__news {
     min-width: 150px;
   }
+  &__trends {
+    min-width: 100px;
+    padding: 10px 15px;
+
+  }
   &__twitter {
     background: $btn-color_twitter;
     color: $font-color_white;
