@@ -1,13 +1,17 @@
 <template>
-  <div>
-    <h2>404</h2><span>Not Found</span>
-    <p>お探しのページは見つかりませんでした</p>
+  <div class="p-error__container">
+    <div class="p-error">
+      <div class="p-error__statusCode">
+        <span class="p-error__statusCode--code">404</span>
+        <span class="p-error__statusCode--text">Not Found</span>
+      </div>
+      <div class="p-error__description">
+        <span>お探しのページは一時的にアクセスができない状況か、移動もしくは削除された可能性があります。 また、URL、ファイル名にタイプミスがないか再度ご確認ください。</span>
+      </div>
 
-    <p>お探しのページは一時的にアクセスができない状況にあるか、移動もしくは削除された可能性があります。 また、URL、ファイル名にタイプミスがないか再度ご確認ください。</p>
-
-    <RouterLink to="/" class="c-btn">トップページへ戻る</RouterLink>
+      <RouterLink to="/" class="c-btn">トップページへ戻る</RouterLink>
+    </div>
   </div>
-
 </template>
 
 <script>

@@ -29,7 +29,7 @@
 
       <!-- 絞り込み -->
       <div class="p-news__checkbox">
-        <SearchCheckbox
+        <NewsSearchCheckbox
             @checked="checked_brand"
             @reset="reset_brand"
             @search="search_googleNews"
@@ -85,7 +85,7 @@
 <script>
 import News from './News.vue';
 import NothingNews from './NothingNews.vue';
-import SearchCheckbox from './SearchCheckbox.vue';
+import NewsSearchCheckbox from './NewsSearchCheckbox.vue';
 import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import { DEFAULT_SEARCHWORD } from "../../util";
@@ -207,7 +207,7 @@ export default {
   components: {
     News,
     NothingNews,
-    SearchCheckbox,
+    NewsSearchCheckbox,
     Loading,
     PageTitle
   },

@@ -1,0 +1,36 @@
+.p-error{
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 120px;
+  &__container {
+    max-width: 768px;
+    margin: 0 auto;
+    @include mq($breakpoint: md) {
+      max-width: 100%;
+    }
+  }
+  &__statusCode {
+    margin-bottom: 30px;
+    &--code {
+      font-weight: bold;
+      font-size: 90px;
+      @include mq() {
+        display: block;
+      }
+    }
+    &--text {
+      margin-left: 12px;
+      font-size: 45px;
+      font-weight: unset;
+      color: #cdcdcd;
+      @include mq() {
+        display: block;
+        font-size: 25px;
+      }
+    }
+  }
+  &__description {
+    font-size: $font-size_l;
+    margin-bottom: 60px;
+  }
+}
