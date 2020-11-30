@@ -26,19 +26,11 @@
 
         <!-- 自動フォロー欄 -->
         <div class="p-accounts__autofollow">
-          <h2>自動フォローステータス</h2>
-
-          <button @click="showModal" class="c-btn">おも０だる</button>
-
-          <div class="">
-            <div
-                class="c-btn c-btn__follow"
-                v-if="isAutoFollowFlg"
-            >自動フォロー中...</div>
-            <div
-                class="c-btn c-btn__follow c-btn__follow--destroy"
-                v-else
-            >していません</div>
+          <div class="p-accounts__autofollow--status">
+            <p>自動フォローステータス: <span>{{ isAutoFollowFlg | auto_follow_status }}</span></p>
+          </div>
+          <div>
+            <button @click="showModal" class="c-btn">自動フォローについて</button>
           </div>
         </div>
 
@@ -314,8 +306,8 @@ export default {
     // モーダル関連
     // =======================
     showModal() {
-      // 読み込み中ならモーダルを開かない
-      if(this.isLoading) {
+      // 読み込み中・モーダルが既にONならモーダルを開かない
+      if(this.isLoading || this.modal) {
         return false;
       }
       this.modal = true;
@@ -336,6 +328,15 @@ export default {
     Loading,
     PageTitle,
     Ribbonnav,
+  },
+  filters: {
+    auto_follow_status: function (auto_flg)  {
+      if(auto_flg){
+        return 'ON'
+      }else{
+        return 'OFF'
+      }
+    },
   },
   watch: {
     $route: {

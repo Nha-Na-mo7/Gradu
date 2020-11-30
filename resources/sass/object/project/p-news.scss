@@ -86,7 +86,7 @@
     box-shadow: 0 0 2px #cdcdcd;
     transition: .5s all;
     display: inline-flex;
-    word-break: break-word;
+    word-break: break-all;
 
     @include mq($breakpoint: md) {
       flex-direction: column;

@@ -16,6 +16,9 @@
     border-radius: 4px;
     margin-right: $space_m;
     position: relative;
+    @include mq() {
+      margin-right: $space_s;
+    }
     &:hover {
       background: #cdcdcd;
     }

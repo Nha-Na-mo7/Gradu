@@ -15,14 +15,14 @@ const state = () => ({
 // ===============
 const mutations = {
   // フラッシュメッセージをセットする。
-  // 引数timeoutに指定した時間が経過したら消える。(通常は2秒、エラーは5秒)
-  setContent(state, {content, timeout = 2000}) {
+  // 引数timeoutに指定した時間が経過したら消える。(通常は3秒、エラーは5秒)
+  setContent(state, {content, timeout = 3000}) {
     state.content = content;
     state.type = 0;
     
     setTimeout(() => (state.content = ''), timeout);
   },
-  setContentSuccess(state, {content, timeout = 2000}) {
+  setContentSuccess(state, {content, timeout = 3000}) {
     state.content = content;
     state.type = 1;
     

@@ -41,7 +41,23 @@
   &__autofollow {
     margin-bottom: 20px;
     display: flex;
-    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    @include mq() {
+      flex-direction: column;
+    }
+    &--status {
+      padding: 5px;
+      font-size: $font-size_l;
+      @include mq() {
+        font-size: $font-size_s;
+        margin-top: 12px;
+        margin-bottom: 5px;
+      }
+      & span {
+      font-weight: bold;
+      }
+    }
   }
 
   &__column {
@@ -136,6 +152,7 @@
     line-height: 150%;
     font-size: 15px;
     margin-bottom: $space_s;
+    word-break: break-all;
     // 投稿時刻
     & span {
       font-size: $font-size_ss;

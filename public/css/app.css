@@ -617,10 +617,34 @@ input[type=checkbox] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__autofollow {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+}
+.p-accounts__autofollow--status {
+  padding: 5px;
+  font-size: 18px;
+}
+@media screen and (max-width: 414px) {
+  .p-accounts__autofollow--status {
+    font-size: 12px;
+    margin-top: 12px;
+    margin-bottom: 5px;
+  }
+}
+.p-accounts__autofollow--status span {
+  font-weight: bold;
 }
 .p-accounts__column {
   display: -webkit-box;
@@ -738,6 +762,7 @@ input[type=checkbox] {
   line-height: 150%;
   font-size: 15px;
   margin-bottom: 5px;
+  word-break: break-all;
 }
 .p-accounts__description span {
   font-size: 10px;
@@ -1249,7 +1274,7 @@ input[type=checkbox] {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  word-break: break-word;
+  word-break: break-all;
 }
 @media screen and (max-width: 768px) {
   .p-news__item {
@@ -1530,6 +1555,12 @@ input[type=checkbox] {
 }
 .c-btn__fluid {
   width: 100%;
+}
+@media screen and (max-width: 414px) {
+  .c-btn__modal {
+    min-width: 100px;
+    padding: 10px 15px;
+  }
 }
 .c-btn__main {
   text-align: center;
@@ -2007,6 +2038,19 @@ input[type=checkbox] {
   position: fixed;
   z-index: 5;
 }
+@media screen and (max-width: 768px) {
+  .c-modal {
+    width: 80%;
+    left: 10%;
+  }
+}
+@media screen and (max-width: 414px) {
+  .c-modal {
+    width: 90%;
+    padding: 12px 8px;
+    left: 5%;
+  }
+}
 .c-modal__cover {
   -webkit-transition: 0.3s all;
   transition: 0.3s all;
@@ -2019,25 +2063,67 @@ input[type=checkbox] {
   opacity: 0.5;
   background: #030303;
 }
-.c-modal__index {
-  margin-top: 40px;
-}
-.c-modal__index-title {
-  font-size: 20px;
-  padding-bottom: 5px;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #000;
-}
-.c-modal__index-description {
-  font-size: 0.8rem;
-}
 .c-modal__head {
   text-align: center;
+  margin-bottom: 40px;
+}
+@media screen and (max-width: 414px) {
+  .c-modal__head {
+    margin-bottom: 20px;
+  }
 }
 .c-modal__head-title {
   font-size: 30px;
   font-weight: bold;
 }
+@media screen and (max-width: 414px) {
+  .c-modal__head-title {
+    font-size: 18px;
+  }
+}
+.c-modal__main {
+  word-break: break-all;
+  margin-bottom: 20px;
+}
+.c-modal__main--info {
+  font-size: 18px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #cdcdcd;
+}
+@media screen and (max-width: 414px) {
+  .c-modal__main--info {
+    font-size: 14px;
+    padding: 0 5px;
+    margin-bottom: 8px;
+  }
+}
+.c-modal__main--description {
+  margin-bottom: 24px;
+  padding: 8px;
+}
+.c-modal__main--description > li {
+  border-bottom: 1px solid #cdcdcd;
+}
+.c-modal__main--li {
+  padding: 8px 0;
+  font-size: 16px;
+}
+@media screen and (max-width: 414px) {
+  .c-modal__main--li {
+    font-size: 12px;
+  }
+}
+.c-modal__btn--inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .c-nothing {
   padding: 15px 25px;
   -webkit-box-pack: center;
@@ -2084,6 +2170,11 @@ input[type=checkbox] {
   border-radius: 4px;
   margin-right: 10px;
   position: relative;
+}
+@media screen and (max-width: 414px) {
+  .c-paginate__item {
+    margin-right: 5px;
+  }
 }
 .c-paginate__item:hover {
   background: #cdcdcd;
@@ -2226,7 +2317,7 @@ input[type=checkbox] {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  word-break: break-word;
+  word-break: break-all;
 }
 @media screen and (max-width: 768px) {
   .p-news__item {

@@ -12,6 +12,15 @@
   padding: 20px 25px;
   position: fixed;
   z-index: 5;
+  @include mq($breakpoint: md) {
+    width: 80%;
+    left: 10%;
+  }
+  @include mq() {
+    width: 90%;
+    padding: 12px 8px;
+    left: 5%;
+  }
 
   &__cover{
     transition: .3s all;
@@ -24,34 +33,55 @@
     opacity: 0.5;
     background: #030303;
   }
-
-  &__index {
-    margin-top: 40px;
-
-    &-title {
-      font-size: 20px;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
-      border-bottom: 1px solid #000;
-    }
-
-    &-description {
-      font-size: 0.8rem;
-    }
-  }
-
-  &__hide {
-
-  }
-
   &__head {
     text-align: center;
+    margin-bottom: 40px;
+    @include mq() {
+      margin-bottom: 20px;
+    }
     &-title {
-      font-size: 30px;
+      font-size: $font-size_xxl;
       font-weight: bold;
+      @include mq() {
+        font-size: $font-size_l;
+      }
     }
   }
-  &__btn-area {
+  &__main {
+    word-break: break-all;
+    margin-bottom: 20px;
+    &--info {
+      font-size: $font-size_l;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #cdcdcd;
+      @include mq() {
+        font-size: $font-size_m;
+        padding: 0 5px;
+        margin-bottom: 8px;
+      }
+    }
 
+    &--description {
+      margin-bottom: 24px;
+      padding: 8px;
+      & > li {
+        border-bottom: 1px solid #cdcdcd;
+      }
+    }
+    &--li {
+      padding: 8px 0;
+      font-size: $font-size_default;
+      @include mq() {
+        font-size: $font-size_s;
+      }
+    }
+  }
+
+  &__btn {
+    &--inner {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
   }
 }

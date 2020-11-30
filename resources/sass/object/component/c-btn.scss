@@ -66,7 +66,6 @@
     }
 
   }
-
   &__link {
     border: 0;
   }
@@ -77,6 +76,12 @@
 
   &__follow {
 
+  }
+  &__modal {
+    @include mq() {
+      min-width: 100px;
+      padding: 10px 15px;
+    }
   }
   &__main {
     text-align: center;
