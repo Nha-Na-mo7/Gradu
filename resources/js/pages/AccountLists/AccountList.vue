@@ -4,6 +4,13 @@
 <template>
   <div class="l-container__content">
 
+    <AutoFollowModal
+        v-if="modal"
+        :auto_flg="!!auto_follow_flg"
+        @close="closeModal"
+        @toggle_auto_follow_flg="toggle_auto_following"
+    />
+
     <!-- ページタイトル -->
     <PageTitle :title='page_title'/>
 
@@ -21,6 +28,8 @@
         <div class="p-accounts__autofollow">
           <h2>自動フォローステータス</h2>
 
+          <button @click="showModal" class="c-btn">おも０だる</button>
+
           <div class="">
             <div
                 class="c-btn c-btn__follow"
@@ -29,20 +38,8 @@
             <div
                 class="c-btn c-btn__follow c-btn__follow--destroy"
                 v-else
-            >START AUTO-FOLLOW</div>
+            >していません</div>
           </div>
-<!--          <div class="">-->
-<!--            <button-->
-<!--                class="c-btn c-btn__follow"-->
-<!--                @click="toggle_auto_following"-->
-<!--                v-if="isAutoFollowFlg"-->
-<!--            >自動フォロー中...</button>-->
-<!--            <button-->
-<!--                class="c-btn c-btn__follow c-btn__follow&#45;&#45;destroy"-->
-<!--                @click="toggle_auto_following"-->
-<!--                v-else-->
-<!--            >START AUTO-FOLLOW</button>-->
-<!--          </div>-->
         </div>
 
         <!-- アカウントリスト -->
@@ -301,43 +298,12 @@ export default {
       }
     },
 
-    // 自動フォローのON/OFF切り替え
-    async toggle_auto_following() {
-      var result = false;
-      const flg = this.auto_follow_flg;
-      if( flg ) {
-        result = confirm('自動フォローをOFFにします。よろしいですか？')
-      } else {
-        result = confirm('自動フォローをONにします。よろしいですか？')
-      }
-      // confirmではいが選択されたら切り替えを行う
-      if(result) {
-        const response = await axios
-            .post(`/accounts/autofollowflg`, {'follow_flg': flg})
-            .catch(error => error.response || error);
-
-        // エラーハンドリング
-        if(response.status === OK) {
-          this.auto_follow_flg = !flg;
-          // フラッシュメッセージをセット
-          this.$store.commit('message/setContentSuccess', {
-            content: response.data.success
-          })
-        }else{
-          // フラッシュメッセージをセット
-          this.$store.commit('message/setContentError', {
-            content: 'エラーが発生しました。'
-          })
-        }
-      }
-    },
     // ======================
     // ページネーション用
     // ======================
     clickCallback: function (pageNum) {
       this.currentPage = Number(pageNum);
     },
-
 
     scrollTop: function () {
       window.scrollTo({
@@ -347,7 +313,20 @@ export default {
     // =======================
     // モーダル関連
     // =======================
-
+    showModal() {
+      // 読み込み中ならモーダルを開かない
+      if(this.isLoading) {
+        return false;
+      }
+      this.modal = true;
+    },
+    closeModal() {
+      this.modal = false;
+    },
+    // 自動フォローのON/OFF切り替え
+    toggle_auto_following() {
+      this.auto_follow_flg = !this.auto_follow_flg;
+    },
   },
   components: {
     Account,

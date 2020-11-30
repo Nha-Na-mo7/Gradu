@@ -138,7 +138,7 @@ export default {
     getPageCount: function() {
       return Math.ceil(this.searchedNews.length / this.parPage);
     },
-    // アカウントリストの座標までスクロールするためのプロパティ
+    // ニュースリストの座標までスクロールするためのプロパティ
     getNewsListRect() {
       var $e = $('#newslist');
       return $e.offset().top - 60;
