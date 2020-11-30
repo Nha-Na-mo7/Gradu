@@ -7,8 +7,7 @@
 
         {{-- ロゴ --}}
         <a class="p-header__logo" href="{{ route('home.index') }}">
-            <img class="p-header__logo" src="" alt="CryptoTrend" />
-            {{--                <img class="p-header__logo" src="{{ asset('images/header_logo.png') }}" alt="CryptoTrend" />--}}
+            <img class="p-header__logo--img" src="storage/images/logos/logo.svg" alt="CryptoTrend" />
         </a>
 
         {{-- SPサイト用メニュー  --}}
@@ -43,10 +42,9 @@
                         <a class="p-header__item--link" href="{{ route('mypage.index') }}"><span>マイページ</span></a>
                     </li>
                     <li class="p-header__item">
-                        {{-- TODO ログアウト処理を用意すること --}}
                         <a class="p-header__item--link"
                            href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
+                           onclick="e.preventDefault();
                     document.getElementById('logout-form').submit();"
                         >ログアウト</a>
                         <form id="logout-form" method="post" action="{{ route('logout') }}" style="display:none;">

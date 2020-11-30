@@ -180,19 +180,19 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/storage/images/logos" />
+      <recent name="$PROJECT_DIR$/app/Models" />
+      <recent name="$PROJECT_DIR$/app/Http/Controllers/Auth" />
+      <recent name="$PROJECT_DIR$/resources/sass/object/project" />
+      <recent name="$PROJECT_DIR$/resources/js/pages/Auths" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/lang" />
       <recent name="$PROJECT_DIR$/app" />
       <recent name="$PROJECT_DIR$/tests/Feature" />
       <recent name="$PROJECT_DIR$/resources" />
       <recent name="$PROJECT_DIR$/resources/js" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Models" />
-      <recent name="$PROJECT_DIR$/app/Http/Controllers/Auth" />
-      <recent name="$PROJECT_DIR$/resources/sass/object/project" />
-      <recent name="$PROJECT_DIR$/resources/js/pages/Auths" />
-      <recent name="$PROJECT_DIR$/resources/views/emails" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.auth.js">
@@ -364,7 +364,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="116240000" />
+      <workItem from="1606542821189" duration="118290000" />
     </task>
     <servers />
   </component>
