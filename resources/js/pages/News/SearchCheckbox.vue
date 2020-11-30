@@ -5,8 +5,10 @@
       <div class="">
         <!--  通貨での絞り込み -->
         <div class="">
-          <p class="">チェックした通貨を検索条件に指定できます。</p>
-          <p class="">※ 仮想通貨と関係のないニュースが表示される可能性を減らすため、「仮想通貨」は必ず検索ワードに入ります。</p>
+          <div class="p-news__search--description">
+            <p class="">チェックした通貨を検索条件に指定できます。</p>
+            <p class="">※ 仮想通貨と関係のないニュースが表示される可能性を減らすため、「仮想通貨」は必ず検索ワードに入ります。</p>
+          </div>
 
           <div class="c-checkbox__space">
 
@@ -37,18 +39,16 @@
         </div>
 
         <!-- 検索ボタン -->
-        <div class="">
+        <div class="p-news__search--btn--inner">
+          <button
+              class="c-btn c-btn__news"
+              @click="reset_checkbox"
+          >絞り込みをリセット
+          </button>
           <button
               class="c-btn c-btn__news"
               @click="search_googleNews"
           >検索する</button>
-        </div>
-
-        <div>
-          <button
-              class="c-btn c-btn__news"
-              @click="reset_checkbox"
-          >リセット</button>
         </div>
 
       </div>

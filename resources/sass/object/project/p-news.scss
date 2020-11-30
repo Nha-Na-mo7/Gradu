@@ -3,74 +3,64 @@
 //  =============
 .p-news {
   margin-top: 20px;
-  padding: 15px 25px;
+  padding: 15px 50px;
   background: #f8fdff;
   @include mq() {
-    padding: 0;
+    padding: 5px 10px;
   }
 
   &__search {
-    position: relative; //TODO c-input__resetarea用に仮に付与したもの
-    display: flex; //TODO c-input__resetarea用に仮に付与したもの
-    align-items: center; //TODO c-input__resetarea用に仮に付与したもの
-    width: 70%;
-    background: #f6f6f6;
-    box-shadow: #b0b0b0 0 0 5px;
-    border-radius: 10px;
+    border-bottom: solid 1px #cdcdcd;
+    margin-bottom: 15px;
+    padding-bottom: 18px;
+    width: inherit;
+    &--inner {
+      margin-left: auto;
+      margin-right: auto;
 
-    transition: .2s all;
-
-    &:focus-within {
-      background: #FFF;
-      box-shadow: #929292 0 1px 5px;
+      width: 100%;
+      font-size: 16px;
+      line-height: 1.5;
     }
+    &--item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
 
-    &Box {
-      border-bottom: solid 1px #DDD;
-      margin-bottom: 30px;
-      padding-bottom: 18px;
-
-      width: inherit;
-      &--Inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-left: auto;
-        margin-right: auto;
-
-        width: 100%;
-        padding: 0 30px;
-
-        font-size: 16px;
-        line-height: 1.5;
+      margin-top: 15px;
+      @include mq($breakpoint: md) {
+        font-size: 14px;
+        justify-content: unset;
+        flex-direction: column;
       }
-      &--Item {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-
-        margin-top: 15px;
-        @include mq($breakpoint: md) {
-          font-size: 14px;
-          justify-content: unset;
-          flex-direction: column;
+    }
+    &--info {
+      color: #cdcdcd;
+      width: 120px;
+    }
+    &--content {
+      width: 80%;
+    }
+    &--content--searchWords {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    &--btn {
+      &--inner {
+        text-align: right;
+        margin-right: $space_s;
+        margin-bottom: $space_l;
+        @include mq() {
+          text-align: unset;
         }
       }
-
-      &--title {
-        color: #AAA;
-        display: flex;
-        width: 140px;
-      }
-      &--content {
-        width: 80%;
-        display: flex;
-        justify-content: space-between;
-      }
-      &--content--searchWords {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
+    }
+    &--description {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      @include mq() {
+        font-size: $font-size_s;
       }
     }
   }
@@ -80,10 +70,6 @@
 
   &__list {
     margin-bottom: 30px;
-    padding: 0 30px;
-    @include mq() {
-      padding: 0;
-    }
   }
 
   // ニュースの一覧表示画面で出てくる用のコンポーネント
@@ -114,20 +100,21 @@
     }
 
     &--title {
-      line-height: 1.2;
-      &:hover {
-        text-decoration: underline;
-        text-decoration-color: #0b2e13;
+      width: 75%;
+      padding-right: $space_s;
+      @include mq($breakpoint: md) {
+        width: 90%;
+        border-bottom: 1px solid #cdcdcd;
+        padding-bottom: $space_m;
       }
-      &--area {
-        width: 75%;
-        padding-right: $space_s;
-        @include mq($breakpoint: md) {
-          width: 90%;
-          border-bottom: 1px solid #cdcdcd;
-          padding-bottom: $space_m;
+      &--link {
+        line-height: 1.2;
+        &:hover {
+          text-decoration: underline;
+          text-decoration-color: #0b2e13;
         }
       }
+
     }
     &--data {
       width: 20%;
@@ -150,11 +137,6 @@
         color: #4dc0b5;
       }
     }
-    // 24hいないのタグ
-    &--new {
-      background: #f8ffed;
-      box-shadow: 1px 1px 3px #cbe8ff;
-    }
     // 記事がない時に表示する
     &--nothing {
       padding: 15px 25px;
@@ -171,7 +153,7 @@
       }
     }
   }
-  &__24hour {
+  &__new {
     border: 1px solid #f6e47d;
     box-shadow: #f6e47d 0 0 3px;
   }

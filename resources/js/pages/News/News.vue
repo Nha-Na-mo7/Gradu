@@ -3,16 +3,16 @@
 <!--=======================================================-->
 <template>
   <div
-      class="p-news__item p-news__item--entry"
-      :class="{'p-news__24hour': is_sub_24hour}"
+      class="p-news__item"
+      :class="{'p-news__new': is_sub_24hour}"
   >
     <!-- 24H以内の記事に付与されるアイコン -->
     <span v-if="is_sub_24hour" class="c-icon__new">NEW!!</span>
     <!-- 記事のタイトル -->
-    <div class="p-news__item--title--area">
+    <div class="p-news__item--title">
       <h2>
         <a
-            class="p-news__item--title"
+            class="p-news__item--title--link"
             :href="get_url"
             target="_blank"
             rel="noopener noreferrer"

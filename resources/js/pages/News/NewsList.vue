@@ -11,19 +11,17 @@
     <div class="p-news">
 
       <!-- サーチボックス -->
-      <div class="p-news__searchBox--Inner">
+      <div class="p-news__search--inner">
 
-        <div class="p-news__searchBox">
+        <div class="p-news__search">
 
-          <div class="p-news__searchBox--Item">
-            <div class="p-news__searchBox--title"><p>検索条件</p></div>
-            <div class="p-news__searchBox--content">
-
+          <div class="p-news__search--item">
+            <div class="p-news__search--info"><p>検索条件</p></div>
+            <div class="p-news__search--content">
               <!-- 検索ワードを表示するエリア -->
-              <div class="p-news__searchBox--content--searchWords">
+              <div class="p-news__search--content--searchWords">
                 <span>{{ default_and_checked_brands }}</span>
               </div>
-
             </div>
           </div>
         </div>
@@ -102,7 +100,6 @@ export default {
 
   data() {
     return {
-      accordion: false,
       isSearching: false,
       // 「検索した結果、記事が無かった」場合にtrueとなるフラグ。
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。

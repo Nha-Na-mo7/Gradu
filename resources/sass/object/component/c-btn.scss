@@ -22,12 +22,12 @@
     background: $btn-color_auth;
   }
   &__news {
-    min-width: 150px;
+    min-width: 100px;
+    padding: 10px;
   }
   &__trends {
     min-width: 100px;
     padding: 10px 15px;
-
   }
   &__twitter {
     background: $btn-color_twitter;
