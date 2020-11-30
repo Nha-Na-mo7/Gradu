@@ -24,23 +24,23 @@
             <ul class="p-header__menu">
                 @guest
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('login') }}">ログイン</a>
+                        <a class="p-header__item--link" href="{{ route('login') }}"><span>ログイン</span></a>
                     </li>
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('register') }}">新規登録</a>
+                        <a class="p-header__item--link" href="{{ route('register') }}"><span>新規登録</span></a>
                     </li>
                 @else
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('trend.index') }}">トレンド</a>
+                        <a class="p-header__item--link" href="{{ route('trend.index') }}"><span>トレンド</span></a>
                     </li>
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('accounts.index') }}">アカウント一覧</a>
+                        <a class="p-header__item--link" href="{{ route('accounts.index') }}"><span>アカウント一覧</span></a>
                     </li>
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('news.index') }}">ニュース</a>
+                        <a class="p-header__item--link" href="{{ route('news.index') }}"><span>ニュース</span></a>
                     </li>
                     <li class="p-header__item">
-                        <a class="p-header__item--link" href="{{ route('mypage.index') }}">マイページ</a>
+                        <a class="p-header__item--link" href="{{ route('mypage.index') }}"><span>マイページ</span></a>
                     </li>
                     <li class="p-header__item">
                         {{-- TODO ログアウト処理を用意すること --}}
