@@ -4,6 +4,9 @@
 .p-trends {
   padding: 15px 40px;
 
+  @include mq() {
+    padding: 0;
+  }
   &__tab {
     display: flex;
     justify-content: flex-end;

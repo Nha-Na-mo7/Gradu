@@ -1349,6 +1349,11 @@ input[type=checkbox] {
 .p-trends {
   padding: 15px 40px;
 }
+@media screen and (max-width: 414px) {
+  .p-trends {
+    padding: 0;
+  }
+}
 .p-trends__tab {
   display: -webkit-box;
   display: -ms-flexbox;

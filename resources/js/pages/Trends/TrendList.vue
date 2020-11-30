@@ -11,7 +11,7 @@
     <div class="p-panel">
 
       <!--メインレイアウト-->
-      <div class="p-accounts__container">
+      <div class="p-trends">
         <!-- リボンタグ -->
         <Ribbonnav
             :title='ribbon_page_title'
