@@ -15,7 +15,7 @@
   }
   &__content {
     max-width: 980px;
-    margin: 50px auto 120px;
+    margin: 100px auto 120px;
 
     @include mq() {
       padding: 0 $space_l;

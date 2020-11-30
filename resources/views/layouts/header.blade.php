@@ -12,14 +12,14 @@
         </a>
 
         {{-- SPサイト用メニュー  --}}
-        <div id="" class="p-header__trigger">
+        <div class="p-header__trigger js-toggle-sp-menu">
             <span></span>
             <span></span>
             <span></span>
         </div>
 
         {{-- ナビバー  --}}
-        <nav id="" class="p-header__nav p-header__nav__sp">
+        <nav class="p-header__nav p-header__nav__sp js-toggle-sp-nav">
 
             <ul class="p-header__menu">
                 @guest

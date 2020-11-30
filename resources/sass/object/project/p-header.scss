@@ -2,6 +2,7 @@
 //  p-header
 //  =============
 .p-header {
+  box-shadow: 0 2px 10px #cdcdcd;
   height: 100%;
   width: 100%;
   color: $font-color_default;
@@ -16,7 +17,7 @@
     &__sp {
       // sp表示の時は右に隠れ、トリガーが押された時だけ左に出てくる
       @include mq(){
-        display: none;
+        display: block;
         position: absolute;
         top: 0;
         right: -100%;
@@ -60,6 +61,13 @@
     & > a {
       text-decoration: none;
     }
+    @include mq() {
+      width: 100%;
+      padding: 18px;
+      margin-left: 5px;
+      text-align: center;
+      font-size: 25px;
+    }
   }
   &__logo {
     width: 250px;
@@ -75,11 +83,13 @@
     position: relative;
     width: 40px;
     height: 32px;
+    margin-right: 10px;
     z-index: 3;
     @include mq(){
-      display: block;
+      display: inline-block;
     }
     & span {
+      background: #8a8a8a;
       display: inline-block;
       transition: all .5s;
       position: absolute;

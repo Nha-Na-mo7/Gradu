@@ -31,7 +31,7 @@
     {{-- メッセージが消える処理・タッチすると消える処理はjQueryなどで処理すること--}}
     {{-- https://qiita.com/usaginooheso/items/6a99e565f16de2f9ddf7 --}}
     @if(Session::has('system_message'))
-        <div class="c-flash" role="alert">
+        <div class="c-flash js-flash-system-message" role="alert">
             <p>{{ session('system_message') }}</p>
         </div>
     @endif

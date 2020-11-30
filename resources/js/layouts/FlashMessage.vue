@@ -2,7 +2,7 @@
 <!--フラッシュメッセージ用のコンポーネント-->
 <!--===============================-->
 <template>
-<div class="c-flash" :class="bgColor" v-show="message" @click="hideFlash">
+<div class="c-flash js-flash-msg" :class="bgColor" v-show="message" @click="hideFlash">
   <div class="c-flash__column--left">
     <div class="c-flash__icon">
       <img :src="messageIcon" alt="message">
@@ -42,10 +42,9 @@ export default {
       return type;
     },
     messageIcon() {
-      var icon = '';
+      var icon = FLASH_ICON_PATH + 'ring.svg';
       switch(this.type) {
         case 0:
-          icon = FLASH_ICON_PATH + 'ring.svg';
           break;
         case 1:
           icon = FLASH_ICON_PATH + 'check.svg';

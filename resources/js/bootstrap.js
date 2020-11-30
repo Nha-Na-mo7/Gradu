@@ -1,6 +1,8 @@
 import { getCookieValue } from "./util";
 
 window._ = require('lodash');
+window.$ = window.jQuery = require('jquery');
+
 
 // ★今回Bootstrapは使用しないため以下はコメントアウト。
 

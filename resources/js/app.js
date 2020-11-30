@@ -1,7 +1,8 @@
 // Ajax通信用のAxiosライブラリの設定が記述されている、デフォルトのjsファイル
 import './bootstrap.js';
+
 // jQuery
-// import './jquery.js';
+import jQuery from './jquery.js';
 
 // webpackでsassをコンパイルする用
 import '../sass/app.scss';
@@ -26,6 +27,7 @@ const createApp = async () => {
       store,
       router,
       paginate,
+      jQuery,
       components: { App },
       template: '<App />'
     });
@@ -34,3 +36,4 @@ const createApp = async () => {
 
 // 上記メソッドを呼び出し。
 createApp();
+
