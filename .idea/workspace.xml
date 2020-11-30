@@ -26,13 +26,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/AccountList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/AutoFollowModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/AutoFollowModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-modal.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-paginate.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-paginate.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-accounts.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-news.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-container.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-container.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-footer.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -370,7 +368,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="131278000" />
+      <workItem from="1606542821189" duration="133475000" />
     </task>
     <servers />
   </component>

@@ -6300,7 +6300,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /*! runtime requirements:  */
 /***/ (function() {
 
-eval("$(function () {\n  // ============================\n  // SPバーガーメニュー\n  // ============================\n  $('.js-toggle-sp-menu').on('click', function () {\n    $(this).toggleClass('active');\n    $('.js-toggle-sp-nav').toggleClass('active');\n  });\n});\n\n//# sourceURL=webpack:///./resources/js/jquery.js?");
+eval("$(function () {\n  // ============================\n  // SPバーガーメニュー\n  // ============================\n  $('.js-toggle-sp-menu').on('click', function () {\n    $(this).toggleClass('active');\n    $('.js-toggle-sp-nav').toggleClass('active');\n  }); // ============================\n  // footerをページ最下部に固定\n  // ============================\n\n  var $ftr = $('#footer'); // window.innerHeightで、画面全体の高さを取得\n  // $ftr.offset().topで、ドキュメントの上からfooterまでの高さを取得\n  // $ftr.outerHeight()で、footer自身の高さを取得\n\n  if (window.innerHeight > $ftr.offset().top + $ftr.outerHeight()) {\n    // $ftr.offset().topと$ftr.outerHeight()の合計よりも、画面全体の高さが大きくなったら、styleを付け足す\n    // 付け足す高さは、画面全体の高さ-footer自身の高さ。これで最下部に固定される\n    $ftr.attr({\n      'style': 'position:fixed; top:' + (window.innerHeight - $ftr.outerHeight()) + 'px;'\n    });\n  }\n});\n\n//# sourceURL=webpack:///./resources/js/jquery.js?");
 
 /***/ }),
 

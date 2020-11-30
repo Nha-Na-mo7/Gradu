@@ -43,7 +43,7 @@
         @yield('content')
     </main>
 
-    <footer class="l-footer">
+    <footer id="footer" class="l-footer">
         @include('layouts.footer')
     </footer>
 

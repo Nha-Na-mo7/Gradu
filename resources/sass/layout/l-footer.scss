@@ -4,7 +4,6 @@
 .l-footer {
   margin-top: auto;
   width: 100%;
-
   background: $background-color_footer;
 
   @include mq($breakpoint: sm) {

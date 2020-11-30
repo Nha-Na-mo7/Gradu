@@ -44,7 +44,7 @@
                     <li class="p-header__item">
                         <a class="p-header__item--link"
                            href="{{ route('logout') }}"
-                           onclick="e.preventDefault();
+                           onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();"
                         >ログアウト</a>
                         <form id="logout-form" method="post" action="{{ route('logout') }}" style="display:none;">

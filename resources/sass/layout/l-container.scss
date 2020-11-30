@@ -8,7 +8,7 @@
 
   &__auth {
     max-width: 768px;
-    margin: auto;
+    margin: 100px auto;
     @include mq($breakpoint: md) {
       max-width: 100%;
     }

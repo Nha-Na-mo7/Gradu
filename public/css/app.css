@@ -553,7 +553,7 @@ input[type=checkbox] {
 }
 .l-container__auth {
   max-width: 768px;
-  margin: auto;
+  margin: 100px auto;
 }
 @media screen and (max-width: 768px) {
   .l-container__auth {
