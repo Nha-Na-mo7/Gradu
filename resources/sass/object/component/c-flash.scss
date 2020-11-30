@@ -2,22 +2,41 @@
 //  c-flash
 //  =============
 .c-flash {
-  position: absolute;
   background: #d6f0ff;
-
   transition: all 3s;
-
-  top: 30px;
+  top: 50px;
   right: 10px;
-
-  height: 60px;
+  min-height: 60px;
   width: 480px;
-  opacity: 0.7;
-
+  opacity: 0.8;
   border-radius: 4px;
   z-index: 5;
-
   font-size: 15px;
+  padding: 15px 10px;
+  position: fixed;
+  display: flex;
+  align-items: center;
+
+  @include mq() {
+    min-height: 50px;
+    width: 240px;
+  }
+  &__icon {
+    height: 40px;
+    width: 40px;
+  }
+  &--column {
+    display: flex;
+    flex-direction: column;
+  }
+  &__text {
+    font-size: $font-size_l;
+    word-break: break-word;
+    @include mq() {
+      font-size: $font-size_m;
+    }
+  }
+
   &__success {
     background: $background-color_success;
   }

@@ -2,7 +2,7 @@
 <template>
   <div>
     <!-- フラッシュメッセージ -->
-    <Message />
+    <FlashMessage />
     <!-- 実際にコンポーネントが切り替わるエリア -->
     <RouterView />
 
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import Message from './layouts/Message.vue';
+import FlashMessage from './layouts/FlashMessage.vue';
 
 export default {
   components: {
-    Message,
+    FlashMessage,
   },
 }
 </script>
