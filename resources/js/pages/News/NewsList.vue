@@ -37,7 +37,7 @@
       </div>
 
       <!-- ニュース一覧 -->
-      <div class="p-news__list">
+      <div id="newslist" class="p-news__list">
         <!-- 検索中 -->
         <div v-if="isSearching" class="">
           <Loading />
@@ -137,6 +137,11 @@ export default {
     // 総ページ数
     getPageCount: function() {
       return Math.ceil(this.searchedNews.length / this.parPage);
+    },
+    // アカウントリストの座標までスクロールするためのプロパティ
+    getNewsListRect() {
+      var $e = $('#newslist');
+      return $e.offset().top - 60;
     }
   },
   methods: {
@@ -200,7 +205,7 @@ export default {
 
     scrollTop: function () {
       window.scrollTo({
-        top: 0,
+        top: this.getNewsListRect,
       });
     }
   },

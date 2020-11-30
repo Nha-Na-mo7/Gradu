@@ -612,7 +612,7 @@ input[type=checkbox] {
 .p-accounts__item:nth-child(2n+1) {
   background: #ffffff;
 }
-.p-accounts__headline {
+.p-accounts__autofollow {
   margin-bottom: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1038,7 +1038,6 @@ input[type=checkbox] {
   }
 }
 .p-header__item {
-  margin-right: 15px;
   font-family: inherit;
   line-height: 150%;
   height: 100%;

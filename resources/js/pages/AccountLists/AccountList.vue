@@ -17,27 +17,36 @@
             :date='twitter_accounts_table_updated_at'
         />
 
-        <!-- ヘッドライン -->
-        <div class="p-accounts__headline">
+        <!-- 自動フォロー欄 -->
+        <div class="p-accounts__autofollow">
+          <h2>自動フォローステータス</h2>
 
-          <!-- TODO newsタグになっているので修正すること -->
-          <!-- 自動フォローボタンの位置確認 -->
-          <div class="p-news__modal p-news__modal-show">
-            <button
-                class="c-btn c-btn__main c-btn--primary"
-                @click="toggle_auto_following"
+          <div class="">
+            <div
+                class="c-btn c-btn__follow"
                 v-if="isAutoFollowFlg"
-            >自動フォロー中...</button>
-            <button
-                class="c-btn c-btn__main c-btn--primary"
-                @click="toggle_auto_following"
+            >自動フォロー中...</div>
+            <div
+                class="c-btn c-btn__follow c-btn__follow--destroy"
                 v-else
-            >START AUTO-FOLLOW</button>
+            >START AUTO-FOLLOW</div>
           </div>
+<!--          <div class="">-->
+<!--            <button-->
+<!--                class="c-btn c-btn__follow"-->
+<!--                @click="toggle_auto_following"-->
+<!--                v-if="isAutoFollowFlg"-->
+<!--            >自動フォロー中...</button>-->
+<!--            <button-->
+<!--                class="c-btn c-btn__follow c-btn__follow&#45;&#45;destroy"-->
+<!--                @click="toggle_auto_following"-->
+<!--                v-else-->
+<!--            >START AUTO-FOLLOW</button>-->
+<!--          </div>-->
         </div>
 
         <!-- アカウントリスト -->
-        <div class="p-accounts__list">
+        <div id="accounts" class="p-accounts__list">
 
           <!-- アカウントが見つからなかった場合 -->
           <div v-if="isNothingStatus">
@@ -121,6 +130,7 @@
 
 <script>
 import Account from './Account.vue';
+import AutoFollowModal from './AutoFollowModal.vue';
 import NeedLinkage from './NeedLinkage.vue';
 import NothingAccount from './NothingAccount.vue';
 import Loading from '../../layouts/Loading.vue';
@@ -144,6 +154,7 @@ export default {
   },
   data() {
     return {
+      modal: false,
       isLoading: true, // 読み込み中か
       nothing_accounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
@@ -214,6 +225,11 @@ export default {
       }else{
         return current;
       }
+    },
+    // アカウントリストの座標までスクロールするためのプロパティ
+    getAccountsRect() {
+      var $e = $('#accounts');
+      return $e.offset().top - 60;
     }
   },
   methods: {
@@ -322,14 +338,20 @@ export default {
       this.currentPage = Number(pageNum);
     },
 
+
     scrollTop: function () {
       window.scrollTo({
-        top: 0,
+        top: this.getAccountsRect,
       });
-    }
+    },
+    // =======================
+    // モーダル関連
+    // =======================
+
   },
   components: {
     Account,
+    AutoFollowModal,
     NeedLinkage,
     NothingAccount,
     Loading,
