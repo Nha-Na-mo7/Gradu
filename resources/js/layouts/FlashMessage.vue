@@ -2,7 +2,7 @@
 <!--フラッシュメッセージ用のコンポーネント-->
 <!--===============================-->
 <template>
-<div class="c-flash" :class="bgColor" v-show="message">
+<div class="c-flash" :class="bgColor" v-show="message" @click="hideFlash">
   <div class="c-flash__column--left">
     <div class="c-flash__icon">
       <img :src="messageIcon" alt="message">
@@ -56,7 +56,15 @@ export default {
       }
       return icon;
     },
+
   },
+  methods: {
+    hideFlash() {
+      this.$store.commit('message/setContent', {
+        content: ''
+      })
+    }
+  }
 }
 </script>
 

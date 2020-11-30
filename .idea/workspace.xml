@@ -26,10 +26,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/layouts/Message.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/layouts/FlashMessage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-flash.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-flash.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/layouts/FlashMessage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/layouts/FlashMessage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/AccountLists/Account.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/message.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/message.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-footer.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/footer.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,7 +368,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="108986000" />
+      <workItem from="1606542821189" duration="110037000" />
     </task>
     <servers />
   </component>

@@ -255,7 +255,7 @@ export default {
         this.$store.commit('message/setContentSuccess', {
           content: response.data.success
         })
-        this.isFollowing = false;
+        this.follow_flg = false;
       }else{
         // フラッシュメッセージをセット
         this.$store.commit('message/setContentError', {
@@ -263,9 +263,6 @@ export default {
         })
       }
     },
-    async isFollowing_check() {
-      this.isFollowing = this.follow_flg;
-    }
   },
   components: {
     AccountTweet
@@ -276,15 +273,6 @@ export default {
       return '@' + screen_name
     }
   },
-  watch: {
-    $route: {
-      async handler() {
-        // ページの読み込み直後、フォロー状態をチェックする
-        await this.isFollowing_check();
-      },
-      immediate: true
-    }
-  }
 }
 </script>
 
