@@ -4,11 +4,13 @@
 .l-container {
   width: 100%;
   height: auto;
-  padding: 0 2%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
   &__auth {
     max-width: 768px;
-    margin: 100px auto;
+    margin: 80px auto;
     @include mq($breakpoint: md) {
       max-width: 100%;
     }

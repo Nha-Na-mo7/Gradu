@@ -17,7 +17,7 @@
     display: inline-block;
   }
   &__submit {
-    margin-top: 40px;
+    margin-top: 30px;
     text-align: center;
   }
   &__item {
@@ -38,6 +38,10 @@
       margin-bottom: 50px;
       & input {
         vertical-align: baseline;
+      }
+      @include mq() {
+        margin-top: 8px;
+        margin-bottom: 20px;
       }
     }
   }

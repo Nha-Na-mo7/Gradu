@@ -28,9 +28,9 @@
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/jquery.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-container.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-container.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/layout/l-footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/layout/l-footer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/header.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-btn.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-auth.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-auth.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-form.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -368,7 +368,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="133475000" />
+      <workItem from="1606542821189" duration="135750000" />
     </task>
     <servers />
   </component>
