@@ -2,29 +2,31 @@
 <!--ランキングページで表示される順位表一枚一枚のコンポーネント-->
 <!--===============================================-->
 <template>
-
   <tr>
-    <td>1</td>
-    <td>
-      <a
-          :href="search_url"
-          target="_blank"
-          rel="noopener noreferrer"
-      >
-        <!-- 通貨アイコン -->
-        <img
-            :src="icon_path | icon_path_filter"
-            class="p-trends__table--icon"
-            :alt="this.brand.brand.name"
+    <td>{{ this.rank + 1 }}</td>
+    <td class="">
+      <div>
+        <a
+            class="p-trends__table--link"
+            :href="search_url"
+            target="_blank"
+            rel="noopener noreferrer"
         >
-        <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
-        <span class="">{{ this.brand.brand.name }}</span>
-        <span class="c-trends__item--realname">{{ this.brand.brand.realname }}</span>
-      </a>
+          <!-- 通貨アイコン -->
+          <img
+              :src="icon_path | icon_path_filter"
+              class="p-trends__table--icon"
+              :alt="this.brand.brand.name"
+          >
+          <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
+          <span class="p-trends__item--name">{{ this.brand.brand.name }}</span>
+          <span class="p-trends__item--realname">{{ this.brand.brand.realname }}</span>
+        </a>
+      </div>
     </td>
-    <td>{{ this.brand.tweet_count }}</td>
-    <td>{{ price_max | add_JPY }}</td>
-    <td>{{ price_min | add_JPY }}</td>
+    <td class="p-trends__table--count">{{ this.brand.tweet_count }}</td>
+    <td class="u-text--right">{{ price_max | add_JPY }}</td>
+    <td class="u-text--right">{{ price_min | add_JPY }}</td>
   </tr>
 
 
@@ -39,6 +41,10 @@ export default {
   props: {
     brand: {
       type: Object,
+      required: true
+    },
+    rank: {
+      type: Number,
       required: true
     }
   },
@@ -103,11 +109,5 @@ export default {
 </script>
 
 <style scoped>
-.c-trends__item--icon {
-  height: 5rem;
-  width: 5rem;
-}
-.c-trends__item--realname {
-  font-size: 10px;
-}
+
 </style>

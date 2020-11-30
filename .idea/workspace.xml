@@ -28,6 +28,7 @@
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/Trends/Ranking.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Trends/Ranking.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/Trends/TrendList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Trends/TrendList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/object/component/c-tab.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/component/c-tab.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/object/project/p-trends.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/object/project/p-trends.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -366,7 +367,7 @@
       <workItem from="1606203414161" duration="69668000" />
       <workItem from="1606335572951" duration="44704000" />
       <workItem from="1606517111877" duration="9636000" />
-      <workItem from="1606542821189" duration="81648000" />
+      <workItem from="1606542821189" duration="91167000" />
     </task>
     <servers />
   </component>

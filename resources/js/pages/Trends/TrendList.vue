@@ -7,18 +7,11 @@
     <!-- ページタイトル -->
     <PageTitle :title='page_title'/>
 
-    <!-- 切り替えタブ -->
-    <ul class="c-tab">
-      <li class="c-tab__item u-bg-blue" @click="tab = 0" v-bind:class="{'tab__item--active': tab === 0}">過去1時間のトレンド</li>
-      <li class="c-tab__item u-bg-green" @click="tab = 1" v-bind:class="{'tab__item--active': tab === 1}">過去1日のトレンド</li>
-      <li class="c-tab__item u-bg-purple" @click="tab = 2" v-bind:class="{'tab__item--active': tab === 2}">過去1週間のトレンド</li>
-    </ul>
-
     <!-- 切り替えタブによってメインレイアウトを入れ替える-->
     <div class="p-panel">
 
       <!--メインレイアウト-->
-      <div class="p-accounts__container" v-bind:class="content_bgcolor">
+      <div class="p-accounts__container">
         <!-- リボンタグ -->
         <Ribbonnav
             :title='ribbon_page_title'
@@ -34,8 +27,21 @@
           />
         </div>
 
+        <!-- 切り替えタブ -->
+        <ul class="p-trends__tab c-tab">
+          <li class="c-tab__item" @click="tab = 0" v-bind:class="{'c-tab__item--active': tab === 0}">過去1時間</li>
+          <li class="c-tab__item" @click="tab = 1" v-bind:class="{'c-tab__item--active': tab === 1}">過去1日</li>
+          <li class="c-tab__item" @click="tab = 2" v-bind:class="{'c-tab__item--active': tab === 2}">過去1週間</li>
+        </ul>
+
+        <!-- ランキングの右上にも更新時刻を書く -->
+        <div class="p-trends__date">
+          <p>最終更新:{{ this.get_updated_at }} JST</p>
+        </div>
+
         <!-- ランキング -->
         <div class="p-trends__list">
+
           <!-- 検索中 -->
           <div v-if="isLoading_status" class="">
             <Loading />
@@ -46,6 +52,7 @@
           </div>
 
           <div v-else class="p-trends__table__area">
+
             <div class="p-trends__table">
               <table class="p-trends__table--inner">
                 <tr>
@@ -57,26 +64,28 @@
                 </tr>
                 <Ranking
                     v-show="tab === 0"
-                    v-for="trend_brand in sort_tweet_count_desc(0)"
+                    v-for="(trend_brand, index) in sort_tweet_count_desc(0)"
                     :key="trend_brand.id"
                     :brand="trend_brand"
+                    :rank="index"
                 />
                 <Ranking
                     v-show="tab === 1"
-                    v-for="trend_brand in sort_tweet_count_desc(1)"
+                    v-for="(trend_brand, index) in sort_tweet_count_desc(1)"
                     :key="trend_brand.id"
                     :brand="trend_brand"
+                    :rank="index"
                 />
                 <Ranking
                     v-show="tab === 2"
-                    v-for="trend_brand in sort_tweet_count_desc(2)"
+                    v-for="(trend_brand, index) in sort_tweet_count_desc(2)"
                     :key="trend_brand.id"
                     :brand="trend_brand"
+                    :rank="index"
                 />
 
               </table>
             </div>
-          </div>
           </div>
 
         </div>
@@ -125,21 +134,6 @@ export default {
     },
     isNothing_status(){
       return this.isNothing
-    },
-    content_bgcolor() {
-      let bgcolor = ''
-      switch (this.tab){
-        case 0:
-          bgcolor = ''
-          break;
-        case 1:
-          bgcolor = 'u-bg-green'
-          break;
-        case 2:
-          bgcolor = 'u-bg-purple'
-          break;
-      }
-      return bgcolor;
     },
     ribbon_page_title(){
       let title = '';
@@ -289,8 +283,5 @@ export default {
 </script>
 
 <style scoped>
-.p-trends__list--container{
-  transition: .5s;
 
-}
 </style>

@@ -4,96 +4,143 @@
 .p-trends {
   padding: 15px 40px;
 
+  &__tab {
+    display: flex;
+    justify-content: flex-end;
+    @include mq() {
+      width: 100%;
+      justify-content: unset;
+    }
+  }
+  &__date {
+    text-align: right;
+    font-weight: bold;
+    margin-top: $space_m;
+
+  }
+
   &__table {
+    margin: 0 auto;
+    margin-top: 15px;
+    border-radius: 4px;
+    background: #ffffff;
+    @include mq() {
+      padding: 0;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
     & tr {
       align-items: center;
-      background: #6cb2eb;
-      border: 1px solid #4d4d4d;
+      border-bottom: 1px solid #cdcdcd;
+
+      & > th , td{
+        padding: 10px 15px;
+      }
+      &:nth-of-type(2n) {
+        background: #f6f6f6;
+      }
     }
     &--area {
 
     }
+    &--count {
+      text-align: right;
+      font-weight: bold;
+      font-size: $font-size_l;
+    }
+
     &--icon {
-      width: 40px;
+      width: 25px;
+      margin-right: $space_m;
+    }
+    &--inner {
+      margin: 0 auto;
+      position: relative;
+    }
+  }
+  &__item {
+    &--name {
+      font-size: $font-size_l;
+      font-weight: bold;
+      min-width: 100px;
+    }
+    &--realname {
+      font-size: $font-size_s;
     }
   }
 
 
-
-  &__list {
-    margin: 20px 30px;
-  }
 
   // 順位パネル
-  &__item {
-    box-sizing: border-box;
-    border-radius: 4px;
-    min-height: 150px; //TODO
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 15px;
-    position: relative;
-    border: 1px solid rgba(255, 255, 255, 0);
-    color: #0b2e13;
-    font-size: 20px;
-    box-shadow: 0 0 2px #cdcdcd;
-    transition: .5s all;
-    display: flex;
-    word-break: break-word;
-
-    &:nth-child(2n) {
-      background: #f6f6f6;
-    }
-
-    &:nth-child(2n+1) {
-      background: #ffffff;
-    }
-    &:hover {
-      background: #fef7ff;
-      border: 1px solid #f66d9b;
-      box-shadow: 0 0 3px #f66d9b;
-    }
-
-    // 順位の数字がかかれるエリア
-    &--rank {
-      height: 80px;
-      width: 80px; //TODO
-      margin-right: 15px;
-      background: #FFF;
-      border-radius: 50%;
-      border: 1px solid #cdcdcd;
-    }
-
-    // ブランド名
-    &--brandname {
-      width: 600px;
-      font-size: 4.5rem;
-      line-height: 1.2;
-      font-weight: bold;
-      &:hover {
-        text-decoration: underline;
-        text-decoration-color: #0b2e13;
-      }
-    }
-
-    &--data {
-      width: 20%;
-      display: flex;
-      flex-direction: column;
-
-      .p-news__item--media {
-        height: 50%;
-        width: 100%;
-        padding: 0 10px;
-        font-size: 15px;
-      }
-
-      .p-news__item--time {
-        height: 50%;
-        width: 100%;
-        padding: 0 10px;
-        color: #4dc0b5;
-      }
-    }
-  }
+  //&__item {
+  //  box-sizing: border-box;
+  //  border-radius: 4px;
+  //  min-height: 150px; //TODO
+  //  width: 100%;
+  //  margin-bottom: 10px;
+  //  padding: 15px;
+  //  position: relative;
+  //  border: 1px solid rgba(255, 255, 255, 0);
+  //  color: #0b2e13;
+  //  font-size: 20px;
+  //  box-shadow: 0 0 2px #cdcdcd;
+  //  transition: .5s all;
+  //  display: flex;
+  //  word-break: break-word;
+  //
+  //  &:nth-child(2n) {
+  //    background: #f6f6f6;
+  //  }
+  //
+  //  &:nth-child(2n+1) {
+  //    background: #ffffff;
+  //  }
+  //  &:hover {
+  //    background: #fef7ff;
+  //    border: 1px solid #f66d9b;
+  //    box-shadow: 0 0 3px #f66d9b;
+  //  }
+  //
+  //  // 順位の数字がかかれるエリア
+  //  &--rank {
+  //    height: 80px;
+  //    width: 80px; //TODO
+  //    margin-right: 15px;
+  //    background: #FFF;
+  //    border-radius: 50%;
+  //    border: 1px solid #cdcdcd;
+  //  }
+  //
+  //  // ブランド名
+  //  &--brandname {
+  //    width: 600px;
+  //    font-size: 4.5rem;
+  //    line-height: 1.2;
+  //    font-weight: bold;
+  //    &:hover {
+  //      text-decoration: underline;
+  //      text-decoration-color: #0b2e13;
+  //    }
+  //  }
+  //
+  //  &--data {
+  //    width: 20%;
+  //    display: flex;
+  //    flex-direction: column;
+  //
+  //    .p-news__item--media {
+  //      height: 50%;
+  //      width: 100%;
+  //      padding: 0 10px;
+  //      font-size: 15px;
+  //    }
+  //
+  //    .p-news__item--time {
+  //      height: 50%;
+  //      width: 100%;
+  //      padding: 0 10px;
+  //      color: #4dc0b5;
+  //    }
+  //  }
+  //}
 }
