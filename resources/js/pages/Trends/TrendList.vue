@@ -61,21 +61,21 @@
                   <th>最高取引価格（24H）</th>
                   <th>最安取引価格（24H）</th>
                 </tr>
-                <Ranking
+                <TrendRankCard
                     v-show="tab === 0"
                     v-for="(trend_brand, index) in sort_tweet_count_desc(0)"
                     :key="trend_brand.id"
                     :brand="trend_brand"
                     :rank="index"
                 />
-                <Ranking
+                <TrendRankCard
                     v-show="tab === 1"
                     v-for="(trend_brand, index) in sort_tweet_count_desc(1)"
                     :key="trend_brand.id"
                     :brand="trend_brand"
                     :rank="index"
                 />
-                <Ranking
+                <TrendRankCard
                     v-show="tab === 2"
                     v-for="(trend_brand, index) in sort_tweet_count_desc(2)"
                     :key="trend_brand.id"
@@ -86,13 +86,9 @@
               </table>
             </div>
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
 
 </template>
@@ -103,7 +99,7 @@ import NothingTrends from './NothingTrends.vue';
 import TrendCheckbox from './TrendCheckbox.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
-import Ranking from './Ranking.vue';
+import TrendRankCard from './TrendRankCard.vue';
 import { OK } from "../../util";
 
 const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
@@ -254,7 +250,7 @@ export default {
     Loading,
     PageTitle,
     Ribbonnav,
-    Ranking,
+    TrendRankCard,
     NothingTrends,
     TrendCheckbox
   },
