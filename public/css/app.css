@@ -1849,6 +1849,9 @@ input[type=checkbox] {
   border-radius: 4px;
   z-index: 5;
   font-size: 15px;
+  font-weight: bold;
+  color: #1f1f1f;
+  text-shadow: 0 0 2px #ffffff;
   line-height: 1.2;
   padding: 15px 10px;
   position: fixed;
@@ -1888,10 +1891,10 @@ input[type=checkbox] {
   }
 }
 .c-flash__success {
-  background: #b6e395;
+  background: #acdb8b;
 }
 .c-flash__error {
-  background: #e39598;
+  background: #e08a8e;
 }
 
 .panel {

@@ -6300,7 +6300,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _uti
 /*! runtime requirements:  */
 /***/ (function() {
 
-eval("$(function () {\n  // ============================\n  // SPバーガーメニュー\n  // ============================\n  $('.js-toggle-sp-menu').on('click', function () {\n    $(this).toggleClass('active');\n    $('.js-toggle-sp-nav').toggleClass('active');\n  });\n});\n\n//# sourceURL=webpack:///./resources/js/jquery.js?");
+eval("$(function () {\n  // ============================\n  // SPバーガーメニュー\n  // ============================\n  $('.js-toggle-sp-menu').on('click', function () {\n    $(this).toggleClass('active');\n    $('.js-toggle-sp-nav').toggleClass('active');\n  }); // フラッシュメッセージのfadeout\n\n  $('.js-flash-system-message').fadeOut(5000);\n});\n\n//# sourceURL=webpack:///./resources/js/jquery.js?");
 
 /***/ }),
 
