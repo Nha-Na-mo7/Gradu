@@ -4,18 +4,18 @@
 <template>
   <div class="l-container__content">
     <!-- ページタイトル -->
-    <PageTitle :title="page_title" />
+    <PageTitle :title="pageTitle" />
 
     <!-- 切り替えタブによってメインレイアウトを入れ替える-->
     <div class="p-panel">
       <!--メインレイアウト-->
       <div class="p-trends">
         <!-- リボンタグ -->
-        <Ribbonnav :title="ribbon_page_title" :date="get_updated_at" />
+        <Ribbonnav :title="ribbonPageTitle" :date="get_updated_at" />
 
         <!-- 絞り込みエリア -->
         <div class="p-news__modal p-news__modal-show">
-          <TrendCheckbox @checked="checked_brand" @reset="reset_brand" />
+          <TrendCheckbox @checked="checkedBrand" @reset="resetBrand" />
         </div>
 
         <!-- 切り替えタブ -->
@@ -56,11 +56,11 @@
         <!-- ランキング -->
         <div class="p-trends__list">
           <!-- 検索中 -->
-          <div v-if="isLoading_status" class="">
+          <div v-if="isLoadingStatus" class="">
             <Loading />
           </div>
 
-          <div v-else-if="isNothing_status">
+          <div v-else-if="isNothingStatus">
             <NothingTrends />
           </div>
 
@@ -76,21 +76,21 @@
                 </tr>
                 <TrendRankCard
                   v-show="tab === 0"
-                  v-for="(trend_brand, index) in sort_tweet_count_desc(0)"
+                  v-for="(trend_brand, index) in sortTweetCountDesc(0)"
                   :key="trend_brand.id"
                   :brand="trend_brand"
                   :rank="index"
                 />
                 <TrendRankCard
                   v-show="tab === 1"
-                  v-for="(trend_brand, index) in sort_tweet_count_desc(1)"
+                  v-for="(trend_brand, index) in sortTweetCountDesc(1)"
                   :key="trend_brand.id"
                   :brand="trend_brand"
                   :rank="index"
                 />
                 <TrendRankCard
                   v-show="tab === 2"
-                  v-for="(trend_brand, index) in sort_tweet_count_desc(2)"
+                  v-for="(trend_brand, index) in sortTweetCountDesc(2)"
                   :key="trend_brand.id"
                   :brand="trend_brand"
                   :rank="index"
@@ -121,26 +121,23 @@ export default {
       isLoading: false,
       isNothing: false,
       tab: 0,
-      trend_data_hour: [],
-      trend_data_day: [],
-      trend_data_week: [],
-      checked_brands: [],
-      search_data: {
-        type: 1,
-      },
+      trendDataHour: [],
+      trendDataDay: [],
+      trendDataWeek: [],
+      checkedBrands: [],
     };
   },
   computed: {
-    page_title() {
+    pageTitle() {
       return PAGE_TITLE;
     },
-    isLoading_status() {
+    isLoadingStatus() {
       return this.isLoading;
     },
-    isNothing_status() {
+    isNothingStatus() {
       return this.isNothing;
     },
-    ribbon_page_title() {
+    ribbonPageTitle() {
       let title = "";
       if (this.tab === 0) {
         title = "過去1時間のトレンド";
@@ -152,25 +149,25 @@ export default {
       return title;
     },
     // それぞれに対応した配列を返す
-    choice_trend_data: function () {
+    choiceTrendData: function () {
       return function (type) {
         let items;
         switch (type) {
           case 0:
-            items = this.trend_data_hour;
+            items = this.trendDataHour;
             break;
           case 1:
-            items = this.trend_data_day;
+            items = this.trendDataDay;
             break;
           case 2:
-            items = this.trend_data_week;
+            items = this.trendDataWeek;
             break;
         }
         return items;
       };
     },
     // 指定のidの銘柄に絞った配列を返却する(チェックされた通貨に絞る)
-    refine_brands: function () {
+    refineBrands: function () {
       return function (array, checked) {
         // 何もチェックされていない時は絞り込まない
         if (checked.length === 0) {
@@ -185,11 +182,11 @@ export default {
       };
     },
     // ツイート数が多い順に並び替えたデータを返却する
-    sort_tweet_count_desc: function () {
+    sortTweetCountDesc: function () {
       return function (type) {
-        const checkedbox = this.checked_brands;
-        let items = this.choice_trend_data(type);
-        let refined = this.refine_brands(items, checkedbox);
+        const checkedbox = this.checkedBrands;
+        let items = this.choiceTrendData(type);
+        let refined = this.refineBrands(items, checkedbox);
         const sorted_item = refined.slice().sort(function (a, b) {
           return b.tweet_count - a.tweet_count;
         });
@@ -199,7 +196,7 @@ export default {
 
     // 配列の最初にある更新時刻を最終更新時刻として表示する
     get_updated_at() {
-      let items = this.choice_trend_data(this.tab);
+      let items = this.choiceTrendData(this.tab);
       if (items.length === 0) {
         return "";
       }
@@ -208,7 +205,7 @@ export default {
   },
   methods: {
     // 指定した時間帯のトレンドテーブルを取得する
-    async fetch_trend(type) {
+    async fetchTrend(type) {
       // トレンド一覧を取得
       const response = await axios
         .get(`/tweet/count`, { params: { type: type } })
@@ -219,13 +216,13 @@ export default {
         // それぞれのトレンドデータに格納
         switch (type) {
           case 0:
-            this.trend_data_hour = response.data;
+            this.trendDataHour = response.data;
             break;
           case 1:
-            this.trend_data_day = response.data;
+            this.trendDataDay = response.data;
             break;
           case 2:
-            this.trend_data_week = response.data;
+            this.trendDataWeek = response.data;
             break;
         }
       } else {
@@ -233,8 +230,8 @@ export default {
         this.isNothing = true;
       }
     },
-    // 上記のfetch_trendを、時間・日・週の全てで取得する
-    async all_fetch() {
+    // 上記のfetchTrendを、時間・日・週の全てで取得する
+    async allFetch() {
       if (this.isLoading) {
         return false;
       }
@@ -242,19 +239,19 @@ export default {
       this.isLoading = true;
 
       for (let type = 0; type <= 2; type++) {
-        this.fetch_trend(type);
+        this.fetchTrend(type);
       }
       // 読み込み中を解除
       this.isLoading = false;
     },
     //チェックボックスでチェックされた値を格納
-    checked_brand(array) {
-      this.reset_brand();
-      this.checked_brands = array;
+    checkedBrand(array) {
+      this.resetBrand();
+      this.checkedBrands = array;
     },
     // チェックボックスがリセットされた時の処理
-    reset_brand() {
-      this.checked_brands = [];
+    resetBrand() {
+      this.checkedBrands = [];
     },
   },
   components: {
@@ -269,7 +266,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、トレンド一覧を取得
-        await this.all_fetch();
+        await this.allFetch();
       },
       immediate: true,
     },

@@ -8,13 +8,13 @@
       <div>
         <a
           class="p-trends__table--link"
-          :href="search_url"
+          :href="searchUrl"
           target="_blank"
           rel="noopener noreferrer"
         >
           <!-- 通貨アイコン -->
           <img
-            :src="icon_path | icon_path_filter"
+            :src="iconPath | iconPathFilter"
             class="p-trends__table--icon"
             :alt="this.brand.brand.name"
           />
@@ -27,8 +27,8 @@
       </div>
     </td>
     <td class="p-trends__table--count">{{ this.brand.tweet_count }}</td>
-    <td class="u-text--right">{{ price_max | add_JPY }}</td>
-    <td class="u-text--right">{{ price_min | add_JPY }}</td>
+    <td class="u-text--right">{{ priceMax | addJPY }}</td>
+    <td class="u-text--right">{{ priceMin | addJPY }}</td>
   </tr>
 </template>
 
@@ -50,47 +50,47 @@ export default {
   },
   data() {
     return {
-      transaction_price: [],
+      transactionPrice: [],
     };
   },
   computed: {
     // アイコンのパス
-    icon_path() {
+    iconPath() {
       return this.brand.brand.icon;
     },
     // 24時間の最低取引価格
-    price_min() {
-      return this.transaction_price.price_min;
+    priceMin() {
+      return this.transactionPrice.priceMin;
     },
     // 24時間の最高取引価格
-    price_max() {
-      return this.transaction_price.price_max;
+    priceMax() {
+      return this.transactionPrice.priceMax;
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
-    search_url() {
+    searchUrl() {
       return TWITTER_SEARCH_URL + this.brand.brand.name;
     },
   },
   methods: {
     // 24時間以内の取引価格の取得
-    async get_transaction_price() {
+    async getTransactionPrice() {
       const response = await axios.get(`/transaction/price`, {
         params: { brand_id: this.brand.brand_id },
       });
 
       // 通信成功時(取引価格だけ取得エラーするのは考えにくいが、もし起きた場合は「不明」と表示させる)
       if (response.status === OK && response.data !== "") {
-        this.transaction_price = response.data;
+        this.transactionPrice = response.data;
       }
     },
   },
   filters: {
     // svgアイコンのパス
-    icon_path_filter: function (icon_path) {
-      return BRAND_ICON_PATH + icon_path;
+    iconPathFilter: function (iconPath) {
+      return BRAND_ICON_PATH + iconPath;
     },
     // JPYを付与する。取得できていない場合は不明とする。
-    add_JPY: function (price) {
+    addJPY: function (price) {
       if (price >= 0) {
         return price + " JPY";
       } else {
@@ -102,7 +102,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、トレンド一覧を取得
-        await this.get_transaction_price();
+        await this.getTransactionPrice();
       },
       immediate: true,
     },
