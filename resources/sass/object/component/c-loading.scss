@@ -34,7 +34,6 @@
     }
 
     // 10個の円があり、時計回りに置かれている。アニメーションの開始を0.1sごとにずらしている
-    // TODO 角度表記はベタ書きで提出するかだけ事前に確認してください
     &--2 {
       -webkit-transform: rotate(36deg);
       -ms-transform: rotate(36deg);

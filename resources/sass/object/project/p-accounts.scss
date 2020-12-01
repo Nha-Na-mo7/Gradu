@@ -156,7 +156,7 @@
     // 投稿時刻
     & span {
       font-size: $font-size_ss;
-      color: #b4b4b4;
+      color: #a4a4a4;
     }
     @include mq($breakpoint: md) {
       font-size: $font-size_s;

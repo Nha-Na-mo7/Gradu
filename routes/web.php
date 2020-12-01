@@ -47,11 +47,6 @@ Route::group(['middleware' => 'auth'], function (){
   // =============================================
   // Twitterアカウント一覧画面関連
   // =============================================
-  // TODO test
-  Route::get('/twitter/testtest', 'TwitterAccountListController@batch_follow_db_insert');
-  
-  
-  
   // アカウント一覧画面/テーブルからアカウント情報を取得
   Route::get('/accounts/list', 'TwitterAccountListController@get_accounts_list');
   // アカウントコンポーネント/指定したユーザーの新着ツイートを取得

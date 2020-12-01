@@ -783,7 +783,7 @@ input[type=checkbox] {
 }
 .p-accounts__description span {
   font-size: 10px;
-  color: #b4b4b4;
+  color: #a4a4a4;
 }
 @media screen and (max-width: 768px) {
   .p-accounts__description {
