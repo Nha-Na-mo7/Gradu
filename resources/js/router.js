@@ -1,14 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 
-// ページコンポーネントのインポート
-import Index from './pages/Index.vue';
-// 認証系 過去作さん
-// import Login from './pages/Auths/Login.vue';
-// import Register from './pages/Auths/Register.vue';
-// import RegisterCompletion from './pages/Auths/RegisterCompletion.vue';
-// import PassResetMailSend from './pages/Auths/PassResetMailSend.vue';
-// import PassResetForm from './pages/Auths/PassResetForm.vue';
 // Googleニュース
 import NewsList from './pages/News/NewsList.vue';
 // Twitterアカウント一覧
@@ -25,7 +17,7 @@ import SystemError500 from './pages/errors/System.vue';
 import NotFound404 from './pages/errors/NotFound.vue';
 
 // ストアのインポート
-import auth from './store/authenticate_store.js';
+import auth from './store/authenticate.js';
 
 // VueRouterプラグインの使用
 Vue.use(VueRouter);
@@ -45,10 +37,6 @@ async function requireLogin(to, from, next){
 
 // パスとコンポーネントをマッピング
 const routes = [
-  {
-    path: '/',
-    component: Index
-  },
   {
     beforeEnter: requireLogin,
     path: '/trends',
