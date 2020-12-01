@@ -1,0 +1,126 @@
+// ==============
+//  p-landing
+//  =============
+.p-landing {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 88px 5%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__introduction {
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    text-align: center;
+    @include mq() {
+      right: unset;
+    }
+
+    &--title {
+      //font-family: $font-family_corp;
+      font-size: 48px;
+      font-weight: bold;
+      line-height: 1.5;
+      @include mq() {
+        font-size: 25px;
+      }
+
+      text-shadow: 0 3px 1px #18b3ba;
+    }
+    &--subtitle {
+      margin-top: 16px;
+      margin-bottom: 48px;
+      font-size: 24px;
+      @include mq() {
+        font-size: 18px;
+      }
+    }
+    &--btn {
+
+    }
+  }
+  &__information {
+
+  }
+
+  &__service {
+    width: 100%;
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    @include mq($breakpoint: md) {
+      flex-direction: column;
+    }
+
+    &--item {
+      height: 480px;
+      width: 30%;
+      background: #f9fffe;
+      box-shadow: 0 4px 10px #cdcdcd;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      transition: .3s;
+      position: relative;
+      @include mq($breakpoint: md) {
+        width: 90%;
+        height: 100%;
+        margin-bottom: 15px;
+      }
+      &--img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+      }
+      &--info {
+        margin-top: 24px;
+        &--title {
+          font-size: 22px;
+          font-weight: bold;
+          margin-top: 5px;
+          margin-bottom: 12px;
+        }
+        &--text {
+          font-size: 16px;
+          line-height: 1.5;
+          color: #777;
+          word-break: break-all;
+        }
+      }
+    }
+  }
+
+  &__section {
+    &--info {
+
+    }
+    &--title {
+      margin-top: 40px;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+    }
+    &--text {
+      margin-top: 32px;
+      font-size: 20px;
+      color: #8a8a8a;
+      line-height: 1.6;
+      text-align: center;
+    }
+  }
+
+  &__footer {
+    padding-bottom: 180px;
+  }
+
+
+}

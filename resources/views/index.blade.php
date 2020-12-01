@@ -10,94 +10,108 @@
 @section('keywords', 'CryptoTrend, クリプトトレンド, 仮想通貨, 暗号通貨, ビットコイン, アルトコイン, BTC, イーサリアム, ETH, Twitter, Twitterアカウント, ツイッター, 自動フォロー, トレンド')
 
 @section('content')
-    {{--ヒーローバナー--}}
+    {{-- ヒーローバナー --}}
     <section class="l-hero p-landing">
         <div class="p-landing__introduction">
             <h1 class="p-landing__introduction--title">
                 仮想通貨のトレンドを
                 <br />追うのに疲れていませんか？
             </h1>
-            <p>Crypto Trend で、最新のトレンド通貨を知ろう</p>
+            <p class="p-landing__introduction--subtitle">Crypto Trend で、最新のトレンド通貨を知ろう</p>
             @guest
-                <div class="">
+                <div class="p-landing__introduction--btn">
                     <a href="{{ route('register') }}" class="">
                         <button class="c-btn c-btn__auth">無料で新規登録</button>
                     </a>
-                    <div class="">
-                        <a class="" href="{{ route('login') }}"><p>既にアカウントをお持ちの方</p></a>
-                    </div>
                 </div>
             @endguest
         </div>
     </section>
 
-    {{--CryptoTrendとは？--}}
-    <section class="p-landing__container p-landing__info">
-        <div class="">
-            <h1 class="">"仮想通貨"に特化した、トレンド情報サービスです</h1>
-            <div>
-                <p>トレンドの移り変わりが激しい仮想通貨の情報を追いきれない...</p>
-                <p>こんな悩みはCryptoTrendですぐに解決。</p>
-                <p>CryptoTrendは、最も人気のある仮想通貨をリアルタイムで確認可能です。</p>
-            </div>
-        </div>
-    </section>
-
-    {{--ツイート数を集計してトレンドが一眼でわかる--}}
-    <section class="p-section p-section__three">
-        <div class="">
-            <div class="">
-                {{-- <img src="" alt />--}}
-            </div>
-            <div class="">
-                <h1 class="">最もツイートされている通貨をチェックしよう</h1>
-                <p class="">
-                    Twitterで今最もツイートされている通貨は何？
-                    CoinCheckで取り扱う通貨1つ1つに対してのツイートが集計されているため、
-                    常に最新のトレンドを漏らすことなくチェック出来ます。
+    {{-- CryptoTrendとは？ --}}
+    <section class="p-landing__section p-landing__information">
+        <div class="p-landing__container">
+            <div class="p-landing__section--info">
+                <h2 class="p-landing__section--title">
+                    仮想通貨 に特化した、トレンド情報サービスです
+                </h2>
+                <p class="p-landing__section--text">
+                    <span>トレンドの移り変わりが激しい仮想通貨の情報を追いきれない...</span><br /><br />
+                    <span>こんな悩みはCryptoTrendですぐに解決。</span><br />
+                    <span>CryptoTrendは、最も人気のある仮想通貨の情報を、無料でリアルタイムに確認可能です。</span>
                 </p>
             </div>
         </div>
     </section>
 
-    {{--仮想通貨ニュースをすぐに確認しよう--}}
-    <section class="p-section p-section__three">
-        <div class="">
-            <div class="">
-                {{--<img src="" alt />--}}
-            </div>
-            <div class="">
-                <h1 class="">最新の仮想通貨ニュースをチェックしよう</h1>
-                <p class="">
-                    仮想通貨に特化した最新のGoogleニュースがすぐに検索可能です。
-                    トレンド通貨をすぐに調べられるので、情報を取りこぼすことがありません。
+    {{-- 3大機能の紹介 --}}
+    <section class="p-landing__section p-landing__contents u-bg-blue">
+        <div class="p-landing__container">
+            <div class="p-landing__section--info">
+                <h2 class="p-landing__section--title">トレンドを確実に捉える3つの機能</h2>
+                <p class="p-landing__section--text">
+                    <span>CryptoTrendは、3つの機能で仮想通貨のトレンドを見逃しません。</span><br />
                 </p>
+            </div>
+            <div class="p-landing__service">
+                {{-- ツイート数 --}}
+                <div class="p-landing__service--item">
+                    <div class="">
+                        <img class="p-landing__service--item--img" src="storage/images/figures/index_section_twitter350.jpeg" alt="仮想通貨トレンド" />
+                    </div>
+                    <div class="p-landing__service--item--info">
+                        <h1 class="p-landing__service--item--info--title">通貨別ツイート数集計</h1>
+                        <p class="p-landing__service--item--info--text">
+                            通貨ごとにツイートを集計してランキングにしているため、
+                            常にTwitterでのトレンド通貨をわかりやすくチェック出来ます。
+                        </p>
+                    </div>
+                </div>
+
+                {{-- 仮想通貨ニュース --}}
+                <div class="p-landing__service--item">
+                    <div class="">
+                        <img class="p-landing__service--item--img" src="storage/images/figures/index_section_news.jpeg" alt="仮想通貨ニュース" />
+                    </div>
+                    <div class="p-landing__service--item--info">
+                        <h1 class="p-landing__service--item--info--title">仮想通貨ニュース</h1>
+                        <p class="p-landing__service--item--info--text">
+                            仮想通貨に特化した最新のニュースが検索可能です。
+                            トレンド通貨をすぐに調べられるので、情報を取りこぼすことがありません。
+                        </p>
+                    </div>
+                </div>
+
+
+                {{-- アカウント一覧 --}}
+                <div class="p-landing__service--item">
+                    <div class="">
+                        <img class="p-landing__service--item--img" src="storage/images/figures/index_section_follow.jpeg" alt="仮想通貨アカウント一覧" />
+                    </div>
+                    <div class="p-landing__service--item--info">
+                        <h1 class="p-landing__service--item--info--title">自動フォロー</h1>
+                        <p class="p-landing__service--item--info--text">
+                            仮想通貨に関連したTwitterアカウントを自動でフォローすることが可能です。
+                            面倒なTwitter運用も、放っておくだけで完了します。
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    {{--気になる仮想通貨ツイッターユーザーをフォローしよう--}}
-    <section class="p-section p-section__three">
-        <div class="">
-            <div class="">
-                {{-- <img src="" alt />--}}
-            </div>
-            <div class="">
-                <h1 class="">仮想通貨ユーザーをもれなくフォローしよう</h1>
-                <p class="">
-                    仮想通貨に関連したTwitterユーザーをフォローすることも出来ます。
-                    さらに、自動フォロー機能を使えば、何もしなくても仮想通貨の関連アカウントを網羅できます。
-                </p>
-            </div>
-        </div>
-    </section>
 
     {{--無料で今すぐはじめよう--}}
-    <section class="p-section p-section__footer">
-        <h1 class="">
-            さっそく始めよう
-        </h1>
-        <p>登録はもちろん無料。仮想通貨の最先端を掴みましょう。</p>
+    <section class="p-landing__container p-landing__section p-landing__footer">
+        <div class="p-landing__section--info">
+            <h2 class="p-landing__section--title">
+                さっそく始めよう
+            </h2>
+            <p class="p-landing__section--text u-mb-3l">
+                <span>登録はもちろん無料。仮想通貨の最先端を掴みましょう。</span>
+            </p>
+        </div>
         @guest
             <div class="">
                 <a href="{{ route('register') }}">
