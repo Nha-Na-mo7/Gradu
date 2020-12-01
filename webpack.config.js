@@ -53,6 +53,7 @@ module.exports = {
               sourceMap: true,
               postcssOptions: {
                 plugins: [
+                  // http://autoprefixer.github.io/
                   // Autoprefixerを有効化
                   require("autoprefixer")({
                     // Android4.4以上、iOS10以上でベンダープレフィックスを付与する
@@ -60,7 +61,7 @@ module.exports = {
                     // IEは非対応
                     browsers: [
                       "last 2 versions",
-                      "Android >= 4",
+                      "Android >= 4.4",
                       "iOS >= 10",
                     ],
                   }),
@@ -130,6 +131,4 @@ module.exports = {
     ignored: /node_modules/
   }
 };
-
-// TODO 11/19時点での設定、リローダーもつけたいところ
 // 以上設定したら、npm run bundle
