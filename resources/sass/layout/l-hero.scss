@@ -3,11 +3,25 @@
 //  =============
 .l-hero {
   // public/css/app.cssから見た相対パスにすること
-  background-image: url("../storage/images/figures/hero_btc.jpg");
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
 
+  // background-attachment:fixedを使ったパララックスデザインはiOSに対応しない
+  //background-image: url("../storage/images/figures/hero_btc.jpg");
+  //background-attachment: fixed;
+  //background-repeat: no-repeat;
+  //background-size: cover;
   width: 100%;
-  height: 70vh;
+  height: 100vh;
+
+  &:before{
+    content: "";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100vh;
+    background: url("../storage/images/figures/hero_btc.jpg") center no-repeat;
+    background-size: cover;
+  }
 }

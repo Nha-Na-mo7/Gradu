@@ -548,12 +548,20 @@ input[type=checkbox] {
 }
 
 .l-hero {
-  background-image: url("../storage/images/figures/hero_btc.jpg");
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
   width: 100%;
-  height: 70vh;
+  height: 100vh;
+}
+.l-hero:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100vh;
+  background: url("../storage/images/figures/hero_btc.jpg") center no-repeat;
+  background-size: cover;
 }
 
 .l-container {
@@ -1200,7 +1208,7 @@ input[type=checkbox] {
 }
 .p-landing__introduction {
   position: absolute;
-  top: 20%;
+  top: 30%;
   right: 10%;
   text-align: center;
 }
@@ -1299,6 +1307,9 @@ input[type=checkbox] {
   line-height: 1.5;
   color: #777;
   word-break: break-all;
+}
+.p-landing__section {
+  background: #ffffff;
 }
 .p-landing__section--title {
   margin-top: 40px;

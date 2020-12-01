@@ -33,7 +33,8 @@
         <div class="p-landing__container">
             <div class="p-landing__section--info">
                 <h2 class="p-landing__section--title">
-                    仮想通貨 に特化した、トレンド情報サービスです
+                    CryptoTrendは<br /><br />
+                    「仮想通貨」 に特化したトレンド情報サービスです
                 </h2>
                 <p class="p-landing__section--text">
                     <span>トレンドの移り変わりが激しい仮想通貨の情報を追いきれない...</span><br /><br />
@@ -103,27 +104,29 @@
 
 
     {{--無料で今すぐはじめよう--}}
-    <section class="p-landing__container p-landing__section p-landing__footer">
-        <div class="p-landing__section--info">
-            <h2 class="p-landing__section--title">
-                さっそく始めよう
-            </h2>
-            <p class="p-landing__section--text u-mb-3l">
-                <span>登録はもちろん無料。仮想通貨の最先端を掴みましょう。</span>
-            </p>
+    <section class="p-landing__section p-landing__footer">
+        <div class="p-landing__container">
+            <div class="p-landing__section--info">
+                <h2 class="p-landing__section--title">
+                    さっそく始めよう
+                </h2>
+                <p class="p-landing__section--text u-mb-3l">
+                    <span>登録はもちろん無料。仮想通貨の最先端を掴みましょう。</span>
+                </p>
+            </div>
+            @guest
+                <div class="">
+                    <a href="{{ route('register') }}">
+                        <button class="c-btn c-btn__auth">無料で新規登録</button>
+                    </a>
+                </div>
+            @else
+                <div class="">
+                    <a href="{{ route('trend.index') }}">
+                        <button class="c-btn c-btn__auth">トレンドをチェック</button>
+                    </a>
+                </div>
+            @endguest
         </div>
-        @guest
-            <div class="">
-                <a href="{{ route('register') }}">
-                    <button class="c-btn c-btn__auth">無料で新規登録</button>
-                </a>
-            </div>
-        @else
-            <div class="">
-                <a href="{{ route('trend.index') }}">
-                    <button class="c-btn c-btn__auth">トレンドをチェック</button>
-                </a>
-            </div>
-        @endguest
     </section>
 @endsection
