@@ -11,7 +11,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // [定数] webpack の出力オプションを指定します
 // 'production' か 'development' を指定
 // ★ 本番前に必ずproductionに変更すること！！！
-const MODE = "development";
+const MODE = "production";
 // ソースマップの利用有無(productionのときはソースマップを利用しない)
 const enabledSourceMap = MODE === "production";
 
