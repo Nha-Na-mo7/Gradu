@@ -117,6 +117,8 @@ Route::group(['middleware' => 'auth'], function (){
   // =============================================
   // 指定のIDの最終更新日時を取得する
   Route::get('/updated/at/table', 'SystemController@get_updated_at');
+  // システムエラーの時
+  Route::get('/500', 'IndexController@error')->name('home.error');
 });
 
 // ==========================================================

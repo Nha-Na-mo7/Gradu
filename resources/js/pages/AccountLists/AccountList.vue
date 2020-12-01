@@ -5,21 +5,21 @@
   <div class="l-container__content">
     <AutoFollowModal
       v-if="modal"
-      :auto_flg="!!auto_follow_flg"
+      :autoFlg="!!auto_follow_flg"
       @close="closeModal"
-      @toggle_auto_follow_flg="toggle_auto_following"
+      @toggleAutoFollowFlg="toggleAutoFollowing"
     />
 
     <!-- ページタイトル -->
-    <PageTitle :title="page_title" />
+    <PageTitle :title="pageTitle" />
 
     <!--メインレイアウト-->
     <div v-if="isExistTwitterAccount" class="p-accounts">
       <div>
         <!-- リボンタグ -->
         <Ribbonnav
-          :title="page_title"
-          :date="twitter_accounts_table_updated_at"
+          :title="pageTitle"
+          :date="twitterAccountsTableUpdatedAt"
         />
 
         <!-- 自動フォロー欄 -->
@@ -27,7 +27,7 @@
           <div class="p-accounts__autofollow--status">
             <p>
               自動フォローステータス:
-              <span>{{ isAutoFollowFlg | auto_follow_status }}</span>
+              <span>{{ isAutoFollowFlg | autoFollowStatusFilter }}</span>
             </p>
           </div>
           <div>
@@ -156,28 +156,28 @@ export default {
     return {
       modal: false,
       isLoading: true, // 読み込み中か
-      nothing_accounts: false, // 検索した結果アカウントが見つからなかったか
+      nothingAccounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
       twitter_id: 1,
       auto_follow_flg: false,
       updated_at: "",
-      follow_list: [],
+      followList: [],
       accounts: [],
       parPage: 10,
       currentPage: 1,
     };
   },
   computed: {
-    page_title() {
+    pageTitle() {
       return PAGE_TITLE;
     },
     // アカウント一覧の最終更新時刻
-    twitter_accounts_table_updated_at() {
+    twitterAccountsTableUpdatedAt() {
       return this.updated_at;
     },
     // アカウントが見つからなかったかを返すcomputed
     isNothingStatus() {
-      return this.nothing_accounts;
+      return this.nothingAccounts;
     },
     // オートフォローがONがどうか
     isAutoFollowFlg() {
@@ -191,8 +191,8 @@ export default {
     checkAlreadyFollow: function () {
       return function (id) {
         // フォローリストをループさせ、TwitterIDと一致していたらtrueを返す
-        for (var i = 0, len = this.follow_list.length; i < len; i++) {
-          if (id === this.follow_list[i]["follow_target_id"]) {
+        for (var i = 0, len = this.followList.length; i < len; i++) {
+          if (id === this.followList[i]["follow_target_id"]) {
             return true;
           }
         }
@@ -234,7 +234,7 @@ export default {
   },
   methods: {
     // ログイン中のユーザーデータを取得する
-    async get_user() {
+    async getUser() {
       const response = await axios
         .get(`/user/info`)
         .catch((error) => error.response || error);
@@ -246,12 +246,12 @@ export default {
         this.auto_follow_flg = response.data.auto_follow_flg ?? 0;
       } else {
         // 取得できなかった場合は、アカウント情報を表示させない
-        this.nothing_accounts = true;
+        this.nothingAccounts = true;
       }
       this.isLoading = false;
     },
     // ログイン中のユーザーのフォローリストを取得する
-    async get_follow_list() {
+    async getFollowList() {
       const response = await axios
         .get(`/accounts/followlist`)
         .catch((error) => error.response || error);
@@ -259,9 +259,9 @@ export default {
       // エラーチェック
       if (response.status === OK) {
         // フォーム用にデータを格納
-        this.follow_list = response.data;
+        this.followList = response.data;
       } else {
-        this.nothing_accounts = true;
+        this.nothingAccounts = true;
       }
     },
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
@@ -281,12 +281,12 @@ export default {
       if (response.status === OK) {
         this.accounts = response.data;
 
-        // そのページにアカウントがないor通信が重いなどで読み込めないとき、nothing_accountsをtrueとする
+        // そのページにアカウントがないor通信が重いなどで読み込めないとき、nothingAccountsをtrueとする
         if (response.data.length === 0) {
-          this.nothing_accounts = true;
+          this.nothingAccounts = true;
         }
       } else {
-        this.nothing_accounts = true;
+        this.nothingAccounts = true;
       }
       this.isLoading = false;
     },
@@ -329,7 +329,7 @@ export default {
       this.modal = false;
     },
     // 自動フォローのON/OFF切り替え
-    toggle_auto_following() {
+    toggleAutoFollowing() {
       this.auto_follow_flg = !this.auto_follow_flg;
     },
   },
@@ -343,7 +343,7 @@ export default {
     Ribbonnav,
   },
   filters: {
-    auto_follow_status: function (auto_flg) {
+    autoFollowStatusFilter: function (auto_flg) {
       if (auto_flg) {
         return "ON";
       } else {
@@ -355,8 +355,8 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、DBからTwitterアカウント一覧を取得
-        await this.get_user();
-        await this.get_follow_list();
+        await this.getUser();
+        await this.getFollowList();
         await this.fetchAccounts();
         await this.fetchUpdatedAt();
       },

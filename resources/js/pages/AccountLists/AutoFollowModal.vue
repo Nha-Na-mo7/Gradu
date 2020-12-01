@@ -38,14 +38,14 @@
         <div class="c-modal__btn">
           <button
             class="c-btn c-btn__follow c-btn__follow--destroy"
-            @click="toggle_auto_following"
-            v-if="is_auto_follow_flg"
+            @click="toggleAutoFollowing"
+            v-if="isAutoFollowFlg"
           >
             自動フォローを解除する
           </button>
           <button
             class="c-btn c-btn__follow"
-            @click="toggle_auto_following"
+            @click="toggleAutoFollowing"
             v-else
           >
             自動フォローを開始する
@@ -61,14 +61,14 @@ import { OK } from "../../util.js";
 
 export default {
   props: {
-    auto_flg: {
+    autoFlg: {
       type: Boolean,
       required: true,
     },
   },
   computed: {
-    is_auto_follow_flg() {
-      return this.auto_flg;
+    isAutoFollowFlg() {
+      return this.autoFlg;
     },
   },
   methods: {
@@ -77,13 +77,13 @@ export default {
       this.$emit("close");
     },
     // 親コンポーネントの自動フォローフラグを切り替える
-    toggle_follow_flg_parent() {
-      this.$emit("toggle_auto_follow_flg");
+    toggleFollowFlgParent() {
+      this.$emit("toggleAutoFollowFlg");
     },
     // 自動フォローのON/OFF切り替え
-    async toggle_auto_following() {
+    async toggleAutoFollowing() {
       var result = false;
-      const flg = this.is_auto_follow_flg;
+      const flg = this.isAutoFollowFlg;
       if (flg) {
         result = confirm("自動フォローをOFFにします。よろしいですか？");
       } else {
@@ -101,7 +101,7 @@ export default {
           this.$store.commit("message/setContentSuccess", {
             content: response.data.success,
           });
-          this.toggle_follow_flg_parent();
+          this.toggleFollowFlgParent();
         } else {
           // フラッシュメッセージをセット
           this.$store.commit("message/setContentError", {

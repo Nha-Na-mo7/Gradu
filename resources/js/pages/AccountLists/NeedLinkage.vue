@@ -32,8 +32,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.renkei {
-  text-align: center;
-}
-</style>
+<style scoped></style>

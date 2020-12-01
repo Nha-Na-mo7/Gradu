@@ -276,7 +276,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.p-accounts__item {
-}
-</style>
+<style scoped></style>
