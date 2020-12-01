@@ -22,17 +22,17 @@ class TwitterAccountListController extends Controller
   
     // twitterAPIが1日にフォローできる最大数。
     // ただし1日に1回のリセットだとフォローに偏りが出やすくなるので、
-    // 処理では1/2した12時間ごとにフォローカウントをリセットするようにしている。
+    // 処理では1/2した200/12hと考えて、12時間ごとにフォローカウントをリセットするようにしている。
     const DAILY_LIMIT_FOLLOW = 400;
-    // twitterAPIが15分の間にフォローできる最大数。こちらも15分ごとのカウントリセットで偏りが出ることを想定して少し少ない人数に設定。
+    // twitterAPIが15分の間にフォローできる最大数。こちらも15分ごとのカウントリセットで偏りが出ることを想定して若干少ない人数に設定。
     const MIN_LIMIT_FOLLOW = 12;
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
     const UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID = 1;
   
     
-    // =====================================================
+    // =======================================
     // ビューを返却する
-    // =====================================================
+    // =======================================
     public function index(){
       return view('pages.accountlist');
     }
@@ -93,9 +93,9 @@ class TwitterAccountListController extends Controller
       // APIリクエストの前準備
       // --------------------------
       
-      $query = '沢口愛華'; // 検索キーワード
+      $query = '仮想通貨'; // 検索キーワード
       $count = 20; // 1回の取得件数
-      $page = 50; // 検索ページ。これを終わるまで繰り返す。
+      $page = 1; // 検索ページ。これを終わるまで繰り返す。
       
       // ループ内で一度更新処理を行ったアカウントのIDを格納する
       $updateded_accounts = [];
@@ -218,7 +218,7 @@ class TwitterAccountListController extends Controller
                   $addlist['tweet_created_at'] = date('Y-m-d H:i:s', strtotime($created_at));
                 }
                 
-                // 画像ツイートがあれば画像を抽出してDBに格納する([media]=>[0]=>[media_url]
+                // 画像ツイートがあれば画像を抽出してDBに格納する([media]=>[0]=>[media_url]に1枚だけ画像が格納されている。
                 Log::debug('***** 画像のチェックをします *****');
                 if (isset($tweetreq->entities->media)) {
                   Log::debug('画像が存在します');
@@ -228,9 +228,7 @@ class TwitterAccountListController extends Controller
                   Log::debug('画像はありません');
                   $addlist['media_url'] = null;
                 }
-                
                 $tweetlist = $addlist;
-                
               }
               // 鍵垢の場合は、アカウントのID以外nullとしてテーブルにいれる
               // これは更新処理の時、公開→鍵垢へ変わっていたユーザーのツイートをnullとして更新するため
@@ -310,8 +308,6 @@ class TwitterAccountListController extends Controller
         exit();
       }
     }
-    
-
     
     // =======================================
     // 指定したアカウントをフォローする(ボタンから)
@@ -472,7 +468,6 @@ class TwitterAccountListController extends Controller
       }
       return response(['success' => $msg], 200);
     }
-    
     
     // =================================
     // 自動フォロー(AUTO FOLLOW) ※バッチ処理
@@ -649,48 +644,11 @@ class TwitterAccountListController extends Controller
       Log::debug('▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ 自動フォローを終了します。 bye ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲');
       Log::debug('===========================================================');
     }
-  
-  
-  
-    // =======================================
-    // アカウントと対象アカウントとのフォロー関係を取得
-    // =======================================
-    public function lookup_follow($account_id, $token, $token_secret)
-    {
-      /* GET friendships/lookup - フォロー関係の確認
-       *
-       * ユーザーに変更されることがない"user_id"を指定。
-       * user_id:必須・フォロー先のアカウントID
-       */
-      Log::debug('==============================================');
-      Log::debug('TwitterController.lookup_follow フォロー関係取得');
-      Log::debug('==============================================');
-      $target_user_id = $account_id; // フォロー対象のアカウントのID。
-      // $target_user_id = 1044456766241558529; // 削除されているID・テスト用
-      
-      // ユーザーのインスタンスを作成
-      $connection = (new TwitterController)->connection_instanse_users($token, $token_secret);
-      
-      // APIリクエスト
-      $twitterRequest = $connection->get('friendships/lookup', array("user_id" => $target_user_id));
-      Log::debug('ID'.$target_user_id.' とのフォロー関係を取得します。');
-      
-      // エラーチェック
-      if(isset($twitterRequest['errors'])) {
-        Log::debug('result: '. print_r($twitterRequest['errors'], true));
-        return '';
-      } else if(empty($twitterRequest)) {
-        Log::debug('result: null');
-        return '';
-      }
-      
-      return response()->json(['result' => $twitterRequest]);
-    }
     
     // =======================================================================
     // accountsテーブルに記載されたIDリストと、対象ユーザーがフォローしているIDを比較して
     // 一致するものをfollowsテーブルに記載する。
-    // バッチ用であるが
+    // バッチ用
     // =======================================================================
     public function batch_follow_db_insert(){
       Log::debug('============================================================');
@@ -753,7 +711,6 @@ class TwitterAccountListController extends Controller
       }
       return true;
     }
-  
     
     // =============================================================
     // twitter_accountsテーブルに登録されたアカウントIDを配列にして返却する
@@ -955,7 +912,6 @@ class TwitterAccountListController extends Controller
         return true;
       }
     }
-    
     
     // =======================================
     // API制限テーブルのフォローカウントを増やす

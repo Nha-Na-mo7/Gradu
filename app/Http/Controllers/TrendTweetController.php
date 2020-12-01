@@ -18,7 +18,7 @@ class TrendTweetController extends Controller
     }
     
     // search/tweetsAPIが15分間の間に検索できる最大数は450。
-    // 誤差でAPI制限にかかるのを避けるため余裕を持って440に設定。APIの仕様が変わった場合こちらを編集してください。
+    // 誤差でAPI制限にかかるのを避けるため余裕を持って440に設定。APIの仕様が変わった場合ここを編集する。
     const SEARCH_TWEETS_LIMIT = 440;
     
     // updated_at_tablesにおけるtwitter_accountsを参照するテーブルのID
@@ -45,7 +45,7 @@ class TrendTweetController extends Controller
      * ⑧ その時間のツイート検索が完了したかの確認をして、updated_at_tablesに更新時刻、complete_flgを記述し終了。
      *
      * 途中でAPI制限にかかった場合、15分の待機をした上で同条件でもう一度検索を開始する。
-     * アプリケーション認証では、15分間の間に450回のツイート検索ができる。
+     * アプリケーション認証では、15分間の間に450回のツイート検索ができる(余裕を持って440回で止める)。
      */
     public function count_tweets($search_type, $sub_times = 1) {
       Log::debug('==============================================');
@@ -81,7 +81,6 @@ class TrendTweetController extends Controller
       
       // updated_at_tablesのモデルに渡す引数
       $table_id = ($search_type == 0) ? self::UPDATED_AT_TABLES__HOURS_ID : self::UPDATED_AT_TABLES__DAYS_ID;
-      
       
       // --------------------------------------------------
       // ⓪ 現在の日付時刻でレコードがあるかを呼び出す
@@ -347,7 +346,6 @@ class TrendTweetController extends Controller
           $resume_flg = false;
         }
         
-        
         // -------------------------------------
         // ⑦ 検索した通貨のツイート数をDB登録する
         // -------------------------------------
@@ -367,11 +365,22 @@ class TrendTweetController extends Controller
         // limitフラグが立っていれば、next_resultsの登録が済み次第終了する
         if($limit_flg) {
           Log::debug('この通貨は検索が中断されました。next_resultsを記録しておき、breakします。');
-          $this->insert_tweet_count_table($count_table_name, $brand_id, $tweet_count, $until_date_insert_db_format, false, $next_results);
+          $this->insert_tweet_count_table(
+              $count_table_name,
+              $brand_id, $tweet_count,
+              $until_date_insert_db_format,
+              false,
+              $next_results
+          );
           break;
         }else{
           Log::debug('コンプリートしていますので完了時刻を挿入します。');
-          $this->insert_tweet_count_table($count_table_name, $brand_id, $tweet_count, $until_date_insert_db_format);
+          $this->insert_tweet_count_table(
+              $count_table_name,
+              $brand_id,
+              $tweet_count,
+              $until_date_insert_db_format
+          );
         }
         Log::debug($search_word.'のツイート検索及びDB登録全て完了しました。次の検索ワードに移ります。');
       }
@@ -426,11 +435,11 @@ class TrendTweetController extends Controller
       // $table_type... 0:hour 1:days 2:weeks
       switch ($table_type){
         case 'hour':
-          Log::debug('tweet_count_hoursテーブルインスタンスを取得します。complete_flがfalsのものがあれば代わりにそちらを取得します。');
+          Log::debug('tweet_count_hoursテーブルインスタンスを取得します。complete_flgがfalsのものがあれば代わりにそちらを取得します。');
           $model = TweetCountHour::firstOrNew(['complete_flg' => false]);
           break;
         case 'day':
-          Log::debug('tweet_count_daysテーブルインスタンスを取得します。complete_flがfalsのものがあれば代わりにそちらを取得します。');
+          Log::debug('tweet_count_daysテーブルインスタンスを取得します。complete_flgがfalsのものがあれば代わりにそちらを取得します。');
           Log::debug('$updated:'.$updated);
           $model = TweetCountDay::firstOrNew(['complete_flg' => false]);
           break;
@@ -564,7 +573,6 @@ class TrendTweetController extends Controller
       Log::debug('▲▲▲▲▲▲▲ 終了します。 bye ▲▲▲▲▲▲▲');
       Log::debug('===================================');
     }
-    
     
     // =======================================
     // brandsテーブルの全通貨名を配列にして返却する
