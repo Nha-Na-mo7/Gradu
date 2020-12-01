@@ -588,9 +588,9 @@ input[type=checkbox] {
 }
 
 .p-accounts {
-  background: #f5f6ff;
-  -webkit-box-shadow: #f5f6ff 0 0 20px;
-          box-shadow: #f5f6ff 0 0 20px;
+  background: #fafafa;
+  -webkit-box-shadow: #fafafa 0 0 20px;
+          box-shadow: #fafafa 0 0 20px;
   padding: 15px 40px;
 }
 @media screen and (max-width: 414px) {
@@ -1464,7 +1464,7 @@ input[type=checkbox] {
   }
 }
 .p-news__item--title--link {
-  line-height: 1.2;
+  line-height: 1.5;
 }
 .p-news__item--title--link:hover {
   text-decoration: underline;
@@ -2507,7 +2507,7 @@ input[type=checkbox] {
   }
 }
 .p-news__item--title--link {
-  line-height: 1.2;
+  line-height: 1.5;
 }
 .p-news__item--title--link:hover {
   text-decoration: underline;
