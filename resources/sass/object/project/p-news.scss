@@ -84,7 +84,7 @@
     color: #0b2e13;
     font-size: 15px;
     box-shadow: 0 0 2px #cdcdcd;
-    transition: .5s all;
+    transition: 0.5s all;
     display: inline-flex;
     word-break: break-all;
 
@@ -92,10 +92,10 @@
       flex-direction: column;
     }
 
-    &:nth-child(2n){
+    &:nth-child(2n) {
       background: #f6f6f6;
     }
-    &:nth-child(2n+1){
+    &:nth-child(2n + 1) {
       background: #ffffff;
     }
 
@@ -114,7 +114,6 @@
           text-decoration-color: #0b2e13;
         }
       }
-
     }
     &--data {
       width: 20%;

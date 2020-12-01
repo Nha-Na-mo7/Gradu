@@ -14,7 +14,7 @@
   transition: all 0.5s;
   background: $brand-color_BTC;
   &:hover {
-    transition: all .5s;
+    transition: all 0.5s;
     background: #7eb1d6;
   }
 
@@ -64,7 +64,6 @@
         background: #c4256f;
       }
     }
-
   }
   &__link {
     border: 0;
@@ -75,7 +74,6 @@
   }
 
   &__follow {
-
   }
   &__modal {
     @include mq() {

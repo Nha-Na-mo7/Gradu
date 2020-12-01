@@ -502,7 +502,8 @@ body {
   letter-spacing: 0.1em;
 }
 
-p, a {
+p,
+a {
   -webkit-font-smoothing: antialiased;
 }
 
@@ -1662,7 +1663,8 @@ input[type=checkbox] {
           align-items: center;
   border-bottom: 1px solid #cdcdcd;
 }
-.p-trends__table tr > th, .p-trends__table tr td {
+.p-trends__table tr > th,
+.p-trends__table tr td {
   padding: 10px 15px;
 }
 .p-trends__table tr:nth-of-type(2n-1) {
@@ -1958,7 +1960,7 @@ input[type=checkbox] {
 .c-ribbon {
   height: 40px;
   width: 100%;
-  color: #FFF;
+  color: #fff;
   font-size: 20px;
   margin-bottom: 15px;
   background: #1d7ebe;
@@ -2112,7 +2114,7 @@ input[type=checkbox] {
   position: absolute;
 }
 .c-loading .c-loading__circle:before {
-  background-color: #4FB4D7;
+  background-color: #4fb4d7;
   border-radius: 50%;
   content: "";
   display: inline-block;

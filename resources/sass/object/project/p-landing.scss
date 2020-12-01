@@ -45,11 +45,9 @@
       }
     }
     &--btn {
-
     }
   }
   &__information {
-
   }
 
   &__service {
@@ -74,7 +72,6 @@
       flex-direction: column;
       text-align: center;
       position: relative;
-
 
       @include mq($breakpoint: md) {
         width: 90%;
@@ -108,7 +105,6 @@
     background: #ffffff;
 
     &--info {
-
     }
     &--title {
       margin-top: 40px;
@@ -128,6 +124,4 @@
   &__footer {
     padding-bottom: 180px;
   }
-
-
 }

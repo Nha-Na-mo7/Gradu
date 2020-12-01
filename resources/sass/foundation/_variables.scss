@@ -9,7 +9,6 @@
 //$font-size-base: 0.9rem;
 //$line-height-base: 1.6;
 
-
 // -----------
 // base-color
 // -----------
@@ -20,7 +19,6 @@ $font-color_default: #1f1f1f;
 $font-color_white: #ffffff;
 $font-color_success: #b6e395;
 $font-color_error: #e39598;
-
 
 $color_CoinCheck: #50cdcd;
 $color_twitter: #55acee;
@@ -38,7 +36,6 @@ $btn-color_auth: #acd9e7;
 $btn-color_twitter: #55acee;
 
 $input-color: #f66d9b;
-
 
 // -------------
 // brand color
@@ -65,7 +62,6 @@ $brand-color_IOST: #f6f6f6;
 //$brand-color_ZEC: #f6f6f6;
 //$brand-color_XMR: #f6f6f6;
 //$brand-color_REP: #f6f6f6;
-
 
 // -----------------
 // font-size
@@ -105,8 +101,9 @@ $space_3l: 40px;
 //$breakpoint-lg: 1000px !default;
 
 $breakpoints: (
-    'ss': 'screen and (max-width: 320px)', // iPhone5(iOS10)
-    'sm': 'screen and (max-width: 414px)',
-    'md': 'screen and (max-width: 768px)',
-    'lg': 'screen and (max-width: 1024px)',
+  "ss": "screen and (max-width: 320px)",
+  // iPhone5(iOS10)
+  "sm": "screen and (max-width: 414px)",
+  "md": "screen and (max-width: 768px)",
+  "lg": "screen and (max-width: 1024px)",
 ) !default;

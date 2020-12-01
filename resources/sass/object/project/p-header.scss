@@ -16,7 +16,7 @@
     height: 100%;
     &__sp {
       // sp表示の時は右に隠れ、トリガーが押された時だけ左に出てくる
-      @include mq(){
+      @include mq() {
         display: block;
         position: absolute;
         top: 0;
@@ -24,12 +24,12 @@
         width: 100%;
         height: 100vh;
         padding-top: 50px;
-        transition: all .5s;
-        background: rgba(255, 255, 255, .85);
+        transition: all 0.5s;
+        background: rgba(255, 255, 255, 0.85);
         // SP表示時かつボタンが押されている時
         &.active {
           display: block;
-          transition: .5s;
+          transition: 0.5s;
           transform: translateX(-100%);
           z-index: 2;
         }
@@ -42,7 +42,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: nowrap;
-    @include mq(){
+    @include mq() {
       width: 100%;
       display: inline-block;
     }
@@ -83,21 +83,21 @@
   }
 
   // SPサイト用・トリガーメニュー
-  &__trigger{
+  &__trigger {
     display: none;
-    transition: all .5s;
+    transition: all 0.5s;
     position: relative;
     width: 40px;
     height: 32px;
     margin-right: 10px;
     z-index: 3;
-    @include mq(){
+    @include mq() {
       display: inline-block;
     }
     & span {
       background: #8a8a8a;
       display: inline-block;
-      transition: all .5s;
+      transition: all 0.5s;
       position: absolute;
       width: 100%;
       height: 4px;
@@ -124,5 +124,4 @@
       }
     }
   }
-
 }

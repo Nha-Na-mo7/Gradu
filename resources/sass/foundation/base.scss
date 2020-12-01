@@ -23,18 +23,19 @@ body {
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
 }
 
-p, a {
+p,
+a {
   // 太くて野暮ったいフォントをシュッとしたフォントにできる。
   -webkit-font-smoothing: antialiased;
 }
 a {
-  transition: all .3s;
+  transition: all 0.3s;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
   cursor: pointer;
   transform: scale(1.5) translateY(-2.5px);
 }
@@ -43,4 +44,3 @@ main {
   //margin-bottom: 6rem;
   //margin-top: 7rem;
 }
-
