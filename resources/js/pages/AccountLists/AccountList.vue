@@ -158,9 +158,9 @@ export default {
       isLoading: true, // 読み込み中か
       nothingAccounts: false, // 検索した結果アカウントが見つからなかったか
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
-      twitter_id: 1,
+      twitterId: 1,
       auto_follow_flg: false,
-      updated_at: "",
+      updatedAt: "",
       followList: [],
       accounts: [],
       parPage: 10,
@@ -173,7 +173,7 @@ export default {
     },
     // アカウント一覧の最終更新時刻
     twitterAccountsTableUpdatedAt() {
-      return this.updated_at;
+      return this.updatedAt;
     },
     // アカウントが見つからなかったかを返すcomputed
     isNothingStatus() {
@@ -185,7 +185,7 @@ export default {
     },
     // ユーザーがTwitterアカウントと連携しているかどうか(!! 二重否定で確実にboolean型とする)
     isExistTwitterAccount() {
-      return !!this.twitter_id;
+      return !!this.twitterId;
     },
     // 引数に指定したアカウントのIDがユーザーのフォローリストに含まれているかの判定
     checkAlreadyFollow: function () {
@@ -242,7 +242,7 @@ export default {
       // エラーチェック
       if (response.status === OK) {
         // フォーム用にデータを格納
-        this.twitter_id = response.data.twitter_id;
+        this.twitterId = response.data.twitter_id;
         this.auto_follow_flg = response.data.auto_follow_flg ?? 0;
       } else {
         // 取得できなかった場合は、アカウント情報を表示させない
@@ -299,7 +299,7 @@ export default {
         .catch((error) => error.response || error);
 
       if (response.status === OK) {
-        this.updated_at = response.data.updated_at;
+        this.updatedAt = response.data.updated_at;
       }
     },
 
