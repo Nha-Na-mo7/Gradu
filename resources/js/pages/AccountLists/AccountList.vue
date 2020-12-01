@@ -3,40 +3,42 @@
 <!--===============-->
 <template>
   <div class="l-container__content">
-
     <AutoFollowModal
-        v-if="modal"
-        :auto_flg="!!auto_follow_flg"
-        @close="closeModal"
-        @toggle_auto_follow_flg="toggle_auto_following"
+      v-if="modal"
+      :auto_flg="!!auto_follow_flg"
+      @close="closeModal"
+      @toggle_auto_follow_flg="toggle_auto_following"
     />
 
     <!-- ページタイトル -->
-    <PageTitle :title='page_title'/>
+    <PageTitle :title="page_title" />
 
     <!--メインレイアウト-->
     <div v-if="isExistTwitterAccount" class="p-accounts">
-
       <div>
         <!-- リボンタグ -->
         <Ribbonnav
-            :title='page_title'
-            :date='twitter_accounts_table_updated_at'
+          :title="page_title"
+          :date="twitter_accounts_table_updated_at"
         />
 
         <!-- 自動フォロー欄 -->
         <div class="p-accounts__autofollow">
           <div class="p-accounts__autofollow--status">
-            <p>自動フォローステータス: <span>{{ isAutoFollowFlg | auto_follow_status }}</span></p>
+            <p>
+              自動フォローステータス:
+              <span>{{ isAutoFollowFlg | auto_follow_status }}</span>
+            </p>
           </div>
           <div>
-            <button @click="showModal" class="c-btn">自動フォローについて</button>
+            <button @click="showModal" class="c-btn">
+              自動フォローについて
+            </button>
           </div>
         </div>
 
         <!-- アカウントリスト -->
         <div id="accounts" class="p-accounts__list">
-
           <!-- アカウントが見つからなかった場合 -->
           <div v-if="isNothingStatus">
             <NothingAccount />
@@ -51,57 +53,67 @@
           <div v-else>
             <div class="u-text--center">
               <div>
-                <p>{{ this.getStartCount }} - {{ this.getEndCount }} / {{ this.accounts.length }}アカウント</p>
+                <p>
+                  {{ this.getStartCount }} - {{ this.getEndCount }} /
+                  {{ this.accounts.length }}アカウント
+                </p>
               </div>
               <paginate
-                  v-model="currentPage"
-                  :page-count="getPageCount"
-                  :page-range="3"
-                  :margin-pages="1"
-                  :click-handler="clickCallback"
-                  :prev-text="'＜'"
-                  :next-text="'＞'"
-                  :hide-prev-next="true"
-                  :containerClass="'c-paginate'"
-                  :page-class="'c-paginate__item'"
-                  :page-link-class="'c-paginate__link'"
-                  :prev-class="'c-paginate__item c-paginate__item--prev'"
-                  :prev-link-class="'c-paginate__link'"
-                  :next-class="'c-paginate__item c-paginate__item--next'"
-                  :next-link-class="'c-paginate__link'"
-                  :active-class="'c-paginate__item--active'"
-                  list="" name="">
+                v-model="currentPage"
+                :page-count="getPageCount"
+                :page-range="3"
+                :margin-pages="1"
+                :click-handler="clickCallback"
+                :prev-text="'＜'"
+                :next-text="'＞'"
+                :hide-prev-next="true"
+                :containerClass="'c-paginate'"
+                :page-class="'c-paginate__item'"
+                :page-link-class="'c-paginate__link'"
+                :prev-class="'c-paginate__item c-paginate__item--prev'"
+                :prev-link-class="'c-paginate__link'"
+                :next-class="'c-paginate__item c-paginate__item--next'"
+                :next-link-class="'c-paginate__link'"
+                :active-class="'c-paginate__item--active'"
+                list=""
+                name=""
+              >
               </paginate>
             </div>
             <Account
-                v-for="Accounts in getAccountsItems"
-                :key="Accounts.id"
-                :account="Accounts"
-                :follow_flg="checkAlreadyFollow(Accounts.account_id)"
-                :auto_follow_flg="!!isAutoFollowFlg"
+              v-for="Accounts in getAccountsItems"
+              :key="Accounts.id"
+              :account="Accounts"
+              :follow_flg="checkAlreadyFollow(Accounts.account_id)"
+              :auto_follow_flg="!!isAutoFollowFlg"
             />
             <div class="u-text--center">
               <paginate
-                  v-model="currentPage"
-                  :page-count="getPageCount"
-                  :page-range="3"
-                  :margin-pages="1"
-                  :click-handler="clickCallback"
-                  :prev-text="'＜'"
-                  :next-text="'＞'"
-                  :hide-prev-next="true"
-                  :containerClass="'c-paginate'"
-                  :page-class="'c-paginate__item'"
-                  :page-link-class="'c-paginate__link'"
-                  :prev-class="'c-paginate__item c-paginate__item--prev'"
-                  :prev-link-class="'c-paginate__link'"
-                  :next-class="'c-paginate__item c-paginate__item--next'"
-                  :next-link-class="'c-paginate__link'"
-                  :active-class="'c-paginate__item--active'"
-                  list="" name="">
+                v-model="currentPage"
+                :page-count="getPageCount"
+                :page-range="3"
+                :margin-pages="1"
+                :click-handler="clickCallback"
+                :prev-text="'＜'"
+                :next-text="'＞'"
+                :hide-prev-next="true"
+                :containerClass="'c-paginate'"
+                :page-class="'c-paginate__item'"
+                :page-link-class="'c-paginate__link'"
+                :prev-class="'c-paginate__item c-paginate__item--prev'"
+                :prev-link-class="'c-paginate__link'"
+                :next-class="'c-paginate__item c-paginate__item--next'"
+                :next-link-class="'c-paginate__link'"
+                :active-class="'c-paginate__item--active'"
+                list=""
+                name=""
+              >
               </paginate>
               <div>
-                <p>{{ this.getStartCount }} - {{ this.getEndCount }} / {{ this.accounts.length }}アカウント</p>
+                <p>
+                  {{ this.getStartCount }} - {{ this.getEndCount }} /
+                  {{ this.accounts.length }}アカウント
+                </p>
               </div>
             </div>
           </div>
@@ -114,32 +126,31 @@
       <NeedLinkage />
     </div>
   </div>
-
 </template>
 
 <script>
-import Account from './Account.vue';
-import AutoFollowModal from './AutoFollowModal.vue';
-import NeedLinkage from './NeedLinkage.vue';
-import NothingAccount from './NothingAccount.vue';
-import Loading from '../../layouts/Loading.vue';
-import PageTitle from '../PageComponents/PageTitle.vue';
-import Ribbonnav from '../PageComponents/Ribbonnav.vue';
+import Account from "./Account.vue";
+import AutoFollowModal from "./AutoFollowModal.vue";
+import NeedLinkage from "./NeedLinkage.vue";
+import NothingAccount from "./NothingAccount.vue";
+import Loading from "../../layouts/Loading.vue";
+import PageTitle from "../PageComponents/PageTitle.vue";
+import Ribbonnav from "../PageComponents/Ribbonnav.vue";
 import { OK } from "../../util";
 
-import Vue from "vue"
-import Paginate from 'vuejs-paginate'
-Vue.component('paginate', Paginate)
+import Vue from "vue";
+import Paginate from "vuejs-paginate";
+Vue.component("paginate", Paginate);
 
-const PAGE_TITLE = '仮想通貨アカウント一覧';
+const PAGE_TITLE = "仮想通貨アカウント一覧";
 
 export default {
   props: {
     p: {
       type: Number,
       required: false,
-      default: 1
-    }
+      default: 1,
+    },
   },
   data() {
     return {
@@ -149,15 +160,15 @@ export default {
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
       twitter_id: 1,
       auto_follow_flg: false,
-      updated_at: '',
+      updated_at: "",
       follow_list: [],
       accounts: [],
       parPage: 10,
-      currentPage: 1
-    }
+      currentPage: 1,
+    };
   },
   computed: {
-    page_title(){
+    page_title() {
       return PAGE_TITLE;
     },
     // アカウント一覧の最終更新時刻
@@ -177,63 +188,63 @@ export default {
       return !!this.twitter_id;
     },
     // 引数に指定したアカウントのIDがユーザーのフォローリストに含まれているかの判定
-    checkAlreadyFollow: function(){
-      return function(id) {
+    checkAlreadyFollow: function () {
+      return function (id) {
         // フォローリストをループさせ、TwitterIDと一致していたらtrueを返す
         for (var i = 0, len = this.follow_list.length; i < len; i++) {
-          if (id === this.follow_list[i]['follow_target_id']) {
+          if (id === this.follow_list[i]["follow_target_id"]) {
             return true;
           }
         }
         return false;
-      }
+      };
     },
     // ======================
     // ページネーション用
     // ======================
     // ページネーション用にアカウントリストを細分化する
-    getAccountsItems: function() {
+    getAccountsItems: function () {
       let current = this.currentPage * this.parPage;
       let start = current - this.parPage;
       return this.accounts.slice(start, current);
     },
     // 総ページ数
-    getPageCount: function() {
+    getPageCount: function () {
       return Math.ceil(this.accounts.length / this.parPage);
     },
     // 現在の表示開始箇所 (21-30件表示中 の21の部分)
-    getStartCount: function (){
-      return ((this.currentPage - 1) * this.parPage) + 1;
+    getStartCount: function () {
+      return (this.currentPage - 1) * this.parPage + 1;
     },
     // 現在の表示終了箇所 (21-30件表示中 の30の部分)
-    getEndCount: function (){
+    getEndCount: function () {
       let current = this.currentPage * this.parPage;
-      let over_check = current > this.accounts.length
-      if(over_check) {
-        return this.accounts.length
-      }else{
+      let over_check = current > this.accounts.length;
+      if (over_check) {
+        return this.accounts.length;
+      } else {
         return current;
       }
     },
     // アカウントリストの座標までスクロールするためのプロパティ
     getAccountsRect() {
-      var $e = $('#accounts');
+      var $e = $("#accounts");
       return $e.offset().top - 60;
-    }
+    },
   },
   methods: {
     // ログイン中のユーザーデータを取得する
     async get_user() {
       const response = await axios
-          .get(`/user/info`)
-          .catch(error => error.response || error);
+        .get(`/user/info`)
+        .catch((error) => error.response || error);
 
       // エラーチェック
-      if(response.status === OK) {
+      if (response.status === OK) {
         // フォーム用にデータを格納
         this.twitter_id = response.data.twitter_id;
-        this.auto_follow_flg =  response.data.auto_follow_flg ?? 0;
-      }else{
+        this.auto_follow_flg = response.data.auto_follow_flg ?? 0;
+      } else {
         // 取得できなかった場合は、アカウント情報を表示させない
         this.nothing_accounts = true;
       }
@@ -242,39 +253,39 @@ export default {
     // ログイン中のユーザーのフォローリストを取得する
     async get_follow_list() {
       const response = await axios
-          .get(`/accounts/followlist`)
-          .catch(error => error.response || error);
+        .get(`/accounts/followlist`)
+        .catch((error) => error.response || error);
 
       // エラーチェック
-      if(response.status === OK) {
+      if (response.status === OK) {
         // フォーム用にデータを格納
         this.follow_list = response.data;
-      }else{
+      } else {
         this.nothing_accounts = true;
       }
     },
     // DBのアカウント一覧からアカウント情報を取得(ページネーション済)
     async fetchAccounts() {
       // 読み込み中ならこのメソッドは発火しない
-      if(this.isLoading) {
+      if (this.isLoading) {
         return false;
       }
       // 読み込みをtrueに
       this.isLoading = true;
 
       const response = await axios
-          .get(`/accounts/list`)
-          .catch(error => error.response || error);
+        .get(`/accounts/list`)
+        .catch((error) => error.response || error);
 
       // 通信成功時、各種アカウント取得結果を格納する
-      if (response.status === OK){
-        this.accounts = response.data
+      if (response.status === OK) {
+        this.accounts = response.data;
 
         // そのページにアカウントがないor通信が重いなどで読み込めないとき、nothing_accountsをtrueとする
-        if(response.data.length === 0) {
+        if (response.data.length === 0) {
           this.nothing_accounts = true;
         }
-      }else{
+      } else {
         this.nothing_accounts = true;
       }
       this.isLoading = false;
@@ -282,10 +293,12 @@ export default {
     // DBからアカウント一覧のテーブル更新終了時刻を取得
     async fetchUpdatedAt() {
       const response = await axios
-          .get(`/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`)
-          .catch(error => error.response || error);
+        .get(
+          `/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`
+        )
+        .catch((error) => error.response || error);
 
-      if(response.status === OK){
+      if (response.status === OK) {
         this.updated_at = response.data.updated_at;
       }
     },
@@ -307,7 +320,7 @@ export default {
     // =======================
     showModal() {
       // 読み込み中・モーダルが既にONならモーダルを開かない
-      if(this.isLoading || this.modal) {
+      if (this.isLoading || this.modal) {
         return false;
       }
       this.modal = true;
@@ -330,11 +343,11 @@ export default {
     Ribbonnav,
   },
   filters: {
-    auto_follow_status: function (auto_flg)  {
-      if(auto_flg){
-        return 'ON'
-      }else{
-        return 'OFF'
+    auto_follow_status: function (auto_flg) {
+      if (auto_flg) {
+        return "ON";
+      } else {
+        return "OFF";
       }
     },
   },
@@ -347,16 +360,13 @@ export default {
         await this.fetchAccounts();
         await this.fetchUpdatedAt();
       },
-      immediate: true
+      immediate: true,
     },
     currentPage: function (newPage, oldPage) {
       this.scrollTop();
-    }
-  }
-
-}
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

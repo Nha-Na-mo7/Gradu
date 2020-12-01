@@ -6,22 +6,22 @@
 // ===============
 // state
 // ===============
-const state = () => ({})
+const state = () => ({});
 
 // ===============
 // getter
 // ===============
-const getter = {}
+const getter = {};
 
 // ===============
 // mutations
 // ===============
-const mutations = {}
+const mutations = {};
 
 // ===============
 // actions
 // ===============
-const actions = {}
+const actions = {};
 
 // ================
 // export default
@@ -31,5 +31,5 @@ export default {
   state,
   getter,
   mutations,
-  actions
-}
+  actions,
+};

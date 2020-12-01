@@ -12,20 +12,18 @@
 </template>
 
 <script>
-
-const NOTHING_TRENDS_TITLE = 'トレンド情報が取得できませんでした。';
-const NOTHING_TRENDS_DESCRIPTION = 'お手数ですが、しばらく経ってからもう一度お試しください。';
+const NOTHING_TRENDS_TITLE = "トレンド情報が取得できませんでした。";
+const NOTHING_TRENDS_DESCRIPTION =
+  "お手数ですが、しばらく経ってからもう一度お試しください。";
 
 export default {
   data() {
     return {
       title: NOTHING_TRENDS_TITLE,
-      description: NOTHING_TRENDS_DESCRIPTION
-    }
-  }
-}
+      description: NOTHING_TRENDS_DESCRIPTION,
+    };
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

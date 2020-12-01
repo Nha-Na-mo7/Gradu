@@ -4,9 +4,13 @@
 <template>
   <div class="c-ribbon">
     <!-- タイトル -->
-    <p class="c-ribbon__content c-ribbon__content--left" v-if="title">{{ title }}</p>
+    <p class="c-ribbon__content c-ribbon__content--left" v-if="title">
+      {{ title }}
+    </p>
     <!-- ナビの右側 更新時刻など-->
-    <p class="c-ribbon__content c-ribbon__content--right" v-if="date">最終更新: <span class="c-ribbon__date">{{ date | update }}</span> JST</p>
+    <p class="c-ribbon__content c-ribbon__content--right" v-if="date">
+      最終更新: <span class="c-ribbon__date">{{ date | update }}</span> JST
+    </p>
   </div>
 </template>
 
@@ -17,21 +21,19 @@ export default {
   props: {
     title: {
       type: String,
-      required: false
+      required: false,
     },
     date: {
       type: [Date, String],
-      required: false
-    }
+      required: false,
+    },
   },
   filters: {
     update: function (date) {
-      return moment(date).format('YYYY/MM/DD HH:mm')
-    }
-  }
-}
+      return moment(date).format("YYYY/MM/DD HH:mm");
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

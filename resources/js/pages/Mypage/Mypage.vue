@@ -2,130 +2,144 @@
 <!--マイページ・アカウント設定画面-->
 <!--=========================-->
 <template>
-<div class="l-container__content">
+  <div class="l-container__content">
+    <!-- ページタイトル -->
+    <PageTitle :title="page_title" />
 
-  <!-- ページタイトル -->
-  <PageTitle :title='page_title'/>
+    <!-- 読み込み中 -->
+    <div v-if="isloading">
+      <Loading />
+    </div>
 
-  <!-- 読み込み中 -->
-  <div v-if="isloading">
-    <Loading />
-  </div>
-
-  <!-- メインレイアウト -->
-  <div v-else class="p-container dummyflex">
-
-    <div class="p-mypage">
-      <div class="p-mypage__column">
-        <!-- ユーザー名・メールアドレス -->
-        <div class="p-documentbox c-documentbox">
-          <div class="c-documentbox__header">
-            <h2 class="c-documentbox__title">プロフィール</h2>
-            <RouterLink to="/mypage/profile">設定する ></RouterLink>
-          </div>
-          <div class="c-documentbox__body">
-            <h2 class="c-documentbox__item c-documentbox__item--info">ユーザーネーム</h2>
-            <p class="c-documentbox__item">{{ this.auth_name }}</p>
-          </div>
-          <div class="c-documentbox__body">
-            <h2 class="c-documentbox__item c-documentbox__item--info">登録メールアドレス</h2>
-            <p class="c-documentbox__item">{{ this.auth_mail }}</p>
-          </div>
-        </div>
-
-        <!-- パスワード -->
-        <div class="p-documentbox c-documentbox">
-          <div class="c-documentbox__header">
-            <h2 class="c-documentbox__title">パスワード</h2>
-            <RouterLink to="/mypage/password">設定する ></RouterLink>
-          </div>
-          <div class="c-documentbox__body" v-if="isExist_password">
-            <!-- 実際の桁数に関係なく********とする -->
-            <h2 class="c-documentbox__item c-documentbox__item--info">パスワード設定済</h2>
-            <p class="c-documentbox__item">＊＊＊＊＊＊＊＊</p>
-          </div>
-          <div class="c-documentbox__body" v-else>
-            <h2 class="c-documentbox__item c-documentbox__item--info">パスワードは設定されていません</h2>
-            <p class="c-documentbox__item">Twitterの連携を解除するには、パスワードの設定が必要です。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="p-mypage__column">
-        <!-- SNS連携 -->
-        <div class="p-documentbox c-documentbox">
-          <div class="c-documentbox__header">
-            <h2 class="c-documentbox__title">Twitter連携状態</h2>
-          </div>
-
-          <!-- 連携中の時 -->
-          <div class="c-documentbox__body" v-if="isExist_twitter">
-            <div class="c-documentbox__item c-documentbox__item--info">
-              <h2>Twitterと連携中</h2>
+    <!-- メインレイアウト -->
+    <div v-else class="p-container dummyflex">
+      <div class="p-mypage">
+        <div class="p-mypage__column">
+          <!-- ユーザー名・メールアドレス -->
+          <div class="p-documentbox c-documentbox">
+            <div class="c-documentbox__header">
+              <h2 class="c-documentbox__title">プロフィール</h2>
+              <RouterLink to="/mypage/profile">設定する ></RouterLink>
             </div>
-            <div>
-              <p class="c-documentbox__item">仮想通貨アカウント一覧機能を利用することができます。</p>
-              <div class="c-documentbox__footer">
-                <button class="c-btn c-btn__twitter" @click="twitter_un_linkage">連携を解除する</button>
+            <div class="c-documentbox__body">
+              <h2 class="c-documentbox__item c-documentbox__item--info">
+                ユーザーネーム
+              </h2>
+              <p class="c-documentbox__item">{{ this.auth_name }}</p>
+            </div>
+            <div class="c-documentbox__body">
+              <h2 class="c-documentbox__item c-documentbox__item--info">
+                登録メールアドレス
+              </h2>
+              <p class="c-documentbox__item">{{ this.auth_mail }}</p>
+            </div>
+          </div>
+
+          <!-- パスワード -->
+          <div class="p-documentbox c-documentbox">
+            <div class="c-documentbox__header">
+              <h2 class="c-documentbox__title">パスワード</h2>
+              <RouterLink to="/mypage/password">設定する ></RouterLink>
+            </div>
+            <div class="c-documentbox__body" v-if="isExist_password">
+              <!-- 実際の桁数に関係なく********とする -->
+              <h2 class="c-documentbox__item c-documentbox__item--info">
+                パスワード設定済
+              </h2>
+              <p class="c-documentbox__item">＊＊＊＊＊＊＊＊</p>
+            </div>
+            <div class="c-documentbox__body" v-else>
+              <h2 class="c-documentbox__item c-documentbox__item--info">
+                パスワードは設定されていません
+              </h2>
+              <p class="c-documentbox__item">
+                Twitterの連携を解除するには、パスワードの設定が必要です。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-mypage__column">
+          <!-- SNS連携 -->
+          <div class="p-documentbox c-documentbox">
+            <div class="c-documentbox__header">
+              <h2 class="c-documentbox__title">Twitter連携状態</h2>
+            </div>
+
+            <!-- 連携中の時 -->
+            <div class="c-documentbox__body" v-if="isExist_twitter">
+              <div class="c-documentbox__item c-documentbox__item--info">
+                <h2>Twitterと連携中</h2>
+              </div>
+              <div>
+                <p class="c-documentbox__item">
+                  仮想通貨アカウント一覧機能を利用することができます。
+                </p>
+                <div class="c-documentbox__footer">
+                  <button
+                    class="c-btn c-btn__twitter"
+                    @click="twitter_un_linkage"
+                  >
+                    連携を解除する
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- 連携していない時 -->
+            <!-- 連携していない時 -->
 
-          <div class="c-documentbox__body" v-else>
-            <div class="c-documentbox__item c-documentbox__item--info">
-              <h2>連携していません</h2>
-            </div>
-            <div>
-              <p class="c-documentbox__item">仮想通貨アカウント一覧機能がご利用できません。</p>
-            </div>
-            <div class="c-documentbox__footer">
-              <button>
-                <a
+            <div class="c-documentbox__body" v-else>
+              <div class="c-documentbox__item c-documentbox__item--info">
+                <h2>連携していません</h2>
+              </div>
+              <div>
+                <p class="c-documentbox__item">
+                  仮想通貨アカウント一覧機能がご利用できません。
+                </p>
+              </div>
+              <div class="c-documentbox__footer">
+                <button>
+                  <a
                     class="c-btn c-btn__twitter"
                     title="Start for Twitter!"
                     @click.stop
                     :href="`/twitter/auth/begin`"
-                >
-                  連携する
-                </a>
-              </button>
+                  >
+                    連携する
+                  </a>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 退会処理 -->
-        <div class="p-documentbox c-documentbox">
-          <div class="c-documentbox__header">
-            <h2 class="c-documentbox__title">退会する</h2>
-          </div>
-          <div class="c-documentbox__body">
-            <div class="c-documentbox__item">
-              <p>退会すると、CryptoTrendのサービスがご利用いただけなくなります。</p>
+          <!-- 退会処理 -->
+          <div class="p-documentbox c-documentbox">
+            <div class="c-documentbox__header">
+              <h2 class="c-documentbox__title">退会する</h2>
             </div>
-            <div class="c-documentbox__footer">
-              <button
-                  class="c-btn"
-                  @click="withdraw"
-              >退会する</button>
+            <div class="c-documentbox__body">
+              <div class="c-documentbox__item">
+                <p>
+                  退会すると、CryptoTrendのサービスがご利用いただけなくなります。
+                </p>
+              </div>
+              <div class="c-documentbox__footer">
+                <button class="c-btn" @click="withdraw">退会する</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-</div>
 </template>
 
 <script>
-import PageTitle from '../PageComponents/PageTitle.vue';
-import Loading from '../../layouts/Loading.vue';
+import PageTitle from "../PageComponents/PageTitle.vue";
+import Loading from "../../layouts/Loading.vue";
 
-import { OK , UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
-const PAGE_TITLE = 'マイページ';
+import { OK, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from "../../util.js";
+const PAGE_TITLE = "マイページ";
 
 export default {
   data() {
@@ -133,58 +147,62 @@ export default {
       loading: true,
       twitter: false,
       password: false,
-      mail: '',
-      name: ''
-    }
+      mail: "",
+      name: "",
+    };
   },
   computed: {
     page_title() {
-      return PAGE_TITLE
+      return PAGE_TITLE;
     },
-    isloading(){
-      return this.loading
+    isloading() {
+      return this.loading;
     },
-    isExist_twitter(){
-      return this.twitter
+    isExist_twitter() {
+      return this.twitter;
     },
-    isExist_password(){
-      return this.password
+    isExist_password() {
+      return this.password;
     },
-    auth_mail(){
-      return this.mail
+    auth_mail() {
+      return this.mail;
     },
-    auth_name(){
-      return this.name
+    auth_name() {
+      return this.name;
     },
   },
   methods: {
     // ログイン中のユーザーデータを取得する
     async get_user() {
       const response = await axios
-          .get(`/user/info`)
-          .catch(error => error.response || error);
+        .get(`/user/info`)
+        .catch((error) => error.response || error);
 
       // エラーチェック
-      if(response.status === OK) {
+      if (response.status === OK) {
         // フォーム用にデータを格納
-        this.user = response.data
-        this.twitter = (response.data.twitter_id !== null);
-        this.password = (response.data.password !== null);
-        this.mail =  response.data.email;
-        this.name =  response.data.name;
+        this.user = response.data;
+        this.twitter = response.data.twitter_id !== null;
+        this.password = response.data.password !== null;
+        this.mail = response.data.email;
+        this.name = response.data.name;
         this.loading = false;
-      }else{
-        this.system_error = response.data.errors
+      } else {
+        this.system_error = response.data.errors;
         this.isloading = false;
       }
     },
     // 退会処理 PHP側でデータ削除して、フロント側で画面遷移させる。
     async withdraw() {
-      if(confirm('【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。')){
+      if (
+        confirm(
+          "【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。"
+        )
+      ) {
         const response = await axios.post(`/withdraw`);
-        if(response.status === OK){
+        if (response.status === OK) {
           window.location = "/";
-        }else{
+        } else {
           window.location = "/login";
         }
       }
@@ -192,38 +210,44 @@ export default {
     // Twitter連携解除
     async twitter_un_linkage() {
       // 更新処理中は複数回起動できないようにする
-      if(this.isUpdating){
+      if (this.isUpdating) {
         return false;
       }
 
       // パスワードが設定されていない場合、警告を出して連携解除できないようにする
-      if(!this.isExist_password) {
-        alert('【パスワードが設定されていません】\nパスワードが設定されていない状態でTwitter連携を解除すると、ログインができなくなります。\nパスワードを設定してから再度お試しください。');
+      if (!this.isExist_password) {
+        alert(
+          "【パスワードが設定されていません】\nパスワードが設定されていない状態でTwitter連携を解除すると、ログインができなくなります。\nパスワードを設定してから再度お試しください。"
+        );
         this.isUpdating = false;
         return false;
       }
 
       // はいが選択されたら解除処理を行う
-      if(confirm('【 Twitterの連携を解除してもよろしいですか？ 】\nTwitterの連携を解除すると、一部の機能がご利用できなくなります。')){
+      if (
+        confirm(
+          "【 Twitterの連携を解除してもよろしいですか？ 】\nTwitterの連携を解除すると、一部の機能がご利用できなくなります。"
+        )
+      ) {
         this.isUpdating = true;
 
         // 更新処理にアクセス
         const response = await axios
-            .post(`/accounts/un_linkage`)
-            .catch(error => error.response || error);
+          .post(`/accounts/un_linkage`)
+          .catch((error) => error.response || error);
 
         // エラーチェック
-        if(response.status === OK) {
+        if (response.status === OK) {
           // フラッシュメッセージをセット
-          this.$store.commit('message/setContentSuccess', {
-            content: response.data.success
-          })
+          this.$store.commit("message/setContentSuccess", {
+            content: response.data.success,
+          });
           this.twitter = false;
-        }else{
+        } else {
           // フラッシュメッセージをセット
-          this.$store.commit('message/setContentError', {
-            content: response.data.errors
-          })
+          this.$store.commit("message/setContentError", {
+            content: response.data.errors,
+          });
         }
         this.isUpdating = false;
       }
@@ -235,16 +259,14 @@ export default {
         // ページの読み込み直後にユーザー取得を行う
         await this.get_user();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   components: {
     PageTitle,
-    Loading
-  }
-}
+    Loading,
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

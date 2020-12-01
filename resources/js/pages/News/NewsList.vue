@@ -3,18 +3,14 @@
 <!--===============-->
 <template>
   <div class="l-container__content">
-
     <!-- ページタイトル -->
-    <PageTitle :title='page_title'/>
+    <PageTitle :title="page_title" />
 
     <!--メインレイアウト-->
     <div class="p-news">
-
       <!-- サーチボックス -->
       <div class="p-news__search--inner">
-
         <div class="p-news__search">
-
           <div class="p-news__search--item">
             <div class="p-news__search--info"><p>検索条件</p></div>
             <div class="p-news__search--content">
@@ -30,9 +26,9 @@
       <!-- 絞り込み -->
       <div class="p-news__checkbox">
         <NewsSearchCheckbox
-            @checked="checked_brand"
-            @reset="reset_brand"
-            @search="search_googleNews"
+          @checked="checked_brand"
+          @reset="reset_brand"
+          @search="search_googleNews"
         />
       </div>
 
@@ -44,29 +40,27 @@
         </div>
         <!-- ニュースコンポーネント、検索中は非表示 -->
         <div v-else>
-          <News
-              v-for="News in getNewsItems"
-              :key="News.id"
-              :entry="News"
-          />
+          <News v-for="News in getNewsItems" :key="News.id" :entry="News" />
           <paginate
-              v-model="currentPage"
-              :page-count="getPageCount"
-              :page-range="3"
-              :margin-pages="1"
-              :click-handler="clickCallback"
-              :prev-text="'＜'"
-              :next-text="'＞'"
-              :hide-prev-next="true"
-              :containerClass="'c-paginate'"
-              :page-class="'c-paginate__item'"
-              :page-link-class="'c-paginate__link'"
-              :prev-class="'c-paginate__item c-paginate__item--prev'"
-              :prev-link-class="'c-paginate__link'"
-              :next-class="'c-paginate__item c-paginate__item--next'"
-              :next-link-class="'c-paginate__link'"
-              :active-class="'c-paginate__item--active'"
-              list="" name="">
+            v-model="currentPage"
+            :page-count="getPageCount"
+            :page-range="3"
+            :margin-pages="1"
+            :click-handler="clickCallback"
+            :prev-text="'＜'"
+            :next-text="'＞'"
+            :hide-prev-next="true"
+            :containerClass="'c-paginate'"
+            :page-class="'c-paginate__item'"
+            :page-link-class="'c-paginate__link'"
+            :prev-class="'c-paginate__item c-paginate__item--prev'"
+            :prev-link-class="'c-paginate__link'"
+            :next-class="'c-paginate__item c-paginate__item--next'"
+            :next-link-class="'c-paginate__link'"
+            :active-class="'c-paginate__item--active'"
+            list=""
+            name=""
+          >
           </paginate>
         </div>
       </div>
@@ -75,29 +69,25 @@
       <div v-if="isNothingNews">
         <NothingNews />
       </div>
-
     </div>
-
   </div>
-
 </template>
 
 <script>
-import News from './News.vue';
-import NothingNews from './NothingNews.vue';
-import NewsSearchCheckbox from './NewsSearchCheckbox.vue';
-import Loading from '../../layouts/Loading.vue';
-import PageTitle from '../PageComponents/PageTitle.vue';
+import News from "./News.vue";
+import NothingNews from "./NothingNews.vue";
+import NewsSearchCheckbox from "./NewsSearchCheckbox.vue";
+import Loading from "../../layouts/Loading.vue";
+import PageTitle from "../PageComponents/PageTitle.vue";
 import { DEFAULT_SEARCHWORD } from "../../util";
 
-import Vue from "vue"
-import Paginate from 'vuejs-paginate'
-Vue.component('paginate', Paginate)
+import Vue from "vue";
+import Paginate from "vuejs-paginate";
+Vue.component("paginate", Paginate);
 
-const PAGE_TITLE = 'NEWS';
+const PAGE_TITLE = "NEWS";
 
 export default {
-
   data() {
     return {
       isSearching: false,
@@ -107,19 +97,19 @@ export default {
       searchedNews: [],
       checked_brands: [],
       search_input_data: {
-        keywords: ''
+        keywords: "",
       },
       // ページネーション用
       parPage: 10,
-      currentPage: 1
-    }
+      currentPage: 1,
+    };
   },
   computed: {
     page_title() {
       return PAGE_TITLE;
     },
     default_and_checked_brands() {
-      return DEFAULT_SEARCHWORD + ' ' + this.checked_brands.join(' ');
+      return DEFAULT_SEARCHWORD + " " + this.checked_brands.join(" ");
     },
     // 「仮想通貨」とチェックされた通貨名の一覧を、search_input_data.keywordsに格納
     marge_words() {
@@ -129,20 +119,20 @@ export default {
     // ページネーション用
     // ======================
     // ページネーション用にニュースリストを細分化する
-    getNewsItems: function() {
+    getNewsItems: function () {
       let current = this.currentPage * this.parPage;
       let start = current - this.parPage;
       return this.searchedNews.slice(start, current);
     },
     // 総ページ数
-    getPageCount: function() {
+    getPageCount: function () {
       return Math.ceil(this.searchedNews.length / this.parPage);
     },
     // ニュースリストの座標までスクロールするためのプロパティ
     getNewsListRect() {
-      var $e = $('#newslist');
+      var $e = $("#newslist");
       return $e.offset().top - 60;
-    }
+    },
   },
   methods: {
     // ===================
@@ -150,7 +140,7 @@ export default {
     // ===================
     // 検索欄を空欄にする
     rese_searchword() {
-      this.searchbox_words = '';
+      this.searchbox_words = "";
     },
     // チェックされた値を格納
     checked_brand(array) {
@@ -158,7 +148,7 @@ export default {
       this.checked_brands = array;
     },
     // チェックボックスがリセットされた時の処理
-    reset_brand(){
+    reset_brand() {
       this.checked_brands = [];
     },
 
@@ -168,7 +158,7 @@ export default {
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
     async search_googleNews() {
       // 検索中には呼び出せないようにする
-      if(this.isSearching) {
+      if (this.isSearching) {
         return false;
       }
       // 検索開始、isSearchingをtrueに、isNothingNewsをfalseにする
@@ -188,7 +178,7 @@ export default {
       this.searchedNews = response.data;
 
       // 記事数が0の時、isNothingNewsをtrueにする
-      if(!this.searchedNews.length) {
+      if (!this.searchedNews.length) {
         this.isNothingNews = true;
       }
 
@@ -207,14 +197,14 @@ export default {
       window.scrollTo({
         top: this.getNewsListRect,
       });
-    }
+    },
   },
   components: {
     News,
     NothingNews,
     NewsSearchCheckbox,
     Loading,
-    PageTitle
+    PageTitle,
   },
   watch: {
     $route: {
@@ -222,15 +212,13 @@ export default {
         // ページの読み込み直後、ニュース取得
         await this.search_googleNews();
       },
-      immediate: true
+      immediate: true,
     },
     currentPage: function (newPage, oldPage) {
       this.scrollTop();
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

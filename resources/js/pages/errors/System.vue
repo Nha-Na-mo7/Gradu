@@ -6,7 +6,9 @@
         <span class="p-error__statusCode--text">Server Error</span>
       </div>
       <div class="p-error__description">
-        <span>サーバーで問題が発生しました。お手数ですが、しばらく時間を置いてからやり直してください。</span>
+        <span
+          >サーバーで問題が発生しました。お手数ですが、しばらく時間を置いてからやり直してください。</span
+        >
       </div>
 
       <a href="/" class="c-btn">トップページへ戻る</a>
@@ -16,10 +18,8 @@
 
 <script>
 export default {
-name: "System"
-}
+  name: "System",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

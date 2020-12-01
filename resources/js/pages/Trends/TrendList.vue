@@ -3,34 +3,44 @@
 <!--===============-->
 <template>
   <div class="l-container__content">
-
     <!-- ページタイトル -->
-    <PageTitle :title='page_title'/>
+    <PageTitle :title="page_title" />
 
     <!-- 切り替えタブによってメインレイアウトを入れ替える-->
     <div class="p-panel">
-
       <!--メインレイアウト-->
       <div class="p-trends">
         <!-- リボンタグ -->
-        <Ribbonnav
-            :title='ribbon_page_title'
-            :date='get_updated_at'
-        />
+        <Ribbonnav :title="ribbon_page_title" :date="get_updated_at" />
 
         <!-- 絞り込みエリア -->
         <div class="p-news__modal p-news__modal-show">
-          <TrendCheckbox
-            @checked="checked_brand"
-            @reset="reset_brand"
-          />
+          <TrendCheckbox @checked="checked_brand" @reset="reset_brand" />
         </div>
 
         <!-- 切り替えタブ -->
         <ul class="p-trends__tab c-tab">
-          <li class="c-tab__item" @click="tab = 0" v-bind:class="{'c-tab__item--active': tab === 0}">過去1時間</li>
-          <li class="c-tab__item" @click="tab = 1" v-bind:class="{'c-tab__item--active': tab === 1}">過去1日</li>
-          <li class="c-tab__item" @click="tab = 2" v-bind:class="{'c-tab__item--active': tab === 2}">過去1週間</li>
+          <li
+            class="c-tab__item"
+            @click="tab = 0"
+            v-bind:class="{ 'c-tab__item--active': tab === 0 }"
+          >
+            過去1時間
+          </li>
+          <li
+            class="c-tab__item"
+            @click="tab = 1"
+            v-bind:class="{ 'c-tab__item--active': tab === 1 }"
+          >
+            過去1日
+          </li>
+          <li
+            class="c-tab__item"
+            @click="tab = 2"
+            v-bind:class="{ 'c-tab__item--active': tab === 2 }"
+          >
+            過去1週間
+          </li>
         </ul>
 
         <!-- ランキングの右上にも更新時刻を書く -->
@@ -45,7 +55,6 @@
 
         <!-- ランキング -->
         <div class="p-trends__list">
-
           <!-- 検索中 -->
           <div v-if="isLoading_status" class="">
             <Loading />
@@ -56,7 +65,6 @@
           </div>
 
           <div v-else class="p-trends__table__area">
-
             <div class="p-trends__table">
               <table class="p-trends__table--inner">
                 <tr>
@@ -67,27 +75,26 @@
                   <th>最安取引価格（24H）</th>
                 </tr>
                 <TrendRankCard
-                    v-show="tab === 0"
-                    v-for="(trend_brand, index) in sort_tweet_count_desc(0)"
-                    :key="trend_brand.id"
-                    :brand="trend_brand"
-                    :rank="index"
+                  v-show="tab === 0"
+                  v-for="(trend_brand, index) in sort_tweet_count_desc(0)"
+                  :key="trend_brand.id"
+                  :brand="trend_brand"
+                  :rank="index"
                 />
                 <TrendRankCard
-                    v-show="tab === 1"
-                    v-for="(trend_brand, index) in sort_tweet_count_desc(1)"
-                    :key="trend_brand.id"
-                    :brand="trend_brand"
-                    :rank="index"
+                  v-show="tab === 1"
+                  v-for="(trend_brand, index) in sort_tweet_count_desc(1)"
+                  :key="trend_brand.id"
+                  :brand="trend_brand"
+                  :rank="index"
                 />
                 <TrendRankCard
-                    v-show="tab === 2"
-                    v-for="(trend_brand, index) in sort_tweet_count_desc(2)"
-                    :key="trend_brand.id"
-                    :brand="trend_brand"
-                    :rank="index"
+                  v-show="tab === 2"
+                  v-for="(trend_brand, index) in sort_tweet_count_desc(2)"
+                  :key="trend_brand.id"
+                  :brand="trend_brand"
+                  :rank="index"
                 />
-
               </table>
             </div>
           </div>
@@ -95,19 +102,18 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import Loading from '../../layouts/Loading.vue';
-import NothingTrends from './NothingTrends.vue';
-import TrendCheckbox from './TrendCheckbox.vue';
-import PageTitle from '../PageComponents/PageTitle.vue';
-import Ribbonnav from '../PageComponents/Ribbonnav.vue';
-import TrendRankCard from './TrendRankCard.vue';
+import Loading from "../../layouts/Loading.vue";
+import NothingTrends from "./NothingTrends.vue";
+import TrendCheckbox from "./TrendCheckbox.vue";
+import PageTitle from "../PageComponents/PageTitle.vue";
+import Ribbonnav from "../PageComponents/Ribbonnav.vue";
+import TrendRankCard from "./TrendRankCard.vue";
 import { OK } from "../../util";
 
-const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
+const PAGE_TITLE = "トレンド通貨・ツイート数ランキング";
 
 export default {
   data() {
@@ -120,82 +126,82 @@ export default {
       trend_data_week: [],
       checked_brands: [],
       search_data: {
-        type: 1
+        type: 1,
       },
-    }
+    };
   },
   computed: {
     page_title() {
       return PAGE_TITLE;
     },
-    isLoading_status(){
-      return this.isLoading
+    isLoading_status() {
+      return this.isLoading;
     },
-    isNothing_status(){
-      return this.isNothing
+    isNothing_status() {
+      return this.isNothing;
     },
-    ribbon_page_title(){
-      let title = '';
-      if(this.tab === 0){
-        title = '過去1時間のトレンド'
-      }else if(this.tab === 1){
-        title = '過去1日でのトレンド'
-      }else{
-        title = '過去1週間でのトレンド'
+    ribbon_page_title() {
+      let title = "";
+      if (this.tab === 0) {
+        title = "過去1時間のトレンド";
+      } else if (this.tab === 1) {
+        title = "過去1日でのトレンド";
+      } else {
+        title = "過去1週間でのトレンド";
       }
       return title;
     },
     // それぞれに対応した配列を返す
-    choice_trend_data: function() {
+    choice_trend_data: function () {
       return function (type) {
         let items;
         switch (type) {
           case 0:
-            items = this.trend_data_hour
+            items = this.trend_data_hour;
             break;
           case 1:
-            items = this.trend_data_day
+            items = this.trend_data_day;
             break;
           case 2:
-            items = this.trend_data_week
+            items = this.trend_data_week;
             break;
         }
         return items;
-      }
+      };
     },
     // 指定のidの銘柄に絞った配列を返却する(チェックされた通貨に絞る)
-    refine_brands: function(){
-      return function(array, checked) {
+    refine_brands: function () {
+      return function (array, checked) {
         // 何もチェックされていない時は絞り込まない
-        if(checked.length === 0) {
+        if (checked.length === 0) {
           return array;
-        }else{
+        } else {
           const result = array.filter((brand) => {
             // チェックボックスで選択された値と同じ名前の通貨だけを抽出する
             return checked.indexOf(brand.brand.name) !== -1;
-          })
+          });
           return result;
         }
-      }
+      };
     },
     // ツイート数が多い順に並び替えたデータを返却する
-    sort_tweet_count_desc: function(){
-      return function(type) {
+    sort_tweet_count_desc: function () {
+      return function (type) {
         const checkedbox = this.checked_brands;
         let items = this.choice_trend_data(type);
         let refined = this.refine_brands(items, checkedbox);
         const sorted_item = refined.slice().sort(function (a, b) {
-          return b.tweet_count - a.tweet_count
+          return b.tweet_count - a.tweet_count;
         });
         return sorted_item;
-      }
+      };
     },
 
     // 配列の最初にある更新時刻を最終更新時刻として表示する
     get_updated_at() {
-      let items = this.choice_trend_data(this.tab)
-      if(items.length === 0){
-        return ''
+      let items = this.choice_trend_data(this.tab);
+      if (items.length === 0) {
+        return "";
       }
       return items[0].updated_at;
     },
@@ -205,8 +211,8 @@ export default {
     async fetch_trend(type) {
       // トレンド一覧を取得
       const response = await axios
-          .get(`/tweet/count`, { params:{type: type} })
-          .catch(error => error.response || error);
+        .get(`/tweet/count`, { params: { type: type } })
+        .catch((error) => error.response || error);
 
       // 通信成功時
       if (response.status === OK) {
@@ -222,20 +228,20 @@ export default {
             this.trend_data_week = response.data;
             break;
         }
-      }else{
+      } else {
         // 何らかの理由でエラーが出た場合は、トレンドが取得できなかった旨を表示する
         this.isNothing = true;
       }
     },
     // 上記のfetch_trendを、時間・日・週の全てで取得する
     async all_fetch() {
-      if(this.isLoading) {
+      if (this.isLoading) {
         return false;
       }
       // 読み込みをtrueに
       this.isLoading = true;
 
-      for (let type = 0;type <= 2;type++){
+      for (let type = 0; type <= 2; type++) {
         this.fetch_trend(type);
       }
       // 読み込み中を解除
@@ -247,9 +253,9 @@ export default {
       this.checked_brands = array;
     },
     // チェックボックスがリセットされた時の処理
-    reset_brand(){
+    reset_brand() {
       this.checked_brands = [];
-    }
+    },
   },
   components: {
     Loading,
@@ -257,7 +263,7 @@ export default {
     Ribbonnav,
     TrendRankCard,
     NothingTrends,
-    TrendCheckbox
+    TrendCheckbox,
   },
   watch: {
     $route: {
@@ -265,14 +271,10 @@ export default {
         // ページの読み込み直後、トレンド一覧を取得
         await this.all_fetch();
       },
-      immediate: true
-    }
-  }
-
-}
-
+      immediate: true,
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -3,9 +3,8 @@
 <!--=======================================================-->
 <template>
   <div class="l-container__content">
-
     <!-- ページタイトル -->
-    <PageTitle :title='page_title'/>
+    <PageTitle :title="page_title" />
 
     <!-- 読み込み中 -->
     <div v-if="isloading">
@@ -23,49 +22,47 @@
       <div v-else>
         <PasswordCreate />
       </div>
-
     </div>
 
     <!-- 戻るボタン -->
     <div class="u-text--center">
       <RouterLink to="/mypage" class="c-btn">マイページへ戻る</RouterLink>
     </div>
-
   </div>
 </template>
 
 <script>
-import PageTitle from '../PageComponents/PageTitle.vue';
-import Loading from '../../layouts/Loading.vue';
-import PasswordCreate from './PasswordCreate.vue';
-import PasswordUpdate from './PasswordUpdate.vue';
-import { OK , INTERNAL_SERVER_ERROR } from '../../util.js';
-const PAGE_TITLE = 'パスワード設定';
+import PageTitle from "../PageComponents/PageTitle.vue";
+import Loading from "../../layouts/Loading.vue";
+import PasswordCreate from "./PasswordCreate.vue";
+import PasswordUpdate from "./PasswordUpdate.vue";
+import { OK, INTERNAL_SERVER_ERROR } from "../../util.js";
+const PAGE_TITLE = "パスワード設定";
 
 export default {
   data() {
     return {
       isloading: true,
       isExist_password: false,
-    }
+    };
   },
   computed: {
     page_title() {
-      return PAGE_TITLE
+      return PAGE_TITLE;
     },
   },
   methods: {
     // ログイン中のユーザーデータを取得する
     async get_user() {
       const response = await axios
-          .get(`/user/info`)
-          .catch(error => error.response || error);
+        .get(`/user/info`)
+        .catch((error) => error.response || error);
 
       // エラーチェック
-      if(response.status === OK) {
+      if (response.status === OK) {
         // パスワードが既に設定されている場合、isExist_passwordをtrueとする
-        if(response.data.password !== null){
-          this.isExist_password = true
+        if (response.data.password !== null) {
+          this.isExist_password = true;
         }
         this.isloading = false;
       }
@@ -75,7 +72,7 @@ export default {
     PageTitle,
     Loading,
     PasswordCreate,
-    PasswordUpdate
+    PasswordUpdate,
   },
   watch: {
     $route: {
@@ -83,12 +80,10 @@ export default {
         // ページの読み込み直後にユーザーの取得を行う
         await this.get_user();
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
-}
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

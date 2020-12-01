@@ -10,20 +10,20 @@
  * @returns {String} キーに対応する値
  */
 export function getCookieValue(searchKey) {
-  if (typeof searchKey === 'undefined') {
-    return '';
+  if (typeof searchKey === "undefined") {
+    return "";
   }
-  
-  let val = '';
-  
+
+  let val = "";
+
   // name=12345;token=67890;key=abcde;XSRF-TOKEN=hogehoge
   // cookieを";"でsplitし、それをさらに"="でsplit。
-  document.cookie.split(';').forEach(cookie => {
-    const [key, value] = cookie.split('=');
+  document.cookie.split(";").forEach((cookie) => {
+    const [key, value] = cookie.split("=");
     if (key === searchKey) {
-      return val = value;
+      return (val = value);
     }
-  })
+  });
   return val;
 }
 
@@ -38,20 +38,18 @@ export function isArrayExists(array, value) {
   return false;
 }
 
+export const OK = 200;
+export const CREATED = 201;
+export const FORBIDDEN = 403;
+export const NOT_FOUND = 404;
+export const UNAUTHORIZED = 419; //認証切れ(Laravel独自のコード)
+export const UNPROCESSABLE_ENTITY = 422; //バリデーションエラー
+export const INTERNAL_SERVER_ERROR = 500;
 
-export const OK = 200
-export const CREATED = 201
-export const FORBIDDEN = 403
-export const NOT_FOUND = 404
-export const UNAUTHORIZED = 419 //認証切れ(Laravel独自のコード)
-export const UNPROCESSABLE_ENTITY = 422 //バリデーションエラー
-export const INTERNAL_SERVER_ERROR = 500
-
-export const DEFAULT_SEARCHWORD = '仮想通貨';
-export const DEFAULT_TWITTER_URL = 'https://twitter.com/';
+export const DEFAULT_SEARCHWORD = "仮想通貨";
+export const DEFAULT_TWITTER_URL = "https://twitter.com/";
 
 // 通貨アイコンのパス。storage/images/brand_svg/xxxxxx.svg
-export const BRAND_ICON_PATH = 'storage/images/brand_svg/';
+export const BRAND_ICON_PATH = "storage/images/brand_svg/";
 // 通貨アイコンのパス。storage/images/icons_svg/xxxxxx.svg
-export const FLASH_ICON_PATH = 'storage/images/icons_svg/';
-
+export const FLASH_ICON_PATH = "storage/images/icons_svg/";

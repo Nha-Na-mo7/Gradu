@@ -7,20 +7,22 @@
     <td class="">
       <div>
         <a
-            class="p-trends__table--link"
-            :href="search_url"
-            target="_blank"
-            rel="noopener noreferrer"
+          class="p-trends__table--link"
+          :href="search_url"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <!-- 通貨アイコン -->
           <img
-              :src="icon_path | icon_path_filter"
-              class="p-trends__table--icon"
-              :alt="this.brand.brand.name"
-          >
+            :src="icon_path | icon_path_filter"
+            class="p-trends__table--icon"
+            :alt="this.brand.brand.name"
+          />
           <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
           <span class="p-trends__item--name">{{ this.brand.brand.name }}</span>
-          <span class="p-trends__item--realname">{{ this.brand.brand.realname }}</span>
+          <span class="p-trends__item--realname">{{
+            this.brand.brand.realname
+          }}</span>
         </a>
       </div>
     </td>
@@ -28,30 +30,28 @@
     <td class="u-text--right">{{ price_max | add_JPY }}</td>
     <td class="u-text--right">{{ price_min | add_JPY }}</td>
   </tr>
-
-
 </template>
 
 <script>
 import { OK, BRAND_ICON_PATH } from "../../util";
 
-const TWITTER_SEARCH_URL = 'https://twitter.com/search?q=';
+const TWITTER_SEARCH_URL = "https://twitter.com/search?q=";
 
 export default {
   props: {
     brand: {
       type: Object,
-      required: true
+      required: true,
     },
     rank: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      transaction_price: []
-    }
+      transaction_price: [],
+    };
   },
   computed: {
     // アイコンのパス
@@ -60,39 +60,41 @@ export default {
     },
     // 24時間の最低取引価格
     price_min() {
-      return this.transaction_price.price_min
+      return this.transaction_price.price_min;
     },
     // 24時間の最高取引価格
     price_max() {
-      return this.transaction_price.price_max
+      return this.transaction_price.price_max;
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
     search_url() {
-      return TWITTER_SEARCH_URL + this.brand.brand.name
+      return TWITTER_SEARCH_URL + this.brand.brand.name;
     },
   },
   methods: {
     // 24時間以内の取引価格の取得
     async get_transaction_price() {
-      const response = await axios.get(`/transaction/price`, { params:{ brand_id: this.brand.brand_id } });
+      const response = await axios.get(`/transaction/price`, {
+        params: { brand_id: this.brand.brand_id },
+      });
 
       // 通信成功時(取引価格だけ取得エラーするのは考えにくいが、もし起きた場合は「不明」と表示させる)
-      if(response.status === OK && response.data !== '') {
-        this.transaction_price = response.data
+      if (response.status === OK && response.data !== "") {
+        this.transaction_price = response.data;
       }
-    }
+    },
   },
   filters: {
     // svgアイコンのパス
-    icon_path_filter: function (icon_path)  {
-      return BRAND_ICON_PATH + icon_path
+    icon_path_filter: function (icon_path) {
+      return BRAND_ICON_PATH + icon_path;
     },
     // JPYを付与する。取得できていない場合は不明とする。
-    add_JPY: function (price)  {
-      if(price >= 0){
-        return price + ' JPY'
-      }else{
-        return '不明'
+    add_JPY: function (price) {
+      if (price >= 0) {
+        return price + " JPY";
+      } else {
+        return "不明";
       }
     },
   },
@@ -102,12 +104,10 @@ export default {
         // ページの読み込み直後、トレンド一覧を取得
         await this.get_transaction_price();
       },
-      immediate: true
-    }
-  }
-}
+      immediate: true,
+    },
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

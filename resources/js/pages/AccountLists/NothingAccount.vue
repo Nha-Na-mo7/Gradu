@@ -9,20 +9,18 @@
 </template>
 
 <script>
-
-const NOTHING_ACCOUNT_TITLE = 'ユーザーアカウントが見つかりませんでした。';
-const NOTHING_ACCOUNT_DESCRIPTION = 'しばらく経ってからもう一度お試しください。';
+const NOTHING_ACCOUNT_TITLE = "ユーザーアカウントが見つかりませんでした。";
+const NOTHING_ACCOUNT_DESCRIPTION =
+  "しばらく経ってからもう一度お試しください。";
 
 export default {
   data() {
     return {
       title: NOTHING_ACCOUNT_TITLE,
-      description: NOTHING_ACCOUNT_DESCRIPTION
-    }
-  }
-}
+      description: NOTHING_ACCOUNT_DESCRIPTION,
+    };
+  },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

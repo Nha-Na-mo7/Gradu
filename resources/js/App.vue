@@ -5,16 +5,15 @@
     <FlashMessage />
     <!-- 実際にコンポーネントが切り替わるエリア -->
     <RouterView />
-
   </div>
 </template>
 
 <script>
-import FlashMessage from './layouts/FlashMessage.vue';
+import FlashMessage from "./layouts/FlashMessage.vue";
 
 export default {
   components: {
     FlashMessage,
   },
-}
+};
 </script>
