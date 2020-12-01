@@ -4,10 +4,10 @@
 <template>
   <div class="l-container__content">
     <!-- ページタイトル -->
-    <PageTitle :title="page_title" />
+    <PageTitle :title="pageTitle" />
 
     <!-- 読み込み中 -->
-    <div v-if="isloading">
+    <div v-if="isLoading">
       <Loading />
     </div>
 
@@ -25,13 +25,13 @@
               <h2 class="c-documentbox__item c-documentbox__item--info">
                 ユーザーネーム
               </h2>
-              <p class="c-documentbox__item">{{ this.auth_name }}</p>
+              <p class="c-documentbox__item">{{ this.authName }}</p>
             </div>
             <div class="c-documentbox__body">
               <h2 class="c-documentbox__item c-documentbox__item--info">
                 登録メールアドレス
               </h2>
-              <p class="c-documentbox__item">{{ this.auth_mail }}</p>
+              <p class="c-documentbox__item">{{ this.authMail }}</p>
             </div>
           </div>
 
@@ -41,7 +41,7 @@
               <h2 class="c-documentbox__title">パスワード</h2>
               <RouterLink to="/mypage/password">設定する ></RouterLink>
             </div>
-            <div class="c-documentbox__body" v-if="isExist_password">
+            <div class="c-documentbox__body" v-if="isExistPassword">
               <!-- 実際の桁数に関係なく********とする -->
               <h2 class="c-documentbox__item c-documentbox__item--info">
                 パスワード設定済
@@ -67,7 +67,7 @@
             </div>
 
             <!-- 連携中の時 -->
-            <div class="c-documentbox__body" v-if="isExist_twitter">
+            <div class="c-documentbox__body" v-if="isExistTwitter">
               <div class="c-documentbox__item c-documentbox__item--info">
                 <h2>Twitterと連携中</h2>
               </div>
@@ -78,7 +78,7 @@
                 <div class="c-documentbox__footer">
                   <button
                     class="c-btn c-btn__twitter"
-                    @click="twitter_un_linkage"
+                    @click="twitterUnLinkage"
                   >
                     連携を解除する
                   </button>
@@ -138,7 +138,7 @@
 import PageTitle from "../PageComponents/PageTitle.vue";
 import Loading from "../../layouts/Loading.vue";
 
-import { OK, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from "../../util.js";
+import { OK } from "../../util.js";
 const PAGE_TITLE = "マイページ";
 
 export default {
@@ -152,28 +152,28 @@ export default {
     };
   },
   computed: {
-    page_title() {
+    pageTitle() {
       return PAGE_TITLE;
     },
-    isloading() {
+    isLoading() {
       return this.loading;
     },
-    isExist_twitter() {
+    isExistTwitter() {
       return this.twitter;
     },
-    isExist_password() {
+    isExistPassword() {
       return this.password;
     },
-    auth_mail() {
+    authMail() {
       return this.mail;
     },
-    auth_name() {
+    authName() {
       return this.name;
     },
   },
   methods: {
     // ログイン中のユーザーデータを取得する
-    async get_user() {
+    async getUser() {
       const response = await axios
         .get(`/user/info`)
         .catch((error) => error.response || error);
@@ -189,7 +189,7 @@ export default {
         this.loading = false;
       } else {
         this.system_error = response.data.errors;
-        this.isloading = false;
+        this.isLoading = false;
       }
     },
     // 退会処理 PHP側でデータ削除して、フロント側で画面遷移させる。
@@ -208,14 +208,14 @@ export default {
       }
     },
     // Twitter連携解除
-    async twitter_un_linkage() {
+    async twitterUnLinkage() {
       // 更新処理中は複数回起動できないようにする
       if (this.isUpdating) {
         return false;
       }
 
       // パスワードが設定されていない場合、警告を出して連携解除できないようにする
-      if (!this.isExist_password) {
+      if (!this.isExistPassword) {
         alert(
           "【パスワードが設定されていません】\nパスワードが設定されていない状態でTwitter連携を解除すると、ログインができなくなります。\nパスワードを設定してから再度お試しください。"
         );
@@ -257,7 +257,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後にユーザー取得を行う
-        await this.get_user();
+        await this.getUser();
       },
       immediate: true,
     },

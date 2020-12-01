@@ -13,8 +13,8 @@
           >新しいパスワード(半角英数字 8~50文字)</label
         >
 
-        <ul v-if="errors_password">
-          <li class="c-error" v-for="error in errors_password">
+        <ul v-if="errorsPassword">
+          <li class="c-error" v-for="error in errorsPassword">
             <span>{{ error }}</span>
           </li>
         </ul>
@@ -22,15 +22,15 @@
           id="password"
           class="p-form__item"
           type="password"
-          v-model="form_password.password"
+          v-model="formPassword.password"
         />
 
         <label class="p-form__info" for="password_confirmation"
           >パスワード【再入力】</label
         >
 
-        <ul v-if="errors_password_confirmation">
-          <li v-for="error in errors_password_confirmation">
+        <ul v-if="errorsPasswordConfirmation">
+          <li v-for="error in errorsPasswordConfirmation">
             <span>{{ error }}</span>
           </li>
         </ul>
@@ -38,11 +38,11 @@
           id="password_confirmation"
           class="p-form__item"
           type="password"
-          v-model="form_password.password_confirmation"
+          v-model="formPassword.password_confirmation"
         />
 
         <div class="u-text--center">
-          <button class="c-btn" @click="create_password">
+          <button class="c-btn" @click="createPassword">
             パスワードを登録する
           </button>
         </div>
@@ -58,9 +58,9 @@ export default {
   data() {
     return {
       isUpdating: false,
-      errors_password: "",
-      errors_password_confirmation: "",
-      form_password: {
+      errorsPassword: "",
+      errorsPasswordConfirmation: "",
+      formPassword: {
         password: "",
         password_confirmation: "",
       },
@@ -69,7 +69,7 @@ export default {
   computed: {},
   methods: {
     // パスワードの新規登録
-    async create_password() {
+    async createPassword() {
       // 更新処理中は複数回起動できないようにする
       if (this.isUpdating) {
         return false;
@@ -78,14 +78,14 @@ export default {
 
       // 更新処理にアクセス
       const response = await axios
-        .post(`/user/create/password`, this.form_password)
+        .post(`/user/create/password`, this.formPassword)
         .catch((error) => error.response || error);
 
       // エラーチェック
       if (response.status === UNPROCESSABLE_ENTITY) {
         // バリデーションエラー。帰ってきたエラーメッセージを格納
-        this.errors_password = response.data.errors.password;
-        this.errors_password_confirmation =
+        this.errorsPassword = response.data.errors.password;
+        this.errorsPasswordConfirmation =
           response.data.errors.password_confirmation;
 
         // 500エラーの時は更新失敗

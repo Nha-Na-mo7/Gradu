@@ -4,17 +4,17 @@
 <template>
   <div class="l-container__content">
     <!-- ページタイトル -->
-    <PageTitle :title="page_title" />
+    <PageTitle :title="pageTitle" />
 
     <!-- 読み込み中 -->
-    <div v-if="isloading">
+    <div v-if="isLoading">
       <Loading />
     </div>
 
     <!-- パスワード変更フォーム -->
     <div v-else>
       <!-- パスワードが設定済みの時 -->
-      <div v-if="isExist_password">
+      <div v-if="isExistPassword">
         <PasswordUpdate />
       </div>
 
@@ -42,29 +42,29 @@ const PAGE_TITLE = "パスワード設定";
 export default {
   data() {
     return {
-      isloading: true,
-      isExist_password: false,
+      isLoading: true,
+      isExistPassword: false,
     };
   },
   computed: {
-    page_title() {
+    pageTitle() {
       return PAGE_TITLE;
     },
   },
   methods: {
     // ログイン中のユーザーデータを取得する
-    async get_user() {
+    async getUser() {
       const response = await axios
         .get(`/user/info`)
         .catch((error) => error.response || error);
 
       // エラーチェック
       if (response.status === OK) {
-        // パスワードが既に設定されている場合、isExist_passwordをtrueとする
+        // パスワードが既に設定されている場合、isExistPasswordをtrueとする
         if (response.data.password !== null) {
-          this.isExist_password = true;
+          this.isExistPassword = true;
         }
-        this.isloading = false;
+        this.isLoading = false;
       }
     },
   },
@@ -78,7 +78,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後にユーザーの取得を行う
-        await this.get_user();
+        await this.getUser();
       },
       immediate: true,
     },
