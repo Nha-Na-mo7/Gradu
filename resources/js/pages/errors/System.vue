@@ -9,7 +9,7 @@
         <span>サーバーで問題が発生しました。お手数ですが、しばらく時間を置いてからやり直してください。</span>
       </div>
 
-      <RouterLink to="/" class="c-btn">トップページへ戻る</RouterLink>
+      <a href="/" class="c-btn">トップページへ戻る</a>
     </div>
   </div>
 </template>

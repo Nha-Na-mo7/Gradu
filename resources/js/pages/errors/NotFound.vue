@@ -9,7 +9,7 @@
         <span>お探しのページは一時的にアクセスができない状況か、移動もしくは削除された可能性があります。 また、URL、ファイル名にタイプミスがないか再度ご確認ください。</span>
       </div>
 
-      <RouterLink to="/" class="c-btn">トップページへ戻る</RouterLink>
+      <a href="/" class="c-btn">トップページへ戻る</a>
     </div>
   </div>
 </template>
