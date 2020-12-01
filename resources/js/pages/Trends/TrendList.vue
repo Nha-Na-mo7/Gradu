@@ -38,6 +38,11 @@
           <p>最終更新:{{ this.get_updated_at }} JST</p>
         </div>
 
+        <!-- スマホ表示の時のみ、注意事項が出る -->
+        <div class="p-trends__sp">
+          <p>※ 左右にスワイプして情報を確認できます。</p>
+        </div>
+
         <!-- ランキング -->
         <div class="p-trends__list">
 

@@ -1610,16 +1610,34 @@ input[type=checkbox] {
 }
 @media screen and (max-width: 414px) {
   .p-trends__tab {
+    margin-top: 12px;
     width: 100%;
-    -webkit-box-pack: unset;
-        -ms-flex-pack: unset;
-            justify-content: unset;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
   }
 }
 .p-trends__date {
   text-align: right;
   font-weight: bold;
   margin-top: 10px;
+}
+@media screen and (max-width: 414px) {
+  .p-trends__date {
+    margin-top: 8px;
+    text-align: center;
+  }
+}
+.p-trends__sp {
+  margin-top: 8px;
+  display: none;
+  font-size: 12px;
+  text-align: center;
+}
+@media screen and (max-width: 414px) {
+  .p-trends__sp {
+    display: block;
+  }
 }
 .p-trends__checkbox--description {
   margin-top: 10px;

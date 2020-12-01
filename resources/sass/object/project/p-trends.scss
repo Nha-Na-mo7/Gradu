@@ -11,14 +11,28 @@
     display: flex;
     justify-content: flex-end;
     @include mq() {
+      margin-top: 12px;
       width: 100%;
-      justify-content: unset;
+      justify-content: center;
     }
   }
   &__date {
     text-align: right;
     font-weight: bold;
     margin-top: $space_m;
+    @include mq() {
+      margin-top: 8px;
+      text-align: center;
+    }
+  }
+  &__sp {
+    margin-top: 8px;
+    display: none;
+    font-size: $font-size_s;
+    text-align: center;
+    @include mq() {
+      display: block;
+    }
   }
   &__checkbox {
     &--description {
