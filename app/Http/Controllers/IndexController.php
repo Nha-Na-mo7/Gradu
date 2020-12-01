@@ -15,4 +15,9 @@ class IndexController extends Controller
   {
     return view('index');
   }
+  
+  public function error()
+  {
+    return view('pages.errors');
+  }
 }

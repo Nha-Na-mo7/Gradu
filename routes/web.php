@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+// トップページ
+Route::get('/', 'IndexController@index')->name('home.index');
 // =========================
 // 認証系(認証なしで利用可能)
 // =========================
@@ -114,12 +117,11 @@ Route::group(['middleware' => 'auth'], function (){
   // =============================================
   // 指定のIDの最終更新日時を取得する
   Route::get('/updated/at/table', 'SystemController@get_updated_at');
-  
 });
 
-// =============================================
-// 上記以外の全てのページに対してindex.blade.phpを返す
-// =============================================
-// トップページ・index.blade.php
-Route::get('/{any?}', 'IndexController@index')->where('any', '.+')->name('home.index');
+// ==========================================================
+// 上記以外の全てのページに対してはNotFoundとしてerror.blade.phpを返す
+// ==========================================================
+// error.blade.php
+Route::get('/{any?}', 'IndexController@error')->where('any', '.+')->name('home.error');
 
