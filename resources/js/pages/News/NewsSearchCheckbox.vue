@@ -17,7 +17,7 @@
             <!-- 通貨一覧 -->
             <div
               class="c-checkbox__item"
-              v-for="brand in fetched_brands"
+              v-for="brand in fetchedBrandsData"
               :key="brand.id"
             >
               <label :for="brand.id - 1">
@@ -26,12 +26,12 @@
                   name="brand"
                   :value="brand.name"
                   :id="brand.id - 1"
-                  v-model="checked_id"
+                  v-model="checkedBrandId"
                   @change="isChecked"
                 />
                 <img
                   v-if="brand.icon"
-                  :src="brand_icon_path + brand.icon"
+                  :src="brandIconPath + brand.icon"
                   :alt="brand.name"
                   class="c-checkbox__icon"
                 />
@@ -43,10 +43,10 @@
 
         <!-- 検索ボタン -->
         <div class="p-news__search--btn--inner">
-          <button class="c-btn c-btn__news" @click="reset_checkbox">
+          <button class="c-btn c-btn__news" @click="resetCheckbox">
             絞り込みをリセット
           </button>
-          <button class="c-btn c-btn__news" @click="search_googleNews">
+          <button class="c-btn c-btn__news" @click="searchGoogleNews">
             検索する
           </button>
         </div>
@@ -61,38 +61,38 @@ import { OK, BRAND_ICON_PATH } from "../../util";
 export default {
   data() {
     return {
-      fetched_brands: [],
-      checked_id: [],
+      fetchedBrandsData: [],
+      checkedBrandId: [],
     };
   },
   computed: {
-    brand_icon_path() {
+    brandIconPath() {
       return BRAND_ICON_PATH;
     },
   },
   methods: {
     // 全ての仮想通貨情報を取得する。選択肢に使用される
-    async fetch_brand() {
+    async fetchBrandsTable() {
       const response = await axios
         .get("/brand")
         .catch((error) => error.response || error);
 
       // 検索を絞るためのチェックボックスであり、最悪通信失敗しても大きく影響しないので通信失敗時はdata更新しないだけに止める。
       if (response.status === OK) {
-        this.fetched_brands = response.data;
+        this.fetchedBrandsData = response.data;
       }
     },
     // チェックされた時、チェックボックスの値全てを親コンポネに送る
     isChecked(brand) {
-      this.$emit("checked", this.checked_id);
+      this.$emit("checked", this.checkedBrandId);
     },
     // チェックを全て外す
-    reset_checkbox() {
-      this.checked_id = [];
+    resetCheckbox() {
+      this.checkedBrandId = [];
       this.$emit("reset");
     },
     // 検索を開始する
-    search_googleNews() {
+    searchGoogleNews() {
       this.$emit("search");
     },
   },
@@ -100,7 +100,7 @@ export default {
     $route: {
       async handler() {
         // 読み込み直後、brandsテーブルから通過情報全てを取得する
-        await this.fetch_brand();
+        await this.fetchBrandsTable();
       },
       immediate: true,
     },

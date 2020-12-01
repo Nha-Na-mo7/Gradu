@@ -16,7 +16,7 @@
             <div class="p-news__search--content">
               <!-- 検索ワードを表示するエリア -->
               <div class="p-news__search--content--searchWords">
-                <span>{{ default_and_checked_brands }}</span>
+                <span>{{ defaultAndCheckedBrandsData }}</span>
               </div>
             </div>
           </div>
@@ -26,9 +26,9 @@
       <!-- 絞り込み -->
       <div class="p-news__checkbox">
         <NewsSearchCheckbox
-          @checked="checked_brand"
-          @reset="reset_brand"
-          @search="search_googleNews"
+          @checked="intoCheckedBrand"
+          @reset="resetBrand"
+          @search="searchGoogleNews"
         />
       </div>
 
@@ -95,8 +95,8 @@ export default {
       // ページ読み込み時にも「記事がありません」と表示するのは不自然なためこのようにしている。
       isNothingNews: false,
       searchedNews: [],
-      checked_brands: [],
-      search_input_data: {
+      checkedBrandsData: [],
+      searchInputData: {
         keywords: "",
       },
       // ページネーション用
@@ -108,12 +108,12 @@ export default {
     page_title() {
       return PAGE_TITLE;
     },
-    default_and_checked_brands() {
-      return DEFAULT_SEARCHWORD + " " + this.checked_brands.join(" ");
+    defaultAndCheckedBrandsData() {
+      return DEFAULT_SEARCHWORD + " " + this.checkedBrandsData.join(" ");
     },
-    // 「仮想通貨」とチェックされた通貨名の一覧を、search_input_data.keywordsに格納
-    marge_words() {
-      this.search_input_data.keywords = this.default_and_checked_brands;
+    // 「仮想通貨」とチェックされた通貨名の一覧を、searchInputData.keywordsに格納
+    margeWords() {
+      this.searchInputData.keywords = this.defaultAndCheckedBrandsData;
     },
     // ======================
     // ページネーション用
@@ -138,25 +138,21 @@ export default {
     // ===================
     // 検索欄
     // ===================
-    // 検索欄を空欄にする
-    rese_searchword() {
-      this.searchbox_words = "";
-    },
     // チェックされた値を格納
-    checked_brand(array) {
-      this.reset_brand();
-      this.checked_brands = array;
+    intoCheckedBrand(array) {
+      this.resetBrand();
+      this.checkedBrandsData = array;
     },
     // チェックボックスがリセットされた時の処理
-    reset_brand() {
-      this.checked_brands = [];
+    resetBrand() {
+      this.checkedBrandsData = [];
     },
 
     // =====================
     // ニュース取得APIリクエスト
     // =====================
     // GoogleNewsControllerを呼び、APIを使ってニュースを取得する
-    async search_googleNews() {
+    async searchGoogleNews() {
       // 検索中には呼び出せないようにする
       if (this.isSearching) {
         return false;
@@ -169,10 +165,10 @@ export default {
       this.currentPage = 1;
 
       // 検索ワードをマージさせる
-      this.marge_words;
+      this.margeWords;
 
       // 作成した検索ワードを元にNewsAPIにリクエスト
-      const params = this.search_input_data;
+      const params = this.searchInputData;
       const response = await axios.get(`/news/get`, { params });
 
       this.searchedNews = response.data;
@@ -210,7 +206,7 @@ export default {
     $route: {
       async handler() {
         // ページの読み込み直後、ニュース取得
-        await this.search_googleNews();
+        await this.searchGoogleNews();
       },
       immediate: true,
     },

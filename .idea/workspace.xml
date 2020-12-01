@@ -23,10 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Trends/TrendCheckbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Trends/TrendCheckbox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Trends/TrendList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Trends/TrendList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Trends/TrendRankCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Trends/TrendRankCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/News.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/News.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/News/NewsSearchCheckbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/News/NewsSearchCheckbox.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
