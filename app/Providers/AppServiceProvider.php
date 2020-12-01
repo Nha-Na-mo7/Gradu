@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -30,5 +31,14 @@ class AppServiceProvider extends ServiceProvider
             \Log::info("Query Time:{$query->time}s] $query->sql");
           });
         }
+  
+        // デプロイ先のMySQLのバージョン次第でマイグレーションが弾かれることがあるので文字列長を指定
+        Schema::defaultStringLength(191);
+        
+        // httpsとして扱う
+        if(\App::environment('production')) {
+          \URL::forceScheme('https');
+        }
+        
     }
 }
