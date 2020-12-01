@@ -7,7 +7,7 @@
 
         {{-- ロゴ --}}
         <a class="p-header__logo" href="{{ route('home.index') }}">
-            <img class="p-header__logo--img" src="storage/images/logos/logo.svg" alt="CryptoTrend" />
+            <img class="p-header__logo--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/logos/logo.svg" alt="CryptoTrend" />
         </a>
 
         {{-- SPサイト用メニュー --}}

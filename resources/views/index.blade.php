@@ -58,7 +58,7 @@
                 {{-- ツイート数 --}}
                 <div class="p-landing__service--item">
                     <div class="">
-                        <img class="p-landing__service--item--img" src="storage/images/figures/index_section_twitter350.jpeg" alt="仮想通貨トレンド" />
+                        <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_twitter350.jpeg" alt="仮想通貨トレンド" />
                     </div>
                     <div class="p-landing__service--item--info">
                         <h1 class="p-landing__service--item--info--title">通貨別ツイート数集計</h1>
@@ -72,7 +72,7 @@
                 {{-- 仮想通貨ニュース --}}
                 <div class="p-landing__service--item">
                     <div class="">
-                        <img class="p-landing__service--item--img" src="storage/images/figures/index_section_news.jpeg" alt="仮想通貨ニュース" />
+                        <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_news.jpeg" alt="仮想通貨ニュース" />
                     </div>
                     <div class="p-landing__service--item--info">
                         <h1 class="p-landing__service--item--info--title">仮想通貨ニュース</h1>
@@ -87,7 +87,7 @@
                 {{-- アカウント一覧 --}}
                 <div class="p-landing__service--item">
                     <div class="">
-                        <img class="p-landing__service--item--img" src="storage/images/figures/index_section_follow.jpeg" alt="仮想通貨アカウント一覧" />
+                        <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_follow.jpeg" alt="仮想通貨アカウント一覧" />
                     </div>
                     <div class="p-landing__service--item--info">
                         <h1 class="p-landing__service--item--info--title">自動フォロー</h1>
