@@ -3,31 +3,28 @@
 //  =============
 .c-flash {
   background: #d6f0ff;
-  transition: all 3s;
-  top: 50px;
-  right: 10px;
-  min-height: 60px;
-  width: 480px;
-  opacity: 0.8;
   border-radius: 4px;
-  z-index: 5;
+  box-shadow: 0 3px 10px #cdcdcd;
+  top: 60px;
+  right: 15px;
+  min-height: 50px;
+  width: 450px;
+  padding: 10px 15px;
   font-size: 15px;
   font-weight: bold;
+  opacity: 0.8;
   color: $font-color_default;
   text-shadow: 0 0 2px $font-color_white;
   line-height: 1.2;
-  padding: 15px 10px;
   position: fixed;
   display: flex;
   align-items: center;
+  transition: all 3s;
+  z-index: 5;
 
   @include mq() {
     min-height: 50px;
     width: 240px;
-  }
-  &__icon {
-    height: 40px;
-    width: 40px;
   }
   &--column {
     display: flex;

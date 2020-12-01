@@ -50,6 +50,4 @@ export const DEFAULT_SEARCHWORD = "仮想通貨";
 export const DEFAULT_TWITTER_URL = "https://twitter.com/";
 
 // 通貨アイコンのパス。storage/images/brand_svg/xxxxxx.svg
-export const BRAND_ICON_PATH = "storage/images/brand_svg/";
-// 通貨アイコンのパス。storage/images/icons_svg/xxxxxx.svg
-export const FLASH_ICON_PATH = "storage/images/icons_svg/";
+export const BRAND_ICON_PATH = "/storage/images/brand_svg/";

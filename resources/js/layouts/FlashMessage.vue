@@ -8,11 +8,6 @@
     v-show="message"
     @click="hideFlash"
   >
-    <div class="c-flash__column--left">
-      <div class="c-flash__icon">
-        <img :src="messageIcon" alt="message" />
-      </div>
-    </div>
     <div class="c-flash__text">
       <span>
         {{ message }}
@@ -23,7 +18,6 @@
 
 <script>
 import { mapState } from "vuex";
-import { FLASH_ICON_PATH } from "../util";
 
 export default {
   computed: {
@@ -45,20 +39,6 @@ export default {
           break;
       }
       return type;
-    },
-    messageIcon() {
-      var icon = FLASH_ICON_PATH + "ring.svg";
-      switch (this.type) {
-        case 0:
-          break;
-        case 1:
-          icon = FLASH_ICON_PATH + "check.svg";
-          break;
-        case 2:
-          icon = FLASH_ICON_PATH + "cross.svg";
-          break;
-      }
-      return icon;
     },
   },
   methods: {

@@ -46,7 +46,7 @@ class ChangeEmail extends Notification
                     ->view('emails.changeEmail') // メールテンプレート
                     ->action(
                         'URL: ',
-                        url('api/user/update/email', $this->token) // メール本文で渡すURL
+                        url('user/update/email', $this->token) // メール本文で渡すURL
             );
     }
 
