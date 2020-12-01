@@ -14,14 +14,21 @@
   }
   &__decription {
     margin-bottom: $space_xl;
+    line-height: 1.5;
   }
   &__info {
     margin-bottom: $space_s;
     display: inline-block;
+    @include mq() {
+      font-size: $font-size_s;
+    }
   }
   &__submit {
     margin-top: 30px;
     text-align: center;
+    @include mq() {
+      margin-top: 15px;
+    }
   }
   &__item {
     border: 1px solid #dedede;
@@ -49,10 +56,17 @@
     }
   }
   &__send {
+    text-align: center;
     margin-top: 15px;
     margin-bottom: 50px;
+    line-height: 1.5;
     &--msg {
-      font-size: $font-size_xl;
+      font-size: $font-size_xxl;
+      font-weight: bold;
+      @include mq() {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
     }
   }
 

@@ -11,17 +11,16 @@
   &__auth {
     max-width: 768px;
     margin: 80px auto;
+    padding: 0 $space_l;
     @include mq($breakpoint: md) {
       max-width: 100%;
+      margin: 50px auto;
     }
   }
   &__content {
     max-width: 980px;
     margin: 100px auto 120px;
-
-    @include mq() {
-      padding: 0 $space_l;
-    }
+    padding: 0 $space_l;
   }
 }
 

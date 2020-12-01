@@ -13,5 +13,9 @@
       border: 1px solid #f66d9b;
       box-shadow: #f66d9b 0 0 4px;
     }
+    @include mq() {
+      padding: 8px;
+      margin-bottom: $space_s;
+    }
   }
 }
