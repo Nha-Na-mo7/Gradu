@@ -63,7 +63,7 @@
             v-model="form_email"
           />
           <div class="u-text--center">
-            <button class="c-btn" @click="update_name">
+            <button class="c-btn" @click="update_email">
               メールアドレスを変更
             </button>
           </div>
