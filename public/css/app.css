@@ -614,7 +614,7 @@ input[type=checkbox] {
   border-radius: 4px;
   font-size: 15px;
   background: #ffffff;
-  color: #0b2e13;
+  color: #1f1f1f;
   -webkit-transition: 0.5s all;
   transition: 0.5s all;
   width: 100%;
@@ -631,7 +631,7 @@ input[type=checkbox] {
   }
 }
 .p-accounts__item:nth-child(2n) {
-  background: #fbf7fd;
+  background: #f5fafa;
 }
 .p-accounts__item:nth-child(2n+1) {
   background: #ffffff;
@@ -1708,7 +1708,7 @@ input[type=checkbox] {
   padding: 15px 20px;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
-  background: #f7931a;
+  background: #c4edf5;
 }
 .c-btn:hover {
   -webkit-transition: all 0.5s;
@@ -1856,7 +1856,7 @@ input[type=checkbox] {
   padding: 8px;
 }
 .c-documentbox__item--info {
-  background: #e4f5f5;
+  background: #c4edf5;
 }
 .c-documentbox__footer {
   position: absolute;
@@ -2404,7 +2404,9 @@ input[type=checkbox] {
   background: #cdcdcd;
 }
 .c-paginate__item--active {
-  background: #ffd7e8;
+  background: #646464;
+  color: #ffffff;
+  font-weight: bold;
 }
 .c-paginate__link {
   padding: 10px 10px;

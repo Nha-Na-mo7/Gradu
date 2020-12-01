@@ -23,7 +23,9 @@
       background: #cdcdcd;
     }
     &--active {
-      background: #ffd7e8;
+      background: #646464;
+      color: $font-color_white;
+      font-weight: bold;
     }
   }
   &__link {
