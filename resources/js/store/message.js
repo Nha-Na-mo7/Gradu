@@ -6,7 +6,7 @@
 // state
 // ===============
 const state = () => ({
-  content: "a",
+  content: "",
   type: 0,
 });
 

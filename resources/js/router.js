@@ -9,7 +9,7 @@ import AccountList from "./pages/AccountLists/AccountList.vue";
 import TrendList from "./pages/Trends/TrendList.vue";
 // マイページ/アカウント設定
 import Mypage from "./pages/Mypage/Mypage.vue";
-import Profile from "./pages/Mypage/Profile.vue";
+import ProfileUpdate from "./pages/Mypage/ProfileUpdate.vue";
 import PasswordMenu from "./pages/Mypage/PasswordMenu.vue";
 
 // エラー系
@@ -66,7 +66,7 @@ const routes = [
   {
     beforeEnter: requireLogin,
     path: "/mypage/profile",
-    component: Profile,
+    component: ProfileUpdate,
     props: true,
   },
   {
