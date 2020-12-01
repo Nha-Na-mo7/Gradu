@@ -962,6 +962,11 @@ input[type=checkbox] {
 .p-form {
   padding: 30px 0;
 }
+@media screen and (max-width: 414px) {
+  .p-form {
+    padding: 20px 15px;
+  }
+}
 .p-form__title {
   font-size: 24px;
   text-align: center;
@@ -1844,6 +1849,7 @@ input[type=checkbox] {
   border-radius: 4px;
   z-index: 5;
   font-size: 15px;
+  line-height: 1.2;
   padding: 15px 10px;
   position: fixed;
   display: -webkit-box;

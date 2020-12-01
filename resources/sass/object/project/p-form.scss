@@ -3,6 +3,9 @@
 //  =============
 .p-form {
   padding: $space_xxl 0;
+  @include mq() {
+    padding: $space_xl $space_l;
+  }
 
   &__title {
     font-size: $font-size_xl;
