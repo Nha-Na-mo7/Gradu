@@ -81,6 +81,9 @@ class TwitterController extends Controller
       Log::debug('=========================================================');
       Log::debug('TwitterController.redirectToTwitterProcider Twitter認証開始');
       Log::debug('=========================================================');
+      // アクセス元の_urlをセッションに格納
+      \Session::flash('url',\Request::server('HTTP_REFERER'));
+  
       return Socialite::driver('twitter')->redirect();
     }
   
@@ -120,7 +123,7 @@ class TwitterController extends Controller
             Log::debug('他のユーザーが連携しているTwitterアカウントです。連携処理は行わずにレスポンスして終了します。');
             Log::debug('===================================================================');
 
-            return redirect()->intended('/mypage')->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
+            return redirect(\Session::get('url'))->with('system_message', self::OTHER_USED_ACCOUNT_ERROR_MSG);
           }
           
           // 登録メールアドレスを使ってユーザーレコードを取得する
@@ -146,7 +149,7 @@ class TwitterController extends Controller
           }
   
           Log::debug('リダイレクトします。');
-          return redirect()->intended()->with('system_message', self::SUCCESS_LINKAGE);
+          return redirect(\Session::get('url'))->with('system_message', self::SUCCESS_LINKAGE);
           
         // ログインしていない場合(新規登録・未ログイン状態からtwitterでログイン)
         }else{
@@ -167,9 +170,8 @@ class TwitterController extends Controller
               Log::debug($twitter_user->email.'を使ったCryptoアカウントは既に存在しています。連携・ログイン共に行わず終了します。');
               Log::debug('===================================================================');
               
-              // 新規登録画面へリダイレクトする。この時フラッシュメッセージも付与する
-              return redirect('/register')
-                  ->intended()
+              // 元の画面に戻し、フラッシュメッセージで連携失敗を説明する
+              return redirect(\Session::get('url'))
                   ->with('system_message', self::ALREADY_EXIST_ACCOUNT_ERROR_MSG);
             }
             
@@ -194,7 +196,7 @@ class TwitterController extends Controller
           // Twitterログインの場合は利便性重視のユーザーが想定されるので、継続ログインをONとする
           Auth::login($myinfo, true);
           
-          // 転送する(トレンド一覧画面が良いか)
+          // 転送する(マイページへ)
           return redirect('mypage')->with('system_message', self::SUCCESS_TWITTER_LOGIN);
         }
       }
