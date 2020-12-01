@@ -66,10 +66,10 @@ class ResetPasswordController extends Controller
       ]);
     }
     
-    // public function showResetForm(Request $request, $token = null)
-    //   {
-    //     return view('auth.passwords.reset')->with(
-    //         ['token' => $token, 'email' => $request->email]
-    //     );
-    //   }
+    // パスワード再設定成功時にフラッシュメッセージを表示させる
+    protected function sendResetResponse(Request $request, $response)
+    {
+      // リダイレクト先でフラッシュメッセージを表示する
+      return redirect($this->redirectPath())->with('system_message', trans($response));
+    }
 }

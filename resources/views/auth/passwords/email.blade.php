@@ -31,7 +31,7 @@
                         class="p-form__info"
                         for="email"
                 >
-                    ご登録のメールアドレスを入力してください</label
+                    ご登録されているメールアドレスを入力してください</label
                 >
                 @error('email')
                 <div class="c-error">
