@@ -33,6 +33,7 @@
         "moment": "^2.29.1",
         "postcss": "^8.1.7",
         "postcss-loader": "^4.0.4",
+        "prettier": "^2.1.1",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.15.2",
         "sass-loader": "^8.0.0",
