@@ -26,7 +26,7 @@
           />
           <img
             v-if="brand.icon"
-            :src="brandIconPath + brand.icon"
+            :src="brand.icon"
             :alt="brand.name"
             class="c-checkbox__icon"
           />
@@ -45,8 +45,6 @@
 </template>
 
 <script>
-import { BRAND_ICON_PATH } from "../../util";
-
 export default {
   data() {
     return {
@@ -54,11 +52,7 @@ export default {
       checkedId: [],
     };
   },
-  computed: {
-    brandIconPath() {
-      return BRAND_ICON_PATH;
-    },
-  },
+  computed: {},
   methods: {
     // 全ての仮想通貨情報を取得する。選択肢に使用される
     async fetchBrand() {

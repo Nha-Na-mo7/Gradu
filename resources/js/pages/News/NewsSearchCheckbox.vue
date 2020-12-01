@@ -31,7 +31,7 @@
                 />
                 <img
                   v-if="brand.icon"
-                  :src="brandIconPath + brand.icon"
+                  :src="brand.icon"
                   :alt="brand.name"
                   class="c-checkbox__icon"
                 />
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { OK, BRAND_ICON_PATH } from "../../util";
+import { OK } from "../../util";
 
 export default {
   data() {
@@ -64,11 +64,6 @@ export default {
       fetchedBrandsData: [],
       checkedBrandId: [],
     };
-  },
-  computed: {
-    brandIconPath() {
-      return BRAND_ICON_PATH;
-    },
   },
   methods: {
     // 全ての仮想通貨情報を取得する。選択肢に使用される

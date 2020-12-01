@@ -14,7 +14,7 @@
         >
           <!-- 通貨アイコン -->
           <img
-            :src="iconPath | iconPathFilter"
+            :src="iconPath"
             class="p-trends__table--icon"
             :alt="this.brand.brand.name"
           />
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { OK, BRAND_ICON_PATH } from "../../util";
+import { OK } from "../../util";
 
 const TWITTER_SEARCH_URL = "https://twitter.com/search?q=";
 
@@ -85,10 +85,6 @@ export default {
     },
   },
   filters: {
-    // svgアイコンのパス
-    iconPathFilter: function (iconPath) {
-      return BRAND_ICON_PATH + iconPath;
-    },
     // JPYを付与する。取得できていない場合は不明とする。
     addJPY: function (price) {
       if (price >= 0) {
