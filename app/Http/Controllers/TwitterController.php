@@ -196,8 +196,8 @@ class TwitterController extends Controller
           // Twitterログインの場合は利便性重視のユーザーが想定されるので、継続ログインをONとする
           Auth::login($myinfo, true);
           
-          // 転送する(マイページへ)
-          return redirect('mypage')->with('system_message', self::SUCCESS_TWITTER_LOGIN);
+          // トレンド一覧ページへ転送する
+          return redirect('trends')->with('system_message', self::SUCCESS_TWITTER_LOGIN);
         }
       }
       catch (\Exception $e) {
