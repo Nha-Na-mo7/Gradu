@@ -121,6 +121,7 @@
       flex-direction: column;
       @include mq($breakpoint: md) {
         width: 100%;
+        height: 100%;
       }
 
       .p-news__item--media {
