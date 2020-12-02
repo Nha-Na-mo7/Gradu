@@ -10,7 +10,7 @@
 
             {{-- 実際のフォーム --}}
             <div class="p-form">
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('register') }}">
                     @csrf
 
                     <label
