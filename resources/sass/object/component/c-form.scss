@@ -10,12 +10,37 @@
     margin-bottom: $space_xl;
     font-size: $font-size_l;
     &:focus {
-      border: 1px solid #f66d9b;
-      box-shadow: #f66d9b 0 0 4px;
+      border: 1px solid $input-color;
+      box-shadow: 0 0 5px $input-color;
     }
     @include mq() {
       padding: 8px;
       margin-bottom: $space_s;
+    }
+  }
+  &__info {
+    margin-bottom: $space_s;
+    display: inline-block;
+    @include mq() {
+      font-size: $font-size_s;
+    }
+  }
+  &__check {
+    margin-top: 12px;
+    margin-bottom: 20px;
+    & input {
+      vertical-align: baseline;
+    }
+    @include mq() {
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+  }
+  &__submit {
+    margin-top: 24px;
+    text-align: center;
+    @include mq() {
+      margin-top: 15px;
     }
   }
 }

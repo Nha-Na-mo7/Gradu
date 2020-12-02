@@ -5,13 +5,13 @@
 <div class="l-container__auth p-auth">
     <div class="p-auth__container">
         <h2 class="p-form__title">ログイン</h2>
-        <div class="p-form">
+        <div class="p-form p-form__auth">
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <!-- email -->
                 <label
-                        class="p-form__info"
+                        class="c-form__info"
                         for="email"
                 >メールアドレス</label>
                 @error('email')
@@ -27,7 +27,7 @@
                 />
 
                 <!-- password -->
-                <label class="p-form__info"
+                <label class="c-form__info"
                        for="password">パスワード (半角英数字 8~50文字)</label>
                 @error('password')
                 <div class="c-error">
@@ -42,7 +42,7 @@
                 />
 
                 <!-- remember me -->
-                <div class="p-form__info p-form__item--check">
+                <div class="c-form__info c-form__check">
                     <label for="remember">
                         <input
                                 type="checkbox"
@@ -53,14 +53,14 @@
                     </label>
                 </div>
 
-                <div class="u-text--center">
+                <div class="c-form__submit">
                     <button
                             type="submit"
                             class="c-btn c-btn__auth"
                     >ログイン</button>
                 </div>
 
-                <div class="p-form__submit">
+                <div class="c-form__submit">
                     <a class="c-btn" href="{{ route('password.request') }}">
                         パスワードを忘れた方はこちら</a>
                 </div>

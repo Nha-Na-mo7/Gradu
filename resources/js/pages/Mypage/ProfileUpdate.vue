@@ -16,7 +16,7 @@
       <div class="p-setting__container">
         <!-- ユーザーネーム -->
         <div class="p-form">
-          <label class="p-form__info" for="name"
+          <label class="c-form__info" for="name"
             >ユーザーネーム( 20文字以内 )</label
           >
 
@@ -27,7 +27,7 @@
           </ul>
           <input
             id="name"
-            class="p-form__item"
+            class="c-form__input"
             type="text"
             v-model="formName"
           />
@@ -49,7 +49,7 @@
             <p>メールアドレスを入力後、確認メールを自動送信します。</p>
             <p>必ずメールを受け取れる状態で変更手続きを行ってください。</p>
           </div>
-          <label class="p-form__info" for="email">メールアドレス </label>
+          <label class="c-form__info" for="email">メールアドレス </label>
           <!-- エラー表示は要修正-->
           <ul v-if="errorsEmail">
             <li class="c-error" v-for="error in errorsEmail">
@@ -58,7 +58,7 @@
           </ul>
           <input
             id="email"
-            class="p-form__item"
+            class="c-form__input"
             type="text"
             v-model="formEmail"
           />

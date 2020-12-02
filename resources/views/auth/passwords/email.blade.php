@@ -28,7 +28,7 @@
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <label
-                        class="p-form__info"
+                        class="c-form__info"
                         for="email"
                 >
                     ご登録されているメールアドレスを入力してください</label
@@ -45,7 +45,7 @@
                         value="{{ old('email') }}"
                 />
 
-                <div class="p-form__submit">
+                <div class="c-form__submit">
                     <button type="submit" class="c-btn c-btn__auth">
                         メールを送信する</button>
                 </div>

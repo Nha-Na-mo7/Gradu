@@ -7,14 +7,13 @@
         <h2 class="p-form__title">アカウントの新規作成</h2>
         <p class="p-form__description">CryptoTrendは、Twitterと連携することでサービスを最大限に利用できます！</p>
         <div class="">
-
             {{-- 実際のフォーム --}}
-            <div class="p-form">
+            <div class="p-form p-form__auth">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
                     <label
-                            class="p-form__info"
+                            class="c-form__info"
                             for="name"
                     >ユーザーネーム ( 20文字以内 )</label>
                     @error('name')
@@ -30,7 +29,7 @@
                     />
 
                     <label
-                            class="p-form__info"
+                            class="c-form__info"
                             for="email"
                     >メールアドレス</label>
                     @error('email')
@@ -46,7 +45,7 @@
                     />
 
                     <label
-                            class="p-form__info"
+                            class="c-form__info"
                             for="password"
                     >パスワード (半角英数字 8~50文字)</label>
                     @error('password')
@@ -62,7 +61,7 @@
                     />
 
                     <label
-                            class="p-form__info"
+                            class="c-form__info"
                             for="password-confirm"
                     >パスワードの再入力</label>
                     @error('password_confirmation')
@@ -77,7 +76,7 @@
                             name="password_confirmation"
                     />
 
-                    <div class="p-form__submit">
+                    <div class="c-form__submit">
                         <button
                                 class="c-btn c-btn__auth"
                                 type="submit"

@@ -9,7 +9,7 @@
           <p>※ 他のサービスと同じパスワードは使用しないでください</p>
         </div>
 
-        <label class="p-form__info" for="password"
+        <label class="c-form__info" for="password"
           >新しいパスワード(半角英数字 8~50文字)</label
         >
 
@@ -20,12 +20,12 @@
         </ul>
         <input
           id="password"
-          class="p-form__item"
+          class="c-form__input"
           type="password"
           v-model="formPassword.password"
         />
 
-        <label class="p-form__info" for="password_confirmation"
+        <label class="c-form__info" for="password_confirmation"
           >パスワード【再入力】</label
         >
 
@@ -36,7 +36,7 @@
         </ul>
         <input
           id="password_confirmation"
-          class="p-form__item"
+          class="c-form__input"
           type="password"
           v-model="formPassword.password_confirmation"
         />

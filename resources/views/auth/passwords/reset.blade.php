@@ -16,7 +16,7 @@
                 @csrf
                 <input type="hidden" name="token" value="{{ $token }}">
 
-                <label class="p-form__info" for="email"
+                <label class="c-form__info" for="email"
                 >メールアドレス</label>
                 @error('email')
                 <div class="c-error">
@@ -35,7 +35,7 @@
                 />
 
                 <label
-                        class="p-form__info"
+                        class="c-form__info"
                         for="password"
                 >新しいパスワード(半角英数 8~50文字)</label>
                 @error('password')
@@ -51,7 +51,7 @@
                         required
                 />
 
-                <label class="p-form__info" for="password-confirm"
+                <label class="c-form__info" for="password-confirm"
                 >パスワードの再入力</label>
                 @error('password_confirmation')
                 <div class="c-error">
@@ -64,7 +64,7 @@
                         type="password"
                         name="password_confirmation"
                 />
-                <div class="p-form__submit">
+                <div class="c-form__submit">
                     <button class="c-btn c-btn__auth" type="submit">
                         パスワードを変更
                     </button>

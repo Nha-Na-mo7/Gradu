@@ -9,7 +9,7 @@
           <p>※ 他のサービスと同じパスワードは使用しないでください</p>
         </div>
 
-        <label class="p-form__info" for="old_password">現在のパスワード</label>
+        <label class="c-form__info" for="old_password">現在のパスワード</label>
 
         <ul v-if="errorsOldPassword">
           <li class="c-error" v-for="error in errorsOldPassword">
@@ -18,12 +18,12 @@
         </ul>
         <input
           id="old_password"
-          class="p-form__item"
+          class="c-form__input"
           type="password"
           v-model="formPassword.old_password"
         />
 
-        <label class="p-form__info" for="password"
+        <label class="c-form__info" for="password"
           >新しいパスワード (半角英数字 8~50文字)</label
         >
 
@@ -34,12 +34,12 @@
         </ul>
         <input
           id="password"
-          class="p-form__item"
+          class="c-form__input"
           type="password"
           v-model="formPassword.password"
         />
 
-        <label class="p-form__info" for="password_confirmation"
+        <label class="c-form__info" for="password_confirmation"
           >新しいパスワード【再入力】</label
         >
 
@@ -50,7 +50,7 @@
         </ul>
         <input
           id="password_confirmation"
-          class="p-form__item"
+          class="c-form__input"
           type="password"
           v-model="formPassword.password_confirmation"
         />

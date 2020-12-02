@@ -6,54 +6,22 @@
   @include mq() {
     padding: $space_xl $space_l;
   }
-
+  &__auth {
+    width: 450px;
+    margin: 0 auto;
+    @include mq() {
+      width: 100%;
+    }
+  }
   &__title {
     font-size: $font-size_xl;
+    font-weight: bold;
     text-align: center;
     margin-bottom: $space_l;
   }
   &__decription {
     margin-bottom: $space_xl;
     line-height: 1.5;
-  }
-  &__info {
-    margin-bottom: $space_s;
-    display: inline-block;
-    @include mq() {
-      font-size: $font-size_s;
-    }
-  }
-  &__submit {
-    margin-top: 30px;
-    text-align: center;
-    @include mq() {
-      margin-top: 15px;
-    }
-  }
-  &__item {
-    border: 1px solid #dedede;
-    border-radius: 0.25rem;
-    font-size: 1.2rem;
-    margin-bottom: $space_xl;
-    padding: $space_m $space_l;
-    letter-spacing: 0.1rem;
-    width: 100%;
-    &:focus {
-      border: 1px solid $input-color;
-      box-shadow: 0 0 5px $input-color;
-    }
-
-    &--check {
-      margin-top: $space_xxl;
-      margin-bottom: 50px;
-      & input {
-        vertical-align: baseline;
-      }
-      @include mq() {
-        margin-top: 8px;
-        margin-bottom: 20px;
-      }
-    }
   }
   &__send {
     text-align: center;
@@ -67,15 +35,6 @@
         font-size: 18px;
         margin-bottom: 12px;
       }
-    }
-  }
-
-  &__textarea {
-    resize: none;
-    font-size: 1.2rem;
-    height: 13rem;
-    @include mq($breakpoint: sm) {
-      height: 20rem;
     }
   }
 }
