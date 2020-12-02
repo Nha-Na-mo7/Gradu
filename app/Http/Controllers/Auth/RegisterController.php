@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRegistPost;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -78,7 +77,6 @@ class RegisterController extends Controller
     // ===================================
     public function redirectPath()
     {
-      \Session::flash('system_message', 'ログインしました！');
       return '/mypage';
     }
 }
