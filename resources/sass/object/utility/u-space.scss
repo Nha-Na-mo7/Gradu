@@ -25,17 +25,4 @@
   &-pd {
     padding: $space_s $space_s;
   }
-
-  &-overflow {
-    &__hidden {
-      overflow: hidden;
-    }
-  }
-
-  &-text--center {
-    text-align: center;
-  }
-  &-text--right {
-    text-align: right;
-  }
 }

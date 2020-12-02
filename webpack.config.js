@@ -124,7 +124,7 @@ module.exports = {
       filename: "../css/app.css",
     }),
   ],
-  //ES5(IE11など)向けの設定
+  //ES5向けの設定
   target: ["web", "es5"],
   watch: true,
   watchOptions: {

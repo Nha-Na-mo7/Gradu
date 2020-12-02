@@ -8,8 +8,6 @@
 
 //  Reset
 @import "./foundation/reset";
-//  Fonts
-//@import url('https://fonts.googleapis.com/css?family=Nunito');
 //  Variables
 @import "foundation/variables";
 //  mixin
@@ -114,3 +112,5 @@
 @import "./object/utility/u-color";
 //  space
 @import "./object/utility/u-space";
+//  other
+@import "./object/utility/u-other";

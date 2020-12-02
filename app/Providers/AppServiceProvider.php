@@ -31,9 +31,5 @@ class AppServiceProvider extends ServiceProvider
             \Log::info("Query Time:{$query->time}s] $query->sql");
           });
         }
-  
-        // デプロイ先のMySQLのバージョン次第でマイグレーションが弾かれることがあるので文字列長を指定
-        Schema::defaultStringLength(191);
-        
     }
 }
