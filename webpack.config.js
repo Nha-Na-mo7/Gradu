@@ -13,7 +13,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // ★ 本番前に必ずproductionに変更すること！！！
 const MODE = "production";
 // ソースマップの利用有無(productionのときはソースマップを利用しない)
-const enabledSourceMap = MODE === "production";
+const enabledSourceMap = MODE === "development";
 
 module.exports = {
   // モード値を production に設定すると最適化された状態で、
