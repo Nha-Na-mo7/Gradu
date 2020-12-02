@@ -540,6 +540,10 @@ class TrendTweetController extends Controller
       }
       
       // tweet_count_daysテーブルのそれぞれのIDごとに、新着上位7件を取得する。
+      
+      // コンプリートフラグを用意(失敗時のみ抜けるためtrueをデフォルトにする)
+      $complete_flg = true;
+  
       Log::debug('日付テーブルの上位７件を取得します。');
       for ($i = 0;$i < $brands_count;$i++){
         $count_days = TweetCountDay::where('brand_id', $i + 1)
@@ -550,6 +554,7 @@ class TrendTweetController extends Controller
         
         if($count_days->count() < 7) {
           Log::debug('日付データが7件に到達していません。');
+          $complete_flg = false;
           break;
         }
         
@@ -567,7 +572,7 @@ class TrendTweetController extends Controller
       }
       $updated = $updated_at_table_model->find(4);
       $updated->fill([
-          'complete_flg' => true,
+          'complete_flg' => $complete_flg,
           'updated_at' => $today_db_format
       ])->save();
       Log::debug('▲▲▲▲▲▲▲ 終了します。 bye ▲▲▲▲▲▲▲');
