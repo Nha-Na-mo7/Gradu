@@ -19,7 +19,6 @@
     text-align: center;
     @include mq() {
       right: unset;
-      position: unset;
       padding: 5px;
     }
 
@@ -65,7 +64,8 @@
     }
 
     &--item {
-      height: 480px;
+      min-height: 480px;
+      height: 100%;
       width: 30%;
       background: #f9fffe;
       box-shadow: 0 4px 10px #cdcdcd;
@@ -96,6 +96,7 @@
           margin-bottom: 12px;
         }
         &--text {
+          text-align: left;
           font-size: 16px;
           line-height: 1.5;
           color: #777;
