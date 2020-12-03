@@ -60,11 +60,11 @@ export default {
     },
     // 24時間の最低取引価格
     priceMin() {
-      return this.transactionPrice.priceMin;
+      return this.transactionPrice.price_min;
     },
     // 24時間の最高取引価格
     priceMax() {
-      return this.transactionPrice.priceMax;
+      return this.transactionPrice.price_max;
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
     searchUrl() {
