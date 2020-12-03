@@ -3,9 +3,9 @@
 <!--=======================================================-->
 <template>
   <div class="p-news__item--container">
+    <!-- 24H以内の記事に付与されるアイコン -->
+    <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
     <div class="p-news__item" :class="{ 'p-news__new': isSub24hour }">
-      <!-- 24H以内の記事に付与されるアイコン -->
-      <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
       <!-- 記事のタイトル -->
       <div class="p-news__item--title">
         <h2>
