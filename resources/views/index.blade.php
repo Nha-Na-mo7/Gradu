@@ -33,7 +33,7 @@
         <div class="p-landing__container">
             <div class="p-landing__section--info">
                 <h2 class="p-landing__section--title">
-                    CryptoTrendは<br /><br />
+                    CryptoTrendは<br />
                     「仮想通貨」 に特化したトレンド情報サービスです
                 </h2>
                 <p class="p-landing__section--text">
