@@ -82,34 +82,36 @@
       </div>
 
       <!-- FF数 -->
-      <div class="p-accounts__ff">
-        <div class="p-accounts__ff--item">
-          <div class="p-accounts__ff--title"><p>フォロー</p></div>
-          <div class="p-accounts__ff--count">
-            <p>
-              <a
-                :href="twitter_following_url"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {{ account.friends_count }}
-              </a>
-            </p>
+      <div class="p-accounts__ff--container">
+        <div class="p-accounts__ff">
+          <div class="p-accounts__ff--item">
+            <div class="p-accounts__ff--title"><p>フォロー</p></div>
+            <div class="p-accounts__ff--count">
+              <p>
+                <a
+                    :href="twitter_following_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  {{ account.friends_count }}
+                </a>
+              </p>
+            </div>
           </div>
-        </div>
 
-        <div class="p-accounts__ff--item">
-          <div class="p-accounts__ff--title"><p>フォロワー</p></div>
-          <div class="p-accounts__ff--count">
-            <p>
-              <a
-                :href="twitter_followers_url"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {{ account.followers_count }}
-              </a>
-            </p>
+          <div class="p-accounts__ff--item">
+            <div class="p-accounts__ff--title"><p>フォロワー</p></div>
+            <div class="p-accounts__ff--count">
+              <p>
+                <a
+                    :href="twitter_followers_url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                  {{ account.followers_count }}
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>

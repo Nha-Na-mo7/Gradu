@@ -143,6 +143,11 @@
         width: 100%;
         color: #279187;
       }
+      &--container {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+      }
     }
     // 記事がない時に表示する
     &--nothing {
