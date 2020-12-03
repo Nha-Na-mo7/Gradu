@@ -103,6 +103,7 @@
 
     &--title {
       width: 75%;
+      height: 100%;
       padding-right: $space_s;
       @include mq($breakpoint: md) {
         width: 90%;

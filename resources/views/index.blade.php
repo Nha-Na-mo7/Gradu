@@ -58,7 +58,7 @@
     </section>
 
     <section class="p-landing__section p-landing__contents u-bg-blue">
-        <div class="p-landing__service u-mb-xl">
+        <div class="p-landing__service">
             {{-- ツイート数 --}}
             <div class="p-landing__service--item">
                 <div class="">
