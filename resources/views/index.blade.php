@@ -11,8 +11,7 @@
 
 @section('content')
     {{-- ヒーローバナー --}}
-    <section class="l-hero p-landing"></section>
-    <section class="p-landing">
+    <section class="l-hero p-landing">
         <div class="p-landing__introduction">
             <h1 class="p-landing__introduction--title">
                 仮想通貨のトレンドを
