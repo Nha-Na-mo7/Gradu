@@ -19,15 +19,13 @@
         </h2>
       </div>
       <!-- 時刻とメディア -->
-      <div>
-        <div class="p-news__item--data--container">
-          <div class="p-news__item--data">
-            <div class="p-news__item--time">
-              <p>{{ getPubDate | newsUpdate }}</p>
-            </div>
-            <div class="p-news__item--media">
-              <p>{{ getEntrySource }}</p>
-            </div>
+      <div class="p-news__item--data--container">
+        <div class="p-news__item--data">
+          <div class="p-news__item--time">
+            <p>{{ getPubDate | newsUpdate }}</p>
+          </div>
+          <div class="p-news__item--media">
+            <p>{{ getEntrySource }}</p>
           </div>
         </div>
       </div>
