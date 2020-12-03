@@ -693,6 +693,7 @@ input[type=checkbox] {
   }
 }
 .p-accounts__column--right {
+  height: 100%;
   width: 100%;
 }
 .p-accounts__icon {
