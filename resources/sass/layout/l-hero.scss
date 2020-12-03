@@ -11,6 +11,9 @@
   //background-size: cover;
   width: 100%;
   min-height: 80vh;
+  @include mq() {
+    min-height: 50vh;
+  }
 
   &:before {
     content: "";
