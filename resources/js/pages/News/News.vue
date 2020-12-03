@@ -2,7 +2,8 @@
 <!--ニュース一覧画面でいくつも描画されるニュースリンクへのコンポーネント-->
 <!--=======================================================-->
 <template>
-  <div class="p-news__item--container">
+<!--  <div class="p-news__item&#45;&#45;container">-->
+  <div class="">
     <div class="p-news__item" :class="{ 'p-news__new': isSub24hour }">
 <!--      &lt;!&ndash; 24H以内の記事に付与されるアイコン &ndash;&gt;-->
       <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
@@ -19,17 +20,13 @@
         </h2>
       </div>
       <!-- 時刻とメディア -->
-      <div class="p-news__item--data--container">
-        <div class="p-news__item--data">
-          <div class="p-news__item--time">
-            <p>{{ getPubDate | newsUpdate }}</p>
-          </div>
-          <div class="p-news__item--media">
-            <p>{{ getEntrySource }}</p>
-          </div>
-        </div>
+      <div class="p-news__item--data">
+        <span class="p-news__item--time">{{ getPubDate | newsUpdate }}</span>
+        <span class="p-news__item--media">{{ getEntrySource }}</span>
       </div>
     </div>
+<!--    <div class="p-news__item&#45;&#45;data&#45;&#45;container">-->
+<!--    </div>-->
   </div>
 </template>
 
