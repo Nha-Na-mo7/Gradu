@@ -207,7 +207,7 @@
       letter-spacing: -0.5px;
       color: $font-color_default;
       @include mq() {
-        font-size: 5px;
+        font-size: 8px;
       }
       & > p {
         margin-right: 4px;
