@@ -5,7 +5,9 @@
 <div class="l-container__auth p-auth">
     <div class="p-auth__container">
         <h2 class="p-form__title">アカウントの新規作成</h2>
-        <p class="p-form__description">CryptoTrendは、Twitterと連携することでサービスを最大限に利用できます！</p>
+        <div class="p-form__description u-text--center">
+            <p>CryptoTrendは、Twitterと連携することでサービスを最大限に利用できます！</p>
+        </div>
         <div class="">
             {{-- 実際のフォーム --}}
             <div class="p-form p-form__auth">

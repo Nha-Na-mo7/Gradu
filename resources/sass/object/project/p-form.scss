@@ -21,6 +21,8 @@
   }
   &__decription {
     margin-bottom: $space_xl;
+    font-size: $font-size_default;
+    font-weight: bold;
     line-height: 1.5;
   }
   &__send {
