@@ -153,6 +153,10 @@
         font-size: 15px;
       }
     }
+    &--container {
+      height: 100%;
+      display: inline-block;
+    }
   }
   &__new {
     border: 1px solid $icon-color-new;
