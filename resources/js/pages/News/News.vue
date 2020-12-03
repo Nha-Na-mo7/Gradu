@@ -2,31 +2,33 @@
 <!--ニュース一覧画面でいくつも描画されるニュースリンクへのコンポーネント-->
 <!--=======================================================-->
 <template>
-  <div class="p-news__item--container">
-    <div class="p-news__item" :class="{ 'p-news__new': isSub24hour }">
-<!--      &lt;!&ndash; 24H以内の記事に付与されるアイコン &ndash;&gt;-->
-      <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
-      <!-- 記事のタイトル -->
-      <div class="p-news__item--title">
-        <h2>
-          <a
-              class="p-news__item--title--link"
-              :href="getEntryUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-          >{{ getEntryTitle }}</a
-          >
-        </h2>
-      </div>
-      <!-- 時刻とメディア -->
-      <div>
-        <div class="p-news__item--data--container">
-          <div class="p-news__item--data">
-            <div class="p-news__item--time">
-              <p>{{ getPubDate | newsUpdate }}</p>
-            </div>
-            <div class="p-news__item--media">
-              <p>{{ getEntrySource }}</p>
+  <div>
+    <div class="p-news__item--container">
+      <div class="p-news__item" :class="{ 'p-news__new': isSub24hour }">
+        <!--      &lt;!&ndash; 24H以内の記事に付与されるアイコン &ndash;&gt;-->
+        <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
+        <!-- 記事のタイトル -->
+        <div class="p-news__item--title">
+          <h2>
+            <a
+                class="p-news__item--title--link"
+                :href="getEntryUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+            >{{ getEntryTitle }}</a
+            >
+          </h2>
+        </div>
+        <!-- 時刻とメディア -->
+        <div class="p-news__block">
+          <div class="p-news__item--data--container">
+            <div class="p-news__item--data">
+              <div class="p-news__item--time">
+                <p>{{ getPubDate | newsUpdate }}</p>
+              </div>
+              <div class="p-news__item--media">
+                <p>{{ getEntrySource }}</p>
+              </div>
             </div>
           </div>
         </div>
