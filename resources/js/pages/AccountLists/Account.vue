@@ -85,7 +85,7 @@
       <div class="p-accounts__ff--container">
         <div class="p-accounts__ff">
           <div class="p-accounts__ff--item">
-            <div class="p-accounts__ff--title"><p>フォロー</p></div>
+            <div class="p-accounts__ff--title"><p>フォロー:</p></div>
             <div class="p-accounts__ff--count">
               <p>
                 <a
@@ -100,7 +100,7 @@
           </div>
 
           <div class="p-accounts__ff--item">
-            <div class="p-accounts__ff--title"><p>フォロワー</p></div>
+            <div class="p-accounts__ff--title"><p>フォロワー:</p></div>
             <div class="p-accounts__ff--count">
               <p>
                 <a

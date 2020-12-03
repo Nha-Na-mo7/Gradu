@@ -177,13 +177,14 @@
   &__ff {
     height: 100%;
     display: flex;
-    flex-direction: column;
     border-top: 1px solid $font-color_default;
     padding: 4px 0;
     // 共通要素
     &--item {
       height: 100%;
+      max-width: 40%;
       margin-bottom: $space_s;
+      margin-right: $space_l;
       display: flex;
       align-items: center;
       word-break: break-all;
@@ -194,7 +195,7 @@
       font-weight: bold;
       font-size: $font-size_l;
       @include mq() {
-        font-size: $font-size_l;
+        font-size: $font-size_m;
       }
       &:hover {
         text-decoration: underline;
@@ -202,10 +203,15 @@
     }
     // フォロー中 or フォロワー の文言
     &--title {
-      width: 80px;
       font-size: 12px;
-      letter-spacing: 0.5px;
+      letter-spacing: -0.5px;
       color: $font-color_default;
+      @include mq() {
+        font-size: 5px;
+      }
+      & > p {
+        margin-right: 4px;
+      }
     }
     &--container {
       display: inline-block;
