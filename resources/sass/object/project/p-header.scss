@@ -65,6 +65,10 @@
       display: flex;
       align-items: center;
       text-decoration: none;
+      @include mq($breakpoint: md) {
+        padding: 5px;
+        font-size: 10px;
+      }
     }
     @include mq() {
       width: 100%;

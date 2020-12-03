@@ -1107,6 +1107,12 @@ input[type=checkbox] {
           align-items: center;
   text-decoration: none;
 }
+@media screen and (max-width: 768px) {
+  .p-header__item > a {
+    padding: 5px;
+    font-size: 10px;
+  }
+}
 @media screen and (max-width: 414px) {
   .p-header__item {
     width: 100%;
@@ -1299,6 +1305,7 @@ input[type=checkbox] {
 }
 .p-landing__section {
   background: #ffffff;
+  height: 100%;
 }
 .p-landing__section--info {
   height: 100%;
