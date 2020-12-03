@@ -10,7 +10,7 @@
     background-size: cover;
     background-image: url("https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/hero_btc.jpg");
     width: 100%;
-    height: 70vh;
+    height: 100vh;
   }
   &__container {
     display: flex;
@@ -58,6 +58,7 @@
     }
   }
   &__information {
+    margin-top: 120px;
   }
 
   &__service {
