@@ -11,7 +11,7 @@
 
 @section('content')
     {{-- ヒーローバナー --}}
-    <section class="l-hero p-landing">
+    <section class="l-hero p-landing p-landing__container">
         <div class="p-landing__introduction">
             <h1 class="p-landing__introduction--title">
                 仮想通貨のトレンドを
@@ -105,7 +105,7 @@
     </section>
 
     {{--無料で今すぐはじめよう--}}
-    <section class="p-landing__section p-landing__footer">
+    <section class="p-landing__section">
         <div class="p-landing__container">
             <div class="p-landing__section--info">
                 <h2 class="p-landing__section--title">
@@ -115,19 +115,22 @@
                     <span>登録はもちろん無料。仮想通貨の最先端を掴みましょう。</span>
                 </p>
             </div>
-            @guest
-                <div class="">
-                    <a href="{{ route('register') }}">
-                        <button class="c-btn c-btn__auth">無料で新規登録</button>
-                    </a>
-                </div>
-            @else
-                <div class="">
-                    <a href="{{ route('trend.index') }}">
-                        <button class="c-btn c-btn__auth">トレンドをチェック</button>
-                    </a>
-                </div>
-            @endguest
         </div>
+    </section>
+
+    <section class="p-landing__section p-landing__footer">
+    @guest
+        <div class="p-landing__container">
+            <a href="{{ route('register') }}">
+                <button class="c-btn c-btn__auth">無料で新規登録</button>
+            </a>
+        </div>
+    @else
+        <div class="">
+            <a href="{{ route('trend.index') }}">
+                <button class="c-btn c-btn__auth">トレンドをチェック</button>
+            </a>
+        </div>
+    @endguest
     </section>
 @endsection
