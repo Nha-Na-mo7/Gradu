@@ -66,53 +66,47 @@
     <section class="p-landing__section p-landing__contents u-bg-blue">
         <div class="p-landing__service">
             {{-- ツイート数 --}}
-            <div class="p-landing__service--item--container">
-                <div class="p-landing__service--item">
-                    <div class="">
-                        <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_twitter350.jpeg" alt="仮想通貨トレンド" />
-                    </div>
-                    <div class="p-landing__service--item--info">
-                        <h1 class="p-landing__service--item--info--title">通貨別ツイート数集計</h1>
-                        <p class="p-landing__service--item--info--text">
-                            通貨ごとにツイートを集計してランキングにしているため、
-                            常にTwitterでのトレンド通貨をわかりやすくチェック出来ます。
-                        </p>
-                    </div>
+            <div class="p-landing__service--item">
+                <div class="">
+                    <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_twitter350.jpeg" alt="仮想通貨トレンド" />
+                </div>
+                <div class="p-landing__service--item--info">
+                    <h1 class="p-landing__service--item--info--title">通貨別ツイート数集計</h1>
+                    <p class="p-landing__service--item--info--text">
+                        通貨ごとにツイートを集計してランキングにしているため、
+                        常にTwitterでのトレンド通貨をわかりやすくチェック出来ます。
+                    </p>
                 </div>
             </div>
 
             {{-- 仮想通貨ニュース --}}
-            <div class="p-landing__service--item--container">
-                <div class="p-landing__service--item">
-                    <div class="">
-                        <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_news.jpeg" alt="仮想通貨ニュース" />
-                    </div>
-                    <div class="p-landing__service--item--info">
-                        <h1 class="p-landing__service--item--info--title">仮想通貨ニュース</h1>
-                        <p class="p-landing__service--item--info--text">
-                            仮想通貨に特化した最新のニュースが検索可能です。
-                            トレンド通貨をすぐに調べられるので、情報を取りこぼすことがありません。
-                        </p>
-                    </div>
+            <div class="p-landing__service--item">
+                <div class="">
+                    <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_news.jpeg" alt="仮想通貨ニュース" />
+                </div>
+                <div class="p-landing__service--item--info">
+                    <h1 class="p-landing__service--item--info--title">仮想通貨ニュース</h1>
+                    <p class="p-landing__service--item--info--text">
+                        仮想通貨に特化した最新のニュースが検索可能です。
+                        トレンド通貨をすぐに調べられるので、情報を取りこぼすことがありません。
+                    </p>
                 </div>
             </div>
+
 
             {{-- アカウント一覧 --}}
-            <div class="p-landing__service--item--container">
-                <div class="p-landing__service--item">
-                    <div class="">
-                        <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_follow.jpeg" alt="仮想通貨アカウント一覧" />
-                    </div>
-                    <div class="p-landing__service--item--info">
-                        <h1 class="p-landing__service--item--info--title">自動フォロー</h1>
-                        <p class="p-landing__service--item--info--text">
-                            仮想通貨に関連したTwitterアカウントを自動でフォローすることが可能です。
-                            面倒なTwitter運用も、放っておくだけで完了します。
-                        </p>
-                    </div>
+            <div class="p-landing__service--item">
+                <div class="">
+                    <img class="p-landing__service--item--img" src="https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/index_section_follow.jpeg" alt="仮想通貨アカウント一覧" />
+                </div>
+                <div class="p-landing__service--item--info">
+                    <h1 class="p-landing__service--item--info--title">自動フォロー</h1>
+                    <p class="p-landing__service--item--info--text">
+                        仮想通貨に関連したTwitterアカウントを自動でフォローすることが可能です。
+                        面倒なTwitter運用も、放っておくだけで完了します。
+                    </p>
                 </div>
             </div>
-
         </div>
     </section>
 
