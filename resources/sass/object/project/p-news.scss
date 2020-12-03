@@ -87,7 +87,7 @@
     font-size: 15px;
     box-shadow: 0 0 2px #cdcdcd;
     transition: 0.5s all;
-    display: inline-flex;
+    display: flex;
     word-break: break-all;
 
     @include mq($breakpoint: md) {
@@ -99,6 +99,10 @@
     }
     &:nth-child(2n + 1) {
       background: #ffffff;
+    }
+    &--container {
+      display: inline-block;
+      width: 100%;
     }
 
     &--title {
