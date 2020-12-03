@@ -1115,6 +1115,11 @@ input[type=checkbox] {
   }
 }
 @media screen and (max-width: 414px) {
+  .p-header__item > a {
+    font-size: 18px;
+  }
+}
+@media screen and (max-width: 414px) {
   .p-header__item {
     width: 100%;
     padding: 12px;
