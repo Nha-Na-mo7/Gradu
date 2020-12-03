@@ -78,6 +78,7 @@
     border-radius: 4px;
     min-height: 100px;
     width: 100%;
+    height: 100%;
     margin-bottom: 12px;
     padding: 10px;
     position: relative;
@@ -118,11 +119,11 @@
     }
     &--data {
       width: 20%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       @include mq($breakpoint: md) {
         width: 100%;
-        height: 100%;
       }
 
       & > .p-news__item--media {
@@ -132,7 +133,7 @@
       }
       & > .p-news__item--time {
         font-size: 15px;
-        margin-bottom: $space_s;
+        padding-bottom: 12px;
         height: 40%;
         width: 100%;
         color: #279187;
