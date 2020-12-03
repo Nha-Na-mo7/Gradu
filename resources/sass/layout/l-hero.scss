@@ -12,7 +12,7 @@
   width: 100%;
   min-height: 80vh;
   @include mq() {
-    min-height: 50vh;
+    min-height: 100vh;
   }
 
   &:before {
