@@ -23,7 +23,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="417e86a3-0e21-419d-ac7b-889edd344c9f" name="Default" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/jquery.js" afterDir="false" />
+>>>>>>> 0da816156d097d6bdad66924e560237e85cbae04
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -367,7 +372,7 @@
       <workItem from="1606542821189" duration="166912000" />
       <workItem from="1606877304966" duration="11000" />
       <workItem from="1606877335951" duration="415000" />
-      <workItem from="1606878777136" duration="34424000" />
+      <workItem from="1606878777136" duration="35123000" />
     </task>
     <servers />
   </component>

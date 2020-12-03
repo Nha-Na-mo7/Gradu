@@ -11,14 +11,14 @@ $(function () {
     $(this).toggleClass("active");
     spnav.toggleClass("active");
     
-    if(spnav.hasClass("active")) {
-      scrollPosition = $(window).scrollTop();
-      $("body").toggleClass('u-scroll-prevent').css({'top': - scrollPosition});
-    }else {
-      scrollPosition = $(window).scrollTop();
-      $("body").toggleClass('u-scroll-prevent').css({'top': 0});
-      window.scrollTo(0, scrollPosition);
-    }
+    // if(spnav.hasClass("active")) {
+    //   scrollPosition = $(window).scrollTop();
+    //   $("body").toggleClass('u-scroll-prevent').css({'top': - scrollPosition});
+    // }else {
+    //   scrollPosition = $(window).scrollTop();
+    //   $("body").toggleClass('u-scroll-prevent').css({'top': 0});
+    //   window.scrollTo(0, scrollPosition);
+    // }
   });
 
   // ==========================
