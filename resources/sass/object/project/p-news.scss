@@ -76,6 +76,7 @@
   // ニュースの一覧表示画面で出てくる用のコンポーネント
   &__item {
     border-radius: 4px;
+    min-height: 100px;
     width: 100%;
     height: 100%;
     margin-bottom: 12px;
@@ -93,7 +94,12 @@
       flex-direction: column;
     }
 
-
+    &:nth-child(2n) {
+      background: #f6f6f6;
+    }
+    &:nth-child(2n + 1) {
+      background: #ffffff;
+    }
     &--container {
       display: inline-block;
       height: 100%;
@@ -101,7 +107,6 @@
     }
 
     &--title {
-      display: block;
       width: 75%;
       height: 100%;
       padding-right: $space_s;
@@ -160,19 +165,9 @@
         font-size: 15px;
       }
     }
-    &:nth-child(2n) {
-      background: #f6f6f6;
-    }
-    &:nth-child(2n + 1) {
-      background: #ffffff;
-    }
   }
   &__new {
     border: 1px solid $icon-color-new;
     box-shadow: $icon-color-new 0 0 3px;
-  }
-
-  &__block {
-    display: block;
   }
 }
