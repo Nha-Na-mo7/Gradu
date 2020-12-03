@@ -112,7 +112,7 @@
 
     {{--無料で今すぐはじめよう--}}
     <section class="p-landing__section">
-        <div class="p-landing__container">
+        <div class="p-landing__container p-landing__container--flex">
             <div class="p-landing__section--info">
                 <h2 class="p-landing__section--title">
                     さっそく始めよう
@@ -126,7 +126,7 @@
 
     <section class="p-landing__section p-landing__footer">
     @guest
-        <div class="p-landing__container">
+        <div class="p-landing__container p-landing__container--flex">
             <a href="{{ route('register') }}">
                 <button class="c-btn c-btn__auth">無料で新規登録</button>
             </a>
