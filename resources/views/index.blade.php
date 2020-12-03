@@ -24,6 +24,12 @@
                         <button class="c-btn c-btn__auth">無料で新規登録</button>
                     </a>
                 </div>
+            @else
+                <div class="">
+                    <a href="{{ route('trend.index') }}">
+                        <button class="c-btn c-btn__auth">トレンドをチェック</button>
+                    </a>
+                </div>
             @endguest
         </div>
     </section>
