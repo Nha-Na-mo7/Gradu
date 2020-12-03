@@ -43,9 +43,9 @@
                     「仮想通貨」 に特化したトレンド情報サービスです
                 </h2>
                 <p class="p-landing__section--text">
-                    <span>トレンドの移り変わりが激しい仮想通貨の情報を追いきれない...</span><br /><br />
-                    <span>こんな悩みはCryptoTrendですぐに解決。</span><br />
-                    <span>CryptoTrendは、最も人気のある仮想通貨の情報を、無料でリアルタイムに確認可能です。</span>
+                    トレンドの移り変わりが激しい仮想通貨の情報を追いきれない...<br /><br />
+                    こんな悩みはCryptoTrendですぐに解決。<br />
+                    CryptoTrendは、最も人気のある仮想通貨の情報を、無料でリアルタイムに確認可能です。
                 </p>
             </div>
         </div>
@@ -57,7 +57,7 @@
             <div class="p-landing__section--info">
                 <h2 class="p-landing__section--title">トレンドを確実に捉える3つの機能</h2>
                 <p class="p-landing__section--text">
-                    <span>CryptoTrendは、3つの機能で仮想通貨のトレンドを見逃しません。</span><br />
+                    CryptoTrendは、3つの機能で仮想通貨のトレンドを見逃しません。<br />
                 </p>
             </div>
         </div>
