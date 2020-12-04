@@ -70,6 +70,7 @@ class ForgotPasswordController extends Controller
      */
     protected function sendResetLinkFailedResponse(Request $request, $response)
     {
+      sleep(2);
       // レスポンスを成功したときと同様の処理に書き換える。
       $response = 'passwords.sent';
       // 成功時と同じようにバリデーションエラーは出さないで戻す
