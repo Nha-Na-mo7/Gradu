@@ -108,11 +108,12 @@ export default {
     page_title() {
       return PAGE_TITLE;
     },
+    // 仮想通貨 + チェックされたワードを文字列として出力する
     defaultAndCheckedBrandsData() {
       return DEFAULT_SEARCHWORD + ' ' + this.checkedBrandsData.join(' ');
     },
     // 「仮想通貨」とチェックされた通貨名の一覧を、searchInputData.keywordsに格納
-    margeWords() {
+    wordsIntoSearchData() {
       this.searchInputData.keywords = this.defaultAndCheckedBrandsData;
     },
     // ======================
@@ -164,8 +165,8 @@ export default {
       // 現在ページを1に戻す(戻さないと新しく検索した場合にも、途中のページから表示されてしまう)
       this.currentPage = 1;
 
-      // 検索ワードをマージさせる
-      this.margeWords;
+      // 検索ワードをsearchDataへ格納
+      this.wordsIntoSearchData;
 
       // 作成した検索ワードを元にNewsAPIにリクエスト
       const params = this.searchInputData;

@@ -22,7 +22,7 @@ class TwitterAccountListController extends Controller
   
     // twitterAPIが1日にフォローできる最大数。
     // ただし1日に1回のリセットだとフォローに偏りが出やすくなるので、
-    // 処理では1/2した200/12hと考えて、12時間ごとにフォローカウントをリセットするようにしている。
+    // 処理内部では1/2した200/12hと考えて、12時間ごとにフォローカウントをリセットするようにしている。
     const DAILY_LIMIT_FOLLOW = 400;
     // twitterAPIが15分の間にフォローできる最大数。こちらも15分ごとのカウントリセットで偏りが出ることを想定して若干少ない人数に設定。
     const MIN_LIMIT_FOLLOW = 12;
@@ -126,7 +126,7 @@ class TwitterAccountListController extends Controller
           foreach ($result_users as $user) {
             
             $request = json_decode(json_encode($user), true);
-            // Log::debug('解体: '. print_r($request, true));
+            // Log::debug('取得アカウント情報: '. print_r($request, true));
             
             // エラーコードが存在する場合
             if (isset($request[0]['code'])) {
