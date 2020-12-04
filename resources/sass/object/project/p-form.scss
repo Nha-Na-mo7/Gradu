@@ -29,12 +29,12 @@
     text-align: center;
     margin-top: 15px;
     margin-bottom: 50px;
-    line-height: 1.5;
+    line-height: 1.4;
     &--msg {
       font-size: $font-size_xxl;
       font-weight: bold;
       @include mq() {
-        font-size: 18px;
+        font-size: 15px;
         margin-bottom: 12px;
       }
     }

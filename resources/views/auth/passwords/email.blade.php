@@ -6,6 +6,17 @@
 @section('content')
 <div class="l-container__auth p-auth">
     <div class="p-auth__container">
+        {{-- ここでメッセージ送信した通知が出る --}}
+        @if (session('status'))
+            <div class="p-form__send">
+                <p class="p-form__send--msg" role="alert">
+                    {{ session('status') }}
+                </p>
+                <p class="u-color--red">※ メールが届くまで、約5分ほどお時間がかかります。</p>
+                <p>5分を過ぎてもメールが届かない場合、入力されたメールアドレスが間違っているか、迷惑メールフォルダに入っている可能性があります。</p>
+            </div>
+        @endif
+
         <div>
             <h2 class="p-form__title">パスワードを忘れた場合</h2>
             <div class="p-form__decription">
@@ -15,16 +26,6 @@
         </div>
 
         <div class="p-form">
-            {{-- ここでメッセージ送信した通知が出る --}}
-            @if (session('status'))
-                <div class="p-form__send">
-                    <p class="p-form__send--msg" role="alert">
-                        {{ session('status') }}
-                    </p>
-                    <p>メールが届かない場合、入力されたメールアドレスが間違っているか、迷惑メールフォルダに入っている可能性がありますので確認してください。</p>
-                </div>
-            @endif
-
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <label

@@ -38,10 +38,10 @@
     <section class="p-landing__section p-landing__information">
         <div class="p-landing__container">
             <div class="p-landing__section--info">
-                <h2 class="p-landing__section--title">
+                <h1 class="p-landing__section--title">
                     CryptoTrendは<br />
                     「仮想通貨」 に特化したトレンド情報サービスです
-                </h2>
+                </h1>
                 <p class="p-landing__section--text">
                     トレンドの移り変わりが激しい仮想通貨の情報を追いきれない...<br /><br />
                     こんな悩みはCryptoTrendですぐに解決。<br />
@@ -114,9 +114,9 @@
     <section class="p-landing__section">
         <div class="p-landing__container p-landing__container--flex">
             <div class="p-landing__section--info">
-                <h2 class="p-landing__section--title">
+                <h1 class="p-landing__section--title">
                     さっそく始めよう
-                </h2>
+                </h1>
                 <p class="p-landing__section--text u-mb-3l">
                     <span>登録はもちろん無料。仮想通貨の最先端を掴みましょう。</span>
                 </p>
