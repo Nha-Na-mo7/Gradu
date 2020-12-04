@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
 export default {
   computed: {
@@ -26,16 +26,16 @@ export default {
       type: (state) => state.message.type,
     }),
     bgColor() {
-      var type = "";
+      var type = '';
       switch (this.type) {
         case 0:
-          type = "";
+          type = '';
           break;
         case 1:
-          type = "c-flash__success";
+          type = 'c-flash__success';
           break;
         case 2:
-          type = "c-flash__error";
+          type = 'c-flash__error';
           break;
       }
       return type;
@@ -43,8 +43,8 @@ export default {
   },
   methods: {
     hideFlash() {
-      this.$store.commit("message/setContent", {
-        content: "",
+      this.$store.commit('message/setContent', {
+        content: '',
       });
     },
   },

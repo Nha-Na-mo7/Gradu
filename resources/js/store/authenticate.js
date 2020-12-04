@@ -31,7 +31,7 @@ const actions = {
   async check_authenticate(context) {
     // 認証状態チェックAPIにリクエストする
     const response = await axios
-      .get("/user/auth/check")
+      .get('/user/auth/check')
       // 通信失敗時にerror.responseが、成功時はレスポンスオブジェクトがそのまま入る
       .catch((error) => error.response || error);
 

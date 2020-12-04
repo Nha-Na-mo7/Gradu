@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { OK } from "../../util";
+import { OK } from '../../util';
 
 export default {
   data() {
@@ -69,7 +69,7 @@ export default {
     // 全ての仮想通貨情報を取得する。選択肢に使用される
     async fetchBrandsTable() {
       const response = await axios
-        .get("/brand")
+        .get('/brand')
         .catch((error) => error.response || error);
 
       // 検索を絞るためのチェックボックスであり、最悪通信失敗しても大きく影響しないので通信失敗時はdata更新しないだけに止める。
@@ -79,16 +79,16 @@ export default {
     },
     // チェックされた時、チェックボックスの値全てを親コンポネに送る
     isChecked(brand) {
-      this.$emit("checked", this.checkedBrandId);
+      this.$emit('checked', this.checkedBrandId);
     },
     // チェックを全て外す
     resetCheckbox() {
       this.checkedBrandId = [];
-      this.$emit("reset");
+      this.$emit('reset');
     },
     // 検索を開始する
     searchGoogleNews() {
-      this.$emit("search");
+      this.$emit('search');
     },
   },
   watch: {

@@ -135,11 +135,11 @@
 </template>
 
 <script>
-import PageTitle from "../PageComponents/PageTitle.vue";
-import Loading from "../../layouts/Loading.vue";
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Loading from '../../layouts/Loading.vue';
 
-import { OK } from "../../util.js";
-const PAGE_TITLE = "マイページ";
+import { OK } from '../../util.js';
+const PAGE_TITLE = 'マイページ';
 
 export default {
   data() {
@@ -147,8 +147,8 @@ export default {
       loading: true,
       twitter: false,
       password: false,
-      mail: "",
-      name: "",
+      mail: '',
+      name: '',
     };
   },
   computed: {
@@ -196,14 +196,14 @@ export default {
     async withdraw() {
       if (
         confirm(
-          "【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。"
+          '【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。',
         )
       ) {
         const response = await axios.post(`/withdraw`);
         if (response.status === OK) {
-          window.location = "/";
+          window.location = '/';
         } else {
-          window.location = "/login";
+          window.location = '/login';
         }
       }
     },
@@ -217,7 +217,7 @@ export default {
       // パスワードが設定されていない場合、警告を出して連携解除できないようにする
       if (!this.isExistPassword) {
         alert(
-          "【パスワードが設定されていません】\nパスワードが設定されていない状態でTwitter連携を解除すると、ログインができなくなります。\nパスワードを設定してから再度お試しください。"
+          '【パスワードが設定されていません】\nパスワードが設定されていない状態でTwitter連携を解除すると、ログインができなくなります。\nパスワードを設定してから再度お試しください。',
         );
         this.isUpdating = false;
         return false;
@@ -226,7 +226,7 @@ export default {
       // はいが選択されたら解除処理を行う
       if (
         confirm(
-          "【 Twitterの連携を解除してもよろしいですか？ 】\nTwitterの連携を解除すると、一部の機能がご利用できなくなります。"
+          '【 Twitterの連携を解除してもよろしいですか？ 】\nTwitterの連携を解除すると、一部の機能がご利用できなくなります。',
         )
       ) {
         this.isUpdating = true;
@@ -239,13 +239,13 @@ export default {
         // エラーチェック
         if (response.status === OK) {
           // フラッシュメッセージをセット
-          this.$store.commit("message/setContentSuccess", {
+          this.$store.commit('message/setContentSuccess', {
             content: response.data.success,
           });
           this.twitter = false;
         } else {
           // フラッシュメッセージをセット
-          this.$store.commit("message/setContentError", {
+          this.$store.commit('message/setContentError', {
             content: response.data.errors,
           });
         }

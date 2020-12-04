@@ -6,7 +6,7 @@
 // state
 // ===============
 const state = () => ({
-  content: "",
+  content: '',
   type: 0,
 });
 
@@ -20,19 +20,19 @@ const mutations = {
     state.content = content;
     state.type = 0;
 
-    setTimeout(() => (state.content = ""), timeout);
+    setTimeout(() => (state.content = ''), timeout);
   },
   setContentSuccess(state, { content, timeout = 3000 }) {
     state.content = content;
     state.type = 1;
 
-    setTimeout(() => (state.content = ""), timeout);
+    setTimeout(() => (state.content = ''), timeout);
   },
   setContentError(state, { content, timeout = 5000 }) {
     state.content = content;
     state.type = 2;
 
-    setTimeout(() => (state.content = ""), timeout);
+    setTimeout(() => (state.content = ''), timeout);
   },
 };
 

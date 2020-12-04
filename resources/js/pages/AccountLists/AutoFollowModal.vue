@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import { OK } from "../../util.js";
+import { OK } from '../../util.js';
 
 export default {
   props: {
@@ -74,20 +74,20 @@ export default {
   methods: {
     // 親コンポーネント側でモーダルを閉じる
     closeModal() {
-      this.$emit("close");
+      this.$emit('close');
     },
     // 親コンポーネントの自動フォローフラグを切り替える
     toggleFollowFlgParent() {
-      this.$emit("toggleAutoFollowFlg");
+      this.$emit('toggleAutoFollowFlg');
     },
     // 自動フォローのON/OFF切り替え
     async toggleAutoFollowing() {
       var result = false;
       const flg = this.isAutoFollowFlg;
       if (flg) {
-        result = confirm("自動フォローをOFFにします。よろしいですか？");
+        result = confirm('自動フォローをOFFにします。よろしいですか？');
       } else {
-        result = confirm("自動フォローをONにします。よろしいですか？");
+        result = confirm('自動フォローをONにします。よろしいですか？');
       }
       // confirmではいが選択されたら切り替えを行う
       if (result) {
@@ -98,14 +98,14 @@ export default {
         // エラーハンドリング
         if (response.status === OK) {
           // フラッシュメッセージをセット
-          this.$store.commit("message/setContentSuccess", {
+          this.$store.commit('message/setContentSuccess', {
             content: response.data.success,
           });
           this.toggleFollowFlgParent();
         } else {
           // フラッシュメッセージをセット
-          this.$store.commit("message/setContentError", {
-            content: "エラーが発生しました。",
+          this.$store.commit('message/setContentError', {
+            content: 'エラーが発生しました。',
           });
         }
         // モーダルを閉じる

@@ -79,21 +79,21 @@
 </template>
 
 <script>
-import PageTitle from "../PageComponents/PageTitle.vue";
-import Loading from "../../layouts/Loading.vue";
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Loading from '../../layouts/Loading.vue';
 
-import { OK, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from "../../util.js";
-const PAGE_TITLE = "プロフィール編集";
+import { OK, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
+const PAGE_TITLE = 'プロフィール編集';
 
 export default {
   data() {
     return {
       isLoading: true,
       // ユーザーネームのフォーム
-      user: "",
-      formName: "",
+      user: '',
+      formName: '',
       // メールアドレスのフォーム
-      formEmail: "",
+      formEmail: '',
       systemError: [],
       errorsName: [],
       errorsEmail: [],
@@ -141,7 +141,7 @@ export default {
         // 500エラーの時は更新失敗
       } else if (response.status === INTERNAL_SERVER_ERROR) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.error,
         });
       } else {
@@ -149,7 +149,7 @@ export default {
         this.errorsName = [];
 
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentSuccess", {
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success,
         });
       }
@@ -175,12 +175,12 @@ export default {
         // 500エラー時
       } else if (response.status === INTERNAL_SERVER_ERROR) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.error,
         });
       } else {
         // 送信完了したらフラッシュメッセージを表示し、バリデーションエラーリストを空にする
-        this.$store.commit("message/setContentSuccess", {
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success,
         });
         this.errorsEmail = [];

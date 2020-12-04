@@ -89,9 +89,9 @@
             <div class="p-accounts__ff--count">
               <p>
                 <a
-                    :href="twitter_following_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  :href="twitter_following_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {{ account.friends_count }}
                 </a>
@@ -104,9 +104,9 @@
             <div class="p-accounts__ff--count">
               <p>
                 <a
-                    :href="twitter_followers_url"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  :href="twitter_followers_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {{ account.followers_count }}
                 </a>
@@ -133,8 +133,8 @@ import {
   OK,
   INTERNAL_SERVER_ERROR,
   FORBIDDEN,
-} from "../../util";
-import AccountTweet from "./AccountTweet.vue";
+} from '../../util';
+import AccountTweet from './AccountTweet.vue';
 
 export default {
   props: {
@@ -169,16 +169,16 @@ export default {
       return this.account.screen_name;
     },
     isExist_profile_description() {
-      return this.account.description !== "";
+      return this.account.description !== '';
     },
     twitter_account_url() {
       return DEFAULT_TWITTER_URL + this.account_screen_name;
     },
     twitter_following_url() {
-      return this.twitter_account_url + "/following";
+      return this.twitter_account_url + '/following';
     },
     twitter_followers_url() {
-      return this.twitter_account_url + "/followers";
+      return this.twitter_account_url + '/followers';
     },
     check_follow_status: function () {
       return function () {
@@ -195,9 +195,9 @@ export default {
     async follow() {
       if (this.isAutoFollowing) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content:
-            "自動フォローをONにしている場合、ボタンからのフォローはできません。",
+            '自動フォローをONにしている場合、ボタンからのフォローはできません。',
         });
         return false;
       }
@@ -208,7 +208,7 @@ export default {
 
       // APIにリクエスト
       const response = await axios
-        .post("../accounts/follow", follow_param)
+        .post('../accounts/follow', follow_param)
         .catch((error) => error.response || error);
 
       // エラーハンドリング
@@ -216,18 +216,18 @@ export default {
       // ※ 二重フォローは、パフォーマンス上の理由で200を返却することもある。
       if (response.status === OK) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentSuccess", {
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success,
         });
         this.follow_flg = true;
       } else if (response.status === FORBIDDEN) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.errors,
         });
       } else {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.errors,
         });
       }
@@ -236,9 +236,9 @@ export default {
     async destroy() {
       if (this.isAutoFollowing) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content:
-            "自動フォローをONにしている場合、ボタンからフォロー解除はできません。",
+            '自動フォローをONにしている場合、ボタンからフォロー解除はできません。',
         });
         return false;
       }
@@ -248,19 +248,19 @@ export default {
       };
       // APIにリクエスト
       const response = await axios
-        .post("../accounts/destroy", destroy_param)
+        .post('../accounts/destroy', destroy_param)
         .catch((error) => error.response || error);
 
       // エラーハンドリング(フォロー解除は200か500のみ)
       if (response.status === OK) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentSuccess", {
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success,
         });
         this.follow_flg = false;
       } else {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.errors,
         });
       }
@@ -272,7 +272,7 @@ export default {
   filters: {
     // ユーザー名にはレスポンスに"@"が付いていないので、付与する
     add_AtSign_to_screen_name: function (screen_name) {
-      return "@" + screen_name;
+      return '@' + screen_name;
     },
   },
 };

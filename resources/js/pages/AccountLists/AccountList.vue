@@ -17,10 +17,7 @@
     <div v-if="isExistTwitterAccount" class="p-accounts">
       <div>
         <!-- リボンタグ -->
-        <Ribbonnav
-          :title="pageTitle"
-          :date="twitterAccountsTableUpdatedAt"
-        />
+        <Ribbonnav :title="pageTitle" :date="twitterAccountsTableUpdatedAt" />
 
         <!-- 自動フォロー欄 -->
         <div class="p-accounts__autofollow">
@@ -129,20 +126,20 @@
 </template>
 
 <script>
-import Account from "./Account.vue";
-import AutoFollowModal from "./AutoFollowModal.vue";
-import NeedLinkage from "./NeedLinkage.vue";
-import NothingAccount from "./NothingAccount.vue";
-import Loading from "../../layouts/Loading.vue";
-import PageTitle from "../PageComponents/PageTitle.vue";
-import Ribbonnav from "../PageComponents/Ribbonnav.vue";
-import { OK } from "../../util";
+import Account from './Account.vue';
+import AutoFollowModal from './AutoFollowModal.vue';
+import NeedLinkage from './NeedLinkage.vue';
+import NothingAccount from './NothingAccount.vue';
+import Loading from '../../layouts/Loading.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Ribbonnav from '../PageComponents/Ribbonnav.vue';
+import { OK } from '../../util';
 
-import Vue from "vue";
-import Paginate from "vuejs-paginate";
-Vue.component("paginate", Paginate);
+import Vue from 'vue';
+import Paginate from 'vuejs-paginate';
+Vue.component('paginate', Paginate);
 
-const PAGE_TITLE = "仮想通貨アカウント一覧";
+const PAGE_TITLE = '仮想通貨アカウント一覧';
 
 export default {
   props: {
@@ -160,7 +157,7 @@ export default {
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
       twitterId: 1,
       auto_follow_flg: false,
-      updatedAt: "",
+      updatedAt: '',
       followList: [],
       accounts: [],
       parPage: 10,
@@ -192,7 +189,7 @@ export default {
       return function (id) {
         // フォローリストをループさせ、TwitterIDと一致していたらtrueを返す
         for (var i = 0, len = this.followList.length; i < len; i++) {
-          if (id === this.followList[i]["follow_target_id"]) {
+          if (id === this.followList[i]['follow_target_id']) {
             return true;
           }
         }
@@ -228,7 +225,7 @@ export default {
     },
     // アカウントリストの座標までスクロールするためのプロパティ
     getAccountsRect() {
-      var $e = $("#accounts");
+      var $e = $('#accounts');
       return $e.offset().top - 60;
     },
   },
@@ -294,7 +291,7 @@ export default {
     async fetchUpdatedAt() {
       const response = await axios
         .get(
-          `/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`
+          `/updated/at/table?id=${this.UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID}`,
         )
         .catch((error) => error.response || error);
 
@@ -345,9 +342,9 @@ export default {
   filters: {
     autoFollowStatusFilter: function (auto_flg) {
       if (auto_flg) {
-        return "ON";
+        return 'ON';
       } else {
-        return "OFF";
+        return 'OFF';
       }
     },
   },

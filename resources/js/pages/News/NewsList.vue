@@ -74,18 +74,18 @@
 </template>
 
 <script>
-import News from "./News.vue";
-import NothingNews from "./NothingNews.vue";
-import NewsSearchCheckbox from "./NewsSearchCheckbox.vue";
-import Loading from "../../layouts/Loading.vue";
-import PageTitle from "../PageComponents/PageTitle.vue";
-import { DEFAULT_SEARCHWORD } from "../../util";
+import News from './News.vue';
+import NothingNews from './NothingNews.vue';
+import NewsSearchCheckbox from './NewsSearchCheckbox.vue';
+import Loading from '../../layouts/Loading.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+import { DEFAULT_SEARCHWORD } from '../../util';
 
-import Vue from "vue";
-import Paginate from "vuejs-paginate";
-Vue.component("paginate", Paginate);
+import Vue from 'vue';
+import Paginate from 'vuejs-paginate';
+Vue.component('paginate', Paginate);
 
-const PAGE_TITLE = "NEWS";
+const PAGE_TITLE = 'NEWS';
 
 export default {
   data() {
@@ -97,7 +97,7 @@ export default {
       searchedNews: [],
       checkedBrandsData: [],
       searchInputData: {
-        keywords: "",
+        keywords: '',
       },
       // ページネーション用
       parPage: 10,
@@ -109,7 +109,7 @@ export default {
       return PAGE_TITLE;
     },
     defaultAndCheckedBrandsData() {
-      return DEFAULT_SEARCHWORD + " " + this.checkedBrandsData.join(" ");
+      return DEFAULT_SEARCHWORD + ' ' + this.checkedBrandsData.join(' ');
     },
     // 「仮想通貨」とチェックされた通貨名の一覧を、searchInputData.keywordsに格納
     margeWords() {
@@ -130,7 +130,7 @@ export default {
     },
     // ニュースリストの座標までスクロールするためのプロパティ
     getNewsListRect() {
-      var $e = $("#newslist");
+      var $e = $('#newslist');
       return $e.offset().top - 60;
     },
   },

@@ -12,9 +12,9 @@
 </template>
 
 <script>
-const NOTHING_TRENDS_TITLE = "トレンド情報が取得できませんでした。";
+const NOTHING_TRENDS_TITLE = 'トレンド情報が取得できませんでした。';
 const NOTHING_TRENDS_DESCRIPTION =
-  "お手数ですが、しばらく経ってからもう一度お試しください。";
+  'お手数ですが、しばらく経ってからもう一度お試しください。';
 
 export default {
   data() {

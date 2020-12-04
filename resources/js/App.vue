@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import FlashMessage from "./layouts/FlashMessage.vue";
+import FlashMessage from './layouts/FlashMessage.vue';
 
 export default {
   components: {

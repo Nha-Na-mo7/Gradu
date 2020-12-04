@@ -21,12 +21,9 @@
     <div class="">
       <!-- 日付・ここをクリックするとツイートのURLに飛ぶ -->
       <span class="p-accounts__tweet--span p-accounts__tweet--date">
-        <a
-          :href="twitterTweetUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          >{{ this.textCreatedAt | newTweetDate }}</a
-        >
+        <a :href="twitterTweetUrl" target="_blank" rel="noopener noreferrer">{{
+          this.textCreatedAt | newTweetDate
+        }}</a>
       </span>
     </div>
   </div>
@@ -40,7 +37,7 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
 export default {
   props: {
@@ -58,7 +55,7 @@ export default {
       return this.tweet !== null && this.tweet.tweet_id_str !== null;
     },
     twitterTweetUrl() {
-      return this.account_url + "/status/" + this.tweet.tweet_id_str;
+      return this.account_url + '/status/' + this.tweet.tweet_id_str;
     },
     text() {
       return this.tweet.tweet_text;
@@ -75,11 +72,11 @@ export default {
   },
   filters: {
     newTweetDate: function (date) {
-      return moment(date).format("YYYY-MM-DD HH:mm:ss");
+      return moment(date).format('YYYY-MM-DD HH:mm:ss');
     },
     // 一覧表示する画像はTwitterのthumbサイズで表示。
     sizeThumb: function (media) {
-      return media + ":thumb";
+      return media + ':thumb';
     },
   },
 };

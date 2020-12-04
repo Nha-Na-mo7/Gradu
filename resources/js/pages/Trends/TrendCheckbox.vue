@@ -56,17 +56,17 @@ export default {
   methods: {
     // 全ての仮想通貨情報を取得する。選択肢に使用される
     async fetchBrand() {
-      const response = await axios.get("/brand");
+      const response = await axios.get('/brand');
       this.fetchedBrandsData = response.data;
     },
     // チェックされた時、チェックボックスの値全てを親コンポネに送る
     isChecked(brand) {
-      this.$emit("checked", this.checkedId);
+      this.$emit('checked', this.checkedId);
     },
     // チェックを全て外す
     resetCheckbox() {
       this.checkedId = [];
-      this.$emit("reset");
+      this.$emit('reset');
     },
   },
   watch: {

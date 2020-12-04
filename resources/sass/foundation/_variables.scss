@@ -37,7 +37,6 @@ $input-color: #f66d9b;
 // new!!アイコン
 $icon-color-new: #f6e47d;
 
-
 // -------------
 // brand color
 // -------------
@@ -96,9 +95,9 @@ $space_3l: 40px;
 //$breakpoint-lg: 1000px !default;
 
 $breakpoints: (
-  "ss": "screen and (max-width: 320px)",
+  'ss': 'screen and (max-width: 320px)',
   // iPhone5(iOS10)
-  "sm": "screen and (max-width: 414px)",
-  "md": "screen and (max-width: 768px)",
-  "lg": "screen and (max-width: 1024px)",
+  'sm': 'screen and (max-width: 414px)',
+  'md': 'screen and (max-width: 768px)',
+  'lg': 'screen and (max-width: 1024px)',
 ) !default;

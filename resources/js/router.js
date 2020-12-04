@@ -1,23 +1,23 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 // Googleニュース
-import NewsList from "./pages/News/NewsList.vue";
+import NewsList from './pages/News/NewsList.vue';
 // Twitterアカウント一覧
-import AccountList from "./pages/AccountLists/AccountList.vue";
+import AccountList from './pages/AccountLists/AccountList.vue';
 // 仮想通貨人気ツイートランキングページ
-import TrendList from "./pages/Trends/TrendList.vue";
+import TrendList from './pages/Trends/TrendList.vue';
 // マイページ/アカウント設定
-import Mypage from "./pages/Mypage/Mypage.vue";
-import ProfileUpdate from "./pages/Mypage/ProfileUpdate.vue";
-import PasswordMenu from "./pages/Mypage/PasswordMenu.vue";
+import Mypage from './pages/Mypage/Mypage.vue';
+import ProfileUpdate from './pages/Mypage/ProfileUpdate.vue';
+import PasswordMenu from './pages/Mypage/PasswordMenu.vue';
 
 // エラー系
-import SystemError500 from "./pages/errors/System.vue";
-import NotFound404 from "./pages/errors/NotFound.vue";
+import SystemError500 from './pages/errors/System.vue';
+import NotFound404 from './pages/errors/NotFound.vue';
 
 // ストアのインポート
-import auth from "./store/authenticate.js";
+import auth from './store/authenticate.js';
 
 // VueRouterプラグインの使用
 Vue.use(VueRouter);
@@ -37,13 +37,13 @@ async function requireLogin(to, from, next) {
 const routes = [
   {
     beforeEnter: requireLogin,
-    path: "/trends",
+    path: '/trends',
     component: TrendList,
     props: true,
   },
   {
     beforeEnter: requireLogin,
-    path: "/accounts",
+    path: '/accounts',
     component: AccountList,
     props: (route) => {
       const p = route.query.p;
@@ -53,40 +53,40 @@ const routes = [
   },
   {
     beforeEnter: requireLogin,
-    path: "/news",
+    path: '/news',
     component: NewsList,
     props: true,
   },
   {
     beforeEnter: requireLogin,
-    path: "/mypage",
+    path: '/mypage',
     component: Mypage,
     props: true,
   },
   {
     beforeEnter: requireLogin,
-    path: "/mypage/profile",
+    path: '/mypage/profile',
     component: ProfileUpdate,
     props: true,
   },
   {
     beforeEnter: requireLogin,
-    path: "/mypage/password",
+    path: '/mypage/password',
     component: PasswordMenu,
     props: true,
   },
   {
-    path: "/500",
+    path: '/500',
     component: SystemError500,
   },
   {
-    path: "*",
+    path: '*',
     component: NotFound404,
   },
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   scrollBehavior() {
     return { x: 0, y: 0 };
   },

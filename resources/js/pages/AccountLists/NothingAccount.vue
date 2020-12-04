@@ -9,9 +9,9 @@
 </template>
 
 <script>
-const NOTHING_ACCOUNT_TITLE = "ユーザーアカウントが見つかりませんでした。";
+const NOTHING_ACCOUNT_TITLE = 'ユーザーアカウントが見つかりませんでした。';
 const NOTHING_ACCOUNT_DESCRIPTION =
-  "しばらく経ってからもう一度お試しください。";
+  'しばらく経ってからもう一度お試しください。';
 
 export default {
   data() {

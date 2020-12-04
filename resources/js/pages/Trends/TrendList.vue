@@ -108,15 +108,15 @@
 </template>
 
 <script>
-import Loading from "../../layouts/Loading.vue";
-import NothingTrends from "./NothingTrends.vue";
-import TrendCheckbox from "./TrendCheckbox.vue";
-import PageTitle from "../PageComponents/PageTitle.vue";
-import Ribbonnav from "../PageComponents/Ribbonnav.vue";
-import TrendRankCard from "./TrendRankCard.vue";
-import { OK } from "../../util";
+import Loading from '../../layouts/Loading.vue';
+import NothingTrends from './NothingTrends.vue';
+import TrendCheckbox from './TrendCheckbox.vue';
+import PageTitle from '../PageComponents/PageTitle.vue';
+import Ribbonnav from '../PageComponents/Ribbonnav.vue';
+import TrendRankCard from './TrendRankCard.vue';
+import { OK } from '../../util';
 
-const PAGE_TITLE = "トレンド通貨・ツイート数ランキング";
+const PAGE_TITLE = 'トレンド通貨・ツイート数ランキング';
 
 export default {
   data() {
@@ -128,7 +128,7 @@ export default {
       trendDataDay: [],
       trendDataWeek: [],
       checkedBrands: [],
-      transactions: []
+      transactions: [],
     };
   },
   computed: {
@@ -142,13 +142,13 @@ export default {
       return this.isNothing;
     },
     ribbonPageTitle() {
-      let title = "";
+      let title = '';
       if (this.tab === 0) {
-        title = "過去1時間のトレンド";
+        title = '過去1時間のトレンド';
       } else if (this.tab === 1) {
-        title = "過去1日でのトレンド";
+        title = '過去1日でのトレンド';
       } else {
-        title = "過去1週間でのトレンド";
+        title = '過去1週間でのトレンド';
       }
       return title;
     },
@@ -201,7 +201,7 @@ export default {
     get_updated_at() {
       let items = this.choiceTrendData(this.tab);
       if (items.length === 0) {
-        return "";
+        return '';
       }
       return items[0].updated_at;
     },
@@ -209,9 +209,9 @@ export default {
     brandsTransactionPrice: function () {
       return function (brand_id) {
         // インデックスに合わせて-1する
-        return this.transactions[brand_id - 1]
-      }
-    }
+        return this.transactions[brand_id - 1];
+      };
+    },
   },
   methods: {
     // 指定した時間帯のトレンドテーブルを取得する
@@ -259,11 +259,10 @@ export default {
     },
     // 24時間以内の取引価格の取得
     async getTransactionPrice() {
-
       const response = await axios.get(`/transaction/price`);
 
       // 通信成功時
-      if (response.status === OK ) {
+      if (response.status === OK) {
         this.transactions = response.data;
       }
     },

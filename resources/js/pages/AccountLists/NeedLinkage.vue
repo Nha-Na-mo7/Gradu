@@ -18,9 +18,9 @@
 
 <script>
 const NOTHING_ACCOUNT_TITLE =
-  "「アカウント一覧」のご利用にはTwitter連携が必要です。";
+  '「アカウント一覧」のご利用にはTwitter連携が必要です。';
 const NOTHING_ACCOUNT_DESCRIPTION =
-  "Twitterと連携することで、仮想通貨アカウントのフォロー・自動フォロー機能が利用可能になります。";
+  'Twitterと連携することで、仮想通貨アカウントのフォロー・自動フォロー機能が利用可能になります。';
 
 export default {
   data() {

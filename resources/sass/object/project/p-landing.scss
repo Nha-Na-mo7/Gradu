@@ -2,12 +2,11 @@
 //  p-landing
 //  =============
 .p-landing {
-
   &__hero {
     // public/css/app.cssから見た相対パスにすること
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/hero_btc.jpg");
+    background-image: url('https://cryptotrendstrage.s3-ap-northeast-1.amazonaws.com/images/figures/hero_btc.jpg');
     width: 100%;
   }
   &__container {

@@ -2,7 +2,7 @@
 <!--ニュース一覧画面でいくつも描画されるニュースリンクへのコンポーネント-->
 <!--=======================================================-->
 <template>
-<!--  <div class="p-news__item&#45;&#45;container">-->
+  <!--  <div class="p-news__item&#45;&#45;container">-->
   <div class="p-news__item" :class="{ 'p-news__new': isSub24hour }">
     <!--      &lt;!&ndash; 24H以内の記事に付与されるアイコン &ndash;&gt;-->
     <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
@@ -10,11 +10,11 @@
     <div class="p-news__item--title">
       <h2>
         <a
-            class="p-news__item--title--link"
-            :href="getEntryUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-        >{{ getEntryTitle }}</a
+          class="p-news__item--title--link"
+          :href="getEntryUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          >{{ getEntryTitle }}</a
         >
       </h2>
     </div>
@@ -24,14 +24,14 @@
       <span class="p-news__item--media">{{ getEntrySource }}</span>
     </div>
   </div>
-<!--  <div class="p-news__item&#45;&#45;container">-->
-<!--    <div class="p-news__item&#45;&#45;data&#45;&#45;container">-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--  <div class="p-news__item&#45;&#45;container">-->
+  <!--    <div class="p-news__item&#45;&#45;data&#45;&#45;container">-->
+  <!--    </div>-->
+  <!--  </div>-->
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
 export default {
   props: {
@@ -49,13 +49,13 @@ export default {
     // " - "で区切る
     splitToTitle() {
       const split_title = this.entry.title;
-      return split_title.split(" - ");
+      return split_title.split(' - ');
     },
     // 提供メディアを除いたタイトルを返す。
     // タイトルの一番最後に" - "に続く形でメディアが続くため、そこだけを取り除いた文字列を返却
     getEntryTitle() {
       const split_title = this.splitToTitle;
-      var title = "";
+      var title = '';
       for (let i = 0; i < split_title.length - 1; i++) {
         title += split_title[i];
       }
@@ -82,7 +82,7 @@ export default {
   },
   filters: {
     newsUpdate: function (date) {
-      return moment(date).format("YYYY/MM/DD HH:mm");
+      return moment(date).format('YYYY/MM/DD HH:mm');
     },
   },
 };

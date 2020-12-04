@@ -12,9 +12,9 @@
 </template>
 
 <script>
-const NOTHING_NEWS_TITLE = "記事が見つかりませんでした。";
+const NOTHING_NEWS_TITLE = '記事が見つかりませんでした。';
 const NOTHING_NEWS_DESCRIPTION =
-  "検索ワードを変えるか、しばらく経ってからもう一度お試しください。";
+  '検索ワードを変えるか、しばらく経ってからもう一度お試しください。';
 
 export default {
   data() {

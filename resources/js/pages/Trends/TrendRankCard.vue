@@ -33,7 +33,7 @@
 </template>
 
 <script>
-const TWITTER_SEARCH_URL = "https://twitter.com/search?q=";
+const TWITTER_SEARCH_URL = 'https://twitter.com/search?q=';
 
 export default {
   props: {
@@ -47,8 +47,8 @@ export default {
     },
     transaction: {
       type: Object,
-      required: false
-    }
+      required: false,
+    },
   },
   computed: {
     // アイコンのパス
@@ -57,18 +57,18 @@ export default {
     },
     // 24時間の最低取引価格
     priceMin() {
-      if(this.transaction != null) {
+      if (this.transaction != null) {
         return this.transaction.price_min;
-      }else{
-        return -1
+      } else {
+        return -1;
       }
     },
     // 24時間の最高取引価格
     priceMax() {
-      if(this.transaction != null) {
+      if (this.transaction != null) {
         return this.transaction.price_max;
-      }else{
-        return -1
+      } else {
+        return -1;
       }
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
@@ -81,9 +81,9 @@ export default {
     // 取得できない通貨の場合はcomputedが-1を返す。-1が帰ってきた時、「不明」と表示する。
     addJPY: function (price) {
       if (price >= 0) {
-        return price + " JPY";
+        return price + ' JPY';
       } else {
-        return "不明";
+        return '不明';
       }
     },
   },

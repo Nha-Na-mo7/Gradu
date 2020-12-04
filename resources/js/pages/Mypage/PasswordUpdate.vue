@@ -66,18 +66,18 @@
 </template>
 
 <script>
-import { UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from "../../util.js";
+import { UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
 
 export default {
   data() {
     return {
-      errorsOldPassword: "",
-      errorsPassword: "",
-      errorsPasswordConfirmation: "",
+      errorsOldPassword: '',
+      errorsPassword: '',
+      errorsPasswordConfirmation: '',
       formPassword: {
-        old_password: "",
-        password: "",
-        password_confirmation: "",
+        old_password: '',
+        password: '',
+        password_confirmation: '',
       },
     };
   },
@@ -107,17 +107,17 @@ export default {
         // 500エラーの時
       } else if (response.status === INTERNAL_SERVER_ERROR) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.errors,
         });
         // 成功時
       } else {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentSuccess", {
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success,
         });
         // パスワード更新完了後はマイページに戻す
-        this.$router.push("/mypage");
+        this.$router.push('/mypage');
       }
       this.isUpdating = false;
     },

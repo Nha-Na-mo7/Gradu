@@ -52,17 +52,17 @@
 </template>
 
 <script>
-import { UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from "../../util";
+import { UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util';
 
 export default {
   data() {
     return {
       isUpdating: false,
-      errorsPassword: "",
-      errorsPasswordConfirmation: "",
+      errorsPassword: '',
+      errorsPasswordConfirmation: '',
       formPassword: {
-        password: "",
-        password_confirmation: "",
+        password: '',
+        password_confirmation: '',
       },
     };
   },
@@ -91,19 +91,19 @@ export default {
         // 500エラーの時は更新失敗
       } else if (response.status === INTERNAL_SERVER_ERROR) {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentError", {
+        this.$store.commit('message/setContentError', {
           content: response.data.errors,
         });
         this.isUpdating = false;
       } else {
         // フラッシュメッセージをセット
-        this.$store.commit("message/setContentSuccess", {
+        this.$store.commit('message/setContentSuccess', {
           content: response.data.success,
         });
         this.isUpdating = false;
 
         // パスワード作成完了後はマイページに戻す
-        this.$router.push("/mypage");
+        this.$router.push('/mypage');
       }
     },
   },

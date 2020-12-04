@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import moment from "moment";
+import moment from 'moment';
 
 export default {
   props: {
@@ -30,7 +30,7 @@ export default {
   },
   filters: {
     update: function (date) {
-      return moment(date).format("YYYY/MM/DD HH:mm");
+      return moment(date).format('YYYY/MM/DD HH:mm');
     },
   },
 };
