@@ -83,8 +83,10 @@ Route::group(['middleware' => 'auth'], function (){
   // =============================================
   // 過去1時間or1日or1週間のツイート数を取得する
   Route::get('/tweet/count', 'CoinCheckController@get_tweet_count');
-  // 指定の通貨の24時間以内での最高・最安取引価格情報を取得する
-  Route::get('/transaction/price', 'CoinCheckController@get_transaction_price');
+  // 指定の通貨の24時間以内での最高・最安取引価格情報カラムを取得する
+  Route::get('/transaction/price/{brand_id}', 'CoinCheckController@get_transaction_price');
+  // 通貨の24時間以内での最高・最安取引価格情報カラムを全て取得する
+  Route::get('/transaction/price{any?}', 'CoinCheckController@get_transaction_price')->where('any', '.+');
   
   // トレンド画面のビューを返却
   Route::get('/trends{any?}', 'CoinCheckController@index')->where('any', '.+')->name('trend.index');

@@ -33,8 +33,6 @@
 </template>
 
 <script>
-import { OK } from "../../util";
-
 const TWITTER_SEARCH_URL = "https://twitter.com/search?q=";
 
 export default {
@@ -47,11 +45,10 @@ export default {
       type: Number,
       required: true,
     },
-  },
-  data() {
-    return {
-      transactionPrice: [],
-    };
+    transaction: {
+      type: Object,
+      required: false
+    }
   },
   computed: {
     // アイコンのパス
@@ -60,47 +57,34 @@ export default {
     },
     // 24時間の最低取引価格
     priceMin() {
-      return this.transactionPrice.price_min;
+      if(this.transaction != null) {
+        return this.transaction.price_min;
+      }else{
+        return -1
+      }
     },
     // 24時間の最高取引価格
     priceMax() {
-      return this.transactionPrice.price_max;
+      if(this.transaction != null) {
+        return this.transaction.price_max;
+      }else{
+        return -1
+      }
     },
     // twitterの検索欄に通貨名が入った状態の検索ページURL
     searchUrl() {
       return TWITTER_SEARCH_URL + this.brand.brand.name;
     },
   },
-  methods: {
-    // 24時間以内の取引価格の取得
-    async getTransactionPrice() {
-      const response = await axios.get(`/transaction/price`, {
-        params: { brand_id: this.brand.brand_id },
-      });
-
-      // 通信成功時(取引価格だけ取得エラーするのは考えにくいが、もし起きた場合は「不明」と表示させる)
-      if (response.status === OK && response.data !== "") {
-        this.transactionPrice = response.data;
-      }
-    },
-  },
   filters: {
-    // JPYを付与する。取得できていない場合は不明とする。
+    // JPYを付与する。
+    // 取得できない通貨の場合はcomputedが-1を返す。-1が帰ってきた時、「不明」と表示する。
     addJPY: function (price) {
       if (price >= 0) {
         return price + " JPY";
       } else {
         return "不明";
       }
-    },
-  },
-  watch: {
-    $route: {
-      async handler() {
-        // ページの読み込み直後、トレンド一覧を取得
-        await this.getTransactionPrice();
-      },
-      immediate: true,
     },
   },
 };

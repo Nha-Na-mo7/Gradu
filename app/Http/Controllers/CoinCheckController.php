@@ -34,21 +34,43 @@ class CoinCheckController extends Controller
     }
     
     // =====================================================
-    // DBから、24時間以内の最高・最安取引価格情報を取得し返却する
+    // DBから24時間以内の最高・最安取引価格情報を取得し返却する
     // =====================================================
-    public function get_transaction_price(){
+    public function get_transaction_price($brand_id = null){
       Log::debug('CoinCheckController.get_transaction_price 24時間以内の取引価格情報');
-      $brand_id = filter_input(INPUT_GET, 'brand_id');
-      
-      $result = CoincheckPrice::where('brand_id', $brand_id)->latest('id')->first();
-      
-      // 取得できない(データがない)通貨の時は空文字で返却する
-      if(isset($result)){
-        return $result;
-      }else{
-        // Log::debug($brand_id.'の通貨は取引価格情報がありませんでした。');
-        return '';
+  
+      if($brand_id != null) {
+        $result = CoincheckPrice::where('brand_id', $brand_id)->latest('id')->first();
+  
+        // 取得できない(データがない)通貨の時は空文字で返却する
+        if(isset($result)){
+          return $result;
+        }else{
+          Log::debug($brand_id.'の通貨は取引価格情報がありませんでした。');
+          return '';
+        }
       }
+      
+      Log::debug('全部取得します');
+      // 価格情報を格納する配列
+      $all_transaction = [];
+  
+      // brandsテーブルのレコード数
+      $brands_count = Brand::all()->count();
+      
+      // テーブルから通貨ごとの24h取引価格を取得する。
+      for ($i = 0; $i < $brands_count ; $i++){
+        $result = CoincheckPrice::where('brand_id', ($i + 1))
+            ->latest('id')
+            ->first();
+        
+        if(isset($result)){
+          $all_transaction[$i] = $result;
+        }else{
+          $all_transaction[$i] = '';
+        }
+      }
+      return $all_transaction;
     }
 
     // =====================================================

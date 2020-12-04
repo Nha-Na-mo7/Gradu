@@ -80,6 +80,7 @@
                   :key="trend_brand.id"
                   :brand="trend_brand"
                   :rank="index"
+                  :transaction="brandsTransactionPrice(trend_brand.brand_id)"
                 />
                 <TrendRankCard
                   v-show="tab === 1"
@@ -87,6 +88,7 @@
                   :key="trend_brand.id"
                   :brand="trend_brand"
                   :rank="index"
+                  :transaction="brandsTransactionPrice(trend_brand.brand_id)"
                 />
                 <TrendRankCard
                   v-show="tab === 2"
@@ -94,6 +96,7 @@
                   :key="trend_brand.id"
                   :brand="trend_brand"
                   :rank="index"
+                  :transaction="brandsTransactionPrice(trend_brand.brand_id)"
                 />
               </table>
             </div>
@@ -125,6 +128,7 @@ export default {
       trendDataDay: [],
       trendDataWeek: [],
       checkedBrands: [],
+      transactions: []
     };
   },
   computed: {
@@ -187,13 +191,12 @@ export default {
         const checkedbox = this.checkedBrands;
         let items = this.choiceTrendData(type);
         let refined = this.refineBrands(items, checkedbox);
-        const sorted_item = refined.slice().sort(function (a, b) {
+        const sortedItem = refined.slice().sort(function (a, b) {
           return b.tweet_count - a.tweet_count;
         });
-        return sorted_item;
+        return sortedItem;
       };
     },
-
     // 配列の最初にある更新時刻を最終更新時刻として表示する
     get_updated_at() {
       let items = this.choiceTrendData(this.tab);
@@ -202,6 +205,13 @@ export default {
       }
       return items[0].updated_at;
     },
+    // 取引価格オブジェクトを格納した配列から取り出す
+    brandsTransactionPrice: function () {
+      return function (brand_id) {
+        // インデックスに合わせて-1する
+        return this.transactions[brand_id - 1]
+      }
+    }
   },
   methods: {
     // 指定した時間帯のトレンドテーブルを取得する
@@ -241,8 +251,21 @@ export default {
       for (let type = 0; type <= 2; type++) {
         this.fetchTrend(type);
       }
+      // 24時間以内の取引価格取得
+      this.getTransactionPrice();
+
       // 読み込み中を解除
       this.isLoading = false;
+    },
+    // 24時間以内の取引価格の取得
+    async getTransactionPrice() {
+
+      const response = await axios.get(`/transaction/price`);
+
+      // 通信成功時
+      if (response.status === OK ) {
+        this.transactions = response.data;
+      }
     },
     //チェックボックスでチェックされた値を格納
     checkedBrand(array) {
