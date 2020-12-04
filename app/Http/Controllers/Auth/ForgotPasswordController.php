@@ -28,8 +28,7 @@ class ForgotPasswordController extends Controller
     {
       $this->middleware('guest');
     }
-  
-  
+    
     // ===================================
     // バリデータ
     // ===================================
@@ -45,7 +44,8 @@ class ForgotPasswordController extends Controller
     // ===================================
     public function sendResetLinkEmail(Request $request)
     {
-      $this->validateEmail($request);
+      // バリデータでバリデーションチェックする
+      $this->validator($request->all())->validate();
     
       $response = $this
           ->broker()
