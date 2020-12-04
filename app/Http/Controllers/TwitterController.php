@@ -15,7 +15,9 @@ class TwitterController extends Controller
     // トレンド通貨集計はTrendTweetControllerを参照してください。
   
     // Twitter連携関係でフラッシュメッセージに使う
-    const ALREADY_EXIST_ACCOUNT_ERROR_MSG = 'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。';
+    const ALREADY_EXIST_ACCOUNT_ERROR_MSG =
+        'Twitterに登録されたメールアドレスを用いたCryptoTrendアカウントが既に存在しています。
+        別のTwitterアカウントを使うか、一度該当メールアドレスでご登録後に連携処理を行ってください。';
     const OTHER_USED_ACCOUNT_ERROR_MSG =  '既に別のユーザーが連携しています。他のアカウントに切り替えて再度お試しください。';
     const FAIL_LOGIN_MSG = 'Twitterログインに失敗しました。';
     const SUCCESS_LINKAGE = 'Twitterアカウントと連携しました！';
@@ -155,7 +157,8 @@ class TwitterController extends Controller
         }else{
           Log::debug('ログインしていません。ログインor新規登録です。');
           // 新規ユーザーによる登録か、連携済みユーザーのログインなのかを判別する。
-          // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。(emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使うこと)
+          // userテーブルのtokenカラムに同一の値を持つレコードがあるかを確認。
+          // (emailなどでレコード確認すると、Twitter側のアドレスを変更されたら同一でない判定されてしまうのでtokenを使う)
           $myinfo = User::where('twitter_id', $twitter_id)
               ->first();
   
