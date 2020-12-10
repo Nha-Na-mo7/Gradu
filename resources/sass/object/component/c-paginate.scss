@@ -19,7 +19,7 @@
     margin-right: 10px;
     position: relative;
     @include mq() {
-      width: 32px;
+      width: 35px;
       font-size: 12px;
       margin-right: 8px;
     }
@@ -42,7 +42,7 @@
     display: block;
     @include mq() {
       text-align: center;
-      padding: 10px 0;
+      padding: 12px 0;
     }
   }
 }
