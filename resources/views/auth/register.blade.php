@@ -16,22 +16,6 @@
 
                     <label
                             class="c-form__info"
-                            for="name"
-                    >ユーザーネーム ( 20文字以内 )</label>
-                    @error('name')
-                    <div class="c-error">
-                        {{ $message }}
-                    </div>
-                    @enderror
-                    <input
-                            type="text"
-                            class="c-form__input @error('name') c-error__input @enderror"
-                            name="name"
-                            value="{{ $name ?? old('name') }}"
-                    />
-
-                    <label
-                            class="c-form__info"
                             for="email"
                     >メールアドレス</label>
                     @error('email')
