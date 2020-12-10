@@ -17,7 +17,7 @@
     margin-right: $space_m;
     position: relative;
     @include mq() {
-      margin-right: $space_s;
+      margin-right: 6px;
     }
     &:hover {
       background: #cdcdcd;
@@ -32,7 +32,7 @@
     padding: 10px 10px;
     display: block;
     @include mq() {
-      padding: 5px 5px;
+      padding: 8px 6px;
     }
   }
 }
