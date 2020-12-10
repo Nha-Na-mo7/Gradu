@@ -24,6 +24,9 @@
       width: 49%;
       height: 20px;
     }
+    &--check {
+      transform: scale(1.5) translateY(-2.5px);
+    }
   }
   &__icon {
     width: 1.6rem;

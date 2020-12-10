@@ -24,6 +24,7 @@
                 <input
                   type="checkbox"
                   name="brand"
+                  class="c-checkbox__item--check"
                   :value="brand.name"
                   :id="brand.id - 1"
                   v-model="checkedBrandId"

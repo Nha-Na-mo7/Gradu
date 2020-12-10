@@ -15,10 +15,11 @@
         v-for="brand in fetchedBrandsData"
         :key="brand.id"
       >
-        <label class="tes" :for="brand.id - 1">
+        <label class="" :for="brand.id - 1">
           <input
             type="checkbox"
             name="brand"
+            class="c-checkbox__item--check"
             :value="brand.name"
             :id="brand.id - 1"
             v-model="checkedId"

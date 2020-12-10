@@ -25,16 +25,17 @@
       font-size: $font-size_s;
     }
   }
-  &__check {
+  &__checkbox {
     margin-top: 12px;
     margin-bottom: 20px;
-    margin-left: 1.6px;
-    & input {
-      vertical-align: baseline;
-    }
+    margin-left: 1.8px;
     @include mq() {
       margin-top: 8px;
       margin-bottom: 20px;
+    }
+    &--check {
+      transform: scale(1.5) translateY(-0.5px);
+      margin-right: 4px;
     }
   }
   &__submit {

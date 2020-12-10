@@ -42,13 +42,13 @@
                 />
 
                 <!-- remember me -->
-                <div class="c-form__info c-form__check">
+                <div class="c-form__info c-form__checkbox">
                     <label for="remember">
                         <input
                                 type="checkbox"
                                 name="remember"
                                 id="remember"
-                                class="c-form__check">
+                                class="c-form__checkbox--check">
                         ログイン状態を維持する
                     </label>
                 </div>
