@@ -118,7 +118,7 @@
     display: flex;
     flex-direction: column;
     @include mq() {
-      width: 65%;
+      width: 60%;
     }
     // アカウント名
     &--nickname {
@@ -151,7 +151,7 @@
   // デスクリプション。アカウントのプロフィール
   &__description {
     line-height: 150%;
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: $space_s;
     word-break: break-all;
     height: 100%;
@@ -243,16 +243,16 @@
 
       background: #fff;
       @include mq() {
-        font-size: 12px;
-        padding: 5px 8px;
-        line-height: 15px;
+        font-size: 13px;
+        padding: 6px 10px;
+        line-height: 120%;
       }
     }
     &--span {
       color: #a4a4a4;
     }
     &--date {
-      font-size: 12px;
+      font-size: 14px;
       text-align: right;
       &:hover {
         cursor: pointer;

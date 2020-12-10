@@ -50,8 +50,8 @@
     }
     @include mq() {
       min-width: 40px;
-      font-size: $font-size_ss;
-      padding: 10px 5px;
+      font-size: 11px;
+      padding: 10px 6px;
     }
     &:hover {
       background: #257cc4;
