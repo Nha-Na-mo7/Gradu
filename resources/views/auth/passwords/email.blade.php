@@ -12,7 +12,7 @@
                 <p class="p-form__send--msg" role="alert">
                     {{ session('status') }}
                 </p>
-                <p class="u-color--red">※ メールが届くまで、約5分ほどお時間がかかります。</p>
+                <p class="u-color--red">※ メールが届くまで、約5分ほどお時間がかかる場合があります。</p>
                 <p>5分を過ぎてもメールが届かない場合、入力されたメールアドレスが間違っているか、迷惑メールフォルダに入っている可能性があります。</p>
             </div>
         @endif

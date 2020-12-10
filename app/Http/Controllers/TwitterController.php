@@ -183,7 +183,6 @@ class TwitterController extends Controller
                 'token' => $token,
                 'token_secret' => $token_secret,
                 'twitter_id' => $twitter_id,
-                'name' => $twitter_user->nickname,
                 'email' => $twitter_user->getEmail()
             ]);
             Log::debug('新規登録処理を行いました。');
