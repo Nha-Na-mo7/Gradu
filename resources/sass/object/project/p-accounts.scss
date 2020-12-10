@@ -158,7 +158,7 @@
     @include mq($breakpoint: md) {
       font-size: $font-size_m;
     }
-    
+
     // 投稿時刻
     & span {
       font-size: $font-size_m;
@@ -180,9 +180,9 @@
     // 共通要素
     &--item {
       height: 100%;
-      max-width: 40%;
-      margin-bottom: $space_s;
-      margin-right: $space_l;
+      max-width: 44%;
+      margin-bottom: 5px;
+      margin-right: 12px;
       display: flex;
       align-items: center;
       word-break: break-all;
