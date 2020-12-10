@@ -16,12 +16,12 @@
     background: #ffffff;
     border: 1px solid #cdcdcd;
     border-radius: 4px;
-    margin-right: 10px;
+    margin: 5px;
     position: relative;
     @include mq() {
       width: 35px;
       font-size: 12px;
-      margin-right: 8px;
+      margin: 4px;
     }
     &:hover {
       background: #cdcdcd;

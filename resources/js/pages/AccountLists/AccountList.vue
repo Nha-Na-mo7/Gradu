@@ -58,11 +58,12 @@
               <paginate
                 v-model="currentPage"
                 :page-count="getPageCount"
-                :page-range="2"
+                :page-range="3"
                 :margin-pages="1"
                 :click-handler="clickCallback"
                 :prev-text="'<'"
                 :next-text="'>'"
+                :break-view-class="'c-paginate__item--break-view'"
                 :hide-prev-next="true"
                 :containerClass="'c-paginate'"
                 :page-class="'c-paginate__item'"
