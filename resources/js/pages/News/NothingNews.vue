@@ -5,8 +5,8 @@
   <div>
     <div class="p-news__item c-nothing">
       <!-- 記事のタイトル -->
-      <h2 class="">{{ title }}</h2>
-      <p>{{ description }}</p>
+      <h2 class="c-nothing__title">{{ title }}</h2>
+      <p class="c-nothing__text">{{ description }}</p>
     </div>
   </div>
 </template>
@@ -25,5 +25,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

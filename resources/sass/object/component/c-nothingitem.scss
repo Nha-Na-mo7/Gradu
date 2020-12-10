@@ -9,12 +9,12 @@
   align-items: center;
   flex-direction: column;
   box-shadow: none;
-  & h2 {
+  &__title {
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 20px;
   }
-  & p {
+  &__text {
     font-size: 15px;
   }
 }

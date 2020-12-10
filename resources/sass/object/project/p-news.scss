@@ -89,9 +89,6 @@
     box-shadow: 0 0 2px #cdcdcd;
     transition: 0.5s all;
     word-break: break-all;
-    //
-    //display: flex;
-    //flex-direction: column;
 
     &:nth-child(2n) {
       background: #f6f6f6;
@@ -123,35 +120,20 @@
       height: 100%;
       border-top: 1px solid #cdcdcd;
       padding-top: $space_m;
-      & > .p-news__item--media {
-        color: #888888;
-        font-size: 12px;
-        @include mq() {
-          font-size: 8px;
-        }
-      }
       & > .p-news__item--time {
         font-size: 15px;
         margin-right: 4px;
         color: #279187;
         @include mq() {
-          font-size: 10px;
+          font-size: 12px;
         }
       }
-    }
-    // 記事がない時に表示する
-    &--nothing {
-      padding: 15px 25px;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      h2 {
-        font-weight: bold;
-        font-size: 20px;
-        margin-bottom: 20px;
-      }
-      p {
-        font-size: 15px;
+      & > .p-news__item--media {
+        color: #888888;
+        font-size: 12px;
+        @include mq() {
+          font-size: 10px;
+        }
       }
     }
     &--container {

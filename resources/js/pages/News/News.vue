@@ -24,10 +24,6 @@
       <span class="p-news__item--media">{{ getEntrySource }}</span>
     </div>
   </div>
-  <!--  <div class="p-news__item&#45;&#45;container">-->
-  <!--    <div class="p-news__item&#45;&#45;data&#45;&#45;container">-->
-  <!--    </div>-->
-  <!--  </div>-->
 </template>
 
 <script>

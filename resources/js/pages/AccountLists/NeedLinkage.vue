@@ -3,8 +3,8 @@
 <!--=================================================================================-->
 <template>
   <div class="p-accounts__item c-nothing">
-    <h2 class="">{{ title }}</h2>
-    <p>{{ description }}</p>
+    <h2 class="c-nothing__title">{{ title }}</h2>
+    <p class="c-nothing__text">{{ description }}</p>
 
     <div class="u-mt-xl">
       <button class="c-btn c-btn__twitter">
