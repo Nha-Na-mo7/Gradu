@@ -1,6 +1,6 @@
-<!--======================================================-->
-<!-- ユーザーネーム・メールアドレスを更新するフォームのコンポーネント-->
-<!--======================================================-->
+<!--========================================-->
+<!-- メールアドレスを更新するフォームのコンポーネント-->
+<!--========================================-->
 <template>
   <div class="l-container__content">
     <!-- ページタイトル -->
@@ -11,37 +11,9 @@
       <Loading />
     </div>
 
-    <!-- ユーザーネームとメールアドレスの変更フォーム -->
+    <!-- メールアドレスの変更フォーム -->
     <div class="p-setting" v-else>
       <div class="p-setting__container">
-        <!-- ユーザーネーム -->
-        <div class="p-form">
-          <label class="c-form__info" for="name"
-            >ユーザーネーム( 20文字以内 )</label
-          >
-
-          <ul v-if="errorsName">
-            <li class="c-error" v-for="error in errorsName">
-              <span>{{ error }}</span>
-            </li>
-          </ul>
-          <input
-            id="name"
-            class="c-form__input"
-            type="text"
-            v-model="formName"
-          />
-          <div class="u-text--center">
-            <button class="c-btn" @click="updateName">変更を保存</button>
-          </div>
-        </div>
-
-        <div class="c-border">
-          <div class="c-border__dividingText">
-            <span class="c-border__dividingText-spanborder"></span>
-          </div>
-        </div>
-
         <!-- メールアドレス -->
         <div class="p-form">
           <!-- DBから現在のメールアドレスを取得し、入力された状態にしておく-->
@@ -62,7 +34,7 @@
             type="text"
             v-model="formEmail"
           />
-          <div class="u-text--center">
+          <div class="c-form__submit u-text--center">
             <button class="c-btn" @click="updateEmail">
               メールアドレスを変更
             </button>
@@ -83,19 +55,15 @@ import PageTitle from '../PageComponents/PageTitle.vue';
 import Loading from '../../layouts/Loading.vue';
 
 import { OK, UNPROCESSABLE_ENTITY, INTERNAL_SERVER_ERROR } from '../../util.js';
-const PAGE_TITLE = 'プロフィール編集';
+const PAGE_TITLE = 'メールアドレスの変更';
 
 export default {
   data() {
     return {
       isLoading: true,
-      // ユーザーネームのフォーム
-      user: '',
-      formName: '',
       // メールアドレスのフォーム
       formEmail: '',
       systemError: [],
-      errorsName: [],
       errorsEmail: [],
       isUpdating: false,
     };
@@ -115,45 +83,9 @@ export default {
       // エラーチェック
       if (response.status === OK) {
         // フォーム用にデータを格納
-        this.formName = response.data.name;
         this.formEmail = response.data.email;
         this.isLoading = false;
       }
-    },
-
-    // ユーザーネームの変更
-    async updateName() {
-      // 更新処理中は複数回起動できないようにする
-      if (this.isUpdating) {
-        return false;
-      }
-      this.isUpdating = true;
-
-      // 更新処理にアクセスする
-      const response = await axios
-        .post(`/user/update/name`, { name: this.formName })
-        .catch((error) => error.response || error);
-
-      // エラーチェック
-      if (response.status === UNPROCESSABLE_ENTITY) {
-        // バリデーションエラー。帰ってきたエラーメッセージを格納
-        this.errorsName = response.data.errors.name;
-        // 500エラーの時は更新失敗
-      } else if (response.status === INTERNAL_SERVER_ERROR) {
-        // フラッシュメッセージをセット
-        this.$store.commit('message/setContentError', {
-          content: response.data.error,
-        });
-      } else {
-        // 更新成功したらエラーメッセージは空にする
-        this.errorsName = [];
-
-        // フラッシュメッセージをセット
-        this.$store.commit('message/setContentSuccess', {
-          content: response.data.success,
-        });
-      }
-      this.isUpdating = false;
     },
 
     // メールアドレスの変更

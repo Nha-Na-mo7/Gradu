@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreatePasswordRequest;
 use App\Http\Requests\UpdateMailRequest;
 use App\Http\Requests\UpdatePasswordRequest;
-use App\Http\Requests\UpdateUsernameRequest;
 use App\Models\EmailReset;
 use App\Models\User;
 use Carbon\Carbon;
@@ -42,29 +41,6 @@ class UserController extends Controller
       }else{
         Log::debug('401 認証切れです');
         return response()->json([], 401);
-      }
-    }
-    
-    // =========================
-    // ユーザーネームの更新
-    // =========================
-    // リクエストクラスを用意するべきか
-    public function update_name(UpdateUsernameRequest $request) {
-      Log::debug('UserController.update_name ユーザーネームの更新');
-      try {
-        $user = Auth::user();
-        
-        $new_name = $request->name;
-        Log::debug('変更後のユーザーネーム: '.$new_name);
-        
-        $user->name = $new_name;
-        $user->save();
-        
-        Log::debug('ユーザーネームの変更完了しました。');
-        return response()->json(['success' => 'ユーザーネームを更新しました！'], 200);
-      }catch(\Exception $e) {
-        Log::debug('エラーが発生しました。'. $e->getMessage());
-        return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
     

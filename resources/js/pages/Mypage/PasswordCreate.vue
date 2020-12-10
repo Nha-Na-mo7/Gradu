@@ -41,7 +41,7 @@
           v-model="formPassword.password_confirmation"
         />
 
-        <div class="u-text--center">
+        <div class="c-form__submit u-text--center">
           <button class="c-btn" @click="createPassword">
             パスワードを登録する
           </button>

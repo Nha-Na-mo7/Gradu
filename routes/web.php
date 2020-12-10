@@ -98,8 +98,6 @@ Route::group(['middleware' => 'auth'], function (){
   Route::get('/user/info', 'UserController@auth_user');
   // ログインしているかをチェックする
   Route::get('/user/auth/check', 'UserController@auth_check');
-  // ユーザーネームを更新する
-  Route::post('/user/update/name', 'UserController@update_name');
   // メールアドレスの更新処理
   Route::post('/user/update/email', 'UserController@update_email');
   // メールアドレスのリセットを確定

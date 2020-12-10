@@ -15,17 +15,11 @@
     <div v-else class="p-container dummyflex">
       <div class="p-mypage">
         <div class="p-mypage__column">
-          <!-- ユーザー名・メールアドレス -->
+          <!-- メールアドレス -->
           <div class="p-documentbox c-documentbox">
             <div class="c-documentbox__header">
-              <h2 class="c-documentbox__title">プロフィール</h2>
+              <h2 class="c-documentbox__title">メールアドレス</h2>
               <RouterLink to="/mypage/profile">設定する ></RouterLink>
-            </div>
-            <div class="c-documentbox__body">
-              <h2 class="c-documentbox__item c-documentbox__item--info">
-                ユーザーネーム
-              </h2>
-              <p class="c-documentbox__item">{{ this.authName }}</p>
             </div>
             <div class="c-documentbox__body">
               <h2 class="c-documentbox__item c-documentbox__item--info">
@@ -148,7 +142,6 @@ export default {
       twitter: false,
       password: false,
       mail: '',
-      name: '',
     };
   },
   computed: {
@@ -167,9 +160,6 @@ export default {
     authMail() {
       return this.mail;
     },
-    authName() {
-      return this.name;
-    },
   },
   methods: {
     // ログイン中のユーザーデータを取得する
@@ -185,7 +175,6 @@ export default {
         this.twitter = response.data.twitter_id !== null;
         this.password = response.data.password !== null;
         this.mail = response.data.email;
-        this.name = response.data.name;
         this.loading = false;
       } else {
         this.system_error = response.data.errors;
