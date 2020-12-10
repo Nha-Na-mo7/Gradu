@@ -5,7 +5,7 @@
   <div class="p-setting">
     <div class="p-setting__container">
       <div class="p-form">
-        <div class="p-form__decription">
+        <div class="p-form__description">
           <p>※ 他のサービスと同じパスワードは使用しないでください</p>
         </div>
 

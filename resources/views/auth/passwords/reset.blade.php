@@ -8,7 +8,7 @@
     <div class="p-auth__container">
         <div>
             <h2 class="p-form__title">パスワードの再設定</h2>
-            <p class="p-form__decription">新しく設定するパスワードを入力してください。</p>
+            <p class="p-form__description">新しく設定するパスワードを入力してください。</p>
         </div>
 
         <div class="p-form">
