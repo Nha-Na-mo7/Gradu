@@ -132,10 +132,10 @@
         text-decoration: underline;
       }
       @include mq($breakpoint: md) {
-        font-size: $font-size_default;
+        font-size: $font-size_l;
       }
       @include mq() {
-        font-size: $font-size_m;
+        font-size: $font-size_default;
       }
     }
     // ユーザー名(@XXXXxxxxXXXXxxxx)
@@ -151,20 +151,17 @@
   // デスクリプション。アカウントのプロフィール
   &__description {
     line-height: 150%;
-    font-size: 15px;
+    font-size: 18px;
     margin-bottom: $space_s;
     word-break: break-all;
     height: 100%;
     // 投稿時刻
     & span {
-      font-size: $font-size_ss;
+      font-size: $font-size_m;
       color: #a4a4a4;
     }
     @include mq($breakpoint: md) {
-      font-size: $font-size_m;
-    }
-    @include mq() {
-      font-size: $font-size_s;
+      font-size: $font-size_default;
     }
   }
 
