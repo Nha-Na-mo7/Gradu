@@ -155,13 +155,14 @@
     margin-bottom: $space_s;
     word-break: break-all;
     height: 100%;
+    @include mq($breakpoint: md) {
+      font-size: $font-size_m;
+    }
+    
     // 投稿時刻
     & span {
       font-size: $font-size_m;
       color: #a4a4a4;
-    }
-    @include mq($breakpoint: md) {
-      font-size: $font-size_default;
     }
   }
 
