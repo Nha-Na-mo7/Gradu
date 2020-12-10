@@ -4,7 +4,7 @@
 .p-form {
   padding: $space_xxl 0;
   @include mq() {
-    padding: $space_xl $space_l;
+    padding: 0 $space_l;
   }
   &__auth {
     width: 450px;
@@ -21,7 +21,7 @@
   }
   &__decription {
     margin-bottom: $space_xl;
-    font-size: $font-size_default;
+    font-size: 15px;
     font-weight: bold;
     line-height: 1.5;
   }
