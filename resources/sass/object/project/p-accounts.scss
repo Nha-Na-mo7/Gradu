@@ -161,10 +161,10 @@
       color: #a4a4a4;
     }
     @include mq($breakpoint: md) {
-      font-size: $font-size_s;
+      font-size: $font-size_m;
     }
     @include mq() {
-      font-size: $font-size_ss;
+      font-size: $font-size_s;
     }
   }
 
@@ -178,7 +178,7 @@
     height: 100%;
     display: flex;
     border-top: 1px solid $font-color_default;
-    padding: 4px 0;
+    padding: 10px 0;
     // 共通要素
     &--item {
       height: 100%;
@@ -203,12 +203,13 @@
     }
     // フォロー中 or フォロワー の文言
     &--title {
-      font-size: 12px;
+      font-size: 14px;
       letter-spacing: -0.5px;
       color: $font-color_default;
       @include mq() {
-        font-size: 8px;
+        font-size: 12px;
       }
+      // TODO 何かクラスをつけること
       & > p {
         margin-right: 4px;
       }
