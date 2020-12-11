@@ -36,7 +36,7 @@ import PageTitle from '../PageComponents/PageTitle.vue';
 import Loading from '../../layouts/Loading.vue';
 import PasswordCreate from './PasswordCreate.vue';
 import PasswordUpdate from './PasswordUpdate.vue';
-import { OK, INTERNAL_SERVER_ERROR } from '../../util.js';
+import { OK } from '../../util.js';
 const PAGE_TITLE = 'パスワード設定';
 
 export default {

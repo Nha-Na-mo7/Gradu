@@ -40,8 +40,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
       // ここに記述することで指定のスケジュールでタスクが実行される
-      // $schedule->command('batchtest')->everyMinute()->hourly();
-  
       // ======================
       // 仮想通貨アカウント取得
       // ======================

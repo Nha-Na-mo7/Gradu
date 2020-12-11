@@ -80,6 +80,7 @@ class RegisterController extends Controller
     // ===================================
     public function redirectPath()
     {
+      session()->flash('system_message', '登録ありがとうございます！まずは銘柄ごとのトレンドを確認してみましょう。');
       return '/trends';
     }
 }

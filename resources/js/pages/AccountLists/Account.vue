@@ -131,7 +131,6 @@
 import {
   DEFAULT_TWITTER_URL,
   OK,
-  INTERNAL_SERVER_ERROR,
   FORBIDDEN,
 } from '../../util';
 import AccountTweet from './AccountTweet.vue';

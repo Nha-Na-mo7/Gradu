@@ -93,7 +93,6 @@ export default {
       },
     };
   },
-  computed: {},
   methods: {
     // パスワードの更新
     async updatePassword() {

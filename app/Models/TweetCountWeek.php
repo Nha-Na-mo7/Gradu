@@ -27,6 +27,7 @@ class TweetCountWeek extends Model
         'complete_flg',
         'next_results',
     ];
+    
     /**
      * リレーション - brandsテーブル
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

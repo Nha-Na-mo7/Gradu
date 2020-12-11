@@ -2,9 +2,8 @@
 <!--ニュース一覧画面でいくつも描画されるニュースリンクへのコンポーネント-->
 <!--=======================================================-->
 <template>
-  <!--  <div class="p-news__item&#45;&#45;container">-->
   <div class="p-news__item" :class="{ 'p-news__new': isSub24hour }">
-    <!--      &lt;!&ndash; 24H以内の記事に付与されるアイコン &ndash;&gt;-->
+    <!-- 24H以内の記事に付与されるアイコン -->
     <span v-if="isSub24hour" class="c-icon__new">NEW!!</span>
     <!-- 記事のタイトル -->
     <div class="p-news__item--title">

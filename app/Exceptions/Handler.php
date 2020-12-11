@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
         // csrf例外だった場合はログイン画面に飛ばす
         if ($exception instanceof \Illuminate\Session\TokenMismatchException){
           Log::debug('app/Exceptions/Handler.php render csrf例外だった場合はログイン画面へ');
-          // session()->flash('csrfError', true);  ->with('system_message', '不正な操作です')
           session()->flash('system_message', 'トークンが無効です。');
           return redirect()->to('/login');
         }

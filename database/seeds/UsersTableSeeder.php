@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
   {
       // 開発用ユーザーを定義
       User::create([
-          'name' => 'develop_user',
           'email' => 'my_email@gmail.com',
           'password' => Hash::make('my_secure_password'), // この場合、「my_secure_password」でログインできる
           'remember_token' => str_random(10),
