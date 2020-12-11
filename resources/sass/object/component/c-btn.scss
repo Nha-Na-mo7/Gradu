@@ -68,12 +68,8 @@
   &__link {
     border: 0;
   }
-
   &__fluid {
     width: 100%;
-  }
-
-  &__follow {
   }
   &__modal {
     @include mq() {
@@ -87,7 +83,6 @@
     margin: auto 0;
     font-size: 1.2rem;
   }
-
   &__disabled {
     cursor: not-allowed;
     background: #dedede;

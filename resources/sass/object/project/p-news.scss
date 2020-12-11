@@ -26,11 +26,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-
       margin-top: 15px;
       @include mq($breakpoint: md) {
         font-size: 14px;
-
         justify-content: unset;
         flex-direction: column;
       }

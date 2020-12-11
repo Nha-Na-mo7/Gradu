@@ -6,9 +6,10 @@
   box-shadow: 0 -2px 10px #cdcdcd;
   margin: 0 auto;
   color: #09093e;
-}
-.p-footer__copyright {
-  text-align: center;
-  font-size: 1rem;
-  padding: 25px 12px;
+
+  &__copyright {
+    text-align: center;
+    font-size: 1rem;
+    padding: 25px 12px;
+  }
 }

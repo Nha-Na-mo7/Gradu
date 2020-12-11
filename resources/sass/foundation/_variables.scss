@@ -83,17 +83,6 @@ $space_3l: 40px;
 // breakpoint
 // -----------------
 // メディアクエリのブレークポイント設定
-
-//@media screen and (max-width: 414px){
-//  .btn{
-//    font-size: .7em;
-//  }
-//}
-
-//$breakpoint-sm: 414px !default;
-//$breakpoint-md: 768px !default;
-//$breakpoint-lg: 1000px !default;
-
 $breakpoints: (
   'ss': 'screen and (max-width: 320px)',
   // iPhone5(iOS10)
