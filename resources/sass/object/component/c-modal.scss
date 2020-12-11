@@ -64,11 +64,9 @@
     &--description {
       margin-bottom: 24px;
       padding: 8px;
-      & > li {
-        border-bottom: 1px solid #cdcdcd;
-      }
     }
     &--li {
+      border-bottom: 1px solid #cdcdcd;
       padding: 8px 0;
       font-size: $font-size_default;
       @include mq() {

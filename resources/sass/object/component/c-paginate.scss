@@ -32,6 +32,13 @@
       font-weight: bold;
     }
     &--break-view {
+      background: none;
+      border: unset;
+      margin: 5px -5px;
+      pointer-events: none;
+      &:hover {
+        background: unset;
+      }
       @include mq() {
         display: none;
       }
