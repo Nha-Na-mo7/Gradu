@@ -14,7 +14,11 @@
         >
 
         <ul v-if="errorsPassword">
-          <li class="c-error" v-for="error in errorsPassword">
+          <li
+              class="c-error"
+              v-for="error in errorsPassword"
+              :key="error"
+          >
             <span>{{ error }}</span>
           </li>
         </ul>
@@ -30,7 +34,11 @@
         >
 
         <ul v-if="errorsPasswordConfirmation">
-          <li v-for="error in errorsPasswordConfirmation">
+          <li
+              class="c-error"
+              v-for="error in errorsPasswordConfirmation"
+              :key="error"
+          >
             <span>{{ error }}</span>
           </li>
         </ul>
@@ -66,7 +74,6 @@ export default {
       },
     };
   },
-  computed: {},
   methods: {
     // パスワードの新規登録
     async createPassword() {

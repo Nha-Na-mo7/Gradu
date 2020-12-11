@@ -24,7 +24,11 @@
           <label class="c-form__info" for="email">メールアドレス </label>
           <!-- エラー表示は要修正-->
           <ul v-if="errorsEmail">
-            <li class="c-error" v-for="error in errorsEmail">
+            <li
+                class="c-error"
+                v-for="error in errorsEmail"
+                :key="error"
+            >
               <span>{{ error }}</span>
             </li>
           </ul>

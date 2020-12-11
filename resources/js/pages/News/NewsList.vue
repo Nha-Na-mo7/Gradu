@@ -62,7 +62,11 @@
             name=""
           >
           </paginate>
-          <News v-for="News in getNewsItems" :key="News.id" :entry="News" />
+          <News
+              v-for="News in getNewsItems"
+              :key="News.id"
+              :entry="News"
+          />
           <paginate
             v-model="currentPage"
             :page-count="getPageCount"

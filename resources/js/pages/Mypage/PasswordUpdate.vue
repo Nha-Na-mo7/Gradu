@@ -12,7 +12,11 @@
         <label class="c-form__info" for="old_password">現在のパスワード</label>
 
         <ul v-if="errorsOldPassword">
-          <li class="c-error" v-for="error in errorsOldPassword">
+          <li
+              class="c-error"
+              v-for="error in errorsOldPassword"
+              :key="error"
+          >
             <span>{{ error }}</span>
           </li>
         </ul>
@@ -28,7 +32,11 @@
         >
 
         <ul v-if="errorsPassword">
-          <li class="c-error" v-for="error in errorsPassword">
+          <li
+              class="c-error"
+              v-for="error in errorsPassword"
+              :key="error"
+          >
             <span>{{ error }}</span>
           </li>
         </ul>
@@ -44,7 +52,11 @@
         >
 
         <ul v-if="errorsPasswordConfirmation">
-          <li class="c-error" v-for="error in errorsPasswordConfirmation">
+          <li
+              class="c-error"
+              v-for="error in errorsPasswordConfirmation"
+              :key="error"
+          >
             <span>{{ error }}</span>
           </li>
         </ul>
