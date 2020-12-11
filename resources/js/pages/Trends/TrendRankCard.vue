@@ -2,9 +2,9 @@
 <!--ランキングページで表示される順位表一枚一枚のコンポーネント-->
 <!--===============================================-->
 <template>
-  <tr>
-    <td>{{ this.rank + 1 }}</td>
-    <td class="">
+  <tr class="p-trends__table--row">
+    <td class="p-trends__table--data">{{ this.rank + 1 }}</td>
+    <td class="p-trends__table--data">
       <div>
         <a
           class="p-trends__table--link"
@@ -26,9 +26,9 @@
         </a>
       </div>
     </td>
-    <td class="p-trends__table--count">{{ this.brand.tweet_count }}</td>
-    <td class="u-text--right">{{ priceMax | addJPY }}</td>
-    <td class="u-text--right">{{ priceMin | addJPY }}</td>
+    <td class="p-trends__table--data p-trends__table--count">{{ this.brand.tweet_count }}</td>
+    <td class="p-trends__table--data u-text--right">{{ priceMax | addJPY }}</td>
+    <td class="p-trends__table--data u-text--right">{{ priceMin | addJPY }}</td>
   </tr>
 </template>
 
@@ -89,5 +89,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

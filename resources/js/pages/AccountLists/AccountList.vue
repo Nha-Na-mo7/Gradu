@@ -24,7 +24,7 @@
           <div class="p-accounts__autofollow--status">
             <p>
               自動フォローステータス:
-              <span>{{ isAutoFollowFlg | autoFollowStatusFilter }}</span>
+              <span class="u-font--bold">{{ isAutoFollowFlg | autoFollowStatusFilter }}</span>
             </p>
           </div>
           <div>

@@ -34,6 +34,9 @@
       display: block;
     }
   }
+  &__modal {
+    margin-left: 2.8px;
+  }
   &__checkbox {
     &--description {
       margin-top: 10px;
@@ -51,17 +54,15 @@
       overflow-y: hidden;
       white-space: nowrap;
     }
-    & tr {
+    &--row {
       align-items: center;
       border-bottom: 1px solid #cdcdcd;
-
-      & > th,
-      td {
-        padding: 10px 15px;
-      }
       &:nth-of-type(2n-1) {
         background: #f6f6f6;
       }
+    }
+    &--header, &--data {
+      padding: 10px 15px;
     }
 
     &--count {

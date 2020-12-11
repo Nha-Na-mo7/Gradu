@@ -67,12 +67,12 @@
           <div v-else class="p-trends__table__area">
             <div class="p-trends__table">
               <table class="p-trends__table--inner">
-                <tr>
-                  <th class="">順位</th>
-                  <th>通貨</th>
-                  <th>ツイート数</th>
-                  <th>最高取引価格（24H）</th>
-                  <th>最安取引価格（24H）</th>
+                <tr class="p-trends__table--row">
+                  <th class="p-trends__table--header">順位</th>
+                  <th class="p-trends__table--header">通貨</th>
+                  <th class="p-trends__table--header">ツイート数</th>
+                  <th class="p-trends__table--header">最高取引価格（24H）</th>
+                  <th class="p-trends__table--header">最安取引価格（24H）</th>
                 </tr>
                 <TrendRankCard
                   v-show="tab === 0"
