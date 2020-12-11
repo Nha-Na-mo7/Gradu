@@ -12,9 +12,9 @@
 
         {{-- SPサイト用メニュー --}}
         <div class="p-header__trigger js-toggle-sp-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span class="p-header__trigger--bar"></span>
+            <span class="p-header__trigger--bar"></span>
+            <span class="p-header__trigger--bar"></span>
         </div>
 
         {{-- ナビバー --}}
