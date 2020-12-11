@@ -14,7 +14,7 @@
         <Ribbonnav :title="ribbonPageTitle" :date="get_updated_at" />
 
         <!-- 絞り込みエリア -->
-        <div class="p-news__modal p-news__modal-show">
+        <div class="p-trends__modal p-trends__modal-show">
           <TrendCheckbox @checked="checkedBrand" @reset="resetBrand" />
         </div>
 
