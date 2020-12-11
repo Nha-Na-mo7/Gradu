@@ -33,7 +33,7 @@ class UpdateMailRequest extends FormRequest
 
       return [
           'email.required' => '入力してください',
-          'email.unique' => 'このメールアドレスは既に登録されています',
+          'email.unique' => '入力されたメールアドレスは利用できません。',
           'email.email' => '正しいメールアドレスを入力してください',
           'email.max' => "100文字以内で入力してください",
 

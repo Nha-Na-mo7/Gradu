@@ -50,10 +50,15 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $message = [
+            'email.unique' => '入力されたメールアドレスは無効です。他のメールアドレスをご利用ください。'
+        ];
+        
         return Validator::make($data, [
             'email' => ['required', 'unique:users,email', 'string', 'email:strict,dns,spoof', 'max:100', 'unique:users'],
             'password' => ['required', 'string', "min:8", "max:50", 'confirmed', 'regex:/^[a-zA-Z0-9]+$/'],
-        ]);
+        ],$message
+        );
     }
   
   /**
