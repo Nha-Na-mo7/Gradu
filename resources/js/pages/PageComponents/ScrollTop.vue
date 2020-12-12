@@ -7,7 +7,7 @@
       :class="{'c-icon__scrolltop--none': scrollY < 120}"
       @click="scrollTop"
   >
-    <span class="c-icon__scrolltop--text">↑</span>
+    <span class="c-icon__scrolltop--text">{{ userAgent }}</span>
   </button>
 </template>
 
@@ -17,6 +17,11 @@ export default {
     return {
       // Y軸の座標
       scrollY: 0
+    }
+  },
+  computed: {
+    userAgent() {
+      return window.navigator.userAgent
     }
   },
   mounted() {

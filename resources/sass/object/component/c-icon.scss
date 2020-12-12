@@ -20,10 +20,10 @@
     border: 1px solid #cdcdcd;
     font-weight: bold;
     position: fixed;
-    bottom: 10px;
+    bottom: 80px;
     right: 10px;
-    width: 60px;
-    height: 60px;
+    width: 260px;
+    height: 260px;
     border-radius: 50%;
     text-align: center;
     text-decoration: none;
@@ -31,12 +31,11 @@
     font-size: $font-size_s;
     :hover {
       opacity: 1;
-      background: #f66d9b;
     }
     @include mq() {
-      width: 50px;
-      height: 50px;
-      bottom: 30px;
+      width: 250px;
+      height: 250px;
+      bottom: 80px;
     }
     &--none {
       display: none;
