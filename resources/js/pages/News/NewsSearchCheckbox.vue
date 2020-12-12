@@ -48,6 +48,7 @@
             絞り込みをリセット
           </button>
           <button class="c-btn c-btn__news" @click="searchGoogleNews">
+            <i class="fas fa-search"></i>
             検索する
           </button>
         </div>
