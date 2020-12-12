@@ -9,7 +9,6 @@
     </p>
     <!-- ナビの右側 更新時刻など-->
     <p class="c-ribbon__content c-ribbon__content--right" v-if="date">
-      <i class="far fa-clock"></i>
       最終更新: <span class="c-ribbon__date">{{ date | update }}</span> JST
     </p>
   </div>
