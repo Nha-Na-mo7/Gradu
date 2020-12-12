@@ -127,6 +127,9 @@
       font-size: 32px;
       font-weight: bold;
       text-align: center;
+      @include mq() {
+        text-align: left;
+      }
     }
     &--text {
       height: 100%;
@@ -135,6 +138,9 @@
       color: #8a8a8a;
       line-height: 1.6;
       text-align: center;
+      @include mq() {
+        text-align: left;
+      }
     }
   }
 
