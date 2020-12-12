@@ -87,7 +87,7 @@
                 <h2>連携していません</h2>
               </div>
               <div>
-                <p class="c-documentbox__item">
+                <p class="c-documentbox__item u-color--red">
                   仮想通貨アカウント一覧機能がご利用できません。
                 </p>
               </div>
