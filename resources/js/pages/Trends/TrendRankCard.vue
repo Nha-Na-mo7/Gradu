@@ -6,6 +6,7 @@
     <td class="p-trends__table--data p-trends__table--rank">{{ this.rank + 1 }}</td>
     <td class="p-trends__table--data">
       <div>
+        <!-- アイコンか通貨名をクリックするとTwitterの検索ページにリンク -->
         <a
           class="p-trends__table--link"
           :href="searchUrl"
@@ -18,7 +19,7 @@
             class="p-trends__table--icon"
             :alt="this.brand.brand.name"
           />
-          <!-- 通貨名(クリックするとtwitter検索ページにリンク) -->
+          <!-- 通貨名 -->
           <span class="p-trends__item--name">{{ this.brand.brand.name }}</span>
           <span class="p-trends__item--realname">{{
             this.brand.brand.realname

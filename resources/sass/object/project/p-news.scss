@@ -50,6 +50,9 @@
         text-align: right;
         margin-right: $space_s;
         margin-bottom: $space_l;
+        @include mq() {
+          text-align: center;
+        }
       }
     }
     &--description {
