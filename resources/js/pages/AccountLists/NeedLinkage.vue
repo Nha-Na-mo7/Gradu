@@ -9,6 +9,7 @@
     <div class="u-mt-xl">
       <button class="c-btn c-btn__twitter">
         <a title="Start for Twitter!" @click.stop :href="`/twitter/auth/begin`">
+          <i class="fab fa-twitter"></i>
           今すぐTwitterと連携する
         </a>
       </button>

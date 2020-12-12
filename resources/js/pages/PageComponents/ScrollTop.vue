@@ -8,7 +8,10 @@
       :class="{'c-icon__scrolltop--none': scrollY < 120}"
       @click="scrollTop"
   >
-    <span class="c-icon__scrolltop--text">↑</span>
+    <!-- ^が2つ並んだアイコン -->
+    <span class="c-icon__scrolltop--text">
+      <i class="fas fa-angle-double-up"></i>
+    </span>
   </button>
 </template>
 

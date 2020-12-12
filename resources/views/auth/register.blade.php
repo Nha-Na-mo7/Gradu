@@ -82,7 +82,9 @@
                         title="Start for Twitter!"
                         @click.stop
                         href="{{ route('twitter.begin') }}"
-                >Twitterで新規登録
+                >
+                    <i class="fab fa-twitter"></i>
+                    Twitterで新規登録
                 </a>
             </div>
         </div>

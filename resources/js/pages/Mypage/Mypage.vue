@@ -18,7 +18,10 @@
           <!-- メールアドレス -->
           <div class="p-documentbox c-documentbox">
             <div class="c-documentbox__header">
-              <h2 class="c-documentbox__title">メールアドレス</h2>
+              <h2 class="c-documentbox__title">
+                <i class="far fa-envelope"></i>
+                メールアドレス
+              </h2>
               <RouterLink to="/mypage/profile">設定する ></RouterLink>
             </div>
             <div class="c-documentbox__body">
@@ -32,7 +35,9 @@
           <!-- パスワード -->
           <div class="p-documentbox c-documentbox">
             <div class="c-documentbox__header">
-              <h2 class="c-documentbox__title">パスワード</h2>
+              <h2 class="c-documentbox__title">
+                <i class="fas fa-key"></i>
+                パスワード</h2>
               <RouterLink to="/mypage/password">設定する ></RouterLink>
             </div>
             <div class="c-documentbox__body" v-if="isExistPassword">
@@ -57,7 +62,10 @@
           <!-- SNS連携 -->
           <div class="p-documentbox c-documentbox">
             <div class="c-documentbox__header">
-              <h2 class="c-documentbox__title">Twitter連携状態</h2>
+              <h2 class="c-documentbox__title">
+                <i class="fab fa-twitter"></i>
+                Twitter連携状態
+              </h2>
             </div>
 
             <!-- 連携中の時 -->
@@ -74,6 +82,7 @@
                     class="c-btn c-btn__twitter"
                     @click="twitterUnLinkage"
                   >
+                    <i class="fab fa-twitter"></i>
                     連携を解除する
                   </button>
                 </div>
@@ -99,6 +108,7 @@
                     @click.stop
                     :href="`/twitter/auth/begin`"
                   >
+                    <i class="fab fa-twitter"></i>
                     連携する
                   </a>
                 </button>
@@ -109,7 +119,10 @@
           <!-- 退会処理 -->
           <div class="p-documentbox c-documentbox">
             <div class="c-documentbox__header">
-              <h2 class="c-documentbox__title">退会する</h2>
+              <h2 class="c-documentbox__title">
+                <i class="fas fa-sign-out-alt"></i>
+                退会する
+              </h2>
             </div>
             <div class="c-documentbox__body">
               <div class="c-documentbox__item">

@@ -32,6 +32,7 @@
   &__twitter {
     background: $btn-color_twitter;
     color: $font-color_white;
+    font-weight: bold;
     &:hover {
       background: $btn-color-twitter_hover;
     }
