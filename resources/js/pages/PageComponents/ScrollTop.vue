@@ -3,11 +3,12 @@
 <!--===================================-->
 <template>
   <button
+      v-if="checkCanUseScrollAgent"
       class="c-icon__scrolltop"
       :class="{'c-icon__scrolltop--none': scrollY < 120}"
       @click="scrollTop"
   >
-    <span class="c-icon__scrolltop--text">{{ userAgent }}</span>
+    <span class="c-icon__scrolltop--text">↑</span>
   </button>
 </template>
 
@@ -20,8 +21,19 @@ export default {
     }
   },
   computed: {
-    userAgent() {
-      return window.navigator.userAgent
+    // Android4.4.4以下はscroll系のメソッド非対応なのでそもそも表示させない
+    checkCanUseScrollAgent() {
+      var version = ''
+      // ブラウザ情報を取得
+      var userAgent = window.navigator.userAgent
+      // Androidであればバージョンを取得
+      if( userAgent.indexOf('Android') > 0 ) {
+        version = parseFloat(userAgent.slice(userAgent.indexOf('Android')+8))
+      } else {
+        // Androidでなければtrue
+        return true
+      }
+      return version > 4.4;
     }
   },
   mounted() {

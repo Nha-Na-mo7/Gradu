@@ -20,10 +20,10 @@
     border: 1px solid #cdcdcd;
     font-weight: bold;
     position: fixed;
-    bottom: 80px;
+    bottom: 10px;
     right: 10px;
-    width: 260px;
-    height: 260px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     text-align: center;
     text-decoration: none;
@@ -33,9 +33,9 @@
       opacity: 1;
     }
     @include mq() {
-      width: 250px;
-      height: 250px;
-      bottom: 80px;
+      width: 50px;
+      height: 50px;
+      bottom: 30px;
     }
     &--none {
       display: none;
