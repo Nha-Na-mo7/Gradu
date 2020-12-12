@@ -26,4 +26,11 @@
   &-font--bold {
     font-weight: bold;
   }
+
+  &-sp__block {
+    display: none;
+    @include mq() {
+      display: block;
+    }
+  }
 }
