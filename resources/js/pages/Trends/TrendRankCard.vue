@@ -3,7 +3,7 @@
 <!--===============================================-->
 <template>
   <tr class="p-trends__table--row">
-    <td class="p-trends__table--data u-text--center">{{ this.rank + 1 }}</td>
+    <td class="p-trends__table--data p-trends__table--rank">{{ this.rank + 1 }}</td>
     <td class="p-trends__table--data">
       <div>
         <a

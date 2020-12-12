@@ -25,6 +25,10 @@ body {
   text-size-adjust: 100%;
   letter-spacing: 0.1em;
 }
+td,
+th {
+  vertical-align: unset;
+}
 
 p,
 a {
