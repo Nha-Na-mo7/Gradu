@@ -2,7 +2,7 @@
 <!--パスワード変更画面のコンポーネント。登録があるかで新規・更新を分ける-->
 <!--=======================================================-->
 <template>
-  <div class="l-container__content">
+  <div class="l-container__profile-edit">
     <!-- ページタイトル -->
     <PageTitle :title="pageTitle" />
 

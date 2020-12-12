@@ -2,7 +2,7 @@
 <!-- メールアドレスを更新するフォームのコンポーネント-->
 <!--========================================-->
 <template>
-  <div class="l-container__content">
+  <div class="l-container__profile-edit">
     <!-- ページタイトル -->
     <PageTitle :title="page_title" />
 
