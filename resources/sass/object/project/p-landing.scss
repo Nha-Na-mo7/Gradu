@@ -38,7 +38,7 @@
       text-shadow: 0 5px 5px #000000;
 
       @include mq() {
-        font-size: 25px;
+        font-size: 23px;
       }
     }
     &--subtitle {
@@ -124,12 +124,10 @@
     &--title {
       height: 100%;
       margin-top: 40px;
-      font-size: 32px;
+      font-size: 28px;
       font-weight: bold;
       text-align: center;
-      @include mq() {
-        text-align: left;
-      }
+      line-height: 140%;
     }
     &--text {
       height: 100%;
