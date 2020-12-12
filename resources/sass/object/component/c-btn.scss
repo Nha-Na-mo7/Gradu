@@ -85,7 +85,13 @@
   }
   &__disabled {
     cursor: not-allowed;
-    background: #dedede;
-    color: #0b2e13;
+    background: #cdcdcd;
+    border: 1px solid #cdcdcd;
+    color: #444;
+    opacity: 0.6;
+    &:hover {
+      background: #cdcdcd;
+      color: #444;
+    }
   }
 }
