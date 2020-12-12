@@ -97,6 +97,9 @@
         <NothingNews />
       </div>
     </div>
+
+    <!-- スクロール -->
+    <ScrollTop />
   </div>
 </template>
 
@@ -106,6 +109,7 @@ import NothingNews from './NothingNews.vue';
 import NewsSearchCheckbox from './NewsSearchCheckbox.vue';
 import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
+import ScrollTop from '../PageComponents/ScrollTop.vue';
 import { DEFAULT_SEARCHWORD } from '../../util';
 
 import Vue from 'vue';
@@ -220,6 +224,7 @@ export default {
     scrollTop: function () {
       window.scrollTo({
         top: this.getNewsListRect,
+        behavior: "smooth"
       });
     },
   },
@@ -229,6 +234,7 @@ export default {
     NewsSearchCheckbox,
     Loading,
     PageTitle,
+    ScrollTop
   },
   watch: {
     $route: {

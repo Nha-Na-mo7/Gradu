@@ -124,6 +124,9 @@
     <div v-else>
       <NeedLinkage />
     </div>
+
+    <!-- スクロール -->
+    <ScrollTop />
   </div>
 </template>
 
@@ -135,6 +138,7 @@ import NothingAccount from './NothingAccount.vue';
 import Loading from '../../layouts/Loading.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
+import ScrollTop from '../PageComponents/ScrollTop.vue';
 import { OK } from '../../util';
 
 import Vue from 'vue';
@@ -312,6 +316,7 @@ export default {
     scrollTop: function () {
       window.scrollTo({
         top: this.getAccountsRect,
+        behavior: "smooth"
       });
     },
     // =======================
@@ -340,6 +345,7 @@ export default {
     Loading,
     PageTitle,
     Ribbonnav,
+    ScrollTop
   },
   filters: {
     autoFollowStatusFilter: function (auto_flg) {

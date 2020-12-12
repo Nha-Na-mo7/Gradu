@@ -104,6 +104,9 @@
         </div>
       </div>
     </div>
+
+    <!-- スクロール -->
+    <ScrollTop />
   </div>
 </template>
 
@@ -113,6 +116,7 @@ import NothingTrends from './NothingTrends.vue';
 import TrendCheckbox from './TrendCheckbox.vue';
 import PageTitle from '../PageComponents/PageTitle.vue';
 import Ribbonnav from '../PageComponents/Ribbonnav.vue';
+import ScrollTop from '../PageComponents/ScrollTop.vue';
 import TrendRankCard from './TrendRankCard.vue';
 import { OK } from '../../util';
 
@@ -280,6 +284,7 @@ export default {
     Loading,
     PageTitle,
     Ribbonnav,
+    ScrollTop,
     TrendRankCard,
     NothingTrends,
     TrendCheckbox,

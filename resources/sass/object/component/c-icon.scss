@@ -14,4 +14,34 @@
     box-shadow: #cdcdcd 1px 2px 2px;
     font-size: $font-size_s;
   }
+  &__scrolltop {
+    padding: 10px 10px;
+    background: $btn-color_scroll;
+    border: 1px solid #cdcdcd;
+    font-weight: bold;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    text-decoration: none;
+    opacity: 0.7;
+    font-size: $font-size_s;
+    :hover {
+      opacity: 1;
+    }
+    @include mq() {
+      width: 40px;
+      height: 40px;
+    }
+    &--none {
+      display: none;
+    }
+    &--text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
 }
