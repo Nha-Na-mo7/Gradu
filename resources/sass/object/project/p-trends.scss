@@ -63,6 +63,9 @@
     }
     &--header, &--data {
       padding: 10px 15px;
+      @include mq() {
+        padding: 9px 8px;
+      }
     }
 
     &--count {
@@ -74,6 +77,9 @@
     &--icon {
       width: 25px;
       margin-right: $space_m;
+      @include mq() {
+        width: 22px;
+      }
     }
     &--inner {
       margin: 0 auto;
@@ -92,6 +98,9 @@
       font-size: $font-size_l;
       font-weight: bold;
       min-width: 100px;
+      @include mq() {
+        font-size: $font-size_default;
+      }
     }
     &--realname {
       font-size: $font-size_s;
