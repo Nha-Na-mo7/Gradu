@@ -17,11 +17,13 @@
         <!-- メールアドレス -->
         <div class="p-form">
           <!-- DBから現在のメールアドレスを取得し、入力された状態にしておく-->
-          <div class="p-form__description u-mb-l">
+          <div class="p-form__description u-mb-3l">
             <p>メールアドレスを入力後、確認メールを自動送信します。</p>
-            <p>必ずメールを受け取れる状態で変更手続きを行ってください。</p>
+            <p>確認メールから承認を行うことで、メールアドレスの変更手続きが完了します。</p>
+            <br />
+            <p>※ 必ずメールを受け取れる状態で変更手続きを行ってください。</p>
           </div>
-          <label class="c-form__info" for="email">メールアドレス </label>
+          <label class="c-form__info" for="email">新しいメールアドレス </label>
           <!-- エラー表示は要修正-->
           <ul v-if="errorsEmail">
             <li
@@ -40,7 +42,7 @@
           />
           <div class="c-form__submit u-text--center">
             <button class="c-btn" @click="updateEmail">
-              メールアドレスを変更
+              変更確認メールを送信
             </button>
           </div>
         </div>
