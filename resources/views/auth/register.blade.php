@@ -70,22 +70,23 @@
                         </button>
                     </div>
                 </form>
-            </div>
-            <div class="p-auth__another">
-                <div class="c-border">
-                    <div class="c-border__dividingText">
-                        <span class="c-border__dividingText-spanborder">または</span>
+
+                <div class="p-auth__another">
+                    <div class="c-border">
+                        <div class="c-border__dividingText">
+                            <span class="c-border__dividingText-spanborder">または</span>
+                        </div>
                     </div>
+                    <a
+                            class="c-btn c-btn__twitter"
+                            title="Start for Twitter!"
+                            @click.stop
+                            href="{{ route('twitter.begin') }}"
+                    >
+                        <i class="fab fa-twitter"></i>
+                        Twitterで新規登録
+                    </a>
                 </div>
-                <a
-                        class="c-btn c-btn__twitter"
-                        title="Start for Twitter!"
-                        @click.stop
-                        href="{{ route('twitter.begin') }}"
-                >
-                    <i class="fab fa-twitter"></i>
-                    Twitterで新規登録
-                </a>
             </div>
         </div>
     </div>

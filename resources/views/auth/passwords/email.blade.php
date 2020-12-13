@@ -17,15 +17,13 @@
             </div>
         @endif
 
-        <div>
-            <h2 class="p-form__title">パスワードを忘れた場合</h2>
-            <div class="p-form__description">
-                <p>アカウント作成時にご登録いただいたメールアドレスを入力してください。</p>
-                <p>入力したメールアドレス宛に、パスワード変更ページのURLが記載されたメールを送信します。</p>
-            </div>
+        <h2 class="p-form__title">パスワードを忘れた場合</h2>
+        <div class="p-form__description u-text--center">
+            <p>アカウント作成時にご登録いただいたメールアドレスを入力してください。</p>
+            <p>入力したメールアドレス宛に、パスワード変更ページのURLが記載されたメールを送信します。</p>
         </div>
 
-        <div class="p-form">
+        <div class="p-form p-form__auth">
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <label
@@ -51,6 +49,18 @@
                         メールを送信する</button>
                 </div>
             </form>
+
+            <div class="p-auth__another">
+                <div class="c-border">
+                    <div class="c-border__dividingText"></div>
+                </div>
+                <a
+                        class="c-btn"
+                        href="{{ route('login') }}"
+                >
+                    ログイン画面へ戻る
+                </a>
+            </div>
         </div>
     </div>
 </div>
