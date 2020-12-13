@@ -13,6 +13,8 @@
   }
 }
 
-.u-color--red {
-  color: $font-color_error;
+.u-color{
+  &--red {
+    color: $font-color_error;
+  }
 }
