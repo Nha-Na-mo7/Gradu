@@ -3,8 +3,6 @@
 namespace App\Console;
 
 use App\Console\Commands\AutoFollow;
-use App\Console\Commands\BatchTest;
-
 use App\Console\Commands\GetTransactionPriceCommand;
 use App\Console\Commands\InsertDbToFollows;
 use App\Console\Commands\SearchAccountsCommand;
