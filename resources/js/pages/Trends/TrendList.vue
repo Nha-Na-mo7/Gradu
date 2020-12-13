@@ -11,11 +11,17 @@
       <!--メインレイアウト-->
       <div class="p-trends">
         <!-- リボンタグ -->
-        <Ribbonnav :title="ribbonPageTitle" :date="get_updated_at" />
+        <Ribbonnav
+            :title="ribbonPageTitle"
+            :date="get_updated_at"
+        />
 
         <!-- 絞り込みエリア -->
         <div class="p-trends__modal p-trends__modal-show">
-          <TrendCheckbox @checked="checkedBrand" @reset="resetBrand" />
+          <TrendCheckbox
+              @checked="checkedBrand"
+              @reset="resetBrand"
+          />
         </div>
 
         <!-- 切り替えタブ -->
@@ -69,7 +75,7 @@
               <table class="p-trends__table--inner">
                 <tr class="p-trends__table--row">
                   <th class="p-trends__table--header">順位</th>
-                  <th class="p-trends__table--header">通貨</th>
+                  <th class="p-trends__table--header" colspan="2">通貨</th>
                   <th class="p-trends__table--header">ツイート数</th>
                   <th class="p-trends__table--header">最高取引価格（24H）</th>
                   <th class="p-trends__table--header">最安取引価格（24H）</th>

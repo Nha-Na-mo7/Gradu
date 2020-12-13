@@ -19,8 +19,20 @@
             class="p-trends__table--icon"
             :alt="this.brand.brand.name"
           />
+        </a>
+      </div>
+    </td>
+    <td class="p-trends__table--data">
+      <div>
+        <!-- アイコンか通貨名をクリックするとTwitterの検索ページにリンク -->
+        <a
+          class="p-trends__table--link"
+          :href="searchUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <!-- 通貨名 -->
-          <span class="p-trends__item--name">{{ this.brand.brand.name }}</span>
+          <span class="p-trends__item--name">{{ this.brand.brand.name }}</span><br />
           <span class="p-trends__item--realname">{{
             this.brand.brand.realname
           }}</span>
