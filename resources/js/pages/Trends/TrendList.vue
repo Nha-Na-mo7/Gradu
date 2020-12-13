@@ -75,7 +75,8 @@
               <table class="p-trends__table--inner">
                 <tr class="p-trends__table--row">
                   <th class="p-trends__table--header">順位</th>
-                  <th class="p-trends__table--header" colspan="2">通貨</th>
+                  <th class="p-trends__table--header p-trends__table--header--sticky">通貨</th>
+                  <th class="p-trends__table--header"></th>
                   <th class="p-trends__table--header">ツイート数</th>
                   <th class="p-trends__table--header">最高取引価格（24H）</th>
                   <th class="p-trends__table--header">最安取引価格（24H）</th>

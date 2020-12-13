@@ -2,10 +2,12 @@
 <!--ランキングページで表示される順位表一枚一枚のコンポーネント-->
 <!--===============================================-->
 <template>
+  <!-- 順位/通貨(アイコン)/(通貨名)/ツイート数/最高取引価格/最低取引価格 -->
   <tr class="p-trends__table--row">
     <td class="p-trends__table--data p-trends__table--rank">{{ this.rank + 1 }}</td>
-    <td class="p-trends__table--data">
-      <div>
+    <!-- 通貨アイコンは右スワイプ時に追従する -->
+    <td class="p-trends__table--data p-trends__table--data--sticky">
+      <div class="u-text--center">
         <!-- アイコンか通貨名をクリックするとTwitterの検索ページにリンク -->
         <a
           class="p-trends__table--link"
