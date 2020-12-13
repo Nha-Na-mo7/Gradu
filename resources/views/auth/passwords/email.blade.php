@@ -52,7 +52,9 @@
 
             <div class="p-auth__another">
                 <div class="c-border">
-                    <div class="c-border__dividingText"></div>
+                    <div class="c-border__dividingText">
+                        <span class="c-border__dividingText-spanborder">または</span>
+                    </div>
                 </div>
                 <a
                         class="c-btn"
