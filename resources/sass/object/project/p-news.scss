@@ -92,7 +92,7 @@
     word-break: break-all;
 
     &:nth-child(2n) {
-      background: #f6f6f6;
+      background: #f8f8f8;
     }
     &:nth-child(2n + 1) {
       background: #ffffff;
@@ -126,14 +126,14 @@
         margin-right: 4px;
         color: #279187;
         @include mq() {
-          font-size: 12px;
+          font-size: 13px;
         }
       }
       & > .p-news__item--media {
         color: #888888;
-        font-size: 12px;
+        font-size: 13px;
         @include mq() {
-          font-size: 10px;
+          font-size: 11px;
         }
       }
     }
