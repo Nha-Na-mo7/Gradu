@@ -5,9 +5,9 @@
   <!-- 取得したツイートと日付 -->
   <div class="p-accounts__tweet--data" v-if="existTweet">
     <!-- 実際のツイートテキスト・画像 -->
-    <div class="">
+    <div>
       <!-- テキスト -->
-      <p class="">{{ this.text }}</p>
+      <p>{{ this.text }}</p>
       <!-- 画像 -->
       <a
         v-if="existMedia"
@@ -15,10 +15,10 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        <img class="" :src="mediaUrl | sizeThumb" :alt="mediaUrl" />
+        <img :src="mediaUrl | sizeThumb" :alt="mediaUrl" />
       </a>
     </div>
-    <div class="">
+    <div>
       <!-- 日付・ここをクリックするとツイートのURLに飛ぶ -->
       <span class="p-accounts__tweet--span p-accounts__tweet--date">
         <a :href="twitterTweetUrl" target="_blank" rel="noopener noreferrer">{{

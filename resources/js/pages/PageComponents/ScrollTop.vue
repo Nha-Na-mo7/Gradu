@@ -43,6 +43,7 @@ export default {
     window.addEventListener('scroll', this.handleScroll)
   },
   methods: {
+    // Y軸のスクロール位置を取得
     handleScroll() {
       this.scrollY = window.scrollY
     },
