@@ -45,11 +45,7 @@ const routes = [
     beforeEnter: requireLogin,
     path: '/accounts',
     component: AccountList,
-    props: (route) => {
-      const p = route.query.p;
-      // 整数でなかった場合、「1」として返す
-      return { p: /^[1-9][0-9]*$/.test(p) ? p * 1 : 1 };
-    },
+    props: true,
   },
   {
     beforeEnter: requireLogin,
