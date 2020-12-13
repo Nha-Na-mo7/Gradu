@@ -72,8 +72,6 @@
                         <span class="c-border__dividingText-spanborder">または</span>
                     </div>
                 </div>
-
-
                 <a
                         class="c-btn c-btn__twitter"
                         title="Start for Twitter!"
