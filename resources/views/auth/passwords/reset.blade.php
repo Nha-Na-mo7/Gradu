@@ -1,4 +1,4 @@
-<!-- トークンを元に変更完了させる側のbladeです -->
+{{-- トークンを元に変更完了させる側のbladeです --}}
 
 @extends('layouts.app')
 @section('title', 'パスワードの再設定')
