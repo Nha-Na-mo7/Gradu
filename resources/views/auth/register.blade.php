@@ -77,15 +77,22 @@
                             <span class="c-border__dividingText-spanborder">または</span>
                         </div>
                     </div>
-                    <a
-                            class="c-btn c-btn__twitter"
-                            title="Start for Twitter!"
-                            @click.stop
-                            href="{{ route('twitter.begin') }}"
-                    >
-                        <i class="fab fa-twitter"></i>
-                        Twitterで新規登録
-                    </a>
+                    <div class="c-form__submit">
+                        <a
+                                class="c-btn c-btn__twitter"
+                                title="Start for Twitter!"
+                                @click.stop
+                                href="{{ route('twitter.begin') }}"
+                        >
+                            <i class="fab fa-twitter"></i>
+                            Twitterで新規登録
+                        </a>
+                    </div>
+                    <div class="c-form__submit">
+                        <a class="c-btn" href="{{ route('login') }}">
+                            既にアカウントをお持ちの方
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
