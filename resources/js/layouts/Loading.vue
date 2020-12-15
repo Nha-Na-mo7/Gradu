@@ -1,5 +1,4 @@
 <!--ローディング中や検索中に表示するコンポーネント-->
-
 <template>
   <div class="c-loading">
     <span class="c-loading__circle c-loading__circle--1"></span>
@@ -15,8 +14,6 @@
   </div>
 </template>
 
-<script>
-export default {};
-</script>
+<script></script>
 
 <style scoped></style>
