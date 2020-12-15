@@ -18,7 +18,7 @@
         @endif
 
         <h2 class="p-form__title">パスワードを忘れた場合</h2>
-        <div class="p-form__description u-text--center">
+        <div class="p-form__description u-text--center__sp--left">
             <p>アカウント作成時にご登録いただいたメールアドレスを入力してください。</p>
             <p>入力したメールアドレス宛に、パスワード変更ページのURLが記載されたメールを送信します。</p>
         </div>

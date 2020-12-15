@@ -17,6 +17,12 @@
   &-text--left {
     text-align: left;
   }
+  &-text--center__sp--left {
+    text-align: center;
+    @include mq() {
+      text-align: left;
+    }
+  }
 
   &-scroll-prevent {
     position: fixed;

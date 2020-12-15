@@ -49,6 +49,13 @@
       </div>
     </div>
 
+    <!-- border -->
+    <div class="c-border">
+      <div class="c-border__dividingText">
+        <span class="c-border__dividingText-spanborder"></span>
+      </div>
+    </div>
+
     <!-- 戻るボタン -->
     <div class="u-text--center">
       <RouterLink to="/mypage" class="c-btn">マイページへ戻る</RouterLink>

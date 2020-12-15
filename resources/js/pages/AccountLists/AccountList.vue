@@ -19,6 +19,11 @@
         <!-- リボンタグ -->
         <Ribbonnav :title="pageTitle" :date="twitterAccountsTableUpdatedAt" />
 
+        <!-- ページ概要 -->
+        <div class="u-mb-l">
+          <p>「仮想通貨」に関連した情報を発信しているTwitterアカウントの一覧です。</p>
+        </div>
+
         <!-- 自動フォロー欄 -->
         <div class="p-accounts__autofollow">
           <div class="p-accounts__autofollow--status">
@@ -29,6 +34,7 @@
           </div>
           <div>
             <button @click="showModal" class="c-btn">
+              <i class="fas fa-cog"></i>
               自動フォローについて
             </button>
           </div>
