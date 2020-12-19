@@ -584,8 +584,11 @@ class TrendTweetController extends Controller
     // tweet_countsのN日前以前のデータを全て削除する
     // =======================================
     // 2週間(14日前)を限度にデータを全て削除する(DBの容量削減のため)
-    public function delete_tweet_count() {
-      
+    public function delete_tweet_count(int $days) {
+      // $days = N日前かを指定する
+      $tweet_count_hours = new TweetCountHour();
+      $tweet_count_days = new TweetCountDay();
+      $tweet_count_weeks = new TweetCountWeek();
     }
   
     // =======================================
