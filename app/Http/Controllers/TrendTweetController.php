@@ -586,9 +586,21 @@ class TrendTweetController extends Controller
     // 2週間(14日前)を限度にデータを全て削除する(DBの容量削減のため)
     public function delete_tweet_count(int $days) {
       // $days = N日前かを指定する
+      // 今日の日付
+      $today = CarbonImmutable::today();
+      // N日前の日付
+      $subday = $today->subDays($days);
+      // フォーマット
+      $subday_format = $subday->format('Y-m-d');
+      
+      
+      
+      
+  
       $tweet_count_hours = new TweetCountHour();
       $tweet_count_days = new TweetCountDay();
       $tweet_count_weeks = new TweetCountWeek();
+
     }
   
     // =======================================
