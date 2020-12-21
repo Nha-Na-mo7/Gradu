@@ -591,16 +591,16 @@ class TrendTweetController extends Controller
       // N日前の日付
       $subday = $today->subDays($days);
       // フォーマット
-      $subday_format = $subday->format('Y-m-d');
+      $subday_format = $subday->format('Y-m-d H:i:s');
       
-      
-      
-      
-  
       $tweet_count_hours = new TweetCountHour();
       $tweet_count_days = new TweetCountDay();
       $tweet_count_weeks = new TweetCountWeek();
 
+      // 指定日以前の全てのデータを削除
+      $tweet_count_hours->where('updated_at', '<', $subday_format)->delete();
+      $tweet_count_days->where('updated_at', '<', $subday_format)->delete();
+      $tweet_count_weeks->where('updated_at', '<', $subday_format)->delete();
     }
   
     // =======================================
