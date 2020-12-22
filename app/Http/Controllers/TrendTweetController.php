@@ -593,6 +593,7 @@ class TrendTweetController extends Controller
       // フォーマット
       $subday_format = $subday->format('Y-m-d H:i:s');
       
+      // それぞれのモデルを取得
       $tweet_count_hours = new TweetCountHour();
       $tweet_count_days = new TweetCountDay();
       $tweet_count_weeks = new TweetCountWeek();
