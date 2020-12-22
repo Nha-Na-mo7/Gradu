@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AutoFollow;
+use App\Console\Commands\DeleteTweetCountsCommand;
 use App\Console\Commands\GetTransactionPriceCommand;
 use App\Console\Commands\InsertDbToFollows;
 use App\Console\Commands\SearchAccountsCommand;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
       AutoFollow::class,
       GetTransactionPriceCommand::class,
+      DeleteTweetCountsCommand::class,
       InsertDbToFollows::class,
       SearchAccountsCommand::class,
       SearchTweetCountDaysCommand::class,
@@ -87,7 +89,16 @@ class Kernel extends ConsoleKernel
       $schedule->command('command:count_week')
           ->twiceDaily(3,22)
           ->withoutOverlapping();
-      
+  
+  
+      // =====================
+      // 古くなったデータの削除
+      // =====================
+      // DBの容量オーバー対策のため、14日以前のレコードは自動削除される
+      // 1日1回、0:25分に実施する
+      $schedule->command('command:delete_tweet_counts')
+          ->dailyAt('0:25')
+          ->withoutOverlapping();
       
       // =======================================
       // 連携済みユーザーのフォローリストをDB登録する
