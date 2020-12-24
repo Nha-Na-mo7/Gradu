@@ -933,4 +933,13 @@ class TwitterAccountListController extends Controller
       $account_limit_data->save();
       Log::debug('DBへのセーブが完了しました');
     }
+    
+    // =======================================
+    // 【バッチ用】アカウントIDがNULLのレコードを削除
+    // =======================================
+    // 退会した、連携を解除したなどによりアカウントIDがNULLとなったレコードがそのまま残ってしまう
+    // 定期的にアカウントIDがNULLのレコードを削除する処理を実行する
+    public function delete_nullaccount_follow() {
+    
+    }
 }
