@@ -940,6 +940,7 @@ class TwitterAccountListController extends Controller
     // 退会した、連携を解除したなどによりアカウントIDがNULLとなったレコードがそのまま残ってしまう
     // 定期的にアカウントIDがNULLのレコードを削除する処理を実行する
     public function delete_nullaccount_follow() {
-    
+      // account_idがNULLのレコードを全て取得する
+      $result = FollowTarget::where('account_id', Null)->get();
     }
 }
