@@ -13,7 +13,7 @@ class DeleteNullAccountToFollowTarget extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:delete_nullaccount_to_follow_targets';
 
     /**
      * The console command description.

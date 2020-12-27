@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AutoFollow;
+use App\Console\Commands\DeleteNullAccountToFollowTarget;
 use App\Console\Commands\DeleteTweetCountsCommand;
 use App\Console\Commands\GetTransactionPriceCommand;
 use App\Console\Commands\InsertDbToFollows;
@@ -24,6 +25,7 @@ class Kernel extends ConsoleKernel
       AutoFollow::class,
       GetTransactionPriceCommand::class,
       DeleteTweetCountsCommand::class,
+      DeleteNullAccountToFollowTarget::class,
       InsertDbToFollows::class,
       SearchAccountsCommand::class,
       SearchTweetCountDaysCommand::class,
@@ -98,6 +100,15 @@ class Kernel extends ConsoleKernel
       // 1日1回、0:25分に実施する
       $schedule->command('command:delete_tweet_counts')
           ->dailyAt('0:25')
+          ->withoutOverlapping();
+      
+      // =====================================================
+      // フォローターゲットテーブルの、アカウントIDがNULLのレコードを削除
+      // =====================================================
+      // 1日1回、0:40分に実施する
+      // フォローターゲットテーブル・アカウントIDがNULL(ユーザーが削除された)のものを定期的に削除する
+      $schedule->command('command:delete_nullaccount_to_follow_targets')
+          ->dailyAt('0:40')
           ->withoutOverlapping();
       
       // =======================================
