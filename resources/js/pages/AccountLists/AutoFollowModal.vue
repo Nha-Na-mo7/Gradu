@@ -65,10 +65,17 @@ export default {
       type: Boolean,
       required: true,
     },
+    testUserFlg: {
+      type: Boolean,
+      required: true,
+    },
   },
   computed: {
     isAutoFollowFlg() {
       return this.autoFlg;
+    },
+    isTestUserFlg() {
+      return this.testUserFlg;
     },
   },
   methods: {
@@ -89,24 +96,32 @@ export default {
       } else {
         result = confirm('自動フォローをONにします。よろしいですか？');
       }
-      // confirmではいが選択されたら切り替えを行う
+      // confirmではいが選択されたら切り替え処理に入る
       if (result) {
-        const response = await axios
-          .post(`/accounts/autofollowflg`, { follow_flg: flg })
-          .catch((error) => error.response || error);
-
-        // エラーハンドリング
-        if (response.status === OK) {
-          // フラッシュメッセージをセット
-          this.$store.commit('message/setContentSuccess', {
-            content: response.data.success,
-          });
-          this.toggleFollowFlgParent();
-        } else {
-          // フラッシュメッセージをセット
+        // テストユーザーの場合は処理は行わない
+        if(this.isTestUserFlg) {
           this.$store.commit('message/setContentError', {
-            content: 'エラーが発生しました。',
+            content: '【テストユーザーのため何も行いません】本登録をされている場合、連携しているTwitterアカウントでの自動フォローが開始されます。',
+            timeout: 8000
           });
+        }else{
+          const response = await axios
+              .post(`/accounts/autofollowflg`, { follow_flg: flg })
+              .catch((error) => error.response || error);
+
+          // エラーハンドリング
+          if (response.status === OK) {
+            // フラッシュメッセージをセット
+            this.$store.commit('message/setContentSuccess', {
+              content: response.data.success,
+            });
+            this.toggleFollowFlgParent();
+          } else {
+            // フラッシュメッセージをセット
+            this.$store.commit('message/setContentError', {
+              content: 'エラーが発生しました。',
+            });
+          }
         }
         // モーダルを閉じる
         this.closeModal();

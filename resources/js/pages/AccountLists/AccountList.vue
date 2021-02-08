@@ -6,6 +6,7 @@
     <AutoFollowModal
       v-if="modal"
       :autoFlg="!!auto_follow_flg"
+      :testUserFlg="!!test_user_flg"
       @close="closeModal"
       @toggleAutoFollowFlg="toggleAutoFollowing"
     />
@@ -152,7 +153,7 @@ import Vue from 'vue';
 import Paginate from 'vuejs-paginate';
 Vue.component('paginate', Paginate);
 
-const PAGE_TITLE = '仮想通貨アカウント一覧 testmode';
+const PAGE_TITLE = '仮想通貨アカウント一覧';
 
 export default {
   props: {
