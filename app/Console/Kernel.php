@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\AutoFollow;
+use App\Console\Commands\DeleteCoinCheckPricesCommand;
 use App\Console\Commands\DeleteNullAccountToFollowTarget;
 use App\Console\Commands\DeleteTweetCountsCommand;
 use App\Console\Commands\GetTransactionPriceCommand;
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
       AutoFollow::class,
       GetTransactionPriceCommand::class,
       DeleteTweetCountsCommand::class,
+      DeleteCoinCheckPricesCommand::class,
       DeleteNullAccountToFollowTarget::class,
       InsertDbToFollows::class,
       SearchAccountsCommand::class,
@@ -99,6 +101,10 @@ class Kernel extends ConsoleKernel
       // DBの容量オーバー対策のため、14日以前のレコードは自動削除される
       // 1日1回、0:25分に実施する
       $schedule->command('command:delete_tweet_counts')
+          ->dailyAt('0:25')
+          ->withoutOverlapping();
+      
+      $schedule->command('command:delete_coincheck_prices')
           ->dailyAt('0:25')
           ->withoutOverlapping();
       
