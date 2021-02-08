@@ -155,6 +155,7 @@ export default {
       twitter: false,
       password: false,
       mail: '',
+      test_user_flg: false
     };
   },
   computed: {
@@ -169,6 +170,9 @@ export default {
     },
     isExistPassword() {
       return this.password;
+    },
+    isTestUserFlg() {
+      return this.test_user_flg;
     },
     authMail() {
       return this.mail;
@@ -188,7 +192,9 @@ export default {
         this.twitter = response.data.twitter_id !== null;
         this.password = response.data.password !== null;
         this.mail = response.data.email;
+        this.test_user_flg = response.data.test_user_flg ?? 0;
         this.loading = false;
+        console.log(this.isTestUserFlg)
       } else {
         this.system_error = response.data.errors;
         this.isLoading = false;
@@ -200,12 +206,22 @@ export default {
         confirm(
           '【 CryptoTrendを退会しますか？ 】\n退会すると各種サービスのご利用ができなくなります。',
         )
-      ) {
-        const response = await axios.post(`/withdraw`);
-        if (response.status === OK) {
-          window.location = '/';
-        } else {
-          window.location = '/login';
+      )
+      {
+        // テストユーザーの場合は退会処理を行わない
+        if (this.isTestUserFlg) {
+          // フラッシュメッセージをセット
+          this.$store.commit('message/setContentError', {
+            content:
+                '【テストユーザーのため処理は行われません。】本登録をされている場合、こちらから退会処理が行われます。',
+          });
+        }else{
+          const response = await axios.post(`/withdraw`);
+          if (response.status === OK) {
+            window.location = '/';
+          } else {
+            window.location = '/login';
+          }
         }
       }
     },
@@ -230,28 +246,38 @@ export default {
         confirm(
           '【 Twitterの連携を解除してもよろしいですか？ 】\nTwitterの連携を解除すると、一部の機能がご利用できなくなります。',
         )
-      ) {
-        this.isUpdating = true;
-
-        // 更新処理にアクセス
-        const response = await axios
-          .post(`/accounts/un_linkage`)
-          .catch((error) => error.response || error);
-
-        // エラーチェック
-        if (response.status === OK) {
-          // フラッシュメッセージをセット
-          this.$store.commit('message/setContentSuccess', {
-            content: response.data.success,
-          });
-          this.twitter = false;
-        } else {
+      )
+      {
+        // テストユーザーの場合は、Twitter連携の解除処理を行わない
+        if (this.isTestUserFlg) {
           // フラッシュメッセージをセット
           this.$store.commit('message/setContentError', {
-            content: response.data.errors,
+            content: '【テストユーザーのため処理は行われません。】連携したTwitterアカウントはいつでも解除することができます。',
+            timeout: 8000
           });
+        }else{
+          // 更新中フラグをONにする
+          this.isUpdating = true;
+          // 更新処理にアクセス
+          const response = await axios
+              .post(`/accounts/un_linkage`)
+              .catch((error) => error.response || error);
+
+          // エラーチェック
+          if (response.status === OK) {
+            // フラッシュメッセージをセット
+            this.$store.commit('message/setContentSuccess', {
+              content: response.data.success,
+            });
+            this.twitter = false;
+          } else {
+            // フラッシュメッセージをセット
+            this.$store.commit('message/setContentError', {
+              content: response.data.errors,
+            });
+          }
+          this.isUpdating = false;
         }
-        this.isUpdating = false;
       }
     },
   },
