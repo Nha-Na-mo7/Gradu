@@ -90,6 +90,7 @@
               :account="Accounts"
               :follow_flg="checkAlreadyFollow(Accounts.account_id)"
               :auto_follow_flg="!!isAutoFollowFlg"
+              :test_user_flg="!!isTestUserFlg"
             />
             <div class="u-text--center">
               <paginate
@@ -151,7 +152,7 @@ import Vue from 'vue';
 import Paginate from 'vuejs-paginate';
 Vue.component('paginate', Paginate);
 
-const PAGE_TITLE = '仮想通貨アカウント一覧';
+const PAGE_TITLE = '仮想通貨アカウント一覧 testmode';
 
 export default {
   props: {
@@ -169,6 +170,7 @@ export default {
       UPDATED_AT_TABLES__TWITTER_ACCOUNTS_ID: 1,
       twitterId: 1,
       auto_follow_flg: false,
+      test_user_flg: false,
       updatedAt: '',
       followList: [],
       accounts: [],
@@ -191,6 +193,10 @@ export default {
     // オートフォローがONがどうか
     isAutoFollowFlg() {
       return this.auto_follow_flg;
+    },
+    // テストユーザーかどうか
+    isTestUserFlg() {
+      return this.test_user_flg;
     },
     // ユーザーがTwitterアカウントと連携しているかどうか(!! 二重否定で確実にboolean型とする)
     isExistTwitterAccount() {
@@ -253,6 +259,7 @@ export default {
         // フォーム用にデータを格納
         this.twitterId = response.data.twitter_id;
         this.auto_follow_flg = response.data.auto_follow_flg ?? 0;
+        this.test_user_flg = response.data.test_user_flg ?? 0;
       } else {
         // 取得できなかった場合は、アカウント情報を表示させない
         this.nothingAccounts = true;

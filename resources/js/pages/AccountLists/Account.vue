@@ -149,6 +149,10 @@ export default {
       type: Boolean,
       required: true,
     },
+    test_user_flg: {
+      type: Boolean,
+      required: true,
+    },
   },
   data() {
     return {
@@ -163,6 +167,9 @@ export default {
     },
     isAutoFollowing() {
       return this.auto_follow_flg;
+    },
+    isTestUser() {
+      return this.test_user_flg;
     },
     account_screen_name() {
       return this.account.screen_name;
@@ -191,12 +198,23 @@ export default {
     },
   },
   methods: {
+    // 手動フォロー
     async follow() {
+      // テストユーザーの場合はフォロー系の処理はできない。
+      if (this.isTestUser) {
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content:
+              '【テストユーザーのため、処理は行われません。】本登録をされている場合、連携したTwitterアカウントでフォローを行います。',
+        });
+        return false;
+      }
+      // オートフォローが既にONの時
       if (this.isAutoFollowing) {
         // フラッシュメッセージをセット
         this.$store.commit('message/setContentError', {
           content:
-            '自動フォローをONにしている場合、ボタンからのフォローはできません。',
+            '自動フォローをONにしている場合、ボタンからのフォローはできません！',
         });
         return false;
       }
@@ -233,6 +251,17 @@ export default {
     },
     // フォロー解除
     async destroy() {
+      // テストユーザーの場合はフォロー系の処理はできない。
+      if (this.isTestUser) {
+        // フラッシュメッセージをセット
+        this.$store.commit('message/setContentError', {
+          content:
+              '【テストユーザーのため、処理は行われません。】本登録している場合、連携したTwitterアカウントから該当ユーザーのフォローを外します。',
+        });
+        return false;
+      }
+
+      // オートフォローが既にONの場合
       if (this.isAutoFollowing) {
         // フラッシュメッセージをセット
         this.$store.commit('message/setContentError', {
