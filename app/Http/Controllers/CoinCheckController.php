@@ -211,6 +211,24 @@ class CoinCheckController extends Controller
       ])->save();
     }
     
+    // =======================================
+    // N日前以前の最高最安取引価格のデータを全て削除する
+    // =======================================
+    // 2週間(14日前)を限度にデータを全て削除する(DBの容量削減のため)
+    // $days = N日前かを指定する
+    public function delete_price_by_db(int $days) {
+      // 今日の日付
+      $today = CarbonImmutable::today();
+      // N日前の日付
+      $subday = $today->subDays($days);
+      // フォーマット
+      $subday_format = $subday->format('Y-m-d H:i:s');
+      // モデルを取得
+      $coincheck_price_model = new CoincheckPrice();
+      // 指定日以前の全てのデータを削除
+      $coincheck_price_model->where('updated_at', '<', $subday_format)->delete();
+    }
+    
     // ==========================
     // Coincheckインスタンスの作成
     // ==========================
@@ -220,5 +238,5 @@ class CoinCheckController extends Controller
       $secret_key = config('services.coincheck')['secret_key'];
   
       return new Coincheck($access_key, $secret_key);
-  }
+    }
 }
