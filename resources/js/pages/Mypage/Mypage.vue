@@ -194,7 +194,6 @@ export default {
         this.mail = response.data.email;
         this.test_user_flg = response.data.test_user_flg ?? 0;
         this.loading = false;
-        console.log(this.isTestUserFlg)
       } else {
         this.system_error = response.data.errors;
         this.isLoading = false;

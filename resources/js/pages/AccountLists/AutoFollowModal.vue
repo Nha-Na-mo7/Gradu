@@ -101,7 +101,7 @@ export default {
         // テストユーザーの場合は処理は行わない
         if(this.isTestUserFlg) {
           this.$store.commit('message/setContentError', {
-            content: '【テストユーザーのため何も行いません】本登録をされている場合、連携しているTwitterアカウントでの自動フォローが開始されます。',
+            content: '【テストユーザーのため処理は行われません。】本登録をされている場合、連携しているTwitterアカウントでの自動フォローが開始されます。',
             timeout: 8000
           });
         }else{
