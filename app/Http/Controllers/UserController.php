@@ -87,10 +87,8 @@ class UserController extends Controller
       // リセットメールを送信する
       Log::debug($new_email.'宛にリセットメールを送信します。');
       $email_reset->send_email_reset_notification($token);
-      
     }
-  
-  
+    
     // ================================
     // メールアドレスの更新を確定させる
     // ================================
@@ -134,7 +132,6 @@ class UserController extends Controller
         return redirect('/mypage')->with('flash_message', 'メールアドレスの更新に失敗しました。');
       }
     }
-  
     
     // =========================================
     // トークンが有効期限オーバーかをチェックする
@@ -150,8 +147,6 @@ class UserController extends Controller
       Log::debug('トークンが有効期限いないかどうか→'.$result);
       return Carbon::parse($createdAt)->addSeconds($expires)->isPast();
     }
-    
-    
     
     // =========================
     // パスワードを新しく設定する
@@ -183,9 +178,10 @@ class UserController extends Controller
       Log::debug('UserController.password_update パスワードの更新');
       
       try {
-        // 更新の場合は旧パスワードと一致するかを確認する工程が入る
+        // ログインユーザーの情報を取得
         $user = Auth::user();
         
+        // 更新の場合は旧パスワードと一致するかを確認する工程が入る
         // Hash::makeでは毎回違うハッシュ値になるので比較できない
         // Hash::checkを使ってDBのパスワードと比較する
         if(!Hash::check($request->get('old_password'), $user->password)) {
@@ -196,6 +192,12 @@ class UserController extends Controller
                       ['現在のパスワードが一致しません']
                   ]
               ], 422);
+        }
+  
+        // テストユーザーの場合は更新処理は行われない
+        if ($user->test_user_flg) {
+          return response()->json(
+              ['success' => '【テストユーザーはパスワード変更できません】'], 200);
         }
         
         Log::debug('old_passwordが認証ユーザーのテーブルのパスワードと一致しました。更新処理を開始します。');
@@ -211,7 +213,6 @@ class UserController extends Controller
         return response()->json(['errors' => 'エラーが発生しました。'], 500);
       }
     }
-  
     
     // ======================
     // 退会
