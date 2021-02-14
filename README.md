@@ -1,16 +1,8 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
-
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+# 仮想通貨トレンド表示サービス 「CryptoTrend」
 
 ## テストユーザー
-テストユーザー用メールアドレス: test@example.com
-テストユーザー用パスワード : testtest
-
+- テストユーザー用メールアドレス: test@example.com
+- テストユーザー用パスワード : testtest
 
 ## 機能概要
 - TwitterAPIによる「仮想通貨」に関する通貨名ごとのツイート数を集計し、ランキング形式で表示することで、トレンドとなっている仮想通貨名を知ることができるWEBサービス
@@ -74,11 +66,11 @@ https://coincheck.com/ja/documents/exchange/api
 - webpack＋babel
 - SPA
 
-### 対応ブラウザ
+### 対応ブラウザ(実機検証済み)
 - Android4.4~
 - iOS10~
 - GoogleChrome
 - Safari
 - Edge
 
-- IE11未対応(Twitter自体がIEをサポートしていないため)
+※ IE11未対応(Twitter自体がIEをサポートしていないため)
