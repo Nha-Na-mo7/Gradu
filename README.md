@@ -12,72 +12,73 @@
 テストユーザー用パスワード : testtest
 
 
-## About Laravel
+## 機能概要
+- TwitterAPIによる「仮想通貨」に関する通貨名ごとのツイート数を集計し、ランキング形式で表示することで、トレンドとなっている仮想通貨名を知ることができるWEBサービス
+- 他、仮想通貨関連を中心としたTwitterアカウントの一覧表示を行う
+- 仮想通貨関連のニュースを一覧表示する
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 機能一覧
+### 取扱通貨について
+- 仮想通貨自体は膨大な銘柄が存在するため、このサービスで取り扱い対象とする仮想通貨は " CoinCheck "で取り扱う通貨の全てとする。
+下記リンク先を参照。
+https://coincheck.com/ja/exchange/closing_prices
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Twitterアカウント連携機能
+1ユーザにつき、Twitterアカウントを1つ連携でき、以下の機能を利用できる。
+- Twitterによる新規登録/ログイン
+- 他の仮想通貨関連Twitterアカウントのフォロー
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+連携させたTwitterアカウントによるフォローを行うことができる。
 
-## Learning Laravel
+### 仮想通貨・トレンド表示機能
+- 取り扱っている仮想通貨名それぞれについて、Twitter上でのツイート数を取得・集計し、ツイート数の多い順にランキング形式で表示する。
+検索条件は、「通貨の英単語略称_通貨のカタカナ名称」という条件としている(例: 「BTC ビットコイン」)
+- 過去1時間、過去1日、過去1週間でランキング表示の条件を指定できる。
+- ランキングにはツイート数の他、その通貨の24時間での最高取引価格 / 最安取引価格が表示される。
+（※ CoinCheckAPIでは「ビットコイン」のみにしか対応していないため、ビットコインのみ表示されている状態です。取得できない通貨は「不明」と表示します。）
+- 通貨名を絞って表示可能(複数選択)。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- 画面表示時にリアルタイムでツイート数を取得しに行くと表示に時間がかかり(1時間以内のツイート数だけでも5分はかかる)利便性に欠けるため、定期的にツイート数を取得し、DBに登録する。
+- ランキング内のある銘柄名をクリックすると、TwitterのTweet検索画面に遷移する。検索欄にはクリックした通貨名が既に入力されている状態になっている。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 仮想通貨アカウント一覧表示機能 (Twitter連携時のみ)
+- 「仮想通貨」というキーワードをユーザー名またはプロフィールに記載しているユーザを一覧で表示し、画面上からフォローできる。
+- ユーザ名、アカウント名、プロフィールのほか、フォロー数、フォロワー数、(集計時点での)最新ツイート一件を表示する。
+- 1日1回、「仮想通貨」ユーザーを検索し、DBに登録することで一覧表示している。
+- 表示は新規アカウントを優先して表示。
 
-## Laravel Sponsors
+### 仮想通貨アカウント自動フォロー機能
+- 仮想通貨アカウント一覧画面の「自動フォロー」を有効にすることで、一覧表示されているアカウントを全てフォローできる機能。
+- フォローの間隔は 4ユーザー/15分 としている。これはTwitterAPIの制限が「15/15min」かつ「1000/1day」と定められているため、この上限を上回らない程度のペースに設定した。
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### 仮想通貨関連ニュース表示機能
+- GoogleニュースAPIを使って、「仮想通貨」というキーワードでニュースを検索し、仮想通貨関連のニュースを一覧表示する。
+- 取扱通貨名に絞ってニュース検索をやり直すことも可能
+- 通貨名によっては仮想通貨と関係のないニュースが取得されることを防ぐため、「仮想通貨」と先頭についた状態で検索をかけている。
+(例:「ETC」は、そのままだと料金所のETCのニュースなどもかかってしまう)
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
-- [Hyper Host](https://hyper.host)
-- [Appoly](https://www.appoly.co.uk)
-- [OP.GG](https://op.gg)
+### その他機能
+- TOP(SEO対策済み)
+- パスワードリマインダー
 
-## Contributing
+CoincheckAPI（仮想通貨取引所のAPI）
+https://coincheck.com/ja/documents/exchange/api
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 開発環境
+- LAMP環境
+- Laravel6
+- Vue.js
+- CSS設計: FLOCSS設計
+- CSSフレームワーク(Bootstrapなど)未使用
+- レスポンシブデザイン
+- webpack＋babel
+- SPA
 
-## Code of Conduct
+### 対応ブラウザ
+- Android4.4~
+- iOS10~
+- GoogleChrome
+- Safari
+- Edge
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- IE11未対応(Twitter自体がIEをサポートしていないため)
